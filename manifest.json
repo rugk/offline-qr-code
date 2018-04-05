@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Offline QR code generator",
+  "version": "0.1",
+  "author": "rugk",
+
+  "description": "Allows you to generate a QR code for any website or tab, you have open.",
+  "homepage_url": "https://github.com/rugk/offline-qr-code",
+
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "19": "icons/icon.svg",
+      "38": "icons/icon.svg"
+    },
+    "default_title": "QR code",
+    "default_popup": "popup/qrcode.html"
+  },
+
+  "content_security_policy": "default-src 'self'",
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  }
+}

@@ -20,3 +20,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 …
 
+## Special thanks
+* to [SVGO](https://jakearchibald.github.io/svgomg/) for their SVG mnimisation tool
+
