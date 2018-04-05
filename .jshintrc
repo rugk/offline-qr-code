@@ -1,0 +1,13 @@
+{
+  "strict": "global",
+  "undef": true,
+  "unused": true,
+  "esversion": 6,
+  "moz": true,
+  "devel": true,
+  "browser": true,
+  "globals": {
+    "browser": true,
+    "kjua": false
+  }
+}

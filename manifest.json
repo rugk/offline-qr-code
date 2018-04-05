@@ -17,9 +17,13 @@
     "default_popup": "popup/qrcode.html"
   },
 
-  "content_security_policy": "default-src 'self'",
+  "content_security_policy": "default-src 'self'; img-src data:",
   "icons": {
     "48": "icons/icon.svg",
     "96": "icons/icon.svg"
-  }
+  },
+
+  "permissions": [
+    "activeTab"
+  ]
 }
