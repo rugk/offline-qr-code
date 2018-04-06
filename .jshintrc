@@ -3,7 +3,6 @@
   "undef": true,
   "unused": true,
   "esversion": 6,
-  "moz": true,
   "devel": true,
   "browser": true,
   "globals": {

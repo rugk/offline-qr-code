@@ -1,3 +1,77 @@
-body {
-  padding: 20px;
+body, .center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* small classes in order to avoid inline CSS */
+.invisible {
+  display: none !important;
+}
+
+.message-container {
+  position: relative;
+}
+
+.qrcode {
+  margin: 20px;
+}
+
+.message-box {
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+
+  /* use whole size(?) */
+  width: 100vw;
+
+  /* make errors selectable, so users can copy them */
+  -moz-user-select: text;
+  cursor: text;
+
+  /* multiline */
+  max-width: 210px;
+  hypens: auto;
+  overflow-wrap: break-word;
+}
+
+.error {
+  color: #ffffff;
+  background-color: rgba(215, 0, 34, 0.9);
+}
+/* icon for error message */
+.error::before {
+  background-image: url('img/error.svg');
+  background-size: 16px 16px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  content: "";
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* Let the element float (at the bottom on the qr) */
+.flot-qr {
+  position: absolute;
+}
+.float-qr-bottom {
+  bottom: 30px;
+}
+
+#qrcodetext {
+  /* let popup grow with text field */
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+
+  resize: both;
+  height: 100%;
+
+  /* override inerhited from browser-style */
+  margin: 0px;
 }

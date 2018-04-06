@@ -2,13 +2,29 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>QR code</title>
 
 		<link rel="stylesheet" href="qrcode.css">
 		<script src="lib/kjua.min.js" charset="utf-8"></script>
-		<script src="qrcode.js" charset="utf-8"></script>
 	</head>
 	<body>
-		<p>QR code</p>
+		<div id="qrcode-container" class="center-container">
+			<div id="qrcode" class="qrcode invisible">
+				<div></div>
+			</div>
+			<img id="qrcode-placeholder" class="qrcode" src="img/qr-grey.svg" alt="QR code placeholder image"
+				width="200"
+				height="200">
+			<div class="message-container center-container">
+				<span id="error" class="message-box error flot-qr float-qr-bottom">Could not generate QR code.</span>
+			</div>
+		</div>
+    	<textarea id="qrcodetext"
+					class="browser-style"
+					placeholder="Enter text for QR code here to generate it."
+					autofocus="true"
+					>unknown error</textarea>
+
+
+		<script src="qrcode.js" charset="utf-8"></script>
 	</body>
 </html>

@@ -18,7 +18,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Other third-party components
 
-…
+* [`popup/img/error.svg`](popup/img/error.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/), color modified
 
 ## Special thanks
 * to [SVGO](https://jakearchibald.github.io/svgomg/) for their SVG mnimisation tool
