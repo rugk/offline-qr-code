@@ -1,7 +1,8 @@
 'use strict';
 
 // Globals
-const AddonName = "Offline QR code generator";
+const ADDON_NAME = "Offline QR code generator";
+const ADDON_NAME_SHORT = "Offline QR code";
 
 var QrCreator = (function () {
     let me = {};
@@ -61,6 +62,7 @@ var QrCreator = (function () {
      * @returns {HTMLElement}
      */
     function getQrCodeFromLib() {
+        ErrorHandler.logInfo("generated new qr code with text: ", qrCodeOptions.text);
         return kjua(qrCodeOptions);
     }
 
@@ -196,7 +198,7 @@ var UserInterface = (function () {
      */
     function refreshQrCode() {
         const text = qrCodeText.value;
-        console.log(text, "value");
+        ErrorHandler.logInfo("new value from textarea: ", text);
 
         // show placeholder when no text is entered
         if (text == "") {
@@ -249,6 +251,7 @@ var UserInterface = (function () {
         // get old element
         const elOldQrCode = qrCode.firstElementChild;
         // and replace it
+        ErrorHandler.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
         qrCode.replaceChild(elNewQr, elOldQrCode);
     };
 
@@ -259,6 +262,7 @@ var UserInterface = (function () {
      * @function
      */
     me.init = function() {
+        ErrorHandler.logInfo("starting…");
         // add event listeners
         qrCodeText.addEventListener("input", refreshQrCode);
     };
@@ -269,27 +273,39 @@ var UserInterface = (function () {
 var ErrorHandler = (function () {
     let me = {};
 
+    const debugMode = true;
+
     /**
-     * Logs an error to console.
+     * Logs a string to console.
      *
      * Pass as many strings/output as you want.
      *
-     * @name   ErrorHandler.logError
+     * @name   ErrorHandler.log
      * @function
      * @private
      * @param  {string} errortype
      * @param  {...*} args
      */
-    function logError() {
+    function log() {
         if (arguments.length < 0) {
-            console.log(AddonName, "logError has been called without parameters");
-            return;
+            // recursive call, it's secure, because this won't fail
+            return log("ERROR", "log has been called without parameters");
         }
 
         const args = Array.from(arguments);
-        args[0] = AddonName + " [" + args[0] + "]";
+        const errortype = args[0]
+        args[0] = ADDON_NAME_SHORT + " [" + errortype + "]";
 
-        console.log.apply(null, args);
+        switch (errortype) {
+            case "ERROR":
+                console.error.apply(null, args);
+                break;
+            case "WARN":
+                console.warn.apply(null, args);
+                break;
+            default:
+                console.log.apply(null, args);
+        }
     }
 
     /**
@@ -297,10 +313,33 @@ var ErrorHandler = (function () {
      *
      * @name   ErrorHandler.logError
      * @function
-     * @param  {string} errormessage
+     * @param  {...*} args
      */
-    me.logError = function(errormessage) {
-        logError("ERROR", errormessage);
+    me.logError = function() {
+        const args = Array.from(arguments);
+        args.unshift("INFO");
+
+        log.apply(null, args);
+    };
+
+    /**
+     * Logs some information.
+     *
+     * Note: This log may be skipped, when not in debug mode.
+     *
+     * @name   ErrorHandler.logInfo
+     * @function
+     * @param  {...*} args
+     */
+    me.logInfo = function() {
+        if (debugMode === false) {
+            return;
+        }
+
+        const args = Array.from(arguments);
+        args.unshift("INFO");
+
+        log.apply(null, args);
     };
 
     return me;

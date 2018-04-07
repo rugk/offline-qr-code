@@ -13,4 +13,4 @@ Apart from that, there are some simple rules.
    * use eval, or other insecure features
    * modify the [CSP](manifest.json#L20) :wink:
 * The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and, theoretically, properties).
-
+* Use early return instead of nested if blocks, to keep the code readable.
