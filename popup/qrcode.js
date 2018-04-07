@@ -196,6 +196,7 @@ var UserInterface = (function () {
      */
     function refreshQrCode() {
         const text = qrCodeText.value;
+        console.log(text, "value");
 
         // show placeholder when no text is entered
         if (text == "") {
@@ -259,7 +260,7 @@ var UserInterface = (function () {
      */
     me.init = function() {
         // add event listeners
-        qrCodeText.addEventListener("keypress", refreshQrCode);
+        qrCodeText.addEventListener("input", refreshQrCode);
     };
 
     return me;

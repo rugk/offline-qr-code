@@ -11,6 +11,6 @@ Apart from that, there are some simple rules.
 * Especially, as we use a [CSP](manifest.json), please do *not*:
    * use inline JavaScript
    * use eval, or other insecure features
-   * modify the CSP :wink:
+   * modify the [CSP](manifest.json#L20) :wink:
 * The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and, theoretically, properties).
 
