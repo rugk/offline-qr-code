@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Offline QR code generator",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Allows you to generate a QR code for any website or tab, you have open.",
+    "description": "Description of the extension."
+  }
+}

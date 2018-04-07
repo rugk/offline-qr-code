@@ -220,6 +220,7 @@ var UserInterface = (function () {
      * @param  {string} text
      */
     me.showError = function(text) {
+        ErrorHandler.logError("show user error:", text);
         showPlaceholder();
         elError.textContent = text;
     };
@@ -345,8 +346,25 @@ var ErrorHandler = (function () {
     return me;
 })();
 
+var Localizer = (function () {
+    let me = {};
+
+    /**
+     * Localises static strings in the HTML file.
+     *
+     * @name   Localizer.init
+     * @function
+     */
+    me.init = function() {
+        document.querySelectorAll("[lang]").
+    };
+
+    return me;
+})();
+
 // init modules
 UserInterface.init();
+Localizer.init();
 
 // generate QR code from tab
 browser.tabs.query({active: true, currentWindow: true})

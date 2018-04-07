@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Offline QR code generator",
+  "name": "__MSG_extensionName__",
   "version": "0.1",
   "author": "rugk",
 
-  "description": "Allows you to generate a QR code for any website or tab, you have open.",
+  "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/rugk/offline-qr-code",
 
   "browser_action": {
@@ -22,6 +22,7 @@
     "48": "icons/icon.svg",
     "96": "icons/icon.svg"
   },
+  "default_locale": "en",
 
   "permissions": [
     "activeTab"
