@@ -132,6 +132,7 @@ var QrCreator = (function () {
 var UserInterface = (function () {
     let me = {};
 
+    const elBody = document.querySelectorAll('body')[0];
     const qrCode = document.getElementById('qrcode');
     const qrCodePlaceholder = document.getElementById('qrcode-placeholder');
     const qrCodeContainer = document.getElementById('qrcode-container');
@@ -189,6 +190,7 @@ var UserInterface = (function () {
         qrCodePlaceholder.classList.add("invisible");
         placeholderShown = false;
     }
+
     /**
      * Refreshes the QR code, if the text has been changed in the input field.
      *
@@ -210,6 +212,49 @@ var UserInterface = (function () {
 
         QrCreator.setTextInternal(text);
         QrCreator.generate();
+    }
+
+    /**
+     * Returns whether an (inpout/textare/…) element is selected or not.
+     *
+     * @name   UserInterface.isSelected
+     * @function
+     * @private
+     * @param {HTMLElement} input
+     * @returns {bool}
+     */
+    function isSelected(input) {
+        return input.selectionStart == 0 && input.selectionEnd == input.value.length;
+    }
+
+    /**
+     * Selects all text of a textarea.
+     *
+     * @name   UserInterface.selectAllText
+     * @function
+     * @private
+     * @param {Event} event
+     */
+    function selectAllText(event) {
+        const targetIsSelected = document.activeElement == event.target && isSelected(event.target);
+        // prevent endless loop after two rechecks (i.e. re-check only two times)
+        if (targetIsSelected || event.retry > 2) {
+            return;
+        }
+
+        ErrorHandler.logInfo("selectAllText", event);
+
+        event.retry = event.retry+1 || 0;
+
+        // re-selecting when already selected, causes flashing, so we avoid that
+        if (!targetIsSelected) {
+            event.target.focus();
+            event.target.select();
+        }
+
+        // recheck selection as a workaround for <FF 60 that it really selected
+        // it -> recursive retry
+        setTimeout(selectAllText, 100, event);
     }
 
     /**
@@ -274,6 +319,12 @@ var UserInterface = (function () {
         ErrorHandler.logInfo("starting…");
         // add event listeners
         qrCodeText.addEventListener("input", refreshQrCode);
+        qrCodeText.addEventListener("focus", selectAllText);
+
+        // manually focus (and select) element when starting
+        // in brute-force-style as bugs seem to prevent it from working otherwise
+        // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
+        setTimeout(selectAllText, 50, { target: qrCodeText });
     };
 
     return me;
