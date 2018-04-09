@@ -325,6 +325,9 @@ var UserInterface = (function () {
         // in brute-force-style as bugs seem to prevent it from working otherwise
         // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
         setTimeout(selectAllText, 50, { target: qrCodeText });
+
+        // TOOD: add option for this
+        qrCodeText.style.fontFamily = "monospace";
     };
 
     return me;
