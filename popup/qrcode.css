@@ -82,6 +82,10 @@ body, .center-container {
   resize: both;
   height: 100%;
 
+  /* text style */
+  word-break: break-word; /* not supported by FF yet, may still look better */
+  word-break: break-all;
+
   /* override inerhited from browser-style */
   margin: 0px;
 }
