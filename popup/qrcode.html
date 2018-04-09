@@ -12,17 +12,20 @@
 				<div></div>
 			</div>
 			<img id="qrcode-placeholder" class="qrcode" src="img/qr-grey.svg" alt="QR code placeholder image"
+				data-i18n
+				data-i18n-alt="__MSG_qrCodePlaceholder__"
 				width="200"
 				height="200">
 			<div class="message-container center-container">
-				<span id="error" lang="en" class="message-box error flot-qr float-qr-bottom">Could not generate QR code.</span>
+				<span id="error" data-i18n="__MSG_couldNotGenerateQrCode__" class="message-box error flot-qr float-qr-bottom">Could not generate QR code.</span>
 			</div>
 		</div>
     	<textarea id="qrcodetext"
 					class="browser-style"
 					placeholder="Enter text for QR code here to generate it."
 					autofocus="true"
-					lang="en"
+					data-i18n="__MSG_unknownError__"
+					data-i18n-placeholder="__MSG_textareaPlaceholder__"
 					>unknown error</textarea>
 
 

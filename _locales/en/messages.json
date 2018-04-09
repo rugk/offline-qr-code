@@ -1,11 +1,35 @@
 {
+  // manifest.json
   "extensionName": {
     "message": "Offline QR code generator",
     "description": "Name of the extension."
   },
-
   "extensionDescription": {
     "message": "Allows you to generate a QR code for any website or tab, you have open.",
     "description": "Description of the extension."
+  },
+
+  // errors
+  "unknownError": {
+    "message": "unknown error",
+    "description": ""
+  },
+  "couldNotGenerateQrCode": {
+    "message": "Could not generate QR code.",
+    "description": ""
+  },
+  "errorShowingError": {
+    "message": "Could not show error.",
+    "description": "When there is an error when showing the error."
+  },
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "QR code placeholder image",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "Enter text for QR code here to generate it.",
+    "description": "Placeholder for the textarea, when it is empty."
   }
+
 }

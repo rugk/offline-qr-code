@@ -215,14 +215,22 @@ var UserInterface = (function () {
     /**
      * Show a critical error.
      *
+     * Note this should only be used to show *short* error messages, which are
+     * meaningfull to the user, as the space is limited. So it is mostly only
+     * useful to use only one param: a string.
+     *
      * @name   UserInterface.showError
      * @function
-     * @param  {string} text
+     * @param  {...*} args
      */
-    me.showError = function(text) {
-        ErrorHandler.logError("show user error:", text);
+    me.showError = function() {
+        const args = Array.from(arguments);
+
+        ErrorHandler.logError("show user error:", args);
         showPlaceholder();
-        elError.textContent = text;
+
+        // localize string or fallback to first string ignoring all others
+        elError.textContent = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingError");
     };
 
     /**
@@ -349,14 +357,73 @@ var ErrorHandler = (function () {
 var Localizer = (function () {
     let me = {};
 
+    const i18nAttribute = "data-i18n";
+
+    const localizedAttributes = [
+        "placeholder",
+        "alt"
+    ]
+
     /**
-     * Localises static strings in the HTML file.
+     * Splits the _MSG__*__ format and returns the actual tag.
+     *
+     * @name   Localizer.getMessageFromTag
+     * @function
+     * @private
+     * @param  {string} tag
+     * @returns {string}
+     */
+    function getMessageTag(tag) {
+        const splitMessage = tag.split(/^__MSG_(\w+)__$/);
+
+        // this may throw exceptions, but then the input is just invalid
+        return splitMessage[1];
+    }
+
+    /**
+     * Logs a string to console.
+     *
+     * Pass as many strings/output as you want.
+     *
+     * @name   Localizer.replaceI18n
+     * @function
+     * @private
+     * @param  {HTMLElement} elem element to translate
+     * @param  {string} tag name of the
+     */
+    function replaceI18n(elem, tag) {
+        // localize main content
+        if (tag != "") {
+            elem.textContent = browser.i18n.getMessage(getMessageTag(tag));
+        }
+
+        // replace attributes
+        localizedAttributes.forEach((currentAttribute) => {
+            const currentLocaleAttribute = `${i18nAttribute}-${currentAttribute}`;
+
+            if (elem.hasAttribute(currentLocaleAttribute)) {
+                const attributeTag = elem.getAttribute(currentLocaleAttribute);
+                elem.setAttribute(currentAttribute, browser.i18n.getMessage(getMessageTag(attributeTag)));
+            }
+        });
+    }
+
+    /**
+     * Localizes static strings in the HTML file.
      *
      * @name   Localizer.init
      * @function
      */
     me.init = function() {
-        document.querySelectorAll("[lang]").
+        document.querySelectorAll(`[${i18nAttribute}]`).forEach((currentElem) => {
+            ErrorHandler.logInfo("init translate", currentElem);
+
+            const contentString = currentElem.getAttribute(i18nAttribute);
+            replaceI18n(currentElem, contentString);
+        });
+
+        // replace html lang attribut after translation
+        document.querySelectorAll("html")[0].setAttribute("lang", browser.i18n.getUILanguage());
     };
 
     return me;

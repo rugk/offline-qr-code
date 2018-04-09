@@ -1,0 +1,34 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Offline QR-Code-Generator",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Elaubt, einen QR-Code für jede Webseite oder Tab zu generieren, die du offen hast.",
+    "description": "Description of the extension."
+  },
+
+  // errors
+  "unknownError": {
+    "message": "unbekannter Fehler",
+    "description": ""
+  },
+  "couldNotGenerateQrCode": {
+    "message": "Konnte QR-Code nicht generieren.",
+    "description": ""
+  },
+  "errorShowingError": {
+    "message": "Konnte Fehler nicht anzeigen.",
+    "description": "When there is an error when showing the error."
+  },
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "QR-Code-Platzhalter-Bild",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "Gibt den Text für den QR-Code hier ein, um ihn zu generieren.",
+    "description": "Placeholder for the textarea, when it is empty."
+  }
+}
