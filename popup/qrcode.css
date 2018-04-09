@@ -1,3 +1,7 @@
+body {
+  direction: __MSG_@@bidi_dir__;
+}
+
 body, .center-container {
   display: flex;
   flex-direction: column;
@@ -14,6 +18,10 @@ body, .center-container {
 }
 
 .qrcode {
+  /* Workaround for Kjua, which cannot include size inline as this is blocked by the CSP */
+  width: 200px;
+  height: 200px;
+
   margin: 20px;
 }
 
