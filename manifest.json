@@ -17,6 +17,11 @@
     "default_popup": "popup/qrcode.html"
   },
 
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+
   "content_security_policy": "default-src 'self'; img-src data:",
   "icons": {
     "48": "icons/icon.svg",
@@ -25,6 +30,13 @@
   "default_locale": "en",
 
   "permissions": [
-    "activeTab"
-  ]
+    "activeTab",
+    "storage"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "offline-qr-code@rugk.github.io",
+      "strict_min_version": "57.0a1"
+    }
+  }
 }
