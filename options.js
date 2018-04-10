@@ -28,14 +28,26 @@ var OptionHandler = (function () {
      * @name   OptionHandler.setManagedOptions
      * @function
      * @private
+     * @param {string} option
      */
-    function setManagedOptions() {
-        // TODO: https://github.com/mdn/webextensions-examples/blob/master/favourite-colour/options.js
-        var storageItem = browser.storage.managed.get('colour');
+    function setManagedOptions(option) {
+        var storageItem = browser.storage.managed.get('color');
         storageItem.then((res) => {
-            document.querySelector("#managed-colour").innerText = res.colour;
+            ErrorHandler.logInfo(res);
+            const elOption = document.getElementById(option);
+            elOption.textContent = res.colour;
         });
+    }
 
+
+    /**
+     * Display option in option page.
+     *
+     * @name   OptionHandler.setOption
+     * @function
+     * @private
+     */
+    function setOption() {
         var gettingItem = browser.storage.sync.get('colour');
         gettingItem.then((res) => {
             document.querySelector("#colour").value = res.colour || 'Firefox red';

@@ -30,6 +30,11 @@
   "textareaPlaceholder": {
     "message": "Enter text for QR code here to generate it.",
     "description": "Placeholder for the textarea, when it is empty."
-  }
+  },
 
+  // options
+  "optionQrCodeColor": {
+    "message": "QR code color",
+    "description": ""
+  }
 }
