@@ -8,6 +8,10 @@
     "message": "Allows you to generate a QR code for any website or tab, you have open.",
     "description": "Description of the extension."
   },
+  "browserActionButtonTitle": {
+    "message": "Offline QR code",
+    "description": "The title for the button, which opens the popup."
+  },
 
   // errors
   "unknownError": {
@@ -33,8 +37,16 @@
   },
 
   // options
+  "someSettingsAreManaged": {
+    "message": "Some settings are managed by your system administrator and cannot be changed.",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "This option is disabled, because it has been configured by your system administrator.",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+  },
   "optionQrCodeColor": {
-    "message": "QR code color",
+    "message": "QR code color: ",
     "description": ""
   }
 }

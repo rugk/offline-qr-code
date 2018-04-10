@@ -1,0 +1,12 @@
+body {
+  /* the font-size the other options in the settings pane use */
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* https://design.firefox.com/photon/patterns/inactive.html */
+[disabled] {
+  opacity: 0.4;
+}
+
+/* TODO: make i icon bigger */

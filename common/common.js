@@ -119,7 +119,11 @@ var Localizer = (function () {
     function replaceI18n(elem, tag) {
         // localize main content
         if (tag != "") {
-            elem.textContent = browser.i18n.getMessage(getMessageTag(tag));
+            const translatedMessage = browser.i18n.getMessage(getMessageTag(tag));
+            // only set message if it could be retrieved, i.e. do not override HTML fallback
+            if (translatedMessage != "") {
+              elem.textContent = translatedMessage;
+            }
         }
 
         // replace attributes
@@ -128,7 +132,11 @@ var Localizer = (function () {
 
             if (elem.hasAttribute(currentLocaleAttribute)) {
                 const attributeTag = elem.getAttribute(currentLocaleAttribute);
-                elem.setAttribute(currentAttribute, browser.i18n.getMessage(getMessageTag(attributeTag)));
+                const translatedMessage = browser.i18n.getMessage(getMessageTag(attributeTag));
+                // only set message if it could be retrieved, i.e. do not override HTML fallback
+                if (translatedMessage != "") {
+                  elem.setAttribute(currentAttribute, translatedMessage);
+                }
             }
         });
     }
@@ -149,6 +157,29 @@ var Localizer = (function () {
 
         // replace html lang attribut after translation
         document.querySelectorAll("html")[0].setAttribute("lang", browser.i18n.getUILanguage());
+    };
+
+    return me;
+})();
+
+var AddonSettings = (function () {
+    let me = {};
+
+    // TODO: default values??
+
+    /**
+     * Returns the add-on setting to use in add-on.
+     *
+     * @name   AddonSettings.get
+     * @function
+     * @param  {string} option name of the option
+     */
+    me.get = function(option) {
+        // TODO: if managed -> managed, otherwqise: sync
+        var gettingItem = browser.storage.sync.get(option);
+        gettingItem.then((res) => {
+
+        });
     };
 
     return me;

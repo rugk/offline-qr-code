@@ -2,13 +2,26 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+
+		<link rel="stylesheet" href="../common/common.css">
+		<link rel="stylesheet" href="options.css">
 	</head>
 
 	<body>
-		<p>storage.managed colour: <b id="managed-colour">no value found</b></p>
+		<div id="managed-settings" class="message-container invisible">
+			<span data-i18n="__MSG_someSettingsAreManaged__" class="message-box info">Some settings are managed by your administrator and cannot be changed.</span>
+		</div>
 		<form>
-			<label data-i18n="__MSG_optionQrCodeColor__">QR code color</label>
-			<input type="text" id="color">
+			<ul>
+				<li>
+					<label data-i18n="__MSG_optionQrCodeColor__" for="color">QR code color: </label>
+					<input class="setting save-on-change" type="color" id="qrColor" name="qr-color">
+				</li>
+				<li>
+					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospace-font" value="true">
+					<label data-i18n="__MSG_useMonospaceFont__" for="monospaceFont">Use monospace font</label>
+				</li>
+			</ul>
 		</form>
 
 		<script src="common/common.js"></script>

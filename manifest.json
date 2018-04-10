@@ -13,7 +13,7 @@
       "19": "icons/icon.svg",
       "38": "icons/icon.svg"
     },
-    "default_title": "QR code",
+    "default_title": "__MSG_browserActionButtonTitle__",
     "default_popup": "popup/qrcode.html"
   },
 

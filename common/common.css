@@ -1,0 +1,69 @@
+body {
+  direction: __MSG_@@bidi_dir__;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* small classes in order to avoid inline CSS */
+.invisible {
+  display: none !important;
+}
+
+.message-container {
+  position: relative;
+}
+
+/* message box */
+/* follows https://design.firefox.com/photon/components/message-bars.html */
+.message-box {
+  padding: 4px;
+  vertical-align: middle;
+
+  border-radius: 4px;
+
+  /* use whole width */
+  width: 100%;
+  min-height: 32px;
+
+  /* make errors selectable, so users can copy them */
+  -moz-user-select: text;
+  cursor: text;
+
+  /* multiline */
+  hypens: auto;
+  overflow-wrap: break-word;
+
+  /* center-vertically */
+  display: flex;
+  align-items: center;
+}
+
+.error {
+  color: #ffffff;
+  background-color: #d70022;
+}
+/* icon for error message */
+.message-box::before {
+  background-size: 16px 16px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  content: "";
+  margin: 4px;
+}
+
+.error::before {
+  background-image: url('/common/img/error-white.svg');
+}
+.info::before {
+  background-image: url('/common/img/info-dark.svg');
+}
+
+.info {
+  color: #0c0c0d;
+  background-color: #ededf0;
+}
