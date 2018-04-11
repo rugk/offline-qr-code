@@ -6,7 +6,6 @@
   "devel": true,
   "browser": true,
   "globals": {
-    "browser": true,
-    "kjua": false
+    "browser": true
   }
 }

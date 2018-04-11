@@ -1,6 +1,7 @@
 'use strict';
 
 /* globals Logger */
+/* globals AddonSettings */
 /* globals ADDON_NAME */
 /* globals ADDON_NAME_SHORT */
 
@@ -21,7 +22,12 @@ var OptionHandler = (function () {
     function applyOptionToElement(elOption, optionValue) {
         // ignore, if not set, i.e. use default value from HTML file
         if (optionValue == "") {
-            return;
+            optionValue = AddonSettings.getDefaultValue(elOption);
+
+            // if still no default value, try to use HTML defaults, i.e. do not set option
+            if (optionValue === undefined) {
+                return;
+            }
         }
 
         // custom handling for special option types

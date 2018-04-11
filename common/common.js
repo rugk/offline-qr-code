@@ -165,25 +165,85 @@ var Localizer = (function () {
 var AddonSettings = (function () {
     let me = {};
 
-    // TODO: default values??
+    const defaultValues = {
+        qrColor: "#0c0c0d",
+    }
+
+    /**
+     *  Get the default value
+     *
+     * Returns undefined, if option cannot be found.
+     *
+     * @name   AddonSettings.getDefaultValue
+     * @function
+     * @param  {string|null} option name of the option
+     * @returns {object}
+     */
+    me.getDefaultValue = function (option) {
+        // return all default values
+        if (!option) {
+            return defaultValues;
+        }
+
+        const optionValue = defaultValues[option];
+
+        // if undefined
+        if (!optionValue) {
+            Logger.logError(`Default value for "${option}" missing.`);
+            return undefined;
+        }
+
+        return optionValue;
+    }
 
     /**
      * Returns the add-on setting to use in add-on.
      *
      * @name   AddonSettings.get
      * @function
-     * @param  {string} option name of the option
+     * @param  {string|null} option name of the option
+     * @return {Promise}
      */
     me.get = function(option) {
-        // TODO: if managed -> managed, otherwqise: sync
-        var gettingItem = browser.storage.sync.get(option);
-        gettingItem.then((res) => {
+        option = option || null;
 
+        // if all values should be returned, first fetch default ones
+        let addValues = null;
+        if (!option) {
+            addValues = me.getDefaultValue(option);
+        }
+
+        // first try to get managed option
+        return browser.storage.managed.get(option).then((res) => {
+            Logger.logInfo(`Managed setting got for "${option}".`, res);
+
+            // merge objects if needed
+            if (addValues !== null) {
+                return Object.assign({}, addValues, res);
+            }
+
+            return res;
+        }).catch((error) => {
+            // get synced option, otherwise
+            return browser.storage.sync.get(option).then((res) => {
+                Logger.logInfo(`Setting got for "${option}".`, res);
+
+                if (addValues !== null) {
+                    return Object.assign({}, addValues, res);
+                }
+
+                return res;
+            }).catch((error) => {
+                // last fallback: default value
+                Logger.logError(`Could not get option "${option}". Using default.`, error);
+
+                // get default value as a last fallback
+                return me.getDefaultValue(option) || null;
+            });
         });
     };
 
     return me;
 })();
-
 // init modules
 Localizer.init();

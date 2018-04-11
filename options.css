@@ -9,4 +9,15 @@ body {
   opacity: 0.4;
 }
 
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+li {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
 /* TODO: make i icon bigger */
+/* TODO: improve checkbox style */

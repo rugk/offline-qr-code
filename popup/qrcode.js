@@ -1,57 +1,131 @@
 'use strict';
 
 /* globals Logger */
+/* globals AddonSettings */
 /* globals ADDON_NAME */
 /* globals ADDON_NAME_SHORT */
 
-var QrCreator = (function () {
+// abstracts away all specific handling of QR code library
+var QrLibKjua = (function () {
     let me = {};
+
+    /* globals kjua */
 
     /**
      * The saved options for Kjua.
      *
-     * @name QrCreator.qrCodeOptions
+     * @name QrCreator.kjuaOptions
      * @private
      */
-    let qrCodeOptions = {
-        // render method: 'canvas' or 'image'
-        render: 'canvas',
+    let kjuaOptions;
 
-        // render pixel-perfect lines
-        crisp: true,
+    /**
+     * How options need to be mapped from general options to kjua.
+     *
+     * format: generalOpt => kjua
+     *
+     * @name QrCreator.optionsMap
+     * @private
+     */
+    const optionsMap = Object.freeze({
+        "qrColor": "fill",
+        "qrBackgroundColor": "back"
+    });
 
-        // minimum version: 1..40
-        minVersion: 1,
+    /**
+     * Resets all options for the QR code.
+     *
+     * @name   QrLibKjua.reset
+     * @function
+     * @returns {HTMLElement}
+     */
+    me.reset = function() {
+        kjuaOptions = {
+            // render method: 'canvas' or 'image'
+            render: 'canvas',
 
-        // error correction level: 'L', 'M', 'Q' or 'H'
-        ecLevel: 'H',
+            // render pixel-perfect lines
+            crisp: true,
 
-        // size in pixel
-        size: 200,
+            // minimum version: 1..40
+            minVersion: 1,
 
-        // pixel-ratio, null for devicePixelRatio
-        ratio: null,
+            // error correction level: 'L', 'M', 'Q' or 'H'
+            ecLevel: 'H',
 
-        // code color
-        fill: '#0c0c0d',
+            // size in pixel
+            size: 200,
 
-        // background color
-        back: '#ffffff',
+            // pixel-ratio, null for devicePixelRatio
+            ratio: null,
 
-        // roundend corners in pc: 0..100
-        rounded: 0,
+            // code color
+            fill: '#0c0c0d',
 
-        // quiet zone in modules
-        quiet: 0,
+            // background color
+            back: '#ffffff',
 
-        // modes: 'plain', 'label' or 'image'
-        mode: 'plain',
+            // roundend corners in pc: 0..100
+            rounded: 0,
 
-        // label/image size and pos in pc: 0..100
-        mSize: 30,
-        mPosX: 50,
-        mPosY: 50
+            // quiet zone in modules
+            quiet: 0,
+
+            // modes: 'plain', 'label' or 'image'
+            mode: 'plain',
+
+            // label/image size and pos in pc: 0..100
+            mSize: 30,
+            mPosX: 50,
+            mPosY: 50
+        };
     };
+
+    /**
+     * Set an option for the QR code.
+     *
+     * @name   QrLibKjua.set
+     * @function
+     * @param {string} tag
+     * @param {object} value
+     */
+    me.set = function(tag, value) {
+        if (optionsMap.hasOwnProperty(tag)) {
+            tag = optionsMap[tag];
+        }
+
+        // TODO: should it reject invalid values?
+
+        kjuaOptions[tag] = value;
+    };
+
+    /**
+     * Return new QR code.
+     *
+     * @name   QrLibKjua.getQr
+     * @function
+     * @returns {HTMLElement}
+     */
+    me.getQr = function() {
+        Logger.logInfo("generated new qr kjua code", kjuaOptions);
+        return kjua(kjuaOptions);
+    };
+
+    /**
+     * Init connector module.
+     *
+     * @name   QrLibKjua.init
+     * @function
+     */
+    me.init = function() {
+        me.reset();
+    };
+
+    return me;
+})();
+
+var QrCreator = (function () {
+    let me = {};
 
     /**
      * Provide connection to library and get QR code with current options.
@@ -62,8 +136,7 @@ var QrCreator = (function () {
      * @returns {HTMLElement}
      */
     function getQrCodeFromLib() {
-        Logger.logInfo("generated new qr code with text: ", qrCodeOptions.text);
-        return kjua(qrCodeOptions);
+        return QrLibKjua.getQr();
     }
 
     /**
@@ -98,7 +171,7 @@ var QrCreator = (function () {
      * @param  {string} text
      */
     me.setTextInternal = function(text) {
-        qrCodeOptions.text = text;
+        QrLibKjua.set("text", text);
     };
 
     /**
@@ -124,6 +197,22 @@ var QrCreator = (function () {
      */
     me.generateFromTabs = function(tabs) {
         me.generateFromTab(tabs[0]);
+    };
+
+    /**
+     * Initiates module.
+     *
+     * @name   QrCreator.init
+     * @function
+     * @return {Promise}
+     */
+    me.init = function() {
+        // get all settings
+        return AddonSettings.get().then((settings) => {
+            // @TODO pass object?
+            // @TODO iterate over all availavble options? (beginning with qr?)
+            QrLibKjua.set("qrColor", settings.qrColor);
+        });
     };
 
     return me;
@@ -314,6 +403,7 @@ var UserInterface = (function () {
      *
      * @name   UserInterface.init
      * @function
+     * @return {Promise}
      */
     me.init = function() {
         Logger.logInfo("starting…");
@@ -326,8 +416,11 @@ var UserInterface = (function () {
         // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
         setTimeout(selectAllText, 50, { target: qrCodeText });
 
-        // TOOD: add option for this
-        qrCodeText.style.fontFamily = "monospace";
+        AddonSettings.get("monospaceFont").then((res) => {
+            if (res.monospaceFont) {
+                qrCodeText.style.fontFamily = "monospace";
+            }
+        });
     };
 
     return me;
@@ -335,8 +428,11 @@ var UserInterface = (function () {
 
 // init modules
 UserInterface.init();
+QrLibKjua.init();
+var qrCreatorInit = QrCreator.init();
 
-// generate QR code from tab
-browser.tabs.query({active: true, currentWindow: true})
-            .then(QrCreator.generateFromTabs)
-            .catch(Logger.logError);
+// generate QR code from tab, if everything is set up
+qrCreatorInit.then((res) => {
+    browser.tabs.query({active: true, currentWindow: true})
+                .then(QrCreator.generateFromTabs);
+}).catch(Logger.logError);
