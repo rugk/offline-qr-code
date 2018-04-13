@@ -4,6 +4,14 @@
 const ADDON_NAME = "Offline QR code generator";
 const ADDON_NAME_SHORT = "Offline QR code";
 
+// "Enums"
+const MESSAGE_LEVEL = Object.freeze({
+    "ERROR": 3,
+    "WARN": 2,
+    "INFO": 1,
+    "SUCESS": -3,
+})
+
 var Logger = (function () {
     let me = {};
 
@@ -13,28 +21,29 @@ var Logger = (function () {
      * Logs a string to console.
      *
      * Pass as many strings/output as you want.
+     * For brevity, better prefer the other functions (logError, etc.) instead
+     * of this one.
      *
      * @name   Logger.log
      * @function
-     * @private
-     * @param  {string} errortype
+     * @param  {MESSAGE_LEVEL} messagetype
      * @param  {...*} args
      */
-    function log() {
+    me.log = function() {
         if (arguments.length < 0) {
             // recursive call, it's secure, because this won't fail
-            return log("ERROR", "log has been called without parameters");
+            return me.log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
         }
 
         const args = Array.from(arguments);
-        const errortype = args[0];
-        args[0] = ADDON_NAME_SHORT + " [" + errortype + "]";
+        const messagetype = args[0];
+        args[0] = ADDON_NAME_SHORT + " [" + messagetype + "]";
 
-        switch (errortype) {
-            case "ERROR":
+        switch (messagetype) {
+            case MESSAGE_LEVEL.ERROR:
                 console.error.apply(null, args);
                 break;
-            case "WARN":
+            case MESSAGE_LEVEL.WARN:
                 console.warn.apply(null, args);
                 break;
             default:
@@ -51,9 +60,9 @@ var Logger = (function () {
      */
     me.logError = function() {
         const args = Array.from(arguments);
-        args.unshift("ERROR");
+        args.unshift(MESSAGE_LEVEL.ERROR);
 
-        log.apply(null, args);
+        me.log.apply(null, args);
     };
 
     /**
@@ -65,9 +74,9 @@ var Logger = (function () {
      */
     me.logWarning = function() {
         const args = Array.from(arguments);
-        args.unshift("WARN");
+        args.unshift(MESSAGE_LEVEL.WARN);
 
-        log.apply(null, args);
+        me.log.apply(null, args);
     };
 
     /**
@@ -85,9 +94,9 @@ var Logger = (function () {
         }
 
         const args = Array.from(arguments);
-        args.unshift("INFO");
+        args.unshift(MESSAGE_LEVEL.INFO);
 
-        log.apply(null, args);
+        me.log.apply(null, args);
     };
 
     return me;
@@ -256,6 +265,181 @@ var AddonSettings = (function () {
             });
         });
     };
+
+    return me;
+})();
+
+var MessageHandler = (function () {
+    let me = {};
+
+    // const elWarning = document.getElementById('messageWarning');
+
+    let errorShownHook = null;
+    let errorHiddenHook = null;
+
+    const ELEMENT_BY_TYPE = {
+        [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError') || null,
+        [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning') || null,
+        [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo') || null,
+        [MESSAGE_LEVEL.SUCESS]: document.getElementById('messageSuccess') || null
+    };
+
+    /**
+     * Shows a message to the user.
+     *
+     * Pass as many strings/output as you want. They will be localized
+     * automatically, before presented to the user.
+     *
+     * @name   MessageHandler.showMessage
+     * @function
+     * @private
+     * @param  {MESSAGE_LEVEL} messagetype
+     * @param  {...*} args
+     */
+    function showMessage() {
+        if (arguments.length < 0) {
+            return Logger.logError("MessageHandler.showMessage has been called without parameters");
+        }
+
+        const args = Array.from(arguments);
+
+        // also log message to console
+        Logger.log.apply(null, args);
+
+        // get first element
+        const messagetype = args.shift();
+
+        // localize string or fallback to first string ignoring all others
+        const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
+
+        // get element by message type
+        const elMessage = ELEMENT_BY_TYPE[messagetype]
+        if (elMessage === null) {
+            return Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
+        }
+
+        elMessage.textContent = localizedString;
+        elMessage.classList.remove("invisible");
+    }
+
+    /**
+     * Hides the message type(s), you specify.
+     *
+     * If you pass no messagetype or "null", it hides all messages.
+     *
+     * @name   MessageHandler.hideMessage
+     * @function
+     * @private
+     * @param  {MESSAGE_LEVEL} messagetype
+     */
+    function hideMessage(messagetype) {
+        if (messagetype !== undefined && messagetype !== null) {
+            ELEMENT_BY_TYPE[MESSAGE_LEVEL.ERROR].classList.add("invisible");
+            return;
+        }
+
+        // hide all of them, otherwise
+        MESSAGE_LEVEL.forEach((currentType) => {
+            // recursive call myself to hide element
+            me.hideMessage(currentType);
+        })
+    }
+
+    /**
+     * Hides the error message.
+     *
+     * @name   MessageHandler.hideError
+     * @function
+     */
+    me.hideError = function() {
+        if (errorHiddenHook !== null && errorHiddenHook !== undefined) {
+            errorHiddenHook(args);
+        }
+    }
+
+    /**
+     * Show a critical error.
+     *
+     * Note this should only be used to show *short* error messages, which are
+     * meaningfull to the user, as the space is limited. So it is mostly only
+     * useful to use only one param: a string.
+     * Also pay attention to the fact, that it currently can only show one error
+     * once.
+     *
+     * @name   MessageHandler.showError
+     * @function
+     * @param  {...*} args
+     */
+    me.showError = function() {
+        const args = Array.from(arguments);
+
+        if (errorShownHook !== null && errorShownHook !== undefined) {
+            errorShownHook(args);
+        }
+
+        args.unshift(MESSAGE_LEVEL.ERROR);
+        showMessage.apply(null, args);
+    };
+
+    /**
+     * Show an warning message.
+     *
+     * @name   MessageHandler.showWarning
+     * @function
+     * @param  {...*} args
+     */
+    me.showWarning = function() {
+        const args = Array.from(arguments);
+
+        args.unshift(MESSAGE_LEVEL.WARNING);
+        showMessage.apply(null, args);
+    };
+
+    /**
+     * Show an info message.
+     *
+     * @name   MessageHandler.showInfo
+     * @function
+     * @param  {...*} args
+     */
+    me.showInfo = function() {
+        const args = Array.from(arguments);
+
+        args.unshift(MESSAGE_LEVEL.INFO);
+        showMessage.apply(null, args);
+    };
+
+    /**
+     * Show a success message.
+     *
+     * @name   MessageHandler.showSuccess
+     * @function
+     * @param  {...*} args
+     */
+    me.showSuccess = function() {
+        const args = Array.from(arguments);
+
+        args.unshift(MESSAGE_LEVEL.SUCCESS);
+        showMessage.apply(null, args);
+    };
+
+    /**
+     * Let's other functions set.
+     *
+     * Set parameters to null or undefined (i.e. do not set) in order to disable
+     * the hook.
+     * The functions get one parameter: The arguments passed to the function,
+     * as an array.
+     *
+     * @name   MessageHandler.setErrorHook
+     * @function
+     * @param {function} errorShown
+     * @param {function} errorHidden
+     */
+    me.setErrorHook = function(errorShown, errorHidden) {
+        errorShownHook = errorShown;
+        errorHiddenHook = errorHidden;
+    }
 
     return me;
 })();

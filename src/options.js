@@ -2,8 +2,10 @@
 
 /* globals Logger */
 /* globals AddonSettings */
+/* globals MessageHandler */
 /* globals ADDON_NAME */
 /* globals ADDON_NAME_SHORT */
+/* globals MESSAGE_LEVEL */
 
 var OptionHandler = (function () {
     let me = {};
@@ -111,14 +113,13 @@ var OptionHandler = (function () {
      * @private
      */
     function showManagedInfo() {
+        // prevent re-showings for multiple options
         if (managedInfoIsShown) {
             // already shown
             return;
         }
 
-        const elMangedInfo = document.getElementById("managed-settings");
-
-        elMangedInfo.classList.remove("invisible");
+        MessageHandler.showInfo("someSettingsAreManaged");
         managedInfoIsShown = true;
     }
 
@@ -202,6 +203,8 @@ var OptionHandler = (function () {
 
         browser.storage.sync.clear();
         loadOptions();
+
+        MessageHandler.showSuccess("resettingOptionsWorked");
     }
 
     /**

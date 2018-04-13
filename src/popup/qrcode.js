@@ -2,8 +2,10 @@
 
 /* globals Logger */
 /* globals AddonSettings */
+/* globals MessageHandler */
 /* globals ADDON_NAME */
 /* globals ADDON_NAME_SHORT */
+/* globals MESSAGE_LEVEL */
 
 // abstracts away all specific handling of QR code library
 var QrLibKjua = (function () {
@@ -24,10 +26,10 @@ var QrLibKjua = (function () {
      *
      * format: generalOpt => kjua
      *
-     * @name QrCreator.optionsMap
+     * @name QrCreator.OPTIONS_MAP
      * @private
      */
-    const optionsMap = Object.freeze({
+    const OPTIONS_MAP = Object.freeze({
         "qrColor": "fill",
         "qrBackgroundColor": "back"
     });
@@ -90,8 +92,8 @@ var QrLibKjua = (function () {
      * @param {object} value
      */
     me.set = function(tag, value) {
-        if (optionsMap.hasOwnProperty(tag)) {
-            tag = optionsMap[tag];
+        if (OPTIONS_MAP.hasOwnProperty(tag)) {
+            tag = OPTIONS_MAP[tag];
         }
 
         // TODO: should it reject invalid values?
@@ -228,8 +230,6 @@ var UserInterface = (function () {
     const qrCodeContainer = document.getElementById('qrcode-container');
     const qrCodeText = document.getElementById('qrcodetext');
 
-    const elError = document.getElementById('error');
-
     let placeholderShown = true;
     let hideErrorOnUpdate = true;
 
@@ -249,18 +249,6 @@ var UserInterface = (function () {
         qrCode.classList.add("invisible");
         qrCodePlaceholder.classList.remove("invisible");
         placeholderShown = true;
-    }
-
-    /**
-     * Hide the error.
-     *
-     * @name   UserInterface.hideError
-     * @function
-     * @private
-     */
-    function hideError() {
-        hidePlaceholder();
-        elError.classList.add("invisible");
     }
 
     /**
@@ -348,27 +336,6 @@ var UserInterface = (function () {
     }
 
     /**
-     * Show a critical error.
-     *
-     * Note this should only be used to show *short* error messages, which are
-     * meaningfull to the user, as the space is limited. So it is mostly only
-     * useful to use only one param: a string.
-     *
-     * @name   UserInterface.showError
-     * @function
-     * @param  {...*} args
-     */
-    me.showError = function() {
-        const args = Array.from(arguments);
-
-        Logger.logError("show user error:", args);
-        showPlaceholder();
-
-        // localize string or fallback to first string ignoring all others
-        elError.textContent = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingError");
-    };
-
-    /**
      * Shows the given text in the QR code's input field.
      *
      * @name   UserInterface.setQrText
@@ -408,6 +375,10 @@ var UserInterface = (function () {
      */
     me.init = function() {
         Logger.logInfo("starting…");
+
+        // set hooks for errors
+        MessageHandler.setErrorHook(showPlaceholder, hidePlaceholder);
+
         // add event listeners
         qrCodeText.addEventListener("input", refreshQrCode);
         qrCodeText.addEventListener("focus", selectAllText);

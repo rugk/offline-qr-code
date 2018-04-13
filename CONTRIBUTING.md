@@ -14,8 +14,10 @@ Apart from that, there are some simple rules.
    * use eval, or other insecure features
    * modify the [CSP](manifest.json#L20) :wink:
 * The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and, theoretically, properties).
+* Avoid `this`, it mostly causes confusion. The pattern used here, usually does not need `this`.
 * Use early return instead of nested if blocks, to keep the code readable.
-* Use `const` where possible, only use `let` when the variable needs to be changed. Don't use `var`.
+* Use `const` whenever possible (also in local variables in functions), only use `let` when the variable needs to be changed. Don't use `var`.
+* If you write real constants (i.e. `const` variables not written in functions, if their scope e.g. is a "module" or whole project), do write them in UPPERCASE, otherwise write them as usual variables in camelCase.
 * Objects, which should never be modified, should be frozen with `Object.freeze`, so they cannot be modified.
 
 ## Translations

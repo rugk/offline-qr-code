@@ -22,9 +22,9 @@
     "message": "Could not generate QR code.",
     "description": ""
   },
-  "errorShowingError": {
-    "message": "Could not show error.",
-    "description": "When there is an error when showing the error."
+  "errorShowingMessage": {
+    "message": "Could not show this message.",
+    "description": "When there is an error when showing the error/info/…."
   },
   // placeholder
   "qrCodePlaceholder": {
@@ -60,6 +60,10 @@
 
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
-    "description": "The buitton to delete all current settings and load the defaults, shown in the add-on settings."
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+  "resettingOptionsWorked": {
+    "message": "All settings are now back to defaults again!",
+    "description": "The message shown, when the options of the settings were reset."
   }
 }

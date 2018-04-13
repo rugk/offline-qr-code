@@ -22,9 +22,9 @@
     "message": "Konnte QR-Code nicht generieren.",
     "description": ""
   },
-  "errorShowingError": {
-    "message": "Konnte Fehler nicht anzeigen.",
-    "description": "When there is an error when showing the error."
+  "errorShowingMessage": {
+    "message": "Konnte Nachricht nicht anzeigen.",
+    "description": "When there is an error when showing the error/info/…."
   },
   // placeholder
   "qrCodePlaceholder": {
@@ -46,7 +46,7 @@
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
   "optionQrCodeColor": {
-    "message": "QR-Code-Farbe",
+    "message": "QR-Code-Farbe: ",
     "description": "This is an option shown in the add-on settings."
   },
   "optionqrcodebackgroundcolor": {
@@ -60,6 +60,10 @@
 
   "optionsResetButton": {
     "message": "Setze alle Einstellungen auf Standardwerte zurück",
-    "description": "The buitton to delete all current settings and load the defaults, shown in the add-on settings."
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+  "resettingOptionsWorked": {
+    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
+    "description": "The message shown, when the options of the settings were reset."
   }
 }
