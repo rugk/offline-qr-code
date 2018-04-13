@@ -62,8 +62,16 @@ body {
 .info::before {
   background-image: url('/common/img/info-dark.svg');
 }
+.success::before {
+  background-image: url('/common/img/check.svg');
+}
 
 .info {
   color: #0c0c0d;
   background-color: #ededf0;
+}
+
+.success {
+  color: #003706;
+  background-color: #30e60b;
 }

@@ -355,7 +355,7 @@ var UserInterface = (function () {
      */
     me.replaceQr = function(elNewQr) {
         if (hideErrorOnUpdate) {
-            hideError();
+            MessageHandler.hideError();
             hideErrorOnUpdate = false;
         }
 
@@ -393,6 +393,12 @@ var UserInterface = (function () {
                 qrCodeText.style.fontFamily = "monospace";
             }
         });
+        AddonSettings.get("qrBackgroundColor").then((res) => {
+            if (res.qrBackgroundColor) {
+                qrCodeContainer.style.backgroundColor = res.qrBackgroundColor;
+            }
+        });
+
     };
 
     return me;

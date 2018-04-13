@@ -1,21 +1,22 @@
 .qrcode {
-  /* Workaround for Kjua, which cannot include size inline as this is blocked by the CSP */
+  /* (also) workaround for Kjua, which cannot include size inline as this is blocked by the CSP */
   width: 200px;
   height: 200px;
+  max-height: 100%;
 
   margin: 20px;
 }
 
 .message-box {
-  width: 100vw;
-  max-width: 210px;
+  width: calc(100vw - 40px);
+  /* max-width: 210px; */
 
   border-radius: 0px;
 
   text-align: center;
 }
 
-/* Let the element float (at the bottom on the qr) */
+/* Let the element float (at the bottom on top of the qr) */
 .flot-qr {
   position: absolute;
 }
@@ -27,6 +28,9 @@
     background-color: #d70022ee;
 }
 
+#qrcode-container {
+  width: 100%;
+}
 #qrcodetext {
   /* let popup grow with text field */
   width: 100%;
@@ -34,6 +38,7 @@
   max-width: 100%;
 
   min-height: 2em;
+  max-height: 100%;
 
   resize: both;
   height: 100%; /* in FF <=59 not correctly applied when in the overflow menu */

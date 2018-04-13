@@ -9,7 +9,7 @@ const MESSAGE_LEVEL = Object.freeze({
     "ERROR": 3,
     "WARN": 2,
     "INFO": 1,
-    "SUCESS": -3,
+    "SUCCESS": -3,
 })
 
 var Logger = (function () {
@@ -278,10 +278,10 @@ var MessageHandler = (function () {
     let errorHiddenHook = null;
 
     const ELEMENT_BY_TYPE = {
-        [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError') || null,
-        [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning') || null,
-        [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo') || null,
-        [MESSAGE_LEVEL.SUCESS]: document.getElementById('messageSuccess') || null
+        [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError'),
+        [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning'),
+        [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo'),
+        [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess')
     };
 
     /**
@@ -313,8 +313,8 @@ var MessageHandler = (function () {
         const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
 
         // get element by message type
-        const elMessage = ELEMENT_BY_TYPE[messagetype]
-        if (elMessage === null) {
+        const elMessage = ELEMENT_BY_TYPE[messagetype];
+        if (!elMessage) {
             return Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
         }
 
@@ -334,7 +334,7 @@ var MessageHandler = (function () {
      */
     function hideMessage(messagetype) {
         if (messagetype !== undefined && messagetype !== null) {
-            ELEMENT_BY_TYPE[MESSAGE_LEVEL.ERROR].classList.add("invisible");
+            ELEMENT_BY_TYPE[messagetype].classList.add("invisible");
             return;
         }
 
@@ -353,8 +353,9 @@ var MessageHandler = (function () {
      */
     me.hideError = function() {
         if (errorHiddenHook !== null && errorHiddenHook !== undefined) {
-            errorHiddenHook(args);
+            errorHiddenHook();
         }
+        hideMessage(MESSAGE_LEVEL.ERROR);
     }
 
     /**
@@ -428,8 +429,8 @@ var MessageHandler = (function () {
      *
      * Set parameters to null or undefined (i.e. do not set) in order to disable
      * the hook.
-     * The functions get one parameter: The arguments passed to the function,
-     * as an array.
+     * The errorShown function gets one parameter: The arguments passed to the
+     * function, as an array.
      *
      * @name   MessageHandler.setErrorHook
      * @function

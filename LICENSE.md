@@ -1,3 +1,4 @@
+## Offline QR code generator license
 Copyright (c) 2018 rugk
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -18,8 +19,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Other third-party components
 
-* [`popup/img/error.svg`](popup/img/error.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/), color modified
+* [`popup/img/check.svg`](popup/img/check.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`popup/img/error-white.svg`](popup/img/error-white.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`popup/img/info-dark.svg`](popup/img/info-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`popup/img/info-light.svg`](popup/img/info-light.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
 ## Special thanks
 * to [SVGO](https://jakearchibald.github.io/svgomg/) for their SVG mnimisation tool
-
