@@ -30,6 +30,12 @@
 
 #qrcode-container {
   width: 100%;
+  height: 100%;
+
+  /* 2:1 compare to #qrcodetext to keep size */
+  flex-grow: 2;
+  /* center QR code itself */
+  justify-content: center;
 }
 #qrcodetext {
   /* let popup grow with text field */
@@ -42,6 +48,8 @@
 
   resize: both;
   height: 100%; /* in FF <=59 not correctly applied when in the overflow menu */
+
+  flex-grow: 1;
 
   /* text style */
   word-break: break-word; /* not supported by FF yet, may still look better */

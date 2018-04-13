@@ -224,6 +224,10 @@ var QrCreator = (function () {
 var UserInterface = (function () {
     let me = {};
 
+    const TOP_SCROLL_TIMEOUT = 10; //ms
+    const SELECT_TEXT_TIMEOUT = 100; //ms
+    const QR_CODE_REFRESH_TIMEOUT = 200; //ms
+
     const elBody = document.querySelectorAll('body')[0];
     const qrCode = document.getElementById('qrcode');
     const qrCodePlaceholder = document.getElementById('qrcode-placeholder');
@@ -232,11 +236,12 @@ var UserInterface = (function () {
 
     let placeholderShown = true;
     let hideErrorOnUpdate = true;
+    let qrCodeRefreshTimer = null;
 
     /**
-     * Hide QR code and show placeholder.
+     * Hide QR code and show placeholder instead.
      *
-     * @name   UserInterface.refreshQrCode
+     * @name   UserInterface.showPlaceholder
      * @function
      * @private
      */
@@ -254,7 +259,7 @@ var UserInterface = (function () {
     /**
      * Show QR code and hide placeholder.
      *
-     * @name   UserInterface.refreshQrCode
+     * @name   UserInterface.hidePlaceholder
      * @function
      * @private
      */
@@ -275,8 +280,24 @@ var UserInterface = (function () {
      * @name   UserInterface.refreshQrCode
      * @function
      * @private
+     * @param {event} event
      */
-    function refreshQrCode() {
+    function refreshQrCode(event) {
+        // if a timer is already running and the current call does not finish it
+        if (qrCodeRefreshTimer !== null && !event.hasOwnProperty("isTimer")) {
+            // do nothing, as this is an additional call during the
+            // timeout, which we want to omit/
+            return;
+        } else if (qrCodeRefreshTimer === null) {
+            // if the timer has not been started yet, start it
+            event.isTimer = true;
+            qrCodeRefreshTimer = setTimeout(refreshQrCode, QR_CODE_REFRESH_TIMEOUT, event);
+            return;
+        }
+
+        // if timer has been reached, reset timer
+        qrCodeRefreshTimer = null;
+
         const text = qrCodeText.value;
         Logger.logInfo("new value from textarea: ", text);
 
@@ -328,12 +349,47 @@ var UserInterface = (function () {
         if (!targetIsSelected) {
             event.target.focus();
             event.target.select();
+
+            // but set scroll position to top one, because you want to see the
+            // top of the URL ;)
+            // (selecting makes the scroll position go to the bottom)
+            setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
         }
 
         // recheck selection as a workaround for <FF 60 that it really selected
         // it -> recursive retry
-        setTimeout(selectAllText, 100, event);
+        setTimeout(selectAllText, SELECT_TEXT_TIMEOUT, event);
     }
+
+    /**
+     * Scrolls to the top of the element.
+     *
+     * @name   UserInterface.scrollToTop
+     * @function
+     * @private
+     * @param {Event} event
+     */
+    function scrollToTop(event) {
+        Logger.logInfo("scrollToTop", event);
+
+        if (event.target.scrollTop != 0) {
+            event.target.scrollTop = 0;
+        }
+
+        // only retry once, if
+        if (event.setScrolled) {
+            return;
+        }
+
+        // Attention: make sure this does not collide with the rety-property set
+        // in selectAllText()!
+        event.setScrolled = true;
+
+        // recheck selection as a workaround for <FF 60 that it really selected
+        // it -> recursive retry
+        setTimeout(selectAllText, TOP_SCROLL_TIMEOUT, event);
+    }
+
 
     /**
      * Shows the given text in the QR code's input field.
@@ -343,7 +399,7 @@ var UserInterface = (function () {
      * @param  {string} text
      */
     me.setQrInputFieldText = function(text) {
-        document.getElementById('qrcodetext').textContent = text;
+        qrCodeText.textContent = text;
     };
 
     /**
@@ -374,8 +430,6 @@ var UserInterface = (function () {
      * @return {Promise}
      */
     me.init = function() {
-        Logger.logInfo("starting…");
-
         // set hooks for errors
         MessageHandler.setErrorHook(showPlaceholder, hidePlaceholder);
 

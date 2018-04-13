@@ -10,12 +10,19 @@ const MESSAGE_LEVEL = Object.freeze({
     "WARN": 2,
     "INFO": 1,
     "SUCCESS": -3,
-})
+});
 
 var Logger = (function () {
     let me = {};
 
-    const debugMode = true;
+    const DEBUG_MODE = true;
+
+    const MESSAGE_LEVEL_NAME = Object.freeze({
+        [MESSAGE_LEVEL.ERROR]: "ERROR",
+        [MESSAGE_LEVEL.WARN]: "WARN",
+        [MESSAGE_LEVEL.INFO]: "INFO",
+        [MESSAGE_LEVEL.SUCCESS]: "SUCCESS"
+    });
 
     /**
      * Logs a string to console.
@@ -37,7 +44,7 @@ var Logger = (function () {
 
         const args = Array.from(arguments);
         const messagetype = args[0];
-        args[0] = ADDON_NAME_SHORT + " [" + messagetype + "]";
+        args[0] = ADDON_NAME_SHORT + " [" + MESSAGE_LEVEL_NAME[messagetype] + "]";
 
         switch (messagetype) {
             case MESSAGE_LEVEL.ERROR:
@@ -89,7 +96,7 @@ var Logger = (function () {
      * @param  {...*} args
      */
     me.logInfo = function() {
-        if (debugMode === false) {
+        if (DEBUG_MODE === false) {
             return;
         }
 
@@ -105,9 +112,9 @@ var Logger = (function () {
 var Localizer = (function () {
     let me = {};
 
-    const i18nAttribute = "data-i18n";
+    const I18N_ATTRIBUTE = "data-i18n";
 
-    const localizedAttributes = [
+    const LOCALIZED_ATTRIBUTES = [
         "placeholder",
         "alt"
     ];
@@ -150,8 +157,8 @@ var Localizer = (function () {
         }
 
         // replace attributes
-        localizedAttributes.forEach((currentAttribute) => {
-            const currentLocaleAttribute = `${i18nAttribute}-${currentAttribute}`;
+        LOCALIZED_ATTRIBUTES.forEach((currentAttribute) => {
+            const currentLocaleAttribute = `${I18N_ATTRIBUTE}-${currentAttribute}`;
 
             if (elem.hasAttribute(currentLocaleAttribute)) {
                 const attributeTag = elem.getAttribute(currentLocaleAttribute);
@@ -171,10 +178,10 @@ var Localizer = (function () {
      * @function
      */
     me.init = function() {
-        document.querySelectorAll(`[${i18nAttribute}]`).forEach((currentElem) => {
+        document.querySelectorAll(`[${I18N_ATTRIBUTE}]`).forEach((currentElem) => {
             Logger.logInfo("init translate", currentElem);
 
-            const contentString = currentElem.getAttribute(i18nAttribute);
+            const contentString = currentElem.getAttribute(I18N_ATTRIBUTE);
             replaceI18n(currentElem, contentString);
         });
 
@@ -277,12 +284,12 @@ var MessageHandler = (function () {
     let errorShownHook = null;
     let errorHiddenHook = null;
 
-    const ELEMENT_BY_TYPE = {
+    const ELEMENT_BY_TYPE = Object.freeze({
         [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError'),
         [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning'),
         [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo'),
         [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess')
-    };
+    });
 
     /**
      * Shows a message to the user.
