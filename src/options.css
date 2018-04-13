@@ -1,6 +1,6 @@
 body {
   /* the font-size the other options in the settings pane use */
-  font-size: 1.25rem;
+  font-size: 1.25rem; /* TODO: adjust to font size on mobile */
   color: #333;
 }
 
@@ -15,7 +15,7 @@ ul {
 }
 li {
   list-style-type: none;
-  margin: 0px;
+  margin: 0.5em;
   padding: 0px;
 }
 

@@ -26,7 +26,7 @@ var OptionHandler = (function () {
         if (!optionValues.hasOwnProperty(option)) {
             optionValue = AddonSettings.getDefaultValue(option);
 
-            Logger.infoLog("got default value for applying option", optionValue);
+            Logger.logInfo("got default value for applying option", optionValue);
 
             // if still no default value, try to use HTML defaults, i.e. do not set option
             if (optionValue === undefined) {
@@ -176,23 +176,49 @@ var OptionHandler = (function () {
     }
 
     /**
+     * Loads all options of the page.
+     *
+     * @name   OptionHandler.loadOptions
+     * @function
+     * @private
+     */
+    function loadOptions() {
+        document.querySelectorAll(".setting").forEach((currentElem) => {
+            const elementId = currentElem.id;
+            setManagedOption(elementId);
+            setOption(elementId);
+        });
+    }
+
+    /**
+     * Resets all options.
+     *
+     * @name   OptionHandler.resetOptions
+     * @function
+     * @private
+     */
+    function resetOptions() {
+        Logger.logInfo("reset options");
+
+        browser.storage.sync.clear();
+        loadOptions();
+    }
+
+    /**
      * Localizes static strings in the HTML file.
      *
      * @name   Localizer.init
      * @function
      */
     me.init = function() {
-        document.querySelectorAll(".setting").forEach((currentElem) => {
-            const elementId = currentElem.id;
-            setManagedOption(elementId);
-            setOption(elementId);
-        });
+        loadOptions();
         document.querySelectorAll(".save-on-input").forEach((currentElem) => {
             currentElem.addEventListener("input", saveOption);
         });
         document.querySelectorAll(".save-on-change").forEach((currentElem) => {
             currentElem.addEventListener("change", saveOption);
         });
+        document.getElementById("resetButton").addEventListener("click", resetOptions)
     };
 
     return me;

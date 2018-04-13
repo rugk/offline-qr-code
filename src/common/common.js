@@ -51,7 +51,21 @@ var Logger = (function () {
      */
     me.logError = function() {
         const args = Array.from(arguments);
-        args.unshift("INFO");
+        args.unshift("ERROR");
+
+        log.apply(null, args);
+    };
+
+    /**
+     * Logs a warning.
+     *
+     * @name   Logger.logWarning
+     * @function
+     * @param  {...*} args
+     */
+    me.logWarning = function() {
+        const args = Array.from(arguments);
+        args.unshift("WARN");
 
         log.apply(null, args);
     };
@@ -168,6 +182,7 @@ var AddonSettings = (function () {
     const defaultValues = {
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
+        monospaceFont: false
     }
 
     /**
@@ -186,15 +201,13 @@ var AddonSettings = (function () {
             return defaultValues;
         }
 
-        const optionValue = defaultValues[option];
-
         // if undefined
-        if (!optionValue) {
+        if (defaultValues.hasOwnProperty(option)) {
+            return defaultValues[option];
+        } else {
             Logger.logError(`Default value for "${option}" missing.`);
             return undefined;
         }
-
-        return optionValue;
     }
 
     /**

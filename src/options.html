@@ -8,8 +8,9 @@
 	</head>
 
 	<body>
-		<div id="managed-settings" class="message-container invisible">
-			<span data-i18n="__MSG_someSettingsAreManaged__" class="message-box info">Some settings are managed by your administrator and cannot be changed.</span>
+		<div class="message-container">
+			<span id="managed-settings" data-i18n="__MSG_someSettingsAreManaged__" class="message-box info invisible">Some settings are managed by your administrator and cannot be changed.</span>
+			<span id="success-message" data-i18n="__MSG_someSettingsAreManaged__" class="message-box info invisible">Some settings are managed by your administrator and cannot be changed.</span>
 		</div>
 		<form>
 			<ul>
@@ -22,8 +23,11 @@
 					<input class="setting save-on-change" type="color" id="qrBackgroundColor" name="qr-background-color">
 				</li>
 				<li>
-					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospace-font" value="true">
-					<label data-i18n="__MSG_useMonospaceFont__" for="monospaceFont">Use monospace font</label>
+					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospace-font">
+					<label data-i18n="__MSG_optionUseMonospaceFont__" for="monospaceFont">Use monospace font</label>
+				</li>
+				<li>
+					<button data-i18n="__MSG_optionsResetButton__" type="reset" name="reset-button" id="resetButton">Reset all settings to defaults</button>
 				</li>
 			</ul>
 		</form>

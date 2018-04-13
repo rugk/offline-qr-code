@@ -47,6 +47,19 @@
   },
   "optionQrCodeColor": {
     "message": "QR code color: ",
-    "description": ""
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionqrcodebackgroundcolor": {
+    "message": "QR code background color: ",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionUseMonospaceFont": {
+    "message": "Use monospace font: ",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionsResetButton": {
+    "message": "Reset all settings to defaults",
+    "description": "The buitton to delete all current settings and load the defaults, shown in the add-on settings."
   }
 }
