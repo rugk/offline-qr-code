@@ -16,18 +16,24 @@ var OptionHandler = (function () {
      * @name   OptionHandler.applyOptionToElementToElement
      * @function
      * @private
+     * @param  {string} option string ob object ID
      * @param  {HTMLElement} elOption where to apply feature
-     * @param  {object} optionValue value to apply
+     * @param  {object} optionValues object containing the object value
      */
-    function applyOptionToElement(elOption, optionValue) {
+    function applyOptionToElement(option, elOption, optionValues) {
+        let optionValue;
         // ignore, if not set, i.e. use default value from HTML file
-        if (optionValue == "") {
-            optionValue = AddonSettings.getDefaultValue(elOption);
+        if (!optionValues.hasOwnProperty(option)) {
+            optionValue = AddonSettings.getDefaultValue(option);
+
+            Logger.infoLog("got default value for applying option", optionValue);
 
             // if still no default value, try to use HTML defaults, i.e. do not set option
             if (optionValue === undefined) {
                 return;
             }
+        } else {
+            optionValue = optionValues[option];
         }
 
         // custom handling for special option types
@@ -134,7 +140,7 @@ var OptionHandler = (function () {
             const elOption = document.getElementById(option);
             Logger.logInfo("managed config found", res, elOption);
 
-            applyOptionToElement(elOption, res[option]);
+            applyOptionToElement(option, elOption, res);
             // and disable control
             elOption.setAttribute("disabled", "")
             elOption.setAttribute("title", browser.i18n.getMessage("optionIsDisabledBecauseManaged"))
@@ -165,7 +171,7 @@ var OptionHandler = (function () {
                 return;
             }
 
-            applyOptionToElement(elOption, res[option]);
+            applyOptionToElement(option, elOption, res);
         });
     }
 

@@ -15,6 +15,8 @@ Apart from that, there are some simple rules.
    * modify the [CSP](manifest.json#L20) :wink:
 * The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and, theoretically, properties).
 * Use early return instead of nested if blocks, to keep the code readable.
+* Use `const` where possible, only use `let` when the variable needs to be changed. Don't use `var`.
+* Objects, which should never be modified, should be frozen with `Object.freeze`, so they cannot be modified.
 
 ## Translations
 

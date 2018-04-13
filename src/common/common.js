@@ -167,6 +167,7 @@ var AddonSettings = (function () {
 
     const defaultValues = {
         qrColor: "#0c0c0d",
+        qrBackgroundColor: "#ffffff",
     }
 
     /**
@@ -177,7 +178,7 @@ var AddonSettings = (function () {
      * @name   AddonSettings.getDefaultValue
      * @function
      * @param  {string|null} option name of the option
-     * @returns {object}
+     * @returns {object|undefined}
      */
     me.getDefaultValue = function (option) {
         // return all default values
@@ -245,5 +246,6 @@ var AddonSettings = (function () {
 
     return me;
 })();
+
 // init modules
 Localizer.init();

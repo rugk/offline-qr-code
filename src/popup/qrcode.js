@@ -212,6 +212,7 @@ var QrCreator = (function () {
             // @TODO pass object?
             // @TODO iterate over all availavble options? (beginning with qr?)
             QrLibKjua.set("qrColor", settings.qrColor);
+            QrLibKjua.set("qrBackgroundColor", settings.qrBackgroundColor);
         });
     };
 
