@@ -275,6 +275,33 @@ var UserInterface = (function () {
     }
 
     /**
+     * Throttles an event listener, so it only runs when the UI is updated.
+     *
+     * Taken from MDN WebDocs and slightly modified..
+     *
+     * @name   UserInterface.refreshQrCode
+     * @function
+     * @private
+     * @param {event} event
+     * @see https://developer.mozilla.org/en-US/docs/Web/Events/resize
+     */
+    function createThrottledEvent(type, name, obj) {
+        obj = obj || window;
+        var running = false;
+        var func = function() {
+            if (running) {
+                return;
+            }
+            running = true;
+            requestAnimationFrame(function() {
+                obj.dispatchEvent(new CustomEvent(name));
+                running = false;
+            });
+        };
+        obj.addEventListener(type, func);
+    };
+
+    /**
      * Refreshes the QR code, if the text has been changed in the input field.
      *
      * @name   UserInterface.refreshQrCode
@@ -390,6 +417,18 @@ var UserInterface = (function () {
         setTimeout(selectAllText, TOP_SCROLL_TIMEOUT, event);
     }
 
+    /**
+     * Resize the UI elements when the popup, etc. is resized.
+     *
+     * @name   UserInterface.resizeElements
+     * @function
+     * @private
+     * @param {Event} event
+     */
+    function resizeElements(event) {
+        // https://developer.mozilla.org/en-US/docs/Web/Events/resize
+        console.log("resize", event);
+    }
 
     /**
      * Shows the given text in the QR code's input field.
@@ -436,6 +475,9 @@ var UserInterface = (function () {
         // add event listeners
         qrCodeText.addEventListener("input", refreshQrCode);
         qrCodeText.addEventListener("focus", selectAllText);
+
+        createThrottledEvent("resize", "optimizedResize");
+        window.addEventListener("optimizedResize", resizeElements);
 
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise

@@ -12,4 +12,5 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 * Follow [Firefox Photon Design](https://design.firefox.com/photon/welcome.html)
 * Use an up-to-date, great, customizable [QR code library](https://larsjung.de/kjua/).
 * Let the user choose the size of the QR code and customize things.
-* Complete internationalisation (i18n).
+* Complete internationalization (i18n).
+* Unicode/UTF-8/Emoji support
