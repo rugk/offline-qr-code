@@ -54,7 +54,7 @@
     "description": "This is an option shown in the add-on settings."
   },
   "optionUseMonospaceFont": {
-    "message": "Benutze Schrift im Monospace",
+    "message": "Benutze Monospace-Schrift",
     "description": "This is an option shown in the add-on settings."
   },
 
@@ -65,5 +65,9 @@
   "resettingOptionsWorked": {
     "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
     "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Konnte Optionen nicht zurück setzen!",
+    "description": "The message shown, when the options of the settings could not have been reset."
   }
 }
