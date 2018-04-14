@@ -201,10 +201,13 @@ var OptionHandler = (function () {
     function resetOptions() {
         Logger.logInfo("reset options");
 
-        browser.storage.sync.clear();
-        loadOptions();
-
-        MessageHandler.showSuccess("resettingOptionsWorked");
+        browser.storage.sync.clear().then(() => {
+            loadOptions();
+            MessageHandler.showSuccess("resettingOptionsWorked");
+        }).catch((error) => {
+            Logger.logError(error);
+            MessageHandler.showSuccess("resettingOptionsFailed");
+        });
     }
 
     /**

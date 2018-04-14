@@ -65,5 +65,10 @@
   "resettingOptionsWorked": {
     "message": "All settings are now back to defaults again!",
     "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Could not reset options!",
+    "description": "The message shown, when the options of the settings could not have been reset."
   }
+
 }
