@@ -8,7 +8,7 @@ To do so, go to [`_locales/en`](_locales/en) and copy the English [`messages.jso
 At the end, just submit a Pull Request.
 Of course, you can (and should) improve existing translations.
 
-For more details, [see the official docs](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Internationalization#Providing_localized_strings_in__locales).
+For more details, [see the official docs](https://developer.mozilla.org/Add-ons/WebExtensions/Internationalization#Providing_localized_strings_in__locales).
 
 ## Coding guidelines
 
