@@ -1,5 +1,15 @@
 Nice to see you want to contribute! :+1:
 
+## Translations
+
+It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSOn files directly.
+To do so, go to [`_locales/en`](_locales/en) and copy the English [`messages.json`](_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`_locales`](_locales) with the abbreviation of the language you want to translate.
+
+At the end, just submit a Pull Request.
+Of course, you can (and should) improve existing translations.
+
+For more details, [see the official docs](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Internationalization#Providing_localized_strings_in__locales).
+
 ## Coding guidelines
 
 As for simple indentation issues, please refere to the [editorconfig file](.editoconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
