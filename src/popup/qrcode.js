@@ -204,7 +204,7 @@ var QrCreator = (function () {
      *
      * Attention: Currently just uses the first tab, only!
      *
-     * @name   QrCreator.generateFromTab
+     * @name   QrCreator.generateFromTabs
      * @function
      * @param  {browser.tabs} tabs
      */
@@ -241,7 +241,6 @@ var UserInterface = (function () {
     const QR_CODE_CONTAINER_MARGIN = 40; //px
     const QR_CODE_SIZE_SNAP = 5; //px
     const QR_CODE_SIZE_DECREASE_SNAP = 2 //px
-    const QR_CODE_WINDOW_PROPERTION = (2/3) //(%)
     const WINDOW_MINIMUM_HEIGHT = 250 //px
 
     const elBody = document.querySelectorAll('body')[0];
@@ -273,6 +272,8 @@ var UserInterface = (function () {
 
         qrCode.classList.add("invisible");
         qrCodePlaceholder.classList.remove("invisible");
+        // break normally again, as "normal" text is shown
+        qrCodeText.style.wordBreak = "unset";
         placeholderShown = true;
     }
 
@@ -291,35 +292,9 @@ var UserInterface = (function () {
 
         qrCode.classList.remove("invisible");
         qrCodePlaceholder.classList.add("invisible");
+        qrCodeText.style.wordBreak = "";
         placeholderShown = false;
     }
-
-    /**
-     * Throttles an event listener, so it only runs when the UI is updated.
-     *
-     * Taken from MDN WebDocs and slightly modified..
-     *
-     * @name   UserInterface.refreshQrCode
-     * @function
-     * @private
-     * @param {event} event
-     * @see https://developer.mozilla.org/en-US/docs/Web/Events/resize
-     */
-    function createThrottledEvent(type, name, obj) {
-        obj = obj || window;
-        var running = false;
-        var func = function() {
-            if (running) {
-                return;
-            }
-            running = true;
-            requestAnimationFrame(function() {
-                obj.dispatchEvent(new CustomEvent(name));
-                running = false;
-            });
-        };
-        obj.addEventListener(type, func);
-    };
 
     /**
      * Refreshes the QR code, if the text has been changed in the input field.
@@ -446,9 +421,16 @@ var UserInterface = (function () {
      * @param {Event} event
      */
     function resizeElements(event) {
+        // do not regenerate QR code if an error is shown
+        if (placeholderShown == true) {
+            return;
+        }
+
         let newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
         const qrSizeDiff = newQrCodeSize - qrLastSize;
 
+        // rezizing at small widow heights (e.g. when popup is being constructed)
+        // could cause it to be resized to 0px or so
         const windowHeight = window.innerHeight;
         if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
             Logger.logInfo("Skipped resize due to low window height", windowHeight);
@@ -458,43 +440,12 @@ var UserInterface = (function () {
         // do not resize if size is not *increased* by 5 px or *decreased* by 2px
         if (qrSizeDiff < QR_CODE_SIZE_SNAP && qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP) {
             return;
-
-            //
-            // // manually detect if textarea was resized to smaller value
-            // const qrTextHeight = qrCodeText.offsetHeight;
-            // const qrTextDiff = qrTextHeight - qrTextLastHeight;
-            // // if it was only an upzising or value is not "big" enough, return
-            // if (qrTextDiff >= -QR_CODE_SIZE_DECREASE_SNAP) {
-            //     return;
-            // }
-            //
-            // // otherwise emulate smaller rezise
-            // Logger.logInfo("emulate smaller resize: textarea ", qrTextLastHeight, " to ", qrTextHeight);
-            //
-            // // fake size
-            // // qr code size is 2/3 of whole size (as also defined by flex)
-            // newQrCodeSize = windowHeight * QR_CODE_WINDOW_PROPERTION;
         }
 
         Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
 
         // apply new size
         QrCreator.setSize(newQrCodeSize);
-
-        // fixed, witdh, so it is correctly centered horizontally
-        qrCode.style.width = `${newQrCodeSize}px`;
-        // qrCode.style.height = `${newQrCodeSize}px`;
-
-        // qrCodePlaceholder.setAttribute("height", newQrCodeSize);
-        // qrCodePlaceholder.setAttribute("width", newQrCodeSize);
-        // qrCodePlaceholder.style.width = `${newQrCodeSize}px`;
-        // qrCodePlaceholder.style.height = `${newQrCodeSize}px`;
-
-        // const canvas = document.querySelectorAll(".qrcode canvas")[0];
-        // canvas.height = newQrCodeSize;
-        // canvas.width = newQrCodeSize;
-        // canvas.style.width = newQrCodeSize;
-        // canvas.style.height = newQrCodeSize;
 
         qrLastSize = newQrCodeSize;
         QrCreator.generate();
@@ -549,16 +500,11 @@ var UserInterface = (function () {
         // set resize event and resize at startup
         qrTextLastHeight = qrCodeText.offsetHeight;
 
-        // listen for window ressize
-        /* (currenbtly disabled as MutationObserver is more flexible)
-        createThrottledEvent("resize", "optimizedResize");
-        window.addEventListener("optimizedResize", resizeElements);
-         */
-
         // listen for resizes at the textarea
         new MutationObserver(resizeElements).observe(qrCodeText, {
-            attributes: true, attributeFilter: [ "style" ]
-        })
+            attributes: true,
+            attributeFilter: ["style"]
+        });
 
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise
@@ -588,5 +534,8 @@ UserInterface.init();
 // generate QR code from tab, if everything is set up
 qrCreatorInit.then((res) => {
     browser.tabs.query({active: true, currentWindow: true})
-                .then(QrCreator.generateFromTabs);
+                .then(QrCreator.generateFromTabs).catch((error) => {
+                    Logger.logError(error);
+                    MessageHandler.showError("couldNotReceiveActiveTab");
+                });
 }).catch(Logger.logError);

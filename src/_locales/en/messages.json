@@ -22,6 +22,10 @@
     "message": "Could not generate QR code.",
     "description": ""
   },
+  "couldNotReceiveActiveTab": {
+    "message": "Could not get active tab.",
+    "description": ""
+  },
   "errorShowingMessage": {
     "message": "Could not show this message.",
     "description": "When there is an error when showing the error/info/…."

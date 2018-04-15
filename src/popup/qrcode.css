@@ -9,14 +9,16 @@ html, body {
 
 .qrcode {
   /* (also) workaround for Kjua, which cannot include size inline as this is blocked by the CSP */
-  width: 200px;
+  width: auto;
   height: auto;
   max-height: 100%;
 
-  /* margin: 20px; */
-
   resize: both;
   overflow: visible;
+}
+/* self-scalable images, do not need JS support */
+.qrcode-scalable-image {
+  height: 100%;
 }
 
 .message-box {
