@@ -9,10 +9,7 @@
 
   "browser_action": {
     "browser_style": true,
-    "default_icon": {
-      "19": "icons/icon.svg",
-      "38": "icons/icon.svg"
-    },
+    "default_icon": "icons/icon-small-dark.svg",
     "default_title": "__MSG_browserActionButtonTitle__",
     "default_popup": "popup/qrcode.html"
   },
@@ -22,10 +19,14 @@
     "browser_style": true
   },
 
+  "background": {
+    "scripts": ["background.js"]
+  },
+
   "content_security_policy": "default-src 'self'; img-src data:",
   "icons": {
-    "48": "icons/icon.svg",
-    "96": "icons/icon.svg"
+    "48": "icons/icon-large.svg",
+    "96": "icons/icon-large.svg"
   },
   "default_locale": "en",
 

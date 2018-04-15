@@ -39,12 +39,21 @@ var OptionHandler = (function () {
         }
 
         // custom handling for special option types
-        switch (elOption.getAttribute("type")) {
+        switch (elOption.getAttribute("type") || elOption.getAttribute("data-type")) {
             case "checkbox":
                 if (optionValue === null) {
                     elOption.indeterminate = true;
                 } else {
                     elOption.checked = (optionValue == true);
+                }
+                break;
+            case "radiogroup":
+                const radioChilds = elOption.children;
+
+                for (const radioElement of radioChilds) {
+                    if (radioElement.getAttribute("value") == optionValue) {
+                        radioElement.setAttribute("checked", "");
+                    }
                 }
                 break;
             default:
@@ -64,8 +73,9 @@ var OptionHandler = (function () {
      */
     function getOptionFromElement(elOption) {
         let optionValue;
+
         // custom handling for special option types
-        switch (elOption.getAttribute("type")) {
+        switch (elOption.getAttribute("type") || elOption.getAttribute("data-type")) {
             case "checkbox":
                 if (elOption.indeterminate === true) {
                     optionValue = null;
@@ -73,11 +83,36 @@ var OptionHandler = (function () {
                     optionValue = elOption.checked;
                 }
                 break;
+            case "radiogroup":
+                // use our custom "selected" method, which contains the selected element
+                optionValue = elOption.selected.value;
+                break;
             default:
                 optionValue = elOption.value;
         }
 
         return optionValue;
+    }
+
+    /**
+     * Runs custom handlers when a settings is changed.
+     *
+     * Can e.g. be used to directly apply a setting, if needed.
+     *
+     * @name   OptionHandler.saveOptionHook
+     * @function
+     * @private
+     * @param  {HTMLElement} element
+     */
+    function saveOptionHook(element) {
+        switch (element.id) {
+            case "popupIconColor":
+                const optionValue = element.selected.value;
+
+                Logger.logInfo("Apply popup icon color directly", optionValue);
+                browser.browserAction.setIcon({path: `icons/icon-small-${optionValue}.svg`});
+                break;
+        }
     }
 
     /**
@@ -89,7 +124,15 @@ var OptionHandler = (function () {
      * @param  {object} event
      */
     function saveOption(event) {
-        const elOption = event.target;
+        let elOption = event.target;
+
+        // radio options need special handling, use parent
+        if (elOption.getAttribute("type") == "radio") {
+            elOption = elOption.parentElement;
+            elOption.selected = event.target;
+        }
+
+        saveOptionHook(elOption);
 
         // do not save if managed
         if (elOption.hasAttribute("disabled")) {
@@ -97,6 +140,7 @@ var OptionHandler = (function () {
             return;
         }
 
+        // let elOption.id
         const optionValue = getOptionFromElement(elOption);
         Logger.logInfo("save option", elOption, optionValue);
 

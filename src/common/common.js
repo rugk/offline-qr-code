@@ -196,6 +196,7 @@ var AddonSettings = (function () {
     let me = {};
 
     const defaultValues = {
+        popupIconColor: 'dark',
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
         qrErrorCorrection: 'Q',

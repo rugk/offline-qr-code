@@ -49,6 +49,19 @@
     "message": "Diese option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
+
+  "optionPopupIconColor": {
+    "message": "Popupicon-Stil: ",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColorDark": {
+    "message": "Dunkel",
+    "description": "The option for the dark popup icon color version."
+  },
+  "optionPopupIconColorLight": {
+    "message": "Hell",
+    "description": "The option for the light popup icon color version."
+  },
   "optionQrCodeColor": {
     "message": "QR-Code-Farbe: ",
     "description": "This is an option shown in the add-on settings."

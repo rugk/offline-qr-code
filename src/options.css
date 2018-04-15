@@ -19,5 +19,11 @@ li {
   padding: 0px;
 }
 
+/* special options values */
+
+#popupIconColor {
+  display: inline;
+}
+
 /* TODO: make i icon bigger */
 /* TODO: improve checkbox style */

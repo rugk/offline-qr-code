@@ -49,6 +49,19 @@
     "message": "This option is disabled, because it has been configured by your system administrator.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
+
+  "optionPopupIconColor": {
+    "message": "Popup icon style: ",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColorDark": {
+    "message": "Dark",
+    "description": "The option for the dark popup icon color version."
+  },
+  "optionPopupIconColorLight": {
+    "message": "Light",
+    "description": "The option for the light popup icon color version."
+  },
   "optionQrCodeColor": {
     "message": "QR code color: ",
     "description": "This is an option shown in the add-on settings."
