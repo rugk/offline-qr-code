@@ -19,6 +19,16 @@ var IconHandler = (function () {
      * @param {string} icon version
      */
     function setPopupIcon(icon) {
+        // verify parameter
+        switch (icon) {
+            case "dark": // fall through
+            case "light":
+                // ok
+                break;
+            default:
+                throw Error("invalid parameter: " + icon);
+        }
+
         browser.browserAction.setIcon({path: `icons/icon-small-${icon}.svg`});
     }
 

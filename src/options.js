@@ -95,20 +95,29 @@ var OptionHandler = (function () {
     }
 
     /**
-     * Runs custom handlers when a settings is changed.
+     * Applies settings directly, if needed.
      *
-     * Can e.g. be used to directly apply a setting, if needed.
+     * E.g. used when a setting is saved, so it.
+     * If no parameters are passed, this gets and applies all options.
      *
-     * @name   OptionHandler.saveOptionHook
+     * @name   OptionHandler.applyOptionLive
      * @function
      * @private
-     * @param  {HTMLElement} element
+     * @param  {string|undefined} option
+     * @param  {object|undefined} optionValue
+     * @returns {Promise} only if called without parameters
      */
-    function saveOptionHook(element) {
-        switch (element.id) {
-            case "popupIconColor":
-                const optionValue = element.selected.value;
+    function applyOptionLive(option, optionValue) {
+        if (option === undefined) {
+            const gettingOption = AddonSettings.get();
+            return gettingOption.then((res) => {
+                // run for each option, which we handle
+                applyOptionLive("popupIconColor", res.popupIconColor);
+            });
+        }
 
+        switch (option) {
+            case "popupIconColor":
                 Logger.logInfo("Apply popup icon color directly", optionValue);
                 browser.browserAction.setIcon({path: `icons/icon-small-${optionValue}.svg`});
                 break;
@@ -132,20 +141,20 @@ var OptionHandler = (function () {
             elOption.selected = event.target;
         }
 
-        saveOptionHook(elOption);
-
         // do not save if managed
         if (elOption.hasAttribute("disabled")) {
             Logger.logInfo(option, "is disabled, ignore sync setting");
             return;
         }
 
-        // let elOption.id
+        const option = elOption.id;
         const optionValue = getOptionFromElement(elOption);
         Logger.logInfo("save option", elOption, optionValue);
 
+        applyOptionLive(option, optionValue);
+
         browser.storage.sync.set({
-            [elOption.id]: optionValue
+            [option]: optionValue
         });
     }
 
@@ -247,6 +256,9 @@ var OptionHandler = (function () {
 
         browser.storage.sync.clear().then(() => {
             loadOptions();
+
+            applyOptionLive();
+
             MessageHandler.showSuccess("resettingOptionsWorked");
         }).catch((error) => {
             Logger.logError(error);
