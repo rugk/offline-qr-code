@@ -25,6 +25,15 @@
 					<input class="setting save-on-change" type="color" id="qrBackgroundColor" name="qr-background-color">
 				</li>
 				<li>
+					<label data-i18n="__MSG_optionErrorCorrection__" for="qrErrorCorrection">Error correction level: </label>
+					<select id="qrErrorCorrection" class="setting save-on-change" name="error-correction" size="0">
+						<option data-i18n="__MSG_optionEcLow__" value="L">Low (7%)</option>
+						<option data-i18n="__MSG_optionEcMedium__" value="M">Medium (15%)</option>
+						<option data-i18n="__MSG_optionEcQuartile__" value="Q">Quartile (25%)</option>
+						<option data-i18n="__MSG_optionEcHigh__" value="H">High (30%)</option>
+					</select>
+				</li>
+				<li>
 					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospace-font">
 					<label data-i18n="__MSG_optionUseMonospaceFont__" for="monospaceFont">Use monospace font</label>
 				</li>

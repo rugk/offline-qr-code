@@ -31,7 +31,8 @@ var QrLibKjua = (function () {
      */
     const OPTIONS_MAP = Object.freeze({
         "qrColor": "fill",
-        "qrBackgroundColor": "back"
+        "qrBackgroundColor": "back",
+        "qrErrorCorrection": "ecLevel"
     });
 
     /**
@@ -223,9 +224,10 @@ var QrCreator = (function () {
         // get all settings
         return AddonSettings.get().then((settings) => {
             // @TODO pass object?
-            // @TODO iterate over all availavble options? (beginning with qr?)
+            // @TODO iterate over all available options? (beginning with qr?)
             QrLibKjua.set("qrColor", settings.qrColor);
             QrLibKjua.set("qrBackgroundColor", settings.qrBackgroundColor);
+            QrLibKjua.set("qrErrorCorrection", settings.qrErrorCorrection);
         });
     };
 

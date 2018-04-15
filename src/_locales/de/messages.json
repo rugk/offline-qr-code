@@ -53,10 +53,31 @@
     "message": "QR-Code-Farbe: ",
     "description": "This is an option shown in the add-on settings."
   },
-  "optionqrcodebackgroundcolor": {
+  "optionQrCodeBackgroundColor": {
     "message": "QR-Code-Hintergrundfarbe: ",
     "description": "This is an option shown in the add-on settings."
   },
+  "optionErrorCorrection": {
+    "message": "Fehlerkorrekturlevel: ",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcLow": {
+    "message": "Level L – Low (7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcMedium": {
+    "message": "Level M – Medium (15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcQuartile": {
+    "message": "Level Q – Quartile (25%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcHigh": {
+    "message": "Level H – High (30%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+
   "optionUseMonospaceFont": {
     "message": "Benutze Monospace-Schrift",
     "description": "This is an option shown in the add-on settings."

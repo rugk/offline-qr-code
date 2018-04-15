@@ -198,6 +198,7 @@ var AddonSettings = (function () {
     const defaultValues = {
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
+        qrErrorCorrection: 'Q',
         monospaceFont: false
     }
 
