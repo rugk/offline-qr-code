@@ -92,7 +92,7 @@
   },
 
   "optionUseMonospaceFont": {
-    "message": "Use monospace font: ",
+    "message": "Use monospace font",
     "description": "This is an option shown in the add-on settings."
   },
 
