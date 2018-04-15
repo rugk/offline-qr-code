@@ -1,4 +1,4 @@
-# Offline QR code generator
+# Offline QR Code Generator
 
 This is a (Firefox) Web Extension, which makes it possible to generate a QR code from any website.
 
@@ -17,3 +17,7 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 * Complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
 * Translated in English and German already. [Add your own language by contributing!](CONTRIBUTING.md#)
+
+## Disclaimer
+
+"QR Code" a registered trademark of DENSO WAVE.

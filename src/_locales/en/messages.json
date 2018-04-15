@@ -1,7 +1,7 @@
 {
   // manifest.json
   "extensionName": {
-    "message": "Offline QR code generator",
+    "message": "Offline QR Code Generator",
     "description": "Name of the extension."
   },
   "extensionDescription": {
