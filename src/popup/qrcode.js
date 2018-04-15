@@ -144,7 +144,7 @@ var QrCreator = (function () {
     /**
      * Displays the QR code when options have been set.
      *
-     * @name   QrCreator.generateFromTab
+     * @name   QrCreator.generate
      * @function
      */
     me.generate = function() {
@@ -152,9 +152,20 @@ var QrCreator = (function () {
     };
 
     /**
-     * Sets the text for thq QR code.
+     * Sets the size of the QR code.
      *
-     * @name   QrCreator.generateFromTab
+     * @name   QrCreator.setSize
+     * @function
+     * @param  {int} size
+     */
+    me.setSize = function(size) {
+        QrLibKjua.set("size", size);
+    };
+
+    /**
+     * Sets the text for the QR code.
+     *
+     * @name   QrCreator.setText
      * @function
      * @param  {string} text
      */
@@ -227,6 +238,11 @@ var UserInterface = (function () {
     const TOP_SCROLL_TIMEOUT = 10; //ms
     const SELECT_TEXT_TIMEOUT = 100; //ms
     const QR_CODE_REFRESH_TIMEOUT = 200; //ms
+    const QR_CODE_CONTAINER_MARGIN = 40; //px
+    const QR_CODE_SIZE_SNAP = 5; //px
+    const QR_CODE_SIZE_DECREASE_SNAP = 2 //px
+    const QR_CODE_WINDOW_PROPERTION = (2/3) //(%)
+    const WINDOW_MINIMUM_HEIGHT = 250 //px
 
     const elBody = document.querySelectorAll('body')[0];
     const qrCode = document.getElementById('qrcode');
@@ -237,6 +253,10 @@ var UserInterface = (function () {
     let placeholderShown = true;
     let hideErrorOnUpdate = true;
     let qrCodeRefreshTimer = null;
+
+    // default/last size
+    let qrLastSize = 200;
+    let qrTextLastHeight;
 
     /**
      * Hide QR code and show placeholder instead.
@@ -426,8 +446,58 @@ var UserInterface = (function () {
      * @param {Event} event
      */
     function resizeElements(event) {
-        // https://developer.mozilla.org/en-US/docs/Web/Events/resize
-        console.log("resize", event);
+        let newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+        const qrSizeDiff = newQrCodeSize - qrLastSize;
+
+        const windowHeight = window.innerHeight;
+        if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
+            Logger.logInfo("Skipped resize due to low window height", windowHeight);
+            return;
+        }
+
+        // do not resize if size is not *increased* by 5 px or *decreased* by 2px
+        if (qrSizeDiff < QR_CODE_SIZE_SNAP && qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP) {
+            return;
+
+            //
+            // // manually detect if textarea was resized to smaller value
+            // const qrTextHeight = qrCodeText.offsetHeight;
+            // const qrTextDiff = qrTextHeight - qrTextLastHeight;
+            // // if it was only an upzising or value is not "big" enough, return
+            // if (qrTextDiff >= -QR_CODE_SIZE_DECREASE_SNAP) {
+            //     return;
+            // }
+            //
+            // // otherwise emulate smaller rezise
+            // Logger.logInfo("emulate smaller resize: textarea ", qrTextLastHeight, " to ", qrTextHeight);
+            //
+            // // fake size
+            // // qr code size is 2/3 of whole size (as also defined by flex)
+            // newQrCodeSize = windowHeight * QR_CODE_WINDOW_PROPERTION;
+        }
+
+        Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
+
+        // apply new size
+        QrCreator.setSize(newQrCodeSize);
+
+        // fixed, witdh, so it is correctly centered horizontally
+        qrCode.style.width = `${newQrCodeSize}px`;
+        // qrCode.style.height = `${newQrCodeSize}px`;
+
+        // qrCodePlaceholder.setAttribute("height", newQrCodeSize);
+        // qrCodePlaceholder.setAttribute("width", newQrCodeSize);
+        // qrCodePlaceholder.style.width = `${newQrCodeSize}px`;
+        // qrCodePlaceholder.style.height = `${newQrCodeSize}px`;
+
+        // const canvas = document.querySelectorAll(".qrcode canvas")[0];
+        // canvas.height = newQrCodeSize;
+        // canvas.width = newQrCodeSize;
+        // canvas.style.width = newQrCodeSize;
+        // canvas.style.height = newQrCodeSize;
+
+        qrLastSize = newQrCodeSize;
+        QrCreator.generate();
     }
 
     /**
@@ -476,8 +546,19 @@ var UserInterface = (function () {
         qrCodeText.addEventListener("input", refreshQrCode);
         qrCodeText.addEventListener("focus", selectAllText);
 
+        // set resize event and resize at startup
+        qrTextLastHeight = qrCodeText.offsetHeight;
+
+        // listen for window ressize
+        /* (currenbtly disabled as MutationObserver is more flexible)
         createThrottledEvent("resize", "optimizedResize");
         window.addEventListener("optimizedResize", resizeElements);
+         */
+
+        // listen for resizes at the textarea
+        new MutationObserver(resizeElements).observe(qrCodeText, {
+            attributes: true, attributeFilter: [ "style" ]
+        })
 
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise
@@ -494,16 +575,15 @@ var UserInterface = (function () {
                 qrCodeContainer.style.backgroundColor = res.qrBackgroundColor;
             }
         });
-
     };
 
     return me;
 })();
 
 // init modules
-UserInterface.init();
 QrLibKjua.init();
 var qrCreatorInit = QrCreator.init();
+UserInterface.init();
 
 // generate QR code from tab, if everything is set up
 qrCreatorInit.then((res) => {

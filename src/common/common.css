@@ -21,7 +21,6 @@ body {
 /* follows https://design.firefox.com/photon/components/message-bars.html */
 .message-box {
   padding: 4px;
-  vertical-align: middle;
 
   border-radius: 4px;
 
@@ -40,6 +39,8 @@ body {
   /* center-vertically */
   display: flex;
   align-items: center;
+
+  z-index: 2;
 }
 
 .error {
