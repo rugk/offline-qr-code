@@ -16,7 +16,9 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 * Complete internationalization (i18n).
 * Complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
-* Translated in English and German already. [Add your own language by contributing!](CONTRIBUTING.md#)
+* Translated in English and German already. [Add your own language by contributing!](CONTRIBUTING.md#Translations)
+* Settings are synced across devices.
+* Settings can be managed by your administrator. (work in progress)
 
 ## Disclaimer
 
