@@ -4,7 +4,7 @@
 
 This is a (Firefox) Web Extension, which makes it possible to generate a QR code from any website.
 
-In contrast to many other add-ons, which use Google Web APIs for that, this add-on works completely offline.
+In contrast to many other add-ons, which use Google Web APIs for that, this add-on works completely offline. **This QR code generator puts your privacy first!**  
 Effectively, the add-on [prevents any web connection](src/manifest.json#L25) for itself, so it does never contact the web. Thanks to the linked `manifest.json` you can also easily verify, that this claim is true. It works offline! Always.
 
 It is inspired by [the old Offline QR code generator add-on](https://github.com/catholicon/OfflineQR) for Firefox 56 and lower. This extension only works with Firefox Quantum (Firefox 57) and higher.
@@ -30,11 +30,15 @@ See:
 * Complete internationalization (i18n).
 * Complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
-* Translated in English and German already. [Add your own language by contributing!](CONTRIBUTING.md#Translations)
+* Translated in English and German already. [Contribute your own language!](CONTRIBUTING.md#Translations)
 * Compatible with Firefox for Android
 * Settings are synced across devices.
 * Settings can be managed by your administrator. (work in progress)
 
 ## Notes
 
-"QR Code" a registered trademark of DENSO WAVE.
+"QR Code" is a registered trademark of DENSO WAVE.
+
+## Support developoment
+
+[You can support the development of this add-on on Liberapay](https://liberapay.com/rugk/).
