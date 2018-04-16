@@ -50,17 +50,13 @@
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
 
-  "optionPopupIconColor": {
-    "message": "Popup icon style: ",
+  "optionPopupIconColored": {
+    "message": "Colored icon",
     "description": "This is an option shown in the add-on settings."
   },
-  "optionPopupIconColorDark": {
-    "message": "Dark",
-    "description": "The option for the dark popup icon color version."
-  },
-  "optionPopupIconColorLight": {
-    "message": "Light",
-    "description": "The option for the light popup icon color version."
+  "optionPopupIconColoredDescr": {
+    "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
   "optionQrCodeColor": {
     "message": "QR code color: ",

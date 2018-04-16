@@ -16,39 +16,27 @@ var IconHandler = (function () {
      * @name   IconHandler.setPopupIcon
      * @function
      * @private
-     * @param {string} icon version
+     * @param {string} icon version or "null"/"undefined" to reset to default
      */
     function setPopupIcon(icon) {
         // verify parameter
         switch (icon) {
             case "dark": // fall through
             case "light":
+            case "colored":
+            case null:
                 // ok
                 break;
             default:
                 throw Error("invalid parameter: " + icon);
         }
 
-        browser.browserAction.setIcon({path: `icons/icon-small-${icon}.svg`});
-    }
-
-    /**
-     * Resets the icon as the theme changed.
-     *
-     * @name   IconHandler.themeChanged
-     * @function
-     * @private
-     * @param {object} theme
-     */
-    function themeChanged(theme) {
-        console.log(theme);
-        if (!theme.hasOwnProperty("colors")) {
+        if (icon === null || icon == undefined) {
+            browser.browserAction.setIcon({path: null});
             return;
         }
 
-        // get theme color
-        const itemColor = theme.colors.toolbar_text || theme.colors.textcolor;
-        console.log("new theme", itemColor);
+        browser.browserAction.setIcon({path: `icons/icon-small-${icon}.svg`});
     }
 
     /**
@@ -58,17 +46,16 @@ var IconHandler = (function () {
      * @function
      */
     me.init = function() {
-        /* DISABLED CURRENTLY AS OPTION HAS BEEN REMOVED */
-        /*
-        browser.theme.getCurrent().then(themeChanged);
-        browser.storage.sync.get("popupIconColor").then((res) => {
-            const popupIconColor = res.popupIconColor;
-            setPopupIcon(popupIconColor);
-        });
-        */
+        browser.storage.sync.get("popupIconColored").then((res) => {
+            const popupIconColored = res.popupIconColored;
 
-        // set listener
-        // browser.theme.onUpdated.addListener(themeChanged);
+            if (popupIconColored === true) {
+                setPopupIcon("colored");
+            } else {
+                // reset icon
+                setPopupIcon(null);
+            }
+        });
     };
 
     return me;

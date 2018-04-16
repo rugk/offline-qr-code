@@ -111,15 +111,20 @@ var OptionHandler = (function () {
         if (option === undefined) {
             const gettingOption = AddonSettings.get();
             return gettingOption.then((res) => {
-                // run for each option, which we handle
-                applyOptionLive("popupIconColor", res.popupIconColor);
+                // run for each option, which we knw to handle
+                applyOptionLive("popupIconColored", res.popupIconColored);
             });
         }
 
         switch (option) {
-            case "popupIconColor":
+            case "popupIconColored":
                 Logger.logInfo("Apply popup icon color directly", optionValue);
-                browser.browserAction.setIcon({path: `icons/icon-small-${optionValue}.svg`});
+                if (optionValue === true) {
+                    browser.browserAction.setIcon({path: `icons/icon-small-colored.svg`});
+                } else {
+                    // reset icon
+                    browser.browserAction.setIcon({path: null});
+                }
                 break;
         }
     }

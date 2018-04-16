@@ -1,5 +1,5 @@
 body {
-  /* the font-size the other options in the settings pane use */
+  /* the style the other options in the settings pane use */
   font-size: 1.25rem; /* TODO: adjust to font size on mobile */
   color: #333;
 }
@@ -15,8 +15,16 @@ ul {
 }
 li {
   list-style-type: none;
-  margin: 0.5em;
+  margin: 0.75em;
   padding: 0px;
+}
+.helper-text {
+  display: block;
+  color: #737373; /* Grey 50 */
+  /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
+  margin-left: 28px;
+
+  margin-top: 0.1em;
 }
 
 /* special options values */
@@ -26,4 +34,3 @@ li {
 }
 
 /* TODO: make i icon bigger */
-/* TODO: improve checkbox style */
