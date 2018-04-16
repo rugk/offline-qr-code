@@ -58,11 +58,14 @@ var IconHandler = (function () {
      * @function
      */
     me.init = function() {
-        // browser.theme.getCurrent().then(themeChanged);
+        /* DISABLED CURRENTLY AS OPTION HAS BEEN REMOVED */
+        /*
+        browser.theme.getCurrent().then(themeChanged);
         browser.storage.sync.get("popupIconColor").then((res) => {
-            const popupIconClor = res.popupIconColor;
-            setPopupIcon(popupIconClor);
+            const popupIconColor = res.popupIconColor;
+            setPopupIcon(popupIconColor);
         });
+        */
 
         // set listener
         // browser.theme.onUpdated.addListener(themeChanged);
@@ -71,5 +74,4 @@ var IconHandler = (function () {
     return me;
 })();
 
-/* DISABLED CURRENTLY */
 IconHandler.init();

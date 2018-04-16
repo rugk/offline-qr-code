@@ -11,7 +11,14 @@
     "browser_style": true,
     "default_icon": "icons/icon-small-dark.svg",
     "default_title": "__MSG_browserActionButtonTitle__",
-    "default_popup": "popup/qrcode.html"
+    "default_popup": "popup/qrcode.html",
+    "theme_icons": [
+      {
+        "dark": "icons/icon-small-dark.svg",
+        "light": "icons/icon-small-light.svg",
+        "size": 32
+      }
+    ]
   },
 
   "options_ui": {
