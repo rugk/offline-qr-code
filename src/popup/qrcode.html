@@ -10,16 +10,18 @@
 	</head>
 	<body class="center-container">
 		<div id="qrcode-container" class="center-container">
-			<div id="qrcode" class="qrcode invisible">
-				<div></div>
-			</div>
-			<img id="qrcode-placeholder" class="qrcode qrcode-scalable-image" src="img/qr-grey.svg" alt="QR code placeholder image"
-				data-i18n
-				data-i18n-alt="__MSG_qrCodePlaceholder__"
-				width="200"
-				height="200">
-			<div class="message-container center-container">
-				<span id="messageError" data-i18n="__MSG_couldNotGenerateQrCode__" class="message-box error flot-qr float-qr-bottom">Could not generate QR code.</span>
+			<div id="qrcode-resize-container">
+				<div id="qrcode" class="qrcode invisible">
+					<img src="" width="200" height="200"></img>
+				</div>
+				<img id="qrcode-placeholder" class="qrcode qrcode-scalable-image" src="img/qr-grey.svg" alt="QR code placeholder image"
+					width="200"
+					height="200"
+					data-i18n
+					data-i18n-alt="__MSG_qrCodePlaceholder__">
+				<div class="message-container center-container">
+					<span id="messageError" data-i18n="__MSG_couldNotGenerateQrCode__" class="message-box error flot-qr float-qr-bottom">Could not generate QR code.</span>
+				</div>
 			</div>
 		</div>
 		<textarea id="qrcodetext"

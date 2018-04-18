@@ -160,6 +160,11 @@ var QrCreator = (function () {
      * @param  {int} size
      */
     me.setSize = function(size) {
+        if (size <= 1) {
+            Logger.logError("tried to create QR code with invalid size of 0 or smaller");
+            return;
+        }
+
         QrLibKjua.set("size", size);
     };
 
@@ -249,6 +254,7 @@ var UserInterface = (function () {
     const qrCode = document.getElementById('qrcode');
     const qrCodePlaceholder = document.getElementById('qrcode-placeholder');
     const qrCodeContainer = document.getElementById('qrcode-container');
+    const qrCodeResizeContainer = document.getElementById('qrcode-resize-container');
     const qrCodeText = document.getElementById('qrcodetext');
 
     let placeholderShown = true;
@@ -257,7 +263,7 @@ var UserInterface = (function () {
 
     // default/last size
     let qrLastSize = 200;
-    let qrTextLastHeight;
+    let qrLockSize = true;
 
     /**
      * Hide QR code and show placeholder instead.
@@ -400,7 +406,7 @@ var UserInterface = (function () {
             event.target.scrollTop = 0;
         }
 
-        // only retry once, if
+        // only retry once, if needed
         if (event.setScrolled) {
             return;
         }
@@ -415,23 +421,31 @@ var UserInterface = (function () {
     }
 
     /**
+     * Sets the new size of the container for the QR code.
+     *
+     * @name   UserInterface.setQrCodeResizeContainerSize
+     * @function
+     * @private
+     * @param {int} newSize the new size in px
+     */
+    function setQrCodeResizeContainerSize(newSize) {
+        qrCodeResizeContainer.style.width = `${newSize}px`;
+        qrCodeResizeContainer.style.height = `${newSize}px`;
+    }
+
+    /**
      * Resize the UI elements when the popup, etc. is resized.
      *
      * @name   UserInterface.resizeElements
      * @function
      * @private
-     * @param {Event} event
+     * @param {Array|Event} event
      */
     function resizeElements(event) {
-        // do not regenerate QR code if an error is shown
-        if (placeholderShown == true) {
-            return;
-        }
-
-        let newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+        const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
         const qrSizeDiff = newQrCodeSize - qrLastSize;
 
-        // rezizing at small widow heights (e.g. when popup is being constructed)
+        // rezizing at small window heights (e.g. when popup is being constructed)
         // could cause it to be resized to 0px or so
         const windowHeight = window.innerHeight;
         if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
@@ -449,8 +463,16 @@ var UserInterface = (function () {
         // apply new size
         QrCreator.setSize(newQrCodeSize);
 
+        setQrCodeResizeContainerSize(newQrCodeSize);
+
         qrLastSize = newQrCodeSize;
-        QrCreator.generate();
+
+        // do not regenerate QR code if an error or so is shown
+        if (placeholderShown === false) {
+            qrLockSize = false;
+            QrCreator.generate();
+            qrLockSize = true;
+        }
     }
 
     /**
@@ -472,6 +494,7 @@ var UserInterface = (function () {
      * @param  {HTMLElement} elNewQr
      */
     me.replaceQr = function(elNewQr) {
+        // only hide startup errors
         if (hideErrorOnUpdate) {
             MessageHandler.hideError();
             hideErrorOnUpdate = false;
@@ -479,6 +502,13 @@ var UserInterface = (function () {
 
         // get old element
         const elOldQrCode = qrCode.firstElementChild;
+        const oldSize = elOldQrCode.getAttribute("width");
+
+        // prevent accidential resizes when text of QR code changes, e.g.
+        if (qrLockSize && oldSize != elNewQr.getAttribute("width")) {
+            Logger.logWarning("qr code size is locked, but has been tried to be modify:", elOldQrCode, "to", elNewQr);
+        }
+
         // and replace it
         Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
         qrCode.replaceChild(elNewQr, elOldQrCode);
@@ -499,14 +529,14 @@ var UserInterface = (function () {
         qrCodeText.addEventListener("input", refreshQrCode);
         qrCodeText.addEventListener("focus", selectAllText);
 
-        // set resize event and resize at startup
-        qrTextLastHeight = qrCodeText.offsetHeight;
-
         // listen for resizes at the textarea
         new MutationObserver(resizeElements).observe(qrCodeText, {
             attributes: true,
             attributeFilter: ["style"]
         });
+
+        // and manually set right size
+        setQrCodeResizeContainerSize(qrLastSize);
 
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise

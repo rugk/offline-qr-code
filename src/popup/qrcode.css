@@ -8,24 +8,17 @@ html, body {
 }
 
 .qrcode {
-  /* (also) workaround for Kjua, which cannot include size inline as this is blocked by the CSP */
+  /* never set a fixed height/width as the qr code is then not resizable */
   width: auto;
   height: auto;
   max-height: 100%;
-
-  resize: both;
-  overflow: visible;
 }
 /* self-scalable images, do not need JS support */
 .qrcode-scalable-image {
-  height: 100%;
+  width: 100%;
 }
 
 .message-box {
-  width: calc(100vw - 40px);
-
-  border-radius: 0px;
-
   text-align: center;
 }
 
@@ -38,7 +31,11 @@ html, body {
 }
 /* make background transparent when floating */
 .error.flot-qr {
-    background-color: #d70022ee;
+  width: auto;
+
+  border-radius: 0px;
+
+  background-color: #d70022ee;
 }
 
 #qrcode-container {
@@ -53,6 +50,12 @@ html, body {
   /* center QR code itself */
   justify-content: center;
 }
+#qrcode-resize-container {
+  overflow: hidden;
+    width: 200px;
+    height: 200px;
+}
+
 #qrcodetext {
   /* let popup grow with text field */
   width: 100%;

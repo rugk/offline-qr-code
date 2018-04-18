@@ -49,10 +49,15 @@ body {
 }
 /* icon for error message */
 .message-box::before {
-  background-size: 16px 16px;
   display: inline-block;
+
+  /* fixed size */
+  background-size: 16px 16px;
   width: 16px;
   height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+
   content: "";
   margin: 4px;
 }
