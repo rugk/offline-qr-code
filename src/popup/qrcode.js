@@ -366,8 +366,8 @@ var UserInterface = (function () {
      */
     function selectAllText(event) {
         const targetIsSelected = document.activeElement == event.target && isSelected(event.target);
-        // prevent endless loop after two rechecks (i.e. re-check only two times)
-        if (targetIsSelected || event.retry > 2) {
+        // prevent endless loop after two rechecks (i.e. re-check only three times)
+        if (targetIsSelected || event.retry > 3) {
             return;
         }
 
