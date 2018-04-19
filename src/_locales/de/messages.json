@@ -18,6 +18,10 @@
     "message": "unbekannter Fehler",
     "description": ""
   },
+  "loading": {
+    "message": "Laden…",
+    "description": "A general loading message."
+  },
   "couldNotGenerateQrCode": {
     "message": "Konnte QR-Code nicht generieren.",
     "description": ""

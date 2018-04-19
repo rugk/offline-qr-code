@@ -258,7 +258,7 @@ var UserInterface = (function () {
     const qrCodeText = document.getElementById('qrcodetext');
 
     let placeholderShown = true;
-    let hideErrorOnUpdate = true;
+    let hideLoadingOnUpdate = true; // hides loading message
     let qrCodeRefreshTimer = null;
 
     // default/last size
@@ -494,10 +494,10 @@ var UserInterface = (function () {
      * @param  {HTMLElement} elNewQr
      */
     me.replaceQr = function(elNewQr) {
-        // only hide startup errors
-        if (hideErrorOnUpdate) {
-            MessageHandler.hideError();
-            hideErrorOnUpdate = false;
+        // only hide startup loading message
+        if (hideLoadingOnUpdate) {
+            document.getElementById("messageLoading").classList.add("invisible");
+            hideLoadingOnUpdate = false;
         }
 
         // get old element
@@ -522,8 +522,8 @@ var UserInterface = (function () {
      * @return {Promise}
      */
     me.init = function() {
-        // set hooks for errors
-        MessageHandler.setErrorHook(showPlaceholder, hidePlaceholder);
+        // set error hooks
+        MessageHandler.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
 
         // add event listeners
         qrCodeText.addEventListener("input", refreshQrCode);

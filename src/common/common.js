@@ -283,15 +283,60 @@ var MessageHandler = (function () {
 
     // const elWarning = document.getElementById('messageWarning');
 
-    let errorShownHook = null;
-    let errorHiddenHook = null;
-
     const ELEMENT_BY_TYPE = Object.freeze({
         [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError'),
         [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning'),
         [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo'),
         [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess')
     });
+
+    let hooks = {
+        'global': {
+            'show': null,
+            'hide': null,
+        },
+        [MESSAGE_LEVEL.ERROR]: {
+            'show': null,
+            'hide': null,
+        },
+        [MESSAGE_LEVEL.WARN]: {
+            'show': null,
+            'hide': null,
+        },
+        [MESSAGE_LEVEL.INFO]: {
+            'show': null,
+            'hide': null,
+        },
+        [MESSAGE_LEVEL.SUCCESS]: {
+            'show': null,
+            'hide': null,
+        },
+    };
+
+    /**
+     * Runs a hook set by some module.
+     *
+     * It automatically also runs the global hook, but you can still specify a
+     * 'global' to ruin it manually.
+     *
+     * @name   MessageHandler.hideMessage
+     * @function
+     * @private
+     * @param  {MESSAGE_LEVEL|global} messagetype
+     * @param  {string} hooktype the type you want to call
+     * @param  {object} param the parameter to pass to the function
+     */
+    function runHook(messagetype, hooktype, param) {
+        if (hooktype != 'global') {
+            // recursively run myself for global hook first
+            runHook(messagetype, 'global', param);
+        }
+
+        const hook = hooks[messagetype][hooktype];
+        if (hook !== null && hook !== undefined) {
+            hookhook(param);
+        }
+    }
 
     /**
      * Shows a message to the user.
@@ -361,10 +406,41 @@ var MessageHandler = (function () {
      * @function
      */
     me.hideError = function() {
-        if (errorHiddenHook !== null && errorHiddenHook !== undefined) {
-            errorHiddenHook();
-        }
+        runHook(MESSAGE_LEVEL.ERROR, "hide");
         hideMessage(MESSAGE_LEVEL.ERROR);
+    }
+
+    /**
+     * Hide error message.
+     *
+     * @name   MessageHandler.hideError
+     * @function
+     */
+    me.hideWarning = function() {
+        runHook(MESSAGE_LEVEL.WARN, "hide");
+        hideMessage(MESSAGE_LEVEL.WARN);
+    }
+
+    /**
+     * Hide info message.
+     *
+     * @name   MessageHandler.hideInfo
+     * @function
+     */
+    me.hideInfo = function() {
+        runHook(MESSAGE_LEVEL.INFO, "hide");
+        hideMessage(MESSAGE_LEVEL.INFO);
+    }
+
+    /**
+     * Hide success message.
+     *
+     * @name   MessageHandler.hideSuccess
+     * @function
+     */
+    me.hideSuccess = function() {
+        runHook(MESSAGE_LEVEL.SUCCESS, "hide");
+        hideMessage(MESSAGE_LEVEL.SUCCESS);
     }
 
     /**
@@ -383,9 +459,7 @@ var MessageHandler = (function () {
     me.showError = function() {
         const args = Array.from(arguments);
 
-        if (errorShownHook !== null && errorShownHook !== undefined) {
-            errorShownHook(args);
-        }
+        runHook(MESSAGE_LEVEL.ERROR, "show", args);
 
         args.unshift(MESSAGE_LEVEL.ERROR);
         showMessage.apply(null, args);
@@ -401,7 +475,9 @@ var MessageHandler = (function () {
     me.showWarning = function() {
         const args = Array.from(arguments);
 
-        args.unshift(MESSAGE_LEVEL.WARNING);
+        runHook(MESSAGE_LEVEL.WARN, "show", args);
+
+        args.unshift(MESSAGE_LEVEL.WARN);
         showMessage.apply(null, args);
     };
 
@@ -414,6 +490,8 @@ var MessageHandler = (function () {
      */
     me.showInfo = function() {
         const args = Array.from(arguments);
+
+        runHook(MESSAGE_LEVEL.INFO, "show", args);
 
         args.unshift(MESSAGE_LEVEL.INFO);
         showMessage.apply(null, args);
@@ -429,26 +507,30 @@ var MessageHandler = (function () {
     me.showSuccess = function() {
         const args = Array.from(arguments);
 
+        runHook(MESSAGE_LEVEL.SUCCESS, "show", args);
+
         args.unshift(MESSAGE_LEVEL.SUCCESS);
         showMessage.apply(null, args);
     };
 
     /**
-     * Let's other functions set.
+     * Let's other functions set a hook to be called when a message type is
+     * shown or hidden.
      *
      * Set parameters to null or undefined (i.e. do not set) in order to disable
      * the hook.
      * The errorShown function gets one parameter: The arguments passed to the
      * function, as an array.
      *
-     * @name   MessageHandler.setErrorHook
+     * @name   MessageHandler.setHooksetHook
      * @function
-     * @param {function} errorShown
-     * @param {function} errorHidden
+     * @param  {MESSAGE_LEVEL|string} messagetype use string "global" for a global hook
+     * @param {function} hookShown
+     * @param {function} hookHidden
      */
-    me.setErrorHook = function(errorShown, errorHidden) {
-        errorShownHook = errorShown;
-        errorHiddenHook = errorHidden;
+    me.setHook = function(messagetype, hookShown, hookHidden) {
+        hooks[messagetype].show = hookShown;
+        hooks[messagetype].hide = hookHidden;
     }
 
     return me;
