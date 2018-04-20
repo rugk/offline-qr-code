@@ -22,6 +22,30 @@
 					<span data-i18n="__MSG_optionPopupIconColoredDescr__" class="helper-text">Shows a colored icon instead of the black/white icon in the toolbar.</span>
 				</li>
 				<li>
+					<fieldset id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
+						<legend data-i18n="__MSG_optionQrCodeSize__">QR code size</legend>
+
+						<ul>
+							<li>
+								<input id="qrCodeSizeFixed" type="radio" name="qrcode-size-fixed" value="fixed" class="save-on-input">
+								<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
+
+								<input class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="size" min="50" step="5" size="5" name="qr-size">
+								<span>px</span>
+							</li>
+
+							<li>
+								<input id="qrCodeSizeAuto" type="radio" name="qrcode-size-auto" value="auto" class="save-on-input">
+								<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust</label>
+							</li>
+							<li>
+								<input id="qrCodeSizeRemember" type="radio" name="qrcode-size-remember" value="auto" class="save-on-input">
+								<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
+							</li>
+						</ul>
+					</fieldset>
+				</li>
+				<li>
 					<label data-i18n="__MSG_optionQrCodeColor__" for="qrColor">QR code color: </label>
 					<input class="setting save-on-change" type="color" id="qrColor" name="qr-color">
 				</li>

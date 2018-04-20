@@ -553,6 +553,23 @@ var UserInterface = (function () {
                 qrCodeContainer.style.backgroundColor = res.qrBackgroundColor;
             }
         });
+
+        AddonSettings.get("qrCodeSize").then((res) => {
+            const qrCodeSize = res.qrCodeSize;
+
+            console.log("new size:", qrCodeSize);
+            if (!qrCodeSize) {
+                return;
+            }
+
+            if (qrCodeSize.sizeType == "auto") {
+                resizeElements();
+            }
+            if (qrCodeSize.sizeType == "remember" || qrCodeSize.sizeType == "fixed") {
+                console.log("new size:", qrCodeSize.size);
+                setQrCodeResizeContainerSize(qrCodeSize.size);
+            }
+        });
     };
 
     return me;

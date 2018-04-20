@@ -12,6 +12,11 @@ const MESSAGE_LEVEL = Object.freeze({
     "SUCCESS": -3,
 });
 
+/* global helper functions */
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 var Logger = (function () {
     let me = {};
 
@@ -195,13 +200,17 @@ var Localizer = (function () {
 var AddonSettings = (function () {
     let me = {};
 
-    const defaultValues = {
+    const defaultValues = Object.freeze({
         popupIconColored: false,
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
         qrErrorCorrection: 'Q',
-        monospaceFont: false
-    }
+        monospaceFont: false,
+        qrCodeSize: {
+            sizeType: "fixed",
+            size: 200
+        }
+    });
 
     /**
      *  Get the default value
@@ -245,8 +254,11 @@ var AddonSettings = (function () {
             addValues = me.getDefaultValue(option);
         }
 
+        const gettingManagedOption = browser.storage.managed.get(option);
+        const gettingSyncOption = browser.storage.sync.get(option);
+
         // first try to get managed option
-        return browser.storage.managed.get(option).then((res) => {
+        gettingManagedOption.then((res) => {
             Logger.logInfo(`Managed setting got for "${option}".`, res);
 
             // merge objects if needed
@@ -255,10 +267,12 @@ var AddonSettings = (function () {
             }
 
             return res;
-        }).catch((error) => {
+        });
+
+        gettingManagedOption.catch((error) => {
             // get synced option, otherwise
-            return browser.storage.sync.get(option).then((res) => {
-                Logger.logInfo(`Setting got for "${option}".`, res);
+            gettingSyncOption.then((res) => {
+                Logger.logInfo(`Setting got for "${option}".`, JSON.parse(JSON.stringify(res)));
 
                 if (addValues !== null) {
                     return Object.assign({}, addValues, res);
@@ -270,9 +284,11 @@ var AddonSettings = (function () {
                 Logger.logError(`Could not get option "${option}". Using default.`, error);
 
                 // get default value as a last fallback
-                return me.getDefaultValue(option) || null;
+                return me.getDefaultValue(option);
             });
         });
+
+        return gettingManagedOption;
     };
 
     return me;

@@ -19,23 +19,33 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {string} option string ob object ID
+     * @param  {string|null} optional optiom group, if it is used
      * @param  {HTMLElement} elOption where to apply feature
      * @param  {object} optionValues object containing the object value
      */
-    function applyOptionToElement(option, elOption, optionValues) {
+    function applyOptionToElement(option, optionGroup, elOption, optionValues) {
         let optionValue;
         // ignore, if not set, i.e. use default value from HTML file
         if (!optionValues.hasOwnProperty(option)) {
-            optionValue = AddonSettings.getDefaultValue(option);
+            if (optionGroup === null) {
+                optionValue = AddonSettings.getDefaultValue(option);
+            } else {
+                optionValue = AddonSettings.getDefaultValue(optionGroup)[option];
+            }
 
-            Logger.logInfo("got default value for applying option", optionValue);
+            Logger.logInfo("got default value for applying option:", optionValue);
 
             // if still no default value, try to use HTML defaults, i.e. do not set option
             if (optionValue === undefined) {
                 return;
             }
         } else {
-            optionValue = optionValues[option];
+            // get default value
+            if (optionGroup === null) {
+                optionValue = optionValues[option];
+            } else {
+                optionValue = optionValues[optionGroup][option];
+            }
         }
 
         // custom handling for special option types
@@ -48,10 +58,11 @@ var OptionHandler = (function () {
                 }
                 break;
             case "radiogroup":
-                const radioChilds = elOption.children;
+                const radioChilds = elOption.getElementsByTagName("input");
 
                 for (const radioElement of radioChilds) {
-                    if (radioElement.getAttribute("value") == optionValue) {
+                    if (radioElement.getAttribute("type") == "radio" &&
+                        radioElement.getAttribute("value") == optionValue) {
                         radioElement.setAttribute("checked", "");
                     }
                 }
@@ -152,8 +163,19 @@ var OptionHandler = (function () {
             return;
         }
 
-        const option = elOption.id;
-        const optionValue = getOptionFromElement(elOption);
+        let option = elOption.id;
+        let optionValue = getOptionFromElement(elOption);
+
+        // if option has a group assigned, first fetch all options of the group for saving
+        if (elOption.hasAttribute("data-optiongroup")) {
+            option = elOption.hasAttribute("data-optiongroup");
+
+            optionValue = {};
+            document.querySelectorAll(`[data-optionsgroup=${option}]`).forEach((elCurrentOption) => {
+                optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
+            });
+        }
+
         Logger.logInfo("save option", elOption, optionValue);
 
         applyOptionLive(option, optionValue);
@@ -190,16 +212,34 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {string} option name of the option
+     * @param  {string|null|undefined} optionGroup name of the option group,
+     *                                             undefined will automatically
+     *                                             detect the element
+     * @param  {HtmlElement|null} elOption optional element of the option, will
+     *                                     be autodetected otherwise
      */
-    function setManagedOption(option) {
-        const gettingOption = browser.storage.managed.get(option);
+    function setManagedOption(option, optionGroup, elOption) {
+        if (!elOption) {
+            elOption = document.getElementById(option);
+        }
+
+        if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
+            optionGroup = elOption.hasAttribute("data-optiongroup");
+        }
+
+        let gettingOption;
+        if (optionGroup == null) {
+            gettingOption = browser.storage.managed.get(optionGroup);
+        } else {
+            gettingOption = browser.storage.managed.get(option);
+        }
+
         gettingOption.then((res) => {
             showManagedInfo();
 
-            const elOption = document.getElementById(option);
             Logger.logInfo("managed config found", res, elOption);
 
-            applyOptionToElement(option, elOption, res);
+            applyOptionToElement(option, optionGroup, elOption, res);
             // and disable control
             elOption.setAttribute("disabled", "")
             elOption.setAttribute("title", browser.i18n.getMessage("optionIsDisabledBecauseManaged"))
@@ -217,11 +257,29 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {string} option name of the option
+     * @param  {string|null|undefined} optionGroup name of the option group,
+     *                                             undefined will automatically
+     *                                             detect the element
+     * @param  {HtmlElement|null} elOption optional element of the option, will
+     *                                     be autodetected otherwise
      */
-    function setOption(option) {
-        const gettingOption = browser.storage.sync.get(option);
+    function setOption(option, optionGroup, elOption) {
+        if (!elOption) {
+            elOption = document.getElementById(option);
+        }
+
+        if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
+            optionGroup = elOption.hasAttribute("data-optiongroup");
+        }
+
+        let gettingOption;
+        if (optionGroup == null) {
+            gettingOption = browser.storage.sync.get( + "." + option);
+        } else {
+            gettingOption = browser.storage.sync.get(option);
+        }
+
         gettingOption.then((res) => {
-            const elOption = document.getElementById(option);
             Logger.logInfo("sync config found", res, elOption);
 
             // do not modify if managed
@@ -230,7 +288,7 @@ var OptionHandler = (function () {
                 return;
             }
 
-            applyOptionToElement(option, elOption, res);
+            applyOptionToElement(option, optionGroup, elOption, res);
         });
     }
 
@@ -244,8 +302,13 @@ var OptionHandler = (function () {
     function loadOptions() {
         document.querySelectorAll(".setting").forEach((currentElem) => {
             const elementId = currentElem.id;
-            setManagedOption(elementId);
-            setOption(elementId);
+            let optionGroup = null;
+            if (currentElem.hasAttribute("data-optiongroup")) {
+                optionGroup = currentElem.getAttribute("data-optiongroup");
+            }
+
+            setManagedOption(elementId, optionGroup, currentElem);
+            setOption(elementId, optionGroup, currentElem);
         });
     }
 
