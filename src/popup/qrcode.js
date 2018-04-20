@@ -130,6 +130,8 @@ var QrLibKjua = (function () {
 var QrCreator = (function () {
     let me = {};
 
+    let initFinished = false;
+
     /**
      * Provide connection to library and get QR code with current options.
      *
@@ -149,6 +151,11 @@ var QrCreator = (function () {
      * @function
      */
     me.generate = function() {
+        if (!initFinished) {
+            Logger.logWarning("QrCreator.generate called, but init not yet finished. Abort.");
+            return;
+        }
+
         UserInterface.replaceQr(getQrCodeFromLib());
     };
 
@@ -216,6 +223,9 @@ var QrCreator = (function () {
      */
     me.generateFromTabs = function(tabs) {
         me.generateFromTab(tabs[0]);
+
+        // hide loading message shown by default
+        MessageHandler.hideLoading();
     };
 
     /**
@@ -233,6 +243,8 @@ var QrCreator = (function () {
             QrLibKjua.set("qrColor", settings.qrColor);
             QrLibKjua.set("qrBackgroundColor", settings.qrBackgroundColor);
             QrLibKjua.set("qrErrorCorrection", settings.qrErrorCorrection);
+
+            initFinished = true;
         });
     };
 
@@ -258,12 +270,12 @@ var UserInterface = (function () {
     const qrCodeText = document.getElementById('qrcodetext');
 
     let placeholderShown = true;
-    let hideLoadingOnUpdate = true; // hides loading message
+    let hideLoadingOnUpdate = false;
     let qrCodeRefreshTimer = null;
 
     // default/last size
     let qrLastSize = 200;
-    let qrLockSize = true;
+    let qrCodeSizeOption = {};
 
     /**
      * Hide QR code and show placeholder instead.
@@ -421,16 +433,35 @@ var UserInterface = (function () {
     }
 
     /**
-     * Sets the new size of the container for the QR code.
+     * Sets the new size of the QR code.
      *
-     * @name   UserInterface.setQrCodeResizeContainerSize
+     * @name   UserInterface.setNewQrCodeSize
      * @function
      * @private
      * @param {int} newSize the new size in px
+     * @param {bool} regenerateQr whether the QR code should be regenerated
      */
-    function setQrCodeResizeContainerSize(newSize) {
+    function setNewQrCodeSize(newSize, regenerateQr) {
+        // apply new size
+        QrCreator.setSize(newSize);
+
         qrCodeResizeContainer.style.width = `${newSize}px`;
         qrCodeResizeContainer.style.height = `${newSize}px`;
+
+        if (regenerateQr) {
+            QrCreator.generate();
+        }
+
+        qrLastSize = newSize;
+
+        // save size of popup to remember last size
+        if (qrCodeSizeOption.sizeType === "remember") {
+            qrCodeSizeOption.size = qrLastSize;
+
+            browser.storage.sync.set({
+                "qrCodeSize": qrCodeSizeOption
+            });
+        }
     }
 
     /**
@@ -460,25 +491,14 @@ var UserInterface = (function () {
 
         Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
 
-        // apply new size
-        QrCreator.setSize(newQrCodeSize);
-
-        setQrCodeResizeContainerSize(newQrCodeSize);
-
-        qrLastSize = newQrCodeSize;
-
         // do not regenerate QR code if an error or so is shown
-        if (placeholderShown === false) {
-            qrLockSize = false;
-            QrCreator.generate();
-            qrLockSize = true;
-        }
+        setNewQrCodeSize(newQrCodeSize, !placeholderShown);
     }
 
     /**
      * Shows the given text in the QR code's input field.
      *
-     * @name   UserInterface.setQrText
+     * @name   UserInterface.setQrInputFieldText
      * @function
      * @param  {string} text
      */
@@ -494,20 +514,9 @@ var UserInterface = (function () {
      * @param  {HTMLElement} elNewQr
      */
     me.replaceQr = function(elNewQr) {
-        // only hide startup loading message
-        if (hideLoadingOnUpdate) {
-            document.getElementById("messageLoading").classList.add("invisible");
-            hideLoadingOnUpdate = false;
-        }
-
         // get old element
         const elOldQrCode = qrCode.firstElementChild;
         const oldSize = elOldQrCode.getAttribute("width");
-
-        // prevent accidential resizes when text of QR code changes, e.g.
-        if (qrLockSize && oldSize != elNewQr.getAttribute("width")) {
-            Logger.logWarning("qr code size is locked, but has been tried to be modify:", elOldQrCode, "to", elNewQr);
-        }
 
         // and replace it
         Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
@@ -523,6 +532,7 @@ var UserInterface = (function () {
      */
     me.init = function() {
         // set error hooks
+        MessageHandler.setHook(MESSAGE_LEVEL.LOADING, showPlaceholder, hidePlaceholder);
         MessageHandler.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
 
         // add event listeners
@@ -535,29 +545,26 @@ var UserInterface = (function () {
             attributeFilter: ["style"]
         });
 
-        // and manually set right size
-        setQrCodeResizeContainerSize(qrLastSize);
-
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise
         // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
         setTimeout(selectAllText, 50, { target: qrCodeText });
 
-        AddonSettings.get("monospaceFont").then((res) => {
-            if (res.monospaceFont) {
+        AddonSettings.get("monospaceFont").then((monospaceFont) => {
+            if (monospaceFont) {
                 qrCodeText.style.fontFamily = "monospace";
             }
         });
-        AddonSettings.get("qrBackgroundColor").then((res) => {
-            if (res.qrBackgroundColor) {
-                qrCodeContainer.style.backgroundColor = res.qrBackgroundColor;
+        AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
+            if (qrBackgroundColor) {
+                qrCodeContainer.style.backgroundColor = qrBackgroundColor;
             }
         });
 
-        AddonSettings.get("qrCodeSize").then((res) => {
-            const qrCodeSize = res.qrCodeSize;
+        AddonSettings.get("qrCodeSize").then((qrCodeSize) => {
+            // save as module variable
+            qrCodeSizeOption = qrCodeSize;
 
-            console.log("new size:", qrCodeSize);
             if (!qrCodeSize) {
                 return;
             }
@@ -566,8 +573,14 @@ var UserInterface = (function () {
                 resizeElements();
             }
             if (qrCodeSize.sizeType == "remember" || qrCodeSize.sizeType == "fixed") {
-                console.log("new size:", qrCodeSize.size);
-                setQrCodeResizeContainerSize(qrCodeSize.size);
+                if (qrLastSize === qrCodeSize.size) {
+                    Logger.logInfo("QR code last size is the same as current setting, so do not reset");
+                    // BUT set CSS stuff to make it consistent
+                    setNewQrCodeSize(qrCodeSize.size, false);
+                } else {
+                    // regenerate QR code
+                    setNewQrCodeSize(qrCodeSize.size, true);
+                }
             }
         });
     };
@@ -576,8 +589,9 @@ var UserInterface = (function () {
 })();
 
 // init modules
+AddonSettings.loadOptions();
 QrLibKjua.init();
-var qrCreatorInit = QrCreator.init();
+const qrCreatorInit = QrCreator.init();
 UserInterface.init();
 
 // generate QR code from tab, if everything is set up

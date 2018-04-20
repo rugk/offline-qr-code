@@ -34,6 +34,10 @@
     "message": "Konnte Nachricht nicht anzeigen.",
     "description": "When there is an error when showing the error/info/…."
   },
+  "couldNotSaveOption": {
+    "message": "Konnte diese Einstellung nicht speichern.",
+    "description": "When a setting could not be saved."
+  },
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR-Code-Platzhalter-Bild",

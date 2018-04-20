@@ -9,13 +9,9 @@ const MESSAGE_LEVEL = Object.freeze({
     "ERROR": 3,
     "WARN": 2,
     "INFO": 1,
-    "SUCCESS": -3,
+    "LOADING": -2,
+    "SUCCESS": -3
 });
-
-/* global helper functions */
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
 
 var Logger = (function () {
     let me = {};
@@ -26,6 +22,7 @@ var Logger = (function () {
         [MESSAGE_LEVEL.ERROR]: "ERROR",
         [MESSAGE_LEVEL.WARN]: "WARN",
         [MESSAGE_LEVEL.INFO]: "INFO",
+        [MESSAGE_LEVEL.LOADING]: "LOADING",
         [MESSAGE_LEVEL.SUCCESS]: "SUCCESS"
     });
 
@@ -200,6 +197,12 @@ var Localizer = (function () {
 var AddonSettings = (function () {
     let me = {};
 
+    let gettingManagedOption;
+    let gettingSyncOption;
+
+    let managedOptions = null;
+    let syncOptions = null;
+
     const defaultValues = Object.freeze({
         popupIconColored: false,
         qrColor: "#0c0c0d",
@@ -213,7 +216,7 @@ var AddonSettings = (function () {
     });
 
     /**
-     *  Get the default value
+     * Get the default value.
      *
      * Returns undefined, if option cannot be found.
      *
@@ -240,55 +243,114 @@ var AddonSettings = (function () {
     /**
      * Returns the add-on setting to use in add-on.
      *
+     * If only a single option is requested (option=string) the result of the
+     * promise will be that return value;
+     *
      * @name   AddonSettings.get
      * @function
      * @param  {string|null} option name of the option
      * @return {Promise}
      */
-    me.get = function(option) {
-        option = option || null;
+    me.get = async function(option) {
+        let result = undefined;
+        option = option || null; // null requests for all options
 
-        // if all values should be returned, first fetch default ones
-        let addValues = null;
-        if (!option) {
-            addValues = me.getDefaultValue(option);
-        }
-
-        const gettingManagedOption = browser.storage.managed.get(option);
-        const gettingSyncOption = browser.storage.sync.get(option);
+        await gettingManagedOption.catch((error) => {
+            // ignore error, as failing is expected here
+        });
 
         // first try to get managed option
-        gettingManagedOption.then((res) => {
-            Logger.logInfo(`Managed setting got for "${option}".`, res);
-
-            // merge objects if needed
-            if (addValues !== null) {
-                return Object.assign({}, addValues, res);
+        if (managedOptions != null) {
+            if (!option) {
+                result = managedOptions;
+            } else if (managedOptions.hasOwnProperty(option)) {
+                result = managedOptions[option];
+                Logger.logInfo(`Managed setting got for "${option}".`, result);
             }
-
-            return res;
-        });
-
-        gettingManagedOption.catch((error) => {
+        } else {
             // get synced option, otherwise
-            gettingSyncOption.then((res) => {
-                Logger.logInfo(`Setting got for "${option}".`, JSON.parse(JSON.stringify(res)));
-
-                if (addValues !== null) {
-                    return Object.assign({}, addValues, res);
-                }
-
-                return res;
-            }).catch((error) => {
-                // last fallback: default value
-                Logger.logError(`Could not get option "${option}". Using default.`, error);
-
-                // get default value as a last fallback
-                return me.getDefaultValue(option);
+            await gettingSyncOption.catch((error) => {
+                // fatal error (likely already logged), requires synced options
+                Promise.reject(new Error('synced options not available'));
             });
+
+            if (syncOptions != null) {
+                if (!option) {
+                    result = syncOptions;
+                } else if (syncOptions.hasOwnProperty(option)) {
+                    result = syncOptions[option];
+                    Logger.logInfo(`Setting setting got for "${option}".`, result);
+                }
+            }
+        }
+
+        // if result is still undefined, get default value
+        if (result === undefined) {
+            // get default value as a last fallback
+            result = me.getDefaultValue(option);
+            // last fallback: default value
+            Logger.logWarning(`Could not get option "${option}". Using default.`, option);
+
+        } else if (!option) {
+            // if all values should be returned, also include all default ones in addition to fetched ones
+            result = Object.assign({}, me.getDefaultValue(option), result);
+        }
+
+        return result;
+    };
+
+    /**
+     * Fetches all options, so they can be used later.
+     *
+     * This is basically the init method!
+     *
+     * @name   AddonSettings.loadOptions
+     * @function
+     */
+    me.loadOptions = function() {
+        // just fetch everything
+        gettingManagedOption = browser.storage.managed.get();
+        gettingSyncOption = browser.storage.sync.get();
+
+        gettingManagedOption.then((options) => {
+            managedOptions = options;
+        }).catch((error) => {
+            /* only log warning as that is expected when no manifest file is found */
+            Logger.logWarning("could not get managed options", error);
         });
 
-        return gettingManagedOption;
+        gettingSyncOption.then((options) => {
+            syncOptions = options;
+        }).catch((error) => {
+            Logger.logError("could not get sync options", error);
+        });
+    };
+
+    /**
+     * Fetches all options, so they can be used later.
+     *
+     * This is basically the init method!
+     *
+     * @name   AddonSettings.loadOptions
+     * @function
+     */
+    me.loadOptions = function() {
+        // just fetch everything
+        gettingManagedOption = browser.storage.managed.get();
+        gettingSyncOption = browser.storage.sync.get();
+
+        gettingManagedOption.then((options) => {
+            managedOptions = options;
+        }).catch((error) => {
+            /* only log warning as that is expected when no manifest file is found */
+            Logger.logWarning("could not get managed options", error);
+        });
+
+        gettingSyncOption.then((options) => {
+            syncOptions = options;
+        }).catch((error) => {
+            Logger.logError("could not get sync options", error);
+        });
     };
 
     return me;
@@ -303,7 +365,8 @@ var MessageHandler = (function () {
         [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError'),
         [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning'),
         [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo'),
-        [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess')
+        [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess'),
+        [MESSAGE_LEVEL.LOADING]: document.getElementById('messageLoading')
     });
 
     let hooks = {
@@ -324,6 +387,10 @@ var MessageHandler = (function () {
             'hide': null,
         },
         [MESSAGE_LEVEL.SUCCESS]: {
+            'show': null,
+            'hide': null,
+        },
+        [MESSAGE_LEVEL.LOADING]: {
             'show': null,
             'hide': null,
         },
@@ -350,7 +417,7 @@ var MessageHandler = (function () {
 
         const hook = hooks[messagetype][hooktype];
         if (hook !== null && hook !== undefined) {
-            hookhook(param);
+            hook(param);
         }
     }
 
@@ -364,7 +431,7 @@ var MessageHandler = (function () {
      * @function
      * @private
      * @param  {MESSAGE_LEVEL} messagetype
-     * @param  {...*} args
+     * @param  {...*} args optional, if none, the content is not translated
      */
     function showMessage() {
         if (arguments.length < 0) {
@@ -379,16 +446,18 @@ var MessageHandler = (function () {
         // get first element
         const messagetype = args.shift();
 
-        // localize string or fallback to first string ignoring all others
-        const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
-
         // get element by message type
         const elMessage = ELEMENT_BY_TYPE[messagetype];
         if (!elMessage) {
             return Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
         }
 
-        elMessage.textContent = localizedString;
+        // localize string or fallback to first string ignoring all others
+        if (typeof args[0] === "string") {
+            const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
+            elMessage.textContent = localizedString;
+        }
+
         elMessage.classList.remove("invisible");
     }
 
@@ -446,6 +515,17 @@ var MessageHandler = (function () {
     me.hideInfo = function() {
         runHook(MESSAGE_LEVEL.INFO, "hide");
         hideMessage(MESSAGE_LEVEL.INFO);
+    }
+
+    /**
+     * Hide loading message.
+     *
+     * @name   MessageHandler.hiudeLoading
+     * @function
+     */
+    me.hideLoading = function() {
+        runHook(MESSAGE_LEVEL.LOADING, "hide");
+        hideMessage(MESSAGE_LEVEL.LOADING);
     }
 
     /**
@@ -510,6 +590,22 @@ var MessageHandler = (function () {
         runHook(MESSAGE_LEVEL.INFO, "show", args);
 
         args.unshift(MESSAGE_LEVEL.INFO);
+        showMessage.apply(null, args);
+    };
+
+    /**
+     * Shows a loading message.
+     *
+     * @name   MessageHandler.showLoading
+     * @function
+     * @param  {...*} args
+     */
+    me.showLoading = function() {
+        const args = Array.from(arguments);
+
+        runHook(MESSAGE_LEVEL.LOADDING, "show", args);
+
+        args.unshift(MESSAGE_LEVEL.LOADDING);
         showMessage.apply(null, args);
     };
 

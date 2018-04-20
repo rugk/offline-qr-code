@@ -32,5 +32,9 @@ li {
 #popupIconColor {
   display: inline;
 }
+/* @TODO: improve ID! size can be anything! Just needed, because of current JS behaviour */
+#size {
+  width: 5em;
+}
 
 /* TODO: make i icon bigger */
