@@ -7,6 +7,8 @@ This is a (Firefox) Web Extension, which makes it possible to generate a QR code
 In contrast to many other add-ons, which use Google Web APIs for that, this add-on works completely offline. **This QR code generator puts your privacy first!**  
 Effectively, the add-on [prevents any web connection](src/manifest.json#L25) for itself, so it does never contact the web. Thanks to the linked `manifest.json` you can also easily verify, that this claim is true. It works offline! Always.
 
+It has a radically **simple, yet powerful** interface, allowing you to tweak many things in the settings, but being lightweight when you use it. A powerful usability improvement is the feature to **just re-size the QR code** with your mouse by dragging and dropping.
+
 It is inspired by [the old Offline QR code generator add-on](https://github.com/catholicon/OfflineQR) for Firefox 56 and lower. This extension only works with Firefox Quantum (Firefox 57) and higher.
 
 ## Download
