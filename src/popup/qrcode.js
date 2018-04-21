@@ -438,18 +438,24 @@ var UserInterface = (function () {
      * @private
      * @returns {Promise}
      */
-    function saveQrCodeSizeOption(timeout) {
-        // throttle by time
-        if (timeout === undefined) {
-            setTimeout(saveQrCodeSizeOption(true), 1000);
-        }
-
+    function saveQrCodeSizeOption() {
         Logger.logInfo("saved qr code text size/style", JSON.parse(JSON.stringify(qrCodeSizeOption)));
 
         return browser.storage.sync.set({
             "qrCodeSize": qrCodeSizeOption
         });
     }
+
+    /**
+     * Executes saveQrCodeTextSize, but only one time each second.
+     *
+     * This depends on the thottle function from lodash.
+     *
+     * @name   UserInterface.throttledSaveQrCodeSizeOption
+     * @function
+     * @private
+     */
+     const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, 1000);
 
     /**
      * Sets the new size of the QR code.
@@ -474,11 +480,11 @@ var UserInterface = (function () {
         qrLastSize = newSize;
 
         // also save new QR code size if needed
-        if (qrCodeSizeOption.sizeType != "remember") {
+        if (qrCodeSizeOption.sizeType == "remember") {
             qrCodeSizeOption.size = qrLastSize;
 
             // only save QR code size with text size, together
-            saveQrCodeTextSize();
+            throttledSaveQrCodeSizeOption();
         }
     }
 
@@ -506,7 +512,7 @@ var UserInterface = (function () {
         qrCodeSizeOption.sizeText.height = qrCodeText.style.height;
         qrCodeSizeOption.sizeText.width = qrCodeText.style.width;
 
-        return saveQrCodeSizeOption();
+        return throttledSaveQrCodeSizeOption();
     }
 
     /**
@@ -515,9 +521,8 @@ var UserInterface = (function () {
      * @name   UserInterface.resizeElements
      * @function
      * @private
-     * @param {Array|Event} event
      */
-    function resizeElements(event) {
+    function resizeElements() {
         const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
         const qrSizeDiff = newQrCodeSize - qrLastSize;
 
