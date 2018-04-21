@@ -17,10 +17,6 @@ const MESSAGE_LEVEL = Object.freeze({
 function objectIsEmpty(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
-// https://stackoverflow.com/a/22482737
-function isObject(obj) {
-  return obj === Object(obj);
-}
 
 var Logger = (function () {
     let me = {};
