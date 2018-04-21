@@ -1,5 +1,6 @@
 /* prevent vertical scrollbar */
 html, body {
+  /* prevent overflow at bottom */
   overflow: hidden;
   max-height: 100%;
   width: 100%;
@@ -66,7 +67,9 @@ html, body {
   max-height: 100%;
 
   resize: both;
-  height: 100%; /* in FF <=59 not correctly applied when in the overflow menu */
+
+  /* Firefox needs a fixed height, so it can scale the popup large enough when QR code is displayed */
+  height: 6em;
 
   flex-grow: 1;
 

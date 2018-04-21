@@ -30,7 +30,7 @@ As for simple indentation issues, please refere to the [editorconfig file](.edit
 Apart from that, there are some simple rules.
 
 ### JS
-* Use EcmaScript 6!
+* Use EcmaScript 6! Or better 2017. (so `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57
 * We use [JSHint](.jshintrc). Please do use it to lint your files.
 * Especially, as we use a [CSP](manifest.json), please do *not*:
    * use inline JavaScript

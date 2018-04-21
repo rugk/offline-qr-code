@@ -13,6 +13,15 @@ const MESSAGE_LEVEL = Object.freeze({
     "SUCCESS": -3
 });
 
+// global functions
+function objectIsEmpty(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+// https://stackoverflow.com/a/22482737
+function isObject(obj) {
+  return obj === Object(obj);
+}
+
 var Logger = (function () {
     let me = {};
 
@@ -38,13 +47,12 @@ var Logger = (function () {
      * @param  {MESSAGE_LEVEL} messagetype
      * @param  {...*} args
      */
-    me.log = function() {
+    me.log = function(...args) {
         if (arguments.length < 0) {
             // recursive call, it's secure, because this won't fail
             return me.log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
         }
 
-        const args = Array.from(arguments);
         const messagetype = args[0];
         args[0] = ADDON_NAME_SHORT + " [" + MESSAGE_LEVEL_NAME[messagetype] + "]";
 
@@ -67,8 +75,7 @@ var Logger = (function () {
      * @function
      * @param  {...*} args
      */
-    me.logError = function() {
-        const args = Array.from(arguments);
+    me.logError = function(...args) {
         args.unshift(MESSAGE_LEVEL.ERROR);
 
         me.log.apply(null, args);
@@ -81,8 +88,7 @@ var Logger = (function () {
      * @function
      * @param  {...*} args
      */
-    me.logWarning = function() {
-        const args = Array.from(arguments);
+    me.logWarning = function(...args) {
         args.unshift(MESSAGE_LEVEL.WARN);
 
         me.log.apply(null, args);
@@ -97,12 +103,11 @@ var Logger = (function () {
      * @function
      * @param  {...*} args
      */
-    me.logInfo = function() {
+    me.logInfo = function(...args) {
         if (DEBUG_MODE === false) {
             return;
         }
 
-        const args = Array.from(arguments);
         args.unshift(MESSAGE_LEVEL.INFO);
 
         me.log.apply(null, args);
@@ -289,7 +294,7 @@ var AddonSettings = (function () {
             // get default value as a last fallback
             result = me.getDefaultValue(option);
             // last fallback: default value
-            Logger.logWarning(`Could not get option "${option}". Using default.`, option);
+            Logger.logWarning(`Could not get option "${option}". Using default.`, result);
 
         } else if (!option) {
             // if all values should be returned, also include all default ones in addition to fetched ones
@@ -303,9 +308,13 @@ var AddonSettings = (function () {
      * Fetches all options, so they can be used later.
      *
      * This is basically the init method!
+     * It returns a promise, but that must not be used, because the module is
+     * built in a way, so that the actual getting of the options is waiting for
+     * the promise.
      *
      * @name   AddonSettings.loadOptions
      * @function
+     * @return {Promise}
      */
     me.loadOptions = function() {
         // just fetch everything
@@ -324,6 +333,10 @@ var AddonSettings = (function () {
         }).catch((error) => {
             Logger.logError("could not get sync options", error);
         });
+
+        return gettingManagedOption.then(() => {
+            return gettingSyncOption;
+        })
     };
 
     /**
@@ -433,12 +446,10 @@ var MessageHandler = (function () {
      * @param  {MESSAGE_LEVEL} messagetype
      * @param  {...*} args optional, if none, the content is not translated
      */
-    function showMessage() {
+    function showMessage(...args) {
         if (arguments.length < 0) {
             return Logger.logError("MessageHandler.showMessage has been called without parameters");
         }
-
-        const args = Array.from(arguments);
 
         // also log message to console
         Logger.log.apply(null, args);
@@ -552,9 +563,7 @@ var MessageHandler = (function () {
      * @function
      * @param  {...*} args
      */
-    me.showError = function() {
-        const args = Array.from(arguments);
-
+    me.showError = function(...args) {
         runHook(MESSAGE_LEVEL.ERROR, "show", args);
 
         args.unshift(MESSAGE_LEVEL.ERROR);
@@ -568,9 +577,7 @@ var MessageHandler = (function () {
      * @function
      * @param  {...*} args
      */
-    me.showWarning = function() {
-        const args = Array.from(arguments);
-
+    me.showWarning = function(...args) {
         runHook(MESSAGE_LEVEL.WARN, "show", args);
 
         args.unshift(MESSAGE_LEVEL.WARN);
@@ -584,9 +591,7 @@ var MessageHandler = (function () {
      * @function
      * @param  {...*} args
      */
-    me.showInfo = function() {
-        const args = Array.from(arguments);
-
+    me.showInfo = function(...args) {
         runHook(MESSAGE_LEVEL.INFO, "show", args);
 
         args.unshift(MESSAGE_LEVEL.INFO);
@@ -600,9 +605,7 @@ var MessageHandler = (function () {
      * @function
      * @param  {...*} args
      */
-    me.showLoading = function() {
-        const args = Array.from(arguments);
-
+    me.showLoading = function(...args) {
         runHook(MESSAGE_LEVEL.LOADDING, "show", args);
 
         args.unshift(MESSAGE_LEVEL.LOADDING);
@@ -616,9 +619,7 @@ var MessageHandler = (function () {
      * @function
      * @param  {...*} args
      */
-    me.showSuccess = function() {
-        const args = Array.from(arguments);
-
+    me.showSuccess = function(...args) {
         runHook(MESSAGE_LEVEL.SUCCESS, "show", args);
 
         args.unshift(MESSAGE_LEVEL.SUCCESS);
