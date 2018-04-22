@@ -12,6 +12,8 @@ const OptionHandler = (function () {
     let managedInfoIsShown = false;
     let remeberSizeInterval = null;
 
+    let rememberedOptions;
+
     /**
      * Applies option to element.
      *
@@ -45,7 +47,13 @@ const OptionHandler = (function () {
             if (optionGroup === null) {
                 optionValue = optionValues[option];
             } else {
+                const allOptionsInGroup = optionValues[optionGroup];
                 optionValue = optionValues[optionGroup][option];
+
+                // save options if needed
+                if (!rememberedOptions.hasOwnProperty(optionGroup)) {
+                    rememberedOptions[optionGroup] = allOptionsInGroup;
+                }
             }
         }
 
@@ -134,9 +142,11 @@ const OptionHandler = (function () {
      */
     function applyOptionLive(option, optionValue) {
         if (option === undefined) {
+            Logger.logInfo("applying all options live");
+
             const gettingOption = AddonSettings.get();
             return gettingOption.then((res) => {
-                // run for each option, which we knw to handle
+                // run for each option, which we know to handle
                 applyOptionLive("popupIconColored", res.popupIconColored);
                 applyOptionLive("qrCodeSize", res.qrCodeSize);
             });
@@ -213,17 +223,31 @@ const OptionHandler = (function () {
             return;
         }
 
-        let option = elOption.id;
-        let optionValue = getOptionFromElement(elOption);
+        let option;
+        let optionValue;
 
         // if option has a group assigned, first fetch all options of the group for saving
         if (elOption.hasAttribute("data-optiongroup")) {
-            option = elOption.getAttribute("data-optiongroup");
+            const optionGroup = elOption.getAttribute("data-optiongroup");
 
-            optionValue = {};
+            // if options are cached/saved use them to prevent them from getting lost
+            if (rememberedOptions.hasOwnProperty(optionGroup)) {
+                optionValue = rememberedOptions[optionGroup];
+            } else {
+                // otherwise just init empty array
+                optionValue = {};
+            }
+
             document.querySelectorAll(`[data-optiongroup=${option}]`).forEach((elCurrentOption) => {
                 optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
             });
+
+            // use group name as ID for saving
+            option = optionGroup;
+        } else {
+            // use ID for saving
+            option = elOption.id;
+            optionValue = getOptionFromElement(elOption);
         }
 
         Logger.logInfo("save option", elOption, optionValue);
@@ -305,7 +329,7 @@ const OptionHandler = (function () {
     /**
      * Display option in option page.
      *
-     * If the option is not saved already, it uses the default from the HTML file.
+     * If the option is not saved already, it uses the default from common.js.
      *
      * @name   OptionHandler.setOption
      * @function
@@ -357,6 +381,9 @@ const OptionHandler = (function () {
      * @returns {void}
      */
     function loadOptions() {
+        // reset remembered options to prevent arkward errors when reloading of the options happens
+        rememberedOptions = {};
+
         // set each option
         document.querySelectorAll(".setting").forEach((currentElem) => {
             const elementId = currentElem.id;
@@ -421,4 +448,5 @@ const OptionHandler = (function () {
 })();
 
 // init module
+AddonSettings.loadOptions();
 OptionHandler.init();
