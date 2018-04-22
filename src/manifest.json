@@ -44,7 +44,7 @@
   "applications": {
     "gecko": {
       "id": "offline-qr-code@rugk.github.io",
-      "strict_min_version": "57.0a1"
+      "strict_min_version": "52.7.3"
     }
   }
 }
