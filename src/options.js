@@ -237,8 +237,9 @@ const OptionHandler = (function () {
                 // otherwise just init empty array
                 optionValue = {};
             }
+            console.log(JSON.parse(JSON.stringify(rememberedOptions)));
 
-            document.querySelectorAll(`[data-optiongroup=${option}]`).forEach((elCurrentOption) => {
+            document.querySelectorAll(`[data-optiongroup=${optionGroup}]`).forEach((elCurrentOption) => {
                 optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
             });
 
@@ -250,7 +251,7 @@ const OptionHandler = (function () {
             optionValue = getOptionFromElement(elOption);
         }
 
-        Logger.logInfo("save option", elOption, optionValue);
+        Logger.logInfo("save option", elOption, JSON.parse(JSON.stringify(optionValue)));
 
         applyOptionLive(option, optionValue);
 

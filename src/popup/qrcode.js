@@ -267,7 +267,11 @@ const UserInterface = (function () {
     const QR_CODE_SIZE_SNAP = 5; // px
     const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
     const WINDOW_MINIMUM_HEIGHT = 250; // px
+    const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
+    const TIMEOUT_HEIGHT_SCROLLBAR_RESTRICT = 100; // ms
 
+    const elHtml = document.querySelector("html");
+    const elBody = document.querySelector("body");
     const qrCode = document.getElementById("qrcode");
     const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
     const qrCodeContainer = document.getElementById("qrcode-container");
@@ -466,7 +470,7 @@ const UserInterface = (function () {
      * @function
      * @private
      */
-    const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, 1000);
+    const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, THROTTLE_SIZE_SAVING_FOR_REMEMBER);
 
     /**
      * Sets the new size of the QR code.
@@ -651,12 +655,15 @@ const UserInterface = (function () {
                 const minimalSize = qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
                 if (window.innerHeight < minimalSize) {
                     Logger.logError("too small size", window.innerHeight, "shpould be at least: ", minimalSize);
-                    // setTimeout(() => {
-                    //     console.error(qrCodeText, qrCodeSize);
-                    //     setNewQrCodeSize(qrCodeSize.size, true);
-                    // }, 500);
                 }
             }
+
+            // in any case, apply height restriction only after the size has been set
+            // this prevents overflow/display issues.
+            setTimeout(() => {
+                elHtml.classList.add("preventScrollbar");
+                elBody.classList.add("preventScrollbar");
+            }, TIMEOUT_HEIGHT_SCROLLBAR_RESTRICT);
         });
 
         // for some very strange reason, initing it as fast as possible gives better performance when resizing later

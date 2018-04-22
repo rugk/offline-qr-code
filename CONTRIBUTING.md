@@ -30,7 +30,7 @@ As for simple indentation issues, please refere to the [editorconfig file](.edit
 Apart from that, there are some simple rules.
 
 ### JS
-* Use EcmaScript 6! Or better 2017. (so `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57
+* Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.
 * We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines.
   When something is not specified just use common sense and look at how other code in the project is written.
 * Especially, as we use a [CSP](manifest.json), please do *not*:
@@ -43,3 +43,4 @@ Apart from that, there are some simple rules.
 * Use `const` whenever possible (also in local variables in functions), only use `let` when the variable needs to be changed. Don't use `var`.
 * If you write real constants (i.e. `const` variables not written in functions, if their scope e.g. is a "module" or whole project, and which do represent static _literals_, e.g. simple variable types, such as integers, strings, but not selected HTML elements), do write them in UPPERCASE, otherwise write them as usual variables in camelCase.
 * Objects, which should never be modified, should be frozen with `Object.freeze`, so they cannot be modified.
+* Do _not_ use magic numbers. Use (global) constants instead.
