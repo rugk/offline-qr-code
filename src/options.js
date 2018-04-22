@@ -1,16 +1,13 @@
-'use strict';
+"use strict";
 
 /* globals Logger */
 /* globals AddonSettings */
 /* globals MessageHandler */
-/* globals ADDON_NAME */
-/* globals ADDON_NAME_SHORT */
-/* globals MESSAGE_LEVEL */
 
-var OptionHandler = (function () {
-    let me = {};
+const OptionHandler = (function () {
+    const me = {};
 
-    const REMEBER_SIZE_INTERVAL = 500 //sec
+    const REMEBER_SIZE_INTERVAL = 500; // sec
 
     let managedInfoIsShown = false;
     let remeberSizeInterval = null;
@@ -22,13 +19,14 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {string} option string ob object ID
-     * @param  {string|null} optional optiom group, if it is used
+     * @param  {string|null} optionGroup optiom group, if it is used
      * @param  {HTMLElement} elOption where to apply feature
-     * @param  {object|undefined} optionValues object values
+     * @param  {Object|undefined} optionValues object values
+     * @returns {void}
      */
     function applyOptionToElement(option, optionGroup, elOption, optionValues) {
         let optionValue;
-        // ignore, if not set, i.e. use default value from HTML file
+        // get default value if value is not passed
         if (!optionValues.hasOwnProperty(option) && !optionValues.hasOwnProperty(optionGroup)) {
             if (optionGroup === null) {
                 optionValue = AddonSettings.getDefaultValue(option);
@@ -43,9 +41,9 @@ var OptionHandler = (function () {
                 return;
             }
         } else {
-            // get value from settings array
+            // as value is present, get value from settings array
             if (optionGroup === null) {
-                optionValue = optionValues[option]
+                optionValue = optionValues[option];
             } else {
                 optionValue = optionValues[optionGroup][option];
             }
@@ -53,26 +51,27 @@ var OptionHandler = (function () {
 
         // custom handling for special option types
         switch (elOption.getAttribute("type") || elOption.getAttribute("data-type")) {
-            case "checkbox":
-                if (optionValue === null) {
-                    elOption.indeterminate = true;
-                } else {
-                    elOption.checked = (optionValue == true);
-                }
-                break;
-            case "radiogroup":
-                const radioChilds = elOption.getElementsByTagName("input");
+        case "checkbox":
+            if (optionValue === null) {
+                elOption.indeterminate = true;
+            } else {
+                elOption.checked = (optionValue === true);
+            }
+            break;
+        case "radiogroup": {
+            const radioChilds = elOption.getElementsByTagName("input");
 
-                for (const radioElement of radioChilds) {
-                    if (radioElement.getAttribute("type") == "radio" &&
-                        radioElement.getAttribute("value") == optionValue) {
-                        radioElement.setAttribute("checked", "");
-                    }
+            for (const radioElement of radioChilds) {
+                if (radioElement.getAttribute("type") === "radio" &&
+                    radioElement.getAttribute("value") === optionValue) {
+                    radioElement.setAttribute("checked", "");
                 }
-                break;
-            default:
-                // set value
-                elOption.value = optionValue;
+            }
+            break;
+        }
+        default:
+            // set value
+            elOption.value = optionValue;
         }
     }
 
@@ -83,38 +82,38 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {HTMLElement} elOption the element to read option from
-     * @returns {object} the option value
+     * @returns {Object} the option value
      */
     function getOptionFromElement(elOption) {
         let optionValue;
 
         // custom handling for special option types
         switch (elOption.getAttribute("type") || elOption.getAttribute("data-type")) {
-            case "checkbox":
-                if (elOption.indeterminate === true) {
-                    optionValue = null;
-                } else {
-                    optionValue = elOption.checked;
-                }
-                break;
-            case "radiogroup":
-                // use our custom "selected" method, which contains the selected element
-                if (elOption.hasOwnProperty("selected")) {
-                    optionValue = elOption.selected.value;
-                } else {
-                    // go through all possible elements and decide, which is checked
-                    const radioChilds = elOption.getElementsByTagName("input");
+        case "checkbox":
+            if (elOption.indeterminate === true) {
+                optionValue = null;
+            } else {
+                optionValue = elOption.checked;
+            }
+            break;
+        case "radiogroup":
+            // use our custom "selected" method, which contains the selected element
+            if (elOption.hasOwnProperty("selected")) {
+                optionValue = elOption.selected.value;
+            } else {
+                // go through all possible elements and decide, which is checked
+                const radioChilds = elOption.getElementsByTagName("input");
 
-                    for (const radioElement of radioChilds) {
-                        if (radioElement.getAttribute("type") == "radio" &&
+                for (const radioElement of radioChilds) {
+                    if (radioElement.getAttribute("type") === "radio" &&
                             radioElement.hasAttribute("checked")) {
-                            optionValue = radioElement.value;
-                        }
+                        optionValue = radioElement.value;
                     }
                 }
-                break;
-            default:
-                optionValue = elOption.value;
+            }
+            break;
+        default:
+            optionValue = elOption.value;
         }
 
         return optionValue;
@@ -130,12 +129,11 @@ var OptionHandler = (function () {
      * @function
      * @private
      * @param  {string|undefined} option
-     * @param  {object|undefined} optionValue
-     * @returns {Promise} only if called without parameters
+     * @param  {Object|undefined} optionValue
+     * @returns {Promise|null} Promise only if called without parameters
      */
     function applyOptionLive(option, optionValue) {
         if (option === undefined) {
-            AddonSettings.loadOptions();
             const gettingOption = AddonSettings.get();
             return gettingOption.then((res) => {
                 // run for each option, which we knw to handle
@@ -145,46 +143,50 @@ var OptionHandler = (function () {
         }
 
         switch (option) {
-            case "qrCodeSize":
-                const elQrCodeSize = document.getElementById("size");
+        case "qrCodeSize": {
+            const elQrCodeSize = document.getElementById("size");
 
-                if (optionValue.sizeType == "fixed") {
-                        // round not so nice values to better values
-                        let sizeValue = Number(optionValue.size);
-                        // increase number if the difference to next heigher number (dividable by 5) is smaller
-                        if (sizeValue % 5 >= 3 ) {
-                            sizeValue += 5;
-                        }
-                        // "divide" by 5 to get only these values
-                        optionValue.size = sizeValue - (sizeValue % 5);
+            if (optionValue.sizeType === "fixed") {
+                // round not so nice values to better values
+                let sizeValue = Number(optionValue.size);
+                // increase number if the difference to next heigher number (dividable by 5) is smaller
+                if (sizeValue % 5 >= 3 ) {
+                    sizeValue += 5;
+                }
+                // "divide" by 5 to get only these values
+                optionValue.size = sizeValue - (sizeValue % 5);
 
-                        elQrCodeSize.value = optionValue.size;
-                        elQrCodeSize.removeAttribute("disabled");
-                } else {
-                    // disable input of number when remember option is selected
-                    elQrCodeSize.setAttribute("disabled", "");
-                }
+                elQrCodeSize.value = optionValue.size;
+                elQrCodeSize.removeAttribute("disabled");
+            } else {
+                // disable input of number when remember option is selected
+                elQrCodeSize.setAttribute("disabled", "");
+            }
 
-                // enable auto-update of
-                if (optionValue.sizeType == "remember") {
-                    remeberSizeInterval = setInterval((element) => {
-                        console.log("int update", element);
-                        // update element and ignore disabled status and that is of course wanted
-                        setOption("size", "qrCodeSize", element, true);
-                    }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
-                } else if (remeberSizeInterval !== null) {
-                    clearInterval(remeberSizeInterval);
-                }
-            case "popupIconColored":
-                Logger.logInfo("Apply popup icon type directly", optionValue);
-                if (optionValue === true) {
-                    browser.browserAction.setIcon({path: `icons/icon-small-colored.svg`});
-                } else {
-                    // reset icon
-                    browser.browserAction.setIcon({path: null});
-                }
-                break;
+            // enable auto-update of
+            if (optionValue.sizeType === "remember") {
+                remeberSizeInterval = setInterval((element) => {
+                    console.log("int update", element);
+                    // update element and ignore disabled status and that is of course wanted
+                    setOption("size", "qrCodeSize", element, true);
+                }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
+            } else if (remeberSizeInterval !== null) {
+                clearInterval(remeberSizeInterval);
+            }
+            break;
         }
+        case "popupIconColored":
+            Logger.logInfo("Apply popup icon type directly", optionValue);
+            if (optionValue === true) {
+                browser.browserAction.setIcon({path: "icons/icon-small-colored.svg"});
+            } else {
+                // reset icon
+                browser.browserAction.setIcon({path: null});
+            }
+            break;
+        }
+
+        return null;
     }
 
     /**
@@ -193,13 +195,14 @@ var OptionHandler = (function () {
      * @name   OptionHandler.saveOption
      * @function
      * @private
-     * @param  {object} event
+     * @param  {Object} event
+     * @returns {void}
      */
     function saveOption(event) {
         let elOption = event.target;
 
         // radio options need special handling, use (closest) parent
-        if (elOption.getAttribute("type") == "radio") {
+        if (elOption.getAttribute("type") === "radio") {
             elOption = elOption.closest("[data-type=radiogroup]");
             elOption.selected = event.target;
         }
@@ -241,6 +244,7 @@ var OptionHandler = (function () {
      * @name   OptionHandler.showManagedInfo
      * @function
      * @private
+     * @returns {void}
      */
     function showManagedInfo() {
         // prevent re-showings for multiple options
@@ -267,7 +271,7 @@ var OptionHandler = (function () {
      *                                             detect the element
      * @param  {HtmlElement|null} elOption optional element of the option, will
      *                                     be autodetected otherwise
-     * @return {Promise}
+     * @returns {Promise}
      */
     function setManagedOption(option, optionGroup, elOption) {
         if (!elOption) {
@@ -292,8 +296,8 @@ var OptionHandler = (function () {
 
             applyOptionToElement(option, optionGroup, elOption, res);
             // and disable control
-            elOption.setAttribute("disabled", "")
-            elOption.setAttribute("title", browser.i18n.getMessage("optionIsDisabledBecauseManaged"))
+            elOption.setAttribute("disabled", "");
+            elOption.setAttribute("title", browser.i18n.getMessage("optionIsDisabledBecauseManaged"));
             // could also set readonly elOption.setAttribute("readonly", "") //TODO: test
         });
     }
@@ -313,7 +317,7 @@ var OptionHandler = (function () {
      * @param  {HtmlElement|null} elOption optional element of the option, will
      *                                     be autodetected otherwise
      * @param  {bool} ignoreDisabled set to true to ignore disabled check
-     * @return {Promise}
+     * @returns {Promise|void}
      */
     function setOption(option, optionGroup, elOption, ignoreDisabled) {
         if (!elOption) {
@@ -350,8 +354,10 @@ var OptionHandler = (function () {
      * @name   OptionHandler.loadOptions
      * @function
      * @private
+     * @returns {void}
      */
     function loadOptions() {
+        // set each option
         document.querySelectorAll(".setting").forEach((currentElem) => {
             const elementId = currentElem.id;
             let optionGroup = null;
@@ -365,9 +371,10 @@ var OptionHandler = (function () {
 
                 // now set "real"/"usual" option
                 setOption(elementId, optionGroup, currentElem);
-            })
+            });
         });
 
+        // when finished, apply live elements for values if needed
         applyOptionLive();
     }
 
@@ -377,6 +384,7 @@ var OptionHandler = (function () {
      * @name   OptionHandler.resetOptions
      * @function
      * @private
+     * @returns {void}
      */
     function resetOptions() {
         Logger.logInfo("reset options");
@@ -396,6 +404,7 @@ var OptionHandler = (function () {
      *
      * @name   Localizer.init
      * @function
+     * @returns {void}
      */
     me.init = function() {
         loadOptions();
@@ -405,7 +414,7 @@ var OptionHandler = (function () {
         document.querySelectorAll(".save-on-change").forEach((currentElem) => {
             currentElem.addEventListener("change", saveOption);
         });
-        document.getElementById("resetButton").addEventListener("click", resetOptions)
+        document.getElementById("resetButton").addEventListener("click", resetOptions);
     };
 
     return me;

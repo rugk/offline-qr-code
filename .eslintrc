@@ -44,6 +44,7 @@
         "symbol-description": 2,
         "object-shorthand": 1,
         "prefer-promise-reject-errors": 2,
+        /* "prefer-destructuring": 1, */ // https://github.com/eslint/eslint/issues/10250
 
         // additional rules
         "no-new-object": 2,
@@ -64,7 +65,6 @@
         "vars-on-top": 1,
         "yoda": ["error", "never"],
         /* "no-warning-comments": 1, */ // should be enabled later
-        "no-lonely-if": 2,
         "require-await": 1,
         "require-jsdoc": ["error", {
             "require": {
@@ -85,6 +85,7 @@
             "requireReturnDescription": false
         }],
         "wrap-iife": ["error", "inside"],
+        "no-loop-func": 2,
         "linebreak-style": 1, // may be disabled if contributing on Windows
     }
 }
