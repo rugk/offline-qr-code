@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 /* globals Logger */
 /* globals AddonSettings */
 /* globals MessageHandler */
-/* globals ADDON_NAME */
-/* globals ADDON_NAME_SHORT */
 /* globals MESSAGE_LEVEL */
+// lodash
+/* globals throttle, isObject */
 
 // abstracts away all specific handling of QR code library
-var QrLibKjua = (function () {
-    let me = {};
+const QrLibKjua = (function () {
+    const me = {};
 
     /* globals kjua */
 
@@ -45,7 +45,7 @@ var QrLibKjua = (function () {
     me.reset = function() {
         kjuaOptions = {
             // render method: 'canvas' or 'image'
-            render: 'canvas',
+            render: "canvas",
 
             // render pixel-perfect lines
             crisp: true,
@@ -54,7 +54,7 @@ var QrLibKjua = (function () {
             minVersion: 1,
 
             // error correction level: 'L', 'M', 'Q' or 'H'
-            ecLevel: 'H',
+            ecLevel: "H",
 
             // size in pixel
             size: 200,
@@ -63,10 +63,10 @@ var QrLibKjua = (function () {
             ratio: null,
 
             // code color
-            fill: '#0c0c0d',
+            fill: "#0c0c0d",
 
             // background color
-            back: '#ffffff',
+            back: "#ffffff",
 
             // roundend corners in pc: 0..100
             rounded: 0,
@@ -75,7 +75,7 @@ var QrLibKjua = (function () {
             quiet: 0,
 
             // modes: 'plain', 'label' or 'image'
-            mode: 'plain',
+            mode: "plain",
 
             // label/image size and pos in pc: 0..100
             mSize: 30,
@@ -89,8 +89,9 @@ var QrLibKjua = (function () {
      *
      * @name   QrLibKjua.set
      * @function
-     * @param {string} tag
-     * @param {object} value
+     * @param {string} tag the common one you know from the outside, e.g. size
+     * @param {Object} value the value to set for this tag
+     * @returns {void}
      */
     me.set = function(tag, value) {
         if (OPTIONS_MAP.hasOwnProperty(tag)) {
@@ -119,6 +120,7 @@ var QrLibKjua = (function () {
      *
      * @name   QrLibKjua.init
      * @function
+     * @returns {void}
      */
     me.init = function() {
         me.reset();
@@ -127,8 +129,8 @@ var QrLibKjua = (function () {
     return me;
 })();
 
-var QrCreator = (function () {
-    let me = {};
+const QrCreator = (function () {
+    const me = {};
 
     let initFinished = false;
 
@@ -149,6 +151,7 @@ var QrCreator = (function () {
      *
      * @name   QrCreator.generate
      * @function
+     * @returns {void}
      */
     me.generate = function() {
         if (!initFinished) {
@@ -165,6 +168,7 @@ var QrCreator = (function () {
      * @name   QrCreator.setSize
      * @function
      * @param  {int} size
+     * @returns {void}
      */
     me.setSize = function(size) {
         if (size <= 1) {
@@ -181,6 +185,7 @@ var QrCreator = (function () {
      * @name   QrCreator.setText
      * @function
      * @param  {string} text
+     * @returns {void}
      */
     me.setText = function(text) {
         me.setTextInternal(text);
@@ -195,6 +200,7 @@ var QrCreator = (function () {
      * @name   QrCreator.generateFromTab
      * @function
      * @param  {string} text
+     * @returns {void}
      */
     me.setTextInternal = function(text) {
         QrLibKjua.set("text", text);
@@ -206,6 +212,7 @@ var QrCreator = (function () {
      * @name   QrCreator.generateFromTab
      * @function
      * @param  {browser.tabs} tab
+     * @returns {void}
      */
     me.generateFromTab = function(tab) {
         me.setText(tab.url);
@@ -219,7 +226,8 @@ var QrCreator = (function () {
      *
      * @name   QrCreator.generateFromTabs
      * @function
-     * @param  {browser.tabs} tabs
+     * @param  {browser.tabs} tabs tabs passed from browser.tabs
+     * @returns {void}
      */
     me.generateFromTabs = function(tabs) {
         me.generateFromTab(tabs[0]);
@@ -233,7 +241,7 @@ var QrCreator = (function () {
      *
      * @name   QrCreator.init
      * @function
-     * @return {Promise}
+     * @returns {Promise}
      */
     me.init = function() {
         // get all settings
@@ -249,29 +257,27 @@ var QrCreator = (function () {
     return me;
 })();
 
-var UserInterface = (function () {
-    let me = {};
+const UserInterface = (function () {
+    const me = {};
 
-    const TOP_SCROLL_TIMEOUT = 10; //ms
-    const SELECT_TEXT_TIMEOUT = 100; //ms
-    const QR_CODE_REFRESH_TIMEOUT = 200; //ms
-    const QR_CODE_CONTAINER_MARGIN = 40; //px
-    const QR_CODE_SIZE_SNAP = 5; //px
-    const QR_CODE_SIZE_DECREASE_SNAP = 2; //px
-    const WINDOW_MINIMUM_HEIGHT = 250; //px
+    const TOP_SCROLL_TIMEOUT = 10; // ms
+    const SELECT_TEXT_TIMEOUT = 100; // ms
+    const QR_CODE_REFRESH_TIMEOUT = 200; // ms
+    const QR_CODE_CONTAINER_MARGIN = 40; // px
+    const QR_CODE_SIZE_SNAP = 5; // px
+    const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
+    const WINDOW_MINIMUM_HEIGHT = 250; // px
 
-    const elBody = document.querySelectorAll('body')[0];
-    const qrCode = document.getElementById('qrcode');
-    const qrCodePlaceholder = document.getElementById('qrcode-placeholder');
-    const qrCodeContainer = document.getElementById('qrcode-container');
-    const qrCodeResizeContainer = document.getElementById('qrcode-resize-container');
-    const qrCodeText = document.getElementById('qrcodetext');
+    const qrCode = document.getElementById("qrcode");
+    const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
+    const qrCodeContainer = document.getElementById("qrcode-container");
+    const qrCodeResizeContainer = document.getElementById("qrcode-resize-container");
+    const qrCodeText = document.getElementById("qrcodetext");
 
     let placeholderShown = true;
     let qrCodeRefreshTimer = null;
 
     // default/last size
-    let enableResize = false; // to block resize initially while loading
     let qrLastSize = 200;
     let qrCodeSizeOption = {};
 
@@ -281,6 +287,7 @@ var UserInterface = (function () {
      * @name   UserInterface.showPlaceholder
      * @function
      * @private
+     * @returns {void}
      */
     function showPlaceholder() {
         if (placeholderShown === true) {
@@ -301,6 +308,7 @@ var UserInterface = (function () {
      * @name   UserInterface.hidePlaceholder
      * @function
      * @private
+     * @returns {void}
      */
     function hidePlaceholder() {
         if (placeholderShown === false) {
@@ -321,6 +329,7 @@ var UserInterface = (function () {
      * @function
      * @private
      * @param {event} event
+     * @returns {void}
      */
     function refreshQrCode(event) {
         // if a timer is already running and the current call does not finish it
@@ -342,7 +351,7 @@ var UserInterface = (function () {
         Logger.logInfo("new value from textarea: ", text);
 
         // show placeholder when no text is entered
-        if (text == "") {
+        if (text === "") {
             showPlaceholder();
             return;
         } else if (placeholderShown) {
@@ -359,11 +368,11 @@ var UserInterface = (function () {
      * @name   UserInterface.isSelected
      * @function
      * @private
-     * @param {HTMLElement} input
+     * @param {HTMLElement} input the input element this is about
      * @returns {bool}
      */
     function isSelected(input) {
-        return input.selectionStart == 0 && input.selectionEnd == input.value.length;
+        return input.selectionStart === 0 && input.selectionEnd === input.value.length;
     }
 
     /**
@@ -373,9 +382,10 @@ var UserInterface = (function () {
      * @function
      * @private
      * @param {Event} event
+     * @returns {void}
      */
     function selectAllText(event) {
-        const targetIsSelected = document.activeElement == event.target && isSelected(event.target);
+        const targetIsSelected = document.activeElement === event.target && isSelected(event.target);
         // prevent endless loop after two rechecks (i.e. re-check only three times)
         if (targetIsSelected || event.retry > 3) {
             return;
@@ -408,11 +418,12 @@ var UserInterface = (function () {
      * @function
      * @private
      * @param {Event} event
+     * @returns {void}
      */
     function scrollToTop(event) {
         Logger.logInfo("scrollToTop", event);
 
-        if (event.target.scrollTop != 0) {
+        if (event.target.scrollTop !== 0) {
             event.target.scrollTop = 0;
         }
 
@@ -455,7 +466,7 @@ var UserInterface = (function () {
      * @function
      * @private
      */
-     const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, 1000);
+    const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, 1000);
 
     /**
      * Sets the new size of the QR code.
@@ -465,6 +476,7 @@ var UserInterface = (function () {
      * @private
      * @param {int} newSize the new size in px
      * @param {bool} regenerateQr whether the QR code should be regenerated (default: false)
+     * @returns {void}
      */
     function setNewQrCodeSize(newSize, regenerateQr) {
         // apply new size
@@ -480,7 +492,7 @@ var UserInterface = (function () {
         qrLastSize = newSize;
 
         // also save new QR code size if needed
-        if (qrCodeSizeOption.sizeType == "remember") {
+        if (qrCodeSizeOption.sizeType === "remember") {
             qrCodeSizeOption.size = qrLastSize;
 
             // only save QR code size with text size, together
@@ -494,21 +506,21 @@ var UserInterface = (function () {
      * @name   UserInterface.saveQrCodeTextSize
      * @function
      * @private
-     * @returns {Promise}
+     * @returns {Promise} to go on
      */
     function saveQrCodeTextSize() {
         // if setting is disabled, ignore and always return a successful promise
-        if (qrCodeSizeOption.sizeType != "remember") {
-            return new Promise((resolve, reject) => {
+        if (qrCodeSizeOption.sizeType !== "remember") {
+            return new Promise((resolve) => {
                 resolve();
-            })
+            });
         }
 
         if (!isObject(qrCodeSizeOption.sizeText)) {
             qrCodeSizeOption.sizeText = {};
         }
 
-        // Attention: sizeText styles are saved as CSS string
+        // ATTENTION: sizeText styles are saved as CSS string
         qrCodeSizeOption.sizeText.height = qrCodeText.style.height;
         qrCodeSizeOption.sizeText.width = qrCodeText.style.width;
 
@@ -521,6 +533,7 @@ var UserInterface = (function () {
      * @name   UserInterface.resizeElements
      * @function
      * @private
+     * @returns {void}
      */
     function resizeElements() {
         const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
@@ -554,6 +567,7 @@ var UserInterface = (function () {
      * @name   UserInterface.setQrInputFieldText
      * @function
      * @param  {string} text
+     * @returns {void}
      */
     me.setQrInputFieldText = function(text) {
         qrCodeText.textContent = text;
@@ -565,11 +579,11 @@ var UserInterface = (function () {
      * @name   UserInterface.replaceQr
      * @function
      * @param  {HTMLElement} elNewQr
+     * @returns {void}
      */
     me.replaceQr = function(elNewQr) {
         // get old element
         const elOldQrCode = qrCode.firstElementChild;
-        const oldSize = elOldQrCode.getAttribute("width");
 
         // and replace it
         Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
@@ -581,7 +595,7 @@ var UserInterface = (function () {
      *
      * @name   UserInterface.init
      * @function
-     * @return {Promise}
+     * @returns {Promise}
      */
     me.init = function() {
         // set error hooks
@@ -598,7 +612,7 @@ var UserInterface = (function () {
             }
         });
 
-        const gettingQrColor = AddonSettings.get("qrBackgroundColor")
+        const gettingQrColor = AddonSettings.get("qrBackgroundColor");
         gettingQrColor.then((qrBackgroundColor) => {
             if (qrBackgroundColor) {
                 qrCodeContainer.style.backgroundColor = qrBackgroundColor;
@@ -611,11 +625,11 @@ var UserInterface = (function () {
             qrCodeSizeOption = qrCodeSize;
 
 
-            if (qrCodeSize.sizeType == "auto") {
+            if (qrCodeSize.sizeType === "auto") {
                 resizeElements();
             }
 
-            if (qrCodeSize.sizeType == "remember" || qrCodeSize.sizeType == "fixed") {
+            if (qrCodeSize.sizeType === "remember" || qrCodeSize.sizeType === "fixed") {
                 if (qrLastSize === qrCodeSize.size) {
                     Logger.logInfo("QR code last size is the same as current setting, so do not reset");
                     // BUT set CSS stuff to make it consistent
@@ -627,8 +641,8 @@ var UserInterface = (function () {
             }
 
             // also set height of text (also to prevent display errors) when remember is enabled
-            if (qrCodeSize.sizeType == "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
-                Logger.logInfo("restore qr code text size:", qrCodeSize.sizeText)
+            if (qrCodeSize.sizeType === "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
+                Logger.logInfo("restore qr code text size:", qrCodeSize.sizeText);
                 // is saved as CSS string already
                 qrCodeText.style.height = qrCodeSize.sizeText.height;
                 qrCodeText.style.width = qrCodeSize.sizeText.width;
@@ -654,7 +668,7 @@ var UserInterface = (function () {
                 attributes: true,
                 attributeFilter: ["style"]
             });
-        }
+        };
         gettingQrSize.then(startResize).catch(startResize);
 
         // manually focus (and select) element when starting
@@ -678,8 +692,8 @@ const qrCreatorInit = QrCreator.init();
 const userInterfaceInit = UserInterface.init();
 
 // generate QR code from tab, if everything is set up
-qrCreatorInit.then((res) => {
-    userInterfaceInit.then((res) => {
+qrCreatorInit.then(() => {
+    userInterfaceInit.then(() => {
         queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab");

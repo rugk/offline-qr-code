@@ -31,7 +31,8 @@ Apart from that, there are some simple rules.
 
 ### JS
 * Use EcmaScript 6! Or better 2017. (so `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57
-* We use [JSHint](.jshintrc). Please do use it to lint your files.
+* We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines.
+  When something is not specified just use common sense and look at how other code in the project is written.
 * Especially, as we use a [CSP](manifest.json), please do *not*:
    * use inline JavaScript
    * use eval, or other insecure features

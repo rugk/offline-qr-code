@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 // Globals
-const ADDON_NAME = "Offline QR code generator";
+const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
 const ADDON_NAME_SHORT = "Offline QR code";
 
 // "Enums"
@@ -13,13 +13,26 @@ const MESSAGE_LEVEL = Object.freeze({
     "SUCCESS": -3
 });
 
-// global functions
-function objectIsEmpty(obj) {
+/* GLOBAL FUNCTIONS */
+
+/**
+ * Logs a string to console.
+ *
+ * Pass as many strings/output as you want.
+ * For brevity, better prefer the other functions (logError, etc.) instead
+ * of this one.
+ *
+ * @name   objectIsEmpty
+ * @function
+ * @param  {Object} obj
+ * @returns {boolean}
+ */
+function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-var Logger = (function () {
-    let me = {};
+const Logger = (function () {
+    const me = {};
 
     const DEBUG_MODE = true;
 
@@ -42,27 +55,29 @@ var Logger = (function () {
      * @function
      * @param  {MESSAGE_LEVEL} messagetype
      * @param  {...*} args
+     * @returns {void}
      */
     me.log = function(...args) {
         if (arguments.length < 0) {
             // recursive call, it's secure, because this won't fail
-            return me.log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
+            me.log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
+            return;
         }
 
         const messagetype = args[0];
-        args[0] = ADDON_NAME_SHORT + " [" + MESSAGE_LEVEL_NAME[messagetype] + "]";
+        args[0] = `${ADDON_NAME_SHORT} [${MESSAGE_LEVEL_NAME[messagetype]}]`;
 
         switch (messagetype) {
-            case MESSAGE_LEVEL.ERROR:
-                console.error.apply(null, args);
-                break;
-            case MESSAGE_LEVEL.WARN:
-                console.warn.apply(null, args);
-                break;
-            default:
-                console.log.apply(null, args);
+        case MESSAGE_LEVEL.ERROR:
+            console.error.apply(null, args);
+            break;
+        case MESSAGE_LEVEL.WARN:
+            console.warn.apply(null, args);
+            break;
+        default:
+            console.log.apply(null, args);
         }
-    }
+    };
 
     /**
      * Logs a fatal error.
@@ -70,6 +85,7 @@ var Logger = (function () {
      * @name   Logger.logError
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.logError = function(...args) {
         args.unshift(MESSAGE_LEVEL.ERROR);
@@ -83,6 +99,7 @@ var Logger = (function () {
      * @name   Logger.logWarning
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.logWarning = function(...args) {
         args.unshift(MESSAGE_LEVEL.WARN);
@@ -98,6 +115,7 @@ var Logger = (function () {
      * @name   Logger.logInfo
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.logInfo = function(...args) {
         if (DEBUG_MODE === false) {
@@ -112,8 +130,8 @@ var Logger = (function () {
     return me;
 })();
 
-var Localizer = (function () {
-    let me = {};
+const Localizer = (function () {
+    const me = {};
 
     const I18N_ATTRIBUTE = "data-i18n";
 
@@ -146,16 +164,17 @@ var Localizer = (function () {
      * @name   Localizer.replaceI18n
      * @function
      * @private
-     * @param  {HTMLElement} elem element to translate
-     * @param  {string} tag name of the
+     * @param  {HTMLElement} elem
+     * @param  {string} tag
+     * @returns {void}
      */
     function replaceI18n(elem, tag) {
         // localize main content
-        if (tag != "") {
+        if (tag !== "") {
             const translatedMessage = browser.i18n.getMessage(getMessageTag(tag));
             // only set message if it could be retrieved, i.e. do not override HTML fallback
-            if (translatedMessage != "") {
-              elem.textContent = translatedMessage;
+            if (translatedMessage !== "") {
+                elem.textContent = translatedMessage;
             }
         }
 
@@ -167,8 +186,8 @@ var Localizer = (function () {
                 const attributeTag = elem.getAttribute(currentLocaleAttribute);
                 const translatedMessage = browser.i18n.getMessage(getMessageTag(attributeTag));
                 // only set message if it could be retrieved, i.e. do not override HTML fallback
-                if (translatedMessage != "") {
-                  elem.setAttribute(currentAttribute, translatedMessage);
+                if (translatedMessage !== "") {
+                    elem.setAttribute(currentAttribute, translatedMessage);
                 }
             }
         });
@@ -179,6 +198,7 @@ var Localizer = (function () {
      *
      * @name   Localizer.init
      * @function
+     * @returns {void}
      */
     me.init = function() {
         document.querySelectorAll(`[${I18N_ATTRIBUTE}]`).forEach((currentElem) => {
@@ -195,8 +215,8 @@ var Localizer = (function () {
     return me;
 })();
 
-var AddonSettings = (function () {
-    let me = {};
+const AddonSettings = (function () { // eslint-disable-line no-unused-vars
+    const me = {};
 
     let gettingManagedOption;
     let gettingSyncOption;
@@ -208,7 +228,7 @@ var AddonSettings = (function () {
         popupIconColored: false,
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
-        qrErrorCorrection: 'Q',
+        qrErrorCorrection: "Q",
         monospaceFont: false,
         qrCodeSize: {
             sizeType: "fixed",
@@ -224,7 +244,7 @@ var AddonSettings = (function () {
      * @name   AddonSettings.getDefaultValue
      * @function
      * @param  {string|null} option name of the option
-     * @returns {object|undefined}
+     * @returns {Object|undefined}
      */
     me.getDefaultValue = function (option) {
         // return all default values
@@ -239,7 +259,7 @@ var AddonSettings = (function () {
             Logger.logError(`Default value for "${option}" missing.`);
             return undefined;
         }
-    }
+    };
 
     /**
      * Returns the add-on setting to use in add-on.
@@ -250,13 +270,13 @@ var AddonSettings = (function () {
      * @name   AddonSettings.get
      * @function
      * @param  {string|null} option name of the option
-     * @return {Promise}
+     * @returns {Promise}
      */
     me.get = async function(option) {
         let result = undefined;
         option = option || null; // null requests for all options
 
-        await gettingManagedOption.catch((error) => {
+        await gettingManagedOption.catch(() => {
             // ignore error, as failing is expected here
         });
 
@@ -270,9 +290,9 @@ var AddonSettings = (function () {
             }
         } else {
             // get synced option, otherwise
-            await gettingSyncOption.catch((error) => {
+            await gettingSyncOption.catch(() => {
                 // fatal error (likely already logged), requires synced options
-                Promise.reject(new Error('synced options not available'));
+                Promise.reject(new Error("synced options not available"));
             });
 
             if (syncOptions != null) {
@@ -310,7 +330,7 @@ var AddonSettings = (function () {
      *
      * @name   AddonSettings.loadOptions
      * @function
-     * @return {Promise}
+     * @returns {Promise}
      */
     me.loadOptions = function() {
         // just fetch everything
@@ -332,7 +352,7 @@ var AddonSettings = (function () {
 
         return gettingManagedOption.then(() => {
             return gettingSyncOption;
-        })
+        });
     };
 
     /**
@@ -342,6 +362,7 @@ var AddonSettings = (function () {
      *
      * @name   AddonSettings.loadOptions
      * @function
+     * @returns {void}
      */
     me.loadOptions = function() {
         // just fetch everything
@@ -365,43 +386,43 @@ var AddonSettings = (function () {
     return me;
 })();
 
-var MessageHandler = (function () {
-    let me = {};
+const MessageHandler = (function () {// eslint-disable-line no-unused-vars
+    const me = {};
 
     // const elWarning = document.getElementById('messageWarning');
 
     const ELEMENT_BY_TYPE = Object.freeze({
-        [MESSAGE_LEVEL.ERROR]: document.getElementById('messageError'),
-        [MESSAGE_LEVEL.WARN]: document.getElementById('messageWarning'),
-        [MESSAGE_LEVEL.INFO]: document.getElementById('messageInfo'),
-        [MESSAGE_LEVEL.SUCCESS]: document.getElementById('messageSuccess'),
-        [MESSAGE_LEVEL.LOADING]: document.getElementById('messageLoading')
+        [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
+        [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
+        [MESSAGE_LEVEL.INFO]: document.getElementById("messageInfo"),
+        [MESSAGE_LEVEL.SUCCESS]: document.getElementById("messageSuccess"),
+        [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
     });
 
-    let hooks = {
-        'global': {
-            'show': null,
-            'hide': null,
+    const hooks = {
+        "global": {
+            "show": null,
+            "hide": null,
         },
         [MESSAGE_LEVEL.ERROR]: {
-            'show': null,
-            'hide': null,
+            "show": null,
+            "hide": null,
         },
         [MESSAGE_LEVEL.WARN]: {
-            'show': null,
-            'hide': null,
+            "show": null,
+            "hide": null,
         },
         [MESSAGE_LEVEL.INFO]: {
-            'show': null,
-            'hide': null,
+            "show": null,
+            "hide": null,
         },
         [MESSAGE_LEVEL.SUCCESS]: {
-            'show': null,
-            'hide': null,
+            "show": null,
+            "hide": null,
         },
         [MESSAGE_LEVEL.LOADING]: {
-            'show': null,
-            'hide': null,
+            "show": null,
+            "hide": null,
         },
     };
 
@@ -416,12 +437,14 @@ var MessageHandler = (function () {
      * @private
      * @param  {MESSAGE_LEVEL|global} messagetype
      * @param  {string} hooktype the type you want to call
-     * @param  {object} param the parameter to pass to the function
+     * @param  {Object} param the parameter to pass to the function
+     * @returns {void}
      */
     function runHook(messagetype, hooktype, param) {
-        if (hooktype != 'global') {
+        // when not global itself -> to prevent infinite loop
+        if (hooktype !== "global") {
             // recursively run myself for global hook first
-            runHook(messagetype, 'global', param);
+            runHook(messagetype, "global", param);
         }
 
         const hook = hooks[messagetype][hooktype];
@@ -441,10 +464,12 @@ var MessageHandler = (function () {
      * @private
      * @param  {MESSAGE_LEVEL} messagetype
      * @param  {...*} args optional, if none, the content is not translated
+     * @returns {void}
      */
     function showMessage(...args) {
         if (arguments.length < 0) {
-            return Logger.logError("MessageHandler.showMessage has been called without parameters");
+            Logger.logError("MessageHandler.showMessage has been called without parameters");
+            return;
         }
 
         // also log message to console
@@ -456,7 +481,8 @@ var MessageHandler = (function () {
         // get element by message type
         const elMessage = ELEMENT_BY_TYPE[messagetype];
         if (!elMessage) {
-            return Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
+            Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
+            return;
         }
 
         // localize string or fallback to first string ignoring all others
@@ -477,6 +503,7 @@ var MessageHandler = (function () {
      * @function
      * @private
      * @param  {MESSAGE_LEVEL} messagetype
+     * @returns {void}
      */
     function hideMessage(messagetype) {
         if (messagetype !== undefined && messagetype !== null) {
@@ -488,7 +515,7 @@ var MessageHandler = (function () {
         MESSAGE_LEVEL.forEach((currentType) => {
             // recursive call myself to hide element
             me.hideMessage(currentType);
-        })
+        });
     }
 
     /**
@@ -496,55 +523,60 @@ var MessageHandler = (function () {
      *
      * @name   MessageHandler.hideError
      * @function
+     * @returns {void}
      */
     me.hideError = function() {
         runHook(MESSAGE_LEVEL.ERROR, "hide");
         hideMessage(MESSAGE_LEVEL.ERROR);
-    }
+    };
 
     /**
      * Hide error message.
      *
      * @name   MessageHandler.hideError
      * @function
+     * @returns {void}
      */
     me.hideWarning = function() {
         runHook(MESSAGE_LEVEL.WARN, "hide");
         hideMessage(MESSAGE_LEVEL.WARN);
-    }
+    };
 
     /**
      * Hide info message.
      *
      * @name   MessageHandler.hideInfo
      * @function
+     * @returns {void}
      */
     me.hideInfo = function() {
         runHook(MESSAGE_LEVEL.INFO, "hide");
         hideMessage(MESSAGE_LEVEL.INFO);
-    }
+    };
 
     /**
      * Hide loading message.
      *
      * @name   MessageHandler.hiudeLoading
      * @function
+     * @returns {void}
      */
     me.hideLoading = function() {
         runHook(MESSAGE_LEVEL.LOADING, "hide");
         hideMessage(MESSAGE_LEVEL.LOADING);
-    }
+    };
 
     /**
      * Hide success message.
      *
      * @name   MessageHandler.hideSuccess
      * @function
+     * @returns {void}
      */
     me.hideSuccess = function() {
         runHook(MESSAGE_LEVEL.SUCCESS, "hide");
         hideMessage(MESSAGE_LEVEL.SUCCESS);
-    }
+    };
 
     /**
      * Show a critical error.
@@ -558,12 +590,13 @@ var MessageHandler = (function () {
      * @name   MessageHandler.showError
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.showError = function(...args) {
         runHook(MESSAGE_LEVEL.ERROR, "show", args);
 
         args.unshift(MESSAGE_LEVEL.ERROR);
-        showMessage.apply(null, args);
+        showMessage(...args);
     };
 
     /**
@@ -572,12 +605,13 @@ var MessageHandler = (function () {
      * @name   MessageHandler.showWarning
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.showWarning = function(...args) {
         runHook(MESSAGE_LEVEL.WARN, "show", args);
 
         args.unshift(MESSAGE_LEVEL.WARN);
-        showMessage.apply(null, args);
+        showMessage(...args);
     };
 
     /**
@@ -586,12 +620,13 @@ var MessageHandler = (function () {
      * @name   MessageHandler.showInfo
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.showInfo = function(...args) {
         runHook(MESSAGE_LEVEL.INFO, "show", args);
 
         args.unshift(MESSAGE_LEVEL.INFO);
-        showMessage.apply(null, args);
+        showMessage(...args);
     };
 
     /**
@@ -600,12 +635,13 @@ var MessageHandler = (function () {
      * @name   MessageHandler.showLoading
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.showLoading = function(...args) {
         runHook(MESSAGE_LEVEL.LOADDING, "show", args);
 
         args.unshift(MESSAGE_LEVEL.LOADDING);
-        showMessage.apply(null, args);
+        showMessage(...args);
     };
 
     /**
@@ -614,12 +650,13 @@ var MessageHandler = (function () {
      * @name   MessageHandler.showSuccess
      * @function
      * @param  {...*} args
+     * @returns {void}
      */
     me.showSuccess = function(...args) {
         runHook(MESSAGE_LEVEL.SUCCESS, "show", args);
 
         args.unshift(MESSAGE_LEVEL.SUCCESS);
-        showMessage.apply(null, args);
+        showMessage(...args);
     };
 
     /**
@@ -636,11 +673,12 @@ var MessageHandler = (function () {
      * @param  {MESSAGE_LEVEL|string} messagetype use string "global" for a global hook
      * @param {function} hookShown
      * @param {function} hookHidden
+     * @returns {void}
      */
     me.setHook = function(messagetype, hookShown, hookHidden) {
         hooks[messagetype].show = hookShown;
         hooks[messagetype].hide = hookHidden;
-    }
+    };
 
     return me;
 })();

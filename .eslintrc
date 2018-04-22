@@ -1,0 +1,90 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "impliedStrict": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "webextensions": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        // basic rules
+        "semi": 1,
+        "semi-style": 2,
+        "semi-spacing": 1,
+        "camelcase": 2,
+        "quotes": ["warn", "double", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": false
+        }],
+        "brace-style": 2,
+        "no-console": 0,
+
+        // just to make sure (are defaults)
+        "indent": ["error", 4],
+
+        // technically required, because of CSP
+        "no-eval": 2,
+        "no-implied-eval": 2,
+
+        // great new EcmaScript features
+        "prefer-const": 2,
+        "no-var": 1,
+        "prefer-arrow-callback": 1,
+        "prefer-rest-params": 2,
+        "prefer-spread": 2,
+        "prefer-template": 1,
+        "template-curly-spacing": 1,
+        "symbol-description": 2,
+        "object-shorthand": 1,
+        "prefer-promise-reject-errors": 2,
+
+        // additional rules
+        "no-new-object": 2,
+        "eqeqeq": ["error", "smart"],
+        "curly": ["error", "all"],
+        "dot-location": 1,
+        "dot-notation": 2,
+        "no-array-constructor": 2,
+        "no-throw-literal": 2,
+        "no-self-compare": 2,
+        "no-useless-call": 1,
+        "consistent-return": 2,
+        "spaced-comment": 1,
+        "no-multi-spaces": 1,
+        "no-new-wrappers": 2,
+        "no-script-url": 2,
+        "no-void": 1,
+        "vars-on-top": 1,
+        "yoda": ["error", "never"],
+        /* "no-warning-comments": 1, */ // should be enabled later
+        "no-lonely-if": 2,
+        "require-await": 1,
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": false,
+                "ClassDeclaration": false,
+                "ArrowFunctionExpression": false
+            }
+        }],
+        "valid-jsdoc": ["error", {
+            "prefer": {
+                "return": "returns"
+            },
+            "preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string" },
+            "requireReturnType": true,
+            "matchDescription": ".+",
+            "requireParamDescription": false,
+            "requireReturnDescription": false
+        }],
+        "wrap-iife": ["error", "inside"],
+        "linebreak-style": 1, // may be disabled if contributing on Windows
+    }
+}
