@@ -15,20 +15,31 @@ ul {
 }
 li {
   list-style-type: none;
-  margin: 0.75em;
+  margin-top: 8px;
   padding: 0px;
 }
 /* in a fieldset e.g. we use a condensed version */
 .condensed-list {
-  margin: 0.2em;
   margin-left: 0px;
 }
 
 fieldset {
+  /* same border style as separators above */
   border: 1px solid;
   border-radius: 4px;
   border-color: #d7d7db; /* Firefox: --in-content-box-border-color */
+
+  /* a big width, but not too big */
+  display: inline-block;
   width: auto;
+  min-width: 60vw;
+
+  margin-bottom: 4px;
+}
+
+/* when a setting has a label *before* it, add some margin */
+label + .setting {
+  margin-left: 8px;
 }
 
 .helper-text {
@@ -37,7 +48,7 @@ fieldset {
   /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
   margin-left: 28px;
 
-  margin-top: 0.1em;
+  margin-top: 4px;
 }
 
 /* special options values */
@@ -47,7 +58,6 @@ fieldset {
 }
 /* @TODO: improve ID! size can be anything! Just needed, because of current JS behaviour */
 #size {
-  margin-left: 4px;
   width: 4.5em;
 }
 

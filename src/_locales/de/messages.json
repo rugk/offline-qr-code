@@ -67,15 +67,15 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
   "optionQrCodeColor": {
-    "message": "QR-Code-Farbe: ",
+    "message": "QR-Code-Farbe:",
     "description": "This is an option shown in the add-on settings."
   },
   "optionQrCodeBackgroundColor": {
-    "message": "QR-Code-Hintergrundfarbe: ",
+    "message": "QR-Code-Hintergrundfarbe:",
     "description": "This is an option shown in the add-on settings."
   },
   "optionErrorCorrection": {
-    "message": "Fehlerkorrekturlevel: ",
+    "message": "Fehlerkorrekturlevel:",
     "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcLow": {

@@ -66,16 +66,29 @@
     "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
+
+  "optionQrCodeSize": {
+    "message": "QR code size",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "Fixed size:",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+
+
   "optionQrCodeColor": {
-    "message": "QR code color: ",
+    "message": "QR code color:",
     "description": "This is an option shown in the add-on settings."
   },
+
   "optionQrCodeBackgroundColor": {
-    "message": "QR code background color: ",
+    "message": "QR code background color:",
     "description": "This is an option shown in the add-on settings."
   },
+
   "optionErrorCorrection": {
-    "message": "Error correction level: ",
+    "message": "Error correction level:",
     "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcLow": {
