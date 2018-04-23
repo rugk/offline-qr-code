@@ -18,6 +18,19 @@ li {
   margin: 0.75em;
   padding: 0px;
 }
+/* in a fieldset e.g. we use a condensed version */
+.condensed-list {
+  margin: 0.2em;
+  margin-left: 0px;
+}
+
+fieldset {
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: #d7d7db; /* Firefox: --in-content-box-border-color */
+  width: auto;
+}
+
 .helper-text {
   display: block;
   color: #737373; /* Grey 50 */
@@ -34,7 +47,8 @@ li {
 }
 /* @TODO: improve ID! size can be anything! Just needed, because of current JS behaviour */
 #size {
-  width: 5em;
+  margin-left: 4px;
+  width: 4.5em;
 }
 
 /* TODO: make i icon bigger */

@@ -23,13 +23,22 @@ If the `data-i18n` value is present, it will additionally try to translate the h
 
 You should always hardcode an English fallback string in the HTML file, so it can use this, if all JS localization fails.
 
-## Coding guidelines
+## Coding
+
+### Getting started
+
+Developing/improving a WebExtension add-on is easy! **If you have ever made some stuff with HTML/CSS/JS you can do that, too!** It's built on the same technologies.
+
+* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions's dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
+* **Change code:** When it is loaded you can just change the code (and press "Reload", if needed) and you'll see the result. That is it!
+
+### Coding guidelines
 
 As for simple indentation issues, please refere to the [editorconfig file](.editorconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
 
 Apart from that, there are some simple rules.
 
-### JS
+#### JS
 * Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.
 * We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines.
   When something is not specified just use common sense and look at how other code in the project is written.
