@@ -83,6 +83,10 @@
     "message": "Automatically adjust size",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "Mostly useful on mobile devices, where the QR code opens in a new tab.",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+  },
   "optionQrCodeSizeRemember": {
     "message": "Remember last size",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
