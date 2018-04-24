@@ -73,9 +73,20 @@
   },
   "optionQrCodeSizeFixed": {
     "message": "Fixed size:",
-    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
-
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "Automatically adjust size",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "Remember last size",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
 
   "optionQrCodeColor": {
     "message": "QR code color:",
