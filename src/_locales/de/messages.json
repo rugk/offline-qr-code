@@ -13,7 +13,7 @@
     "description": "The title for the button, which opens the popup."
   },
 
-  // errors
+  // errors or other messages
   "unknownError": {
     "message": "unbekannter Fehler",
     "description": ""
@@ -38,6 +38,19 @@
     "message": "Konnte diese Einstellung nicht speichern.",
     "description": "When a setting could not be saved."
   },
+  "couldNotLoadOptions": {
+    "message": "Konnte Einstellungen nicht laden.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "resettingOptionsWorked": {
+    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Konnte Optionen nicht zurück setzen!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR-Code-Platzhalter-Bild",
@@ -127,13 +140,5 @@
   "optionsResetButton": {
     "message": "Setze alle Einstellungen auf Standardwerte zurück",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
-  },
-  "resettingOptionsWorked": {
-    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
-    "description": "The message shown, when the options of the settings were reset."
-  },
-  "resettingOptionsFailed": {
-    "message": "Konnte Optionen nicht zurück setzen!",
-    "description": "The message shown, when the options of the settings could not have been reset."
   }
 }

@@ -13,7 +13,7 @@
     "description": "The title for the button, which opens the popup."
   },
 
-  // errors
+  // errors or other messages
   "unknownError": {
     "message": "unknown error",
     "description": ""
@@ -38,6 +38,19 @@
     "message": "Could not save this setting.",
     "description": "When a setting could not be saved."
   },
+  "couldNotLoadOptions": {
+    "message": "Could not load settings.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "resettingOptionsWorked": {
+    "message": "All settings are now back to defaults again!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Could not reset options!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR code placeholder image",
@@ -131,14 +144,5 @@
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
-  },
-  "resettingOptionsWorked": {
-    "message": "All settings are now back to defaults again!",
-    "description": "The message shown, when the options of the settings were reset."
-  },
-  "resettingOptionsFailed": {
-    "message": "Could not reset options!",
-    "description": "The message shown, when the options of the settings could not have been reset."
   }
-
 }

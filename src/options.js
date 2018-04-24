@@ -152,6 +152,8 @@ const OptionHandler = (function () {
             });
         }
 
+        Logger.logInfo("applyOptionLive:", option, optionValue);
+
         switch (option) {
         case "qrCodeSize": {
             const elQrCodeSize = document.getElementById("size");
@@ -173,10 +175,9 @@ const OptionHandler = (function () {
                 elQrCodeSize.setAttribute("disabled", "");
             }
 
-            // enable auto-update of
+            // enable auto-update of size in input field (if changed while settings are open)
             if (optionValue.sizeType === "remember") {
                 remeberSizeInterval = setInterval((element) => {
-                    console.log("int update", element);
                     // update element and ignore disabled status and that is of course wanted
                     setOption("size", "qrCodeSize", element, true);
                 }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
@@ -186,7 +187,6 @@ const OptionHandler = (function () {
             break;
         }
         case "popupIconColored":
-            Logger.logInfo("Apply popup icon type directly", optionValue);
             if (optionValue === true) {
                 browser.browserAction.setIcon({path: "icons/icon-small-colored.svg"});
             } else {
@@ -237,7 +237,6 @@ const OptionHandler = (function () {
                 // otherwise just init empty array
                 optionValue = {};
             }
-            console.log(JSON.parse(JSON.stringify(rememberedOptions)));
 
             document.querySelectorAll(`[data-optiongroup=${optionGroup}]`).forEach((elCurrentOption) => {
                 optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
@@ -379,31 +378,37 @@ const OptionHandler = (function () {
      * @name   OptionHandler.loadOptions
      * @function
      * @private
-     * @returns {void}
+     * @returns {Promise}
      */
     function loadOptions() {
         // reset remembered options to prevent arkward errors when reloading of the options happens
         rememberedOptions = {};
+        const allPromises = [];
 
         // set each option
-        document.querySelectorAll(".setting").forEach((currentElem) => {
+        document.querySelectorAll(".setting").forEach((currentElem, index) => {
             const elementId = currentElem.id;
             let optionGroup = null;
             if (currentElem.hasAttribute("data-optiongroup")) {
                 optionGroup = currentElem.getAttribute("data-optiongroup");
             }
 
-            setManagedOption(elementId, optionGroup, currentElem).catch((error) => {
+            allPromises[index] = setManagedOption(elementId, optionGroup, currentElem).catch((error) => {
                 /* only log warning as that is expected when no manifest file is found */
                 Logger.logWarning("could not get managed options", error);
 
                 // now set "real"/"usual" option
-                setOption(elementId, optionGroup, currentElem);
+                return setOption(elementId, optionGroup, currentElem);
             });
         });
 
-        // when finished, apply live elements for values if needed
-        applyOptionLive();
+        // when everything is finished, apply live elements for values if needed
+        const allOptionsLoaded = Promise.all(allPromises);
+        allOptionsLoaded.then(() => {
+            applyOptionLive();
+        });
+
+        return allOptionsLoaded;
     }
 
     /**
@@ -412,18 +417,29 @@ const OptionHandler = (function () {
      * @name   OptionHandler.resetOptions
      * @function
      * @private
+     * @param {Event} event
      * @returns {void}
      */
-    function resetOptions() {
+    function resetOptions(event) {
         Logger.logInfo("reset options");
 
-        browser.storage.sync.clear().then(() => {
-            loadOptions();
+        // disable reset button (which triggered this) until process is running
+        event.target.setAttribute("disabled", "");
 
-            MessageHandler.showSuccess("resettingOptionsWorked");
+        browser.storage.sync.clear().then(() => {
+            // needs to reset some custom options, as they may prevent (correctly) loading settings later
+            const elQrCodeSize = document.getElementById("size");
+            elQrCodeSize.removeAttribute("disabled");
+
+            return loadOptions().then(() => {
+                MessageHandler.showSuccess("resettingOptionsWorked");
+            });
         }).catch((error) => {
             Logger.logError(error);
-            MessageHandler.showSuccess("resettingOptionsFailed");
+            MessageHandler.showError("resettingOptionsFailed");
+        }).finally(() => {
+            // re-enable button
+            event.target.removeAttribute("disabled");
         });
     }
 
@@ -435,7 +451,11 @@ const OptionHandler = (function () {
      * @returns {void}
      */
     me.init = function() {
-        loadOptions();
+        loadOptions().catch((error) => {
+            Logger.logError(error);
+            MessageHandler.showError("couldNotLoadOptions");
+        });
+
         document.querySelectorAll(".save-on-input").forEach((currentElem) => {
             currentElem.addEventListener("input", saveOption);
         });
