@@ -1,0 +1,2 @@
+This add-on will never (and cannot) send any information to the add-on author or any third-party. It is technically restricted, so that it has no ability to connect to the internet.
+

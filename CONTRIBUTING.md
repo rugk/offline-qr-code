@@ -2,7 +2,7 @@ Nice to see you want to contribute! :+1:
 
 ## Translations
 
-It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSOn files directly.
+It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSON files directly.
 To do so, go to [`_locales/en`](_locales/en) and copy the English [`messages.json`](_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`_locales`](_locales) with the abbreviation of the language you want to translate.
 
 At the end, just submit a Pull Request.
@@ -13,6 +13,12 @@ For more details, [see the official docs](https://developer.mozilla.org/Add-ons/
 ### Translation style
 
 The English "you" should be translated in a personal way, if the target language differentiates between "you" for "anybody"/"they" and "you" for "the user of this extension". In German, that e.g. means you can translate it with "du [kannst etwas machen]" instead of "man [kann etwas machen]".
+
+### Translations of add-on description
+
+All texts shown on AMO (addons.mozilla.org) are maintained in [`assets/texts`](assets/texts). Again, you can use the English template there.
+The files have different formats, but all of them are easily translatable with any text editor.
+Note that the `amoScreenshots.csv` file refers to the screenshot descriptions you can see when you click on the screenshots of AMO. The first column there is the file name, which you can see in [`assets/screenshots`](assets/screenshots), and does _not_ need to be translated.
 
 ### Internationalisation of HTML files
 

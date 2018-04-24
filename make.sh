@@ -1,6 +1,6 @@
 #!/bin/sh
 
-EXTENSION_NAME="offlineqr"
+EXTENSION_NAME="offline-qr-code@rugk.github.io"
 
 mkdir "build"
 
@@ -8,8 +8,8 @@ mkdir "build"
 mv LICENSE.md src/LICENSE.md
 
 # create XPI
-cd src
-zip -r -FS "../build/$EXTENSION_NAME.xpi" *
+cd src || exit
+zip -r -FS "../build/$EXTENSION_NAME.xpi" ./*
 
 mv LICENSE.md ../LICENSE.md
 cd ..

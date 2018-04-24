@@ -1,0 +1,3 @@
+Dieses Add-on erlaubt dir QR-Codes mit der URL des aktiven Tabs oder jedem anderen Text schnell & einfach zu erstellen!
+
+Es funktioniert offline und schützt deine Privatsphäre. Und du kannst weitere Features wie farbige QR-Codes genießen!
