@@ -425,7 +425,10 @@ const OptionHandler = (function () {
      * @returns {void}
      */
     function resetOptions(event) {
-        if(!confirm(browser.i18n.getMessage("resetOptionsMessage"))) return;
+        const resetOptionsConfirmation = confirm(browser.i18n.getMessage("resetOptionsMessage"));
+        if(!resetOptionsConfirmation) {
+            return;
+        }
 
         Logger.logInfo("reset options");
 
