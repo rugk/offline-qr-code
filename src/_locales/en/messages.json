@@ -50,6 +50,10 @@
     "message": "Could not reset options!",
     "description": "The message shown, when the options of the settings could not have been reset."
   },
+  "resetOptionsMessage": {
+    "message": "Are you sure that you want to reset all options?",
+    "description": "The message shown, when the user is prompted to confirm the resetting of all options"
+  },
 
   // placeholder
   "qrCodePlaceholder": {
