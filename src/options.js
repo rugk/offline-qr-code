@@ -425,6 +425,8 @@ const OptionHandler = (function () {
      * @returns {void}
      */
     function resetOptions(event) {
+        if(!confirm(browser.i18n.getMessage("resetOptionsMessage"))) return;
+
         Logger.logInfo("reset options");
 
         // disable reset button (which triggered this) until process is running
