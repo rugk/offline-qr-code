@@ -197,13 +197,7 @@ const OptionHandler = (function () {
             break;
 
         case "debugMode":
-            if (optionValue === true) {
-                browser.browserAction.setIcon({path: "icons/icon-small-colored.svg"});
-            } else {
-                // reset icon
-                browser.browserAction.setIcon({path: null});
-            }
-            break;
+            Logger.setDebugMode(optionValue);
         }
 
         return null;

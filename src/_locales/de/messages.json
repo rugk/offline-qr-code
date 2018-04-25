@@ -79,6 +79,7 @@
     "message": "Zeigt ein farbiges Icon anstatt eines schwarz/weißen Icons in der Toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
+
   "optionQrCodeSize": {
     "message": "QR-Code-Größe",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
@@ -103,10 +104,12 @@
     "message": "An letzte Größe erinnern",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
+
   "optionQrCodeColor": {
     "message": "QR-Code-Farbe:",
     "description": "This is an option shown in the add-on settings."
   },
+
   "optionQrCodeBackgroundColor": {
     "message": "QR-Code-Hintergrundfarbe:",
     "description": "This is an option shown in the add-on settings."
@@ -135,6 +138,15 @@
   "optionUseMonospaceFont": {
     "message": "Benutze Monospace-Schrift",
     "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionDebugMode": {
+    "message": "Aktiviere den Debug-Modus",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "Dies ist nur nützlich, um eine detailliertere Logausgabe in der Konsole zu erhalten, z.B. zum Melden von Fehlern.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
   },
 
   "optionsResetButton": {

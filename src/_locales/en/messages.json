@@ -141,6 +141,15 @@
     "description": "This is an option shown in the add-on settings."
   },
 
+  "optionDebugMode": {
+    "message": "Enable debug mode",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "This is only useful to get more detailed logging output in the console for reporting bugs, etc.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
+  },
+
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
