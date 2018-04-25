@@ -24,7 +24,6 @@
             "allowTemplateLiterals": false
         }],
         "brace-style": 2,
-        "no-console": 0,
 
         // just to make sure (are defaults)
         "indent": ["error", 4],

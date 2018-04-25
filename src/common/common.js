@@ -16,11 +16,7 @@ const MESSAGE_LEVEL = Object.freeze({
 /* GLOBAL FUNCTIONS */
 
 /**
- * Logs a string to console.
- *
- * Pass as many strings/output as you want.
- * For brevity, better prefer the other functions (logError, etc.) instead
- * of this one.
+ * Determinates whether an object is empty or not.
  *
  * @name   objectIsEmpty
  * @function
@@ -34,7 +30,7 @@ function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
 const Logger = (function () {
     const me = {};
 
-    const DEBUG_MODE = true;
+    let debugMode = null;
 
     const MESSAGE_LEVEL_NAME = Object.freeze({
         [MESSAGE_LEVEL.ERROR]: "ERROR",
@@ -67,6 +63,7 @@ const Logger = (function () {
         const messagetype = args[0];
         args[0] = `${ADDON_NAME_SHORT} [${MESSAGE_LEVEL_NAME[messagetype]}]`;
 
+        /* eslint-disable no-console */
         switch (messagetype) {
         case MESSAGE_LEVEL.ERROR:
             console.error.apply(null, args);
@@ -77,6 +74,7 @@ const Logger = (function () {
         default:
             console.log.apply(null, args);
         }
+        /* eslint-enable no-console */
     };
 
     /**
@@ -118,13 +116,39 @@ const Logger = (function () {
      * @returns {void}
      */
     me.logInfo = function(...args) {
-        if (DEBUG_MODE === false) {
+        // skip log only, when deliberately disabled!
+        if (debugMode === false) {
             return;
         }
 
         args.unshift(MESSAGE_LEVEL.INFO);
 
         me.log.apply(null, args);
+    };
+
+    /**
+     * Enable or disable the debug mode.
+     *
+     * @name   Logger.setDebugMode
+     * @function
+     * @param  {boolean} isDebug
+     * @returns {void}
+     */
+    me.setDebugMode = function(isDebug) {
+        debugMode = isDebug;
+    };
+
+    /**
+     * Inits some information.
+     *
+     * @name   Logger.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        AddonSettings.get("debugMode").then((isDebug) => {
+            me.setDebugMode(isDebug);
+        });
     };
 
     return me;
@@ -225,6 +249,7 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
     let syncOptions = null;
 
     const defaultValues = Object.freeze({
+        debugMode: false,
         popupIconColored: false,
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
@@ -300,7 +325,7 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
                     result = syncOptions;
                 } else if (syncOptions.hasOwnProperty(option)) {
                     result = syncOptions[option];
-                    Logger.logInfo(`Setting setting got for "${option}".`, result);
+                    Logger.logInfo(`Synced setting got for "${option}".`, result);
                 }
             }
         }
@@ -684,4 +709,6 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 })();
 
 // init modules
+AddonSettings.loadOptions();
+Logger.init();
 Localizer.init();
