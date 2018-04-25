@@ -59,3 +59,4 @@ Apart from that, there are some simple rules.
 * If you write real constants (i.e. `const` variables not written in functions, if their scope e.g. is a "module" or whole project, and which do represent static _literals_, e.g. simple variable types, such as integers, strings, but not selected HTML elements), do write them in UPPERCASE, otherwise write them as usual variables in camelCase.
 * Objects, which should never be modified, should be frozen with `Object.freeze`, so they cannot be modified.
 * Do _not_ use magic numbers. Use (global) constants instead.
+* Do log important things you do in your code. Use the `Logger` for that. In production code no `console.log()` or similar should appear.
