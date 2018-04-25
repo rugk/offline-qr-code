@@ -3,7 +3,7 @@ Nice to see you want to contribute! :+1:
 ## Translations
 
 It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSON files directly.
-To do so, go to [`_locales/en`](_locales/en) and copy the English [`messages.json`](_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`_locales`](_locales) with the abbreviation of the language you want to translate.
+To do so, go to [`src/_locales/en`](src/_locales/en) and copy the English [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
 
 At the end, just submit a Pull Request.
 Of course, you can (and should) improve existing translations.
@@ -35,12 +35,12 @@ You should always hardcode an English fallback string in the HTML file, so it ca
 
 Developing/improving a WebExtension add-on is easy! **If you have ever made some stuff with HTML/CSS/JS you can do that, too!** It's built on the same technologies.
 
-* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions's dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
+* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions' dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
 * **Change code:** When it is loaded you can just change the code (and press "Reload", if needed) and you'll see the result. That is it!
 
 ### Coding guidelines
 
-As for simple indentation issues, please refere to the [editorconfig file](.editorconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
+As for simple indentation issues, please refer to the [editorconfig file](.editorconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
 
 Apart from that, there are some simple rules.
 
@@ -48,10 +48,10 @@ Apart from that, there are some simple rules.
 * Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.
 * We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines.
   When something is not specified just use common sense and look at how other code in the project is written.
-* Especially, as we use a [CSP](manifest.json), please do *not*:
+* Especially, as we use a [CSP](src/manifest.json), please do *not*:
    * use inline JavaScript
    * use eval, or other insecure features
-   * modify the [CSP](manifest.json#L20) :wink:
+   * modify the [CSP](src/manifest.json#L33) :wink:
 * The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and, theoretically, properties).
 * Avoid `this`, it mostly causes confusion. The pattern used here, usually does not need `this`.
 * Use early return instead of nested if blocks, to keep the code readable.
