@@ -3,7 +3,7 @@ Nice to see you want to contribute! :+1:
 ## Translations
 
 It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSON files directly.
-To do so, go to [`_locales/en`](_locales/en) and copy the English [`messages.json`](_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`_locales`](_locales) with the abbreviation of the language you want to translate.
+To do so, go to [`src/_locales/en`](src/_locales/en) and copy the English [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
 
 At the end, just submit a Pull Request.
 Of course, you can (and should) improve existing translations.
@@ -35,7 +35,7 @@ You should always hardcode an English fallback string in the HTML file, so it ca
 
 Developing/improving a WebExtension add-on is easy! **If you have ever made some stuff with HTML/CSS/JS you can do that, too!** It's built on the same technologies.
 
-* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions's dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
+* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions' dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
 * **Change code:** When it is loaded you can just change the code (and press "Reload", if needed) and you'll see the result. That is it!
 
 ### Coding guidelines
