@@ -231,9 +231,6 @@ const QrCreator = (function () {
      */
     me.generateFromTabs = function(tabs) {
         me.generateFromTab(tabs[0]);
-
-        // hide loading message shown by default
-        MessageHandler.hideLoading();
     };
 
     /**
@@ -691,19 +688,87 @@ const UserInterface = (function () {
     return me;
 })();
 
+const BrowserCommunication = (function () {
+    const me = {};
+
+    const MESSAGE_RESENT_TIMEOUT = 100; // ms
+
+    let overwroteQrode = false;
+
+    /**
+     * Handles messages received by other parts.
+     *
+     * @name   BrowserCommunication.handleMessages
+     * @function
+     * @private
+     * @param {Object} request
+     * @param {Object} sender
+     * @returns {HTMLElement}
+     */
+    function handleMessages(request, sender) {
+        Logger.logInfo("Got message", request, "from", sender);
+
+        switch (request.type) {
+        case "setQrText":
+            QrCreator.setText(request.qrText);
+
+            overwroteQrode = true;
+            break;
+        }
+    }
+
+    /**
+     * Returns whether the text has been overwritten.
+     *
+     * @name   BrowserCommunication.isTextOverwritten
+     * @function
+     * @private
+     * @returns {boolean}
+     */
+    me.isTextOverwritten = function() {
+        return overwroteQrode;
+    };
+
+    /**
+     * Init context menu module.
+     *
+     * Adds menu elements.
+     *
+     * @name   BrowserCommunication.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        browser.runtime.onMessage.addListener(handleMessages);
+    };
+
+    return me;
+})();
+
 // init modules
 const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 QrLibKjua.init();
+BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init();
 const userInterfaceInit = UserInterface.init();
 
 // generate QR code from tab, if everything is set up
 qrCreatorInit.then(() => {
     userInterfaceInit.then(() => {
-        queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            Logger.logError(error);
-            MessageHandler.showError("couldNotReceiveActiveTab");
-        });
+        // do not generate tabs if text is already overwritten
+        if (BrowserCommunication.isTextOverwritten()) {
+            Logger.logInfo("Text is already overwritten by some message.");
+            // generate QR code
+            QrCreator.generate();
+        } else {
+            queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+                Logger.logError(error);
+                MessageHandler.showError("couldNotReceiveActiveTab");
+            });
+        }
+
+        // hide loading message shown by default
+        MessageHandler.hideLoading();
     });
 }).catch(Logger.logError);

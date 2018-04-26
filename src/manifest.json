@@ -39,7 +39,8 @@
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "menus"
   ],
   "applications": {
     "gecko": {
