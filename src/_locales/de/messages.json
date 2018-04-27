@@ -65,6 +65,16 @@
     "description": "Placeholder for the textarea, when it is empty."
   },
 
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "Generiere QR-Code aus Auswahl",
+    "description": "The context menu entry shown for generating QR codes from a slection."
+  },
+  "contextMenuItemOptions": {
+    "message": "Einstellungen",
+    "description": "The context menu entry shown for generating QR codes ."
+  },
+
   // options
   "someSettingsAreManaged": {
     "message": "Einige Einstellung werden von deinem Systemadministrator festgelegt und können nicht geändert werden.",
