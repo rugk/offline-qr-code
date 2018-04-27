@@ -62,6 +62,7 @@ const ContextMenu = (function () {
     const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
     const OPEN_OPTIONS = "qr-open-options";
 
+    // TODO: This constant should be usable for all scripts.
     const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
         "SET_QR_TEXT": "setQrText",
     });
@@ -102,7 +103,7 @@ const ContextMenu = (function () {
             type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
             qrText
         }).then(() => {
-            console.log(`QR code text "${qrText}" sent to tab successfully`);
+            console.log(`QR code text "${qrText}" sent to tab successfully`); // TODO: we need the Logger here…
         }).catch(() => {
             // recusively re-try message sending
             setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
