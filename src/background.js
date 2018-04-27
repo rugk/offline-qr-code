@@ -61,6 +61,11 @@ const ContextMenu = (function () {
 
     const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
     const OPEN_OPTIONS = "qr-open-options";
+
+    const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
+        "SET_QR_TEXT": "setQrText",
+    });
+
     const MESSAGE_RESENT_TIMEOUT = 100; // ms
 
     /**
@@ -94,7 +99,7 @@ const ContextMenu = (function () {
      */
     function sendQrCodeText(qrText) {
         browser.runtime.sendMessage({
-            type: "setQrText",
+            type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
             qrText
         }).then(() => {
             console.log(`QR code text "${qrText}" sent to tab successfully`);

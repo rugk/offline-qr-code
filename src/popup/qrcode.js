@@ -7,6 +7,9 @@
 // lodash
 /* globals throttle, isObject */
 
+/* globals */
+let initCompleted = false;
+
 // abstracts away all specific handling of QR code library
 const QrLibKjua = (function () {
     const me = {};
@@ -181,6 +184,11 @@ const QrCreator = (function () {
 
     /**
      * Sets the text for the QR code.
+     *
+     * Note that this alos triggers all user interface actions to display the
+     * test in a nice way. (e.g. selection and scrolling)..
+     * As such, it is not a good idea for live updating the text. To only set
+     * the option for the QR code itself, use {@link setTextInternal()}.
      *
      * @name   QrCreator.setText
      * @function
@@ -565,6 +573,8 @@ const UserInterface = (function () {
     /**
      * Shows the given text in the QR code's input field.
      *
+     * Note that this also triggers the actions to show it nicely in the UI.
+     *
      * @name   UserInterface.setQrInputFieldText
      * @function
      * @param  {string} text
@@ -572,6 +582,9 @@ const UserInterface = (function () {
      */
     me.setQrInputFieldText = function(text) {
         qrCodeText.textContent = text;
+
+        // as text has been changed, we need to focus & (potentially) re-select the text
+        qrCodeText.focus();
     };
 
     /**
@@ -691,7 +704,9 @@ const UserInterface = (function () {
 const BrowserCommunication = (function () {
     const me = {};
 
-    const MESSAGE_RESENT_TIMEOUT = 100; // ms
+    const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
+        "SET_QR_TEXT": "setQrText",
+    });
 
     let overwroteQrCode = false;
 
@@ -709,8 +724,15 @@ const BrowserCommunication = (function () {
         Logger.logInfo("Got message", request, "from", sender);
 
         switch (request.type) {
-        case "setQrText":
+        case COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT:
             QrCreator.setText(request.qrText);
+
+            // if the unlikely case should happen, that the odl QR code has
+            // already been generated/displayed, trigger re-generation
+            if (initCompleted) {
+                Logger.logInfo("Initialisation has already been completed, regenerate QR code with new text.");
+                QrCreator.generate();
+            }
 
             overwroteQrCode = true;
             break;
@@ -770,5 +792,7 @@ qrCreatorInit.then(() => {
 
         // hide loading message shown by default
         MessageHandler.hideLoading();
+
+        initCompleted = true;
     });
 }).catch(Logger.logError);
