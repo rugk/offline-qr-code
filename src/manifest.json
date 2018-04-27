@@ -27,7 +27,10 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background/background.js",
+      "background/menu.js"
+    ]
   },
 
   "content_security_policy": "default-src 'self'; img-src data:",
@@ -39,7 +42,8 @@
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "applications": {
     "gecko": {
