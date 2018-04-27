@@ -4,6 +4,19 @@ body {
   color: #333;
 }
 
+/* on (small) mobile displays */
+@media (max-width: 700px) {
+  body {
+    /* smaller size -> default on Firefox for Android is 14px */
+    font-size: 14px;
+  }
+
+  /* e.g. the icon is not even displayed there :) */
+  .mobile-incompatible {
+    display: none;
+  }
+}
+
 /* https://design.firefox.com/photon/patterns/inactive.html */
 [disabled] {
   opacity: 0.4;

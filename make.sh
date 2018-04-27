@@ -2,7 +2,7 @@
 
 EXTENSION_NAME="offline-qr-code@rugk.github.io"
 
-mkdir "build"
+mkdir -p "build"
 
 # license should be in add-on
 mv LICENSE.md src/LICENSE.md
