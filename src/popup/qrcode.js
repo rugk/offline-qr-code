@@ -197,7 +197,7 @@ const QrCreator = (function () {
      *
      * Usually this should not be used, as it can cause an inconsistent display.
      *
-     * @name   QrCreator.generateFromTab
+     * @name   QrCreator.setTextInternal
      * @function
      * @param  {string} text
      * @returns {void}
@@ -691,19 +691,57 @@ const UserInterface = (function () {
     return me;
 })();
 
+const MessageSender = (function () {
+    const me = {};
+
+    /**
+     * send a message
+     *
+     * @name   MessageSender.send
+     * @function
+     * @param  {object} message
+     * @returns {Promise}
+     */
+    me.send = function(message) {
+        return browser.runtime.sendMessage(message);
+    };
+
+    return me;
+})();
+
 // init modules
 const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 QrLibKjua.init();
 const qrCreatorInit = QrCreator.init();
 const userInterfaceInit = UserInterface.init();
+const shouldUseSelectedText = MessageSender.send({get: ["shouldUseSelectedText"]});
 
 // generate QR code from tab, if everything is set up
 qrCreatorInit.then(() => {
     userInterfaceInit.then(() => {
-        queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            Logger.logError(error);
-            MessageHandler.showError("couldNotReceiveActiveTab");
+        shouldUseSelectedText.then((message) => {
+            if (message.response.shouldUseSelectedText) {
+                /*
+                TODO: find a solution for this: Missing host permission for the tab (happens in tabs beggining with "about:")
+                might be solved with https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/menus/update
+                or https://github.com/mozilla-services/screenshots/issues/4121
+                */
+                browser.tabs.executeScript( {
+                    code: "window.getSelection().toString().trim();"
+                }, (selection) => {
+                    QrCreator.setText(selection[0]);
+                    QrCreator.generate();
+                    MessageHandler.hideLoading();
+
+                    MessageSender.send({set: {shouldUseSelectedText: false}});
+                });
+            } else {
+                queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+                    Logger.logError(error);
+                    MessageHandler.showError("couldNotReceiveActiveTab");
+                });
+            }
         });
     });
 }).catch(Logger.logError);

@@ -157,5 +157,16 @@
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  //context menu
+  "contextMenuItemConvertSelection": {
+    "message": "Create QR code from text",
+    "description": "The item which is added to the context menu to convert a selection to a QR code"
+  },
+
+  "contextMenuItemOpenOptions": {
+    "message": "Open settings for this add-on",
+    "description": "The item which is added to the context menu to open the options of this add-on"
   }
 }
