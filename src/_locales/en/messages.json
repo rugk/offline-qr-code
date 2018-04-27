@@ -149,6 +149,10 @@
     "message": "High (30%)",
     "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
+  "optionErrorCorrectionDescr": {
+    "message": "If a QR code is damaged it can still be read by machines. This value indicates how much of the code can be missing. For more information see <a href='https://en.wikipedia.org/wiki/QR_code#Error_correction'>this Wikipedia article</a>.",
+    "description": "The description of the error correction option."
+  },
 
   "optionUseMonospaceFont": {
     "message": "Use monospace font",

@@ -148,6 +148,10 @@
     "message": "Level H – High (30%)",
     "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
+  "optionErrorCorrectionDescr": {
+    "message": "Auch wenn ein QR-Code kaputt ist, kann er noch von Maschinen gelesen werden. Dieser Wert zeigt an wie viel von dem Code fehlen kann. Für mehr Information siehe <a href='https://de.wikipedia.org/wiki/QR-Code#Kapazit%C3%A4t_und_Fehlertoleranz'>diesen Wikipedia Eintrag</a>.",
+    "description": "The description of the error correction option."
+  },
 
   "optionUseMonospaceFont": {
     "message": "Benutze Monospace-Schrift",

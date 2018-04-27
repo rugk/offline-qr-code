@@ -198,7 +198,7 @@ const Localizer = (function () {
             const translatedMessage = browser.i18n.getMessage(getMessageTag(tag));
             // only set message if it could be retrieved, i.e. do not override HTML fallback
             if (translatedMessage !== "") {
-                elem.textContent = translatedMessage;
+                elem.innerHTML = translatedMessage;
             }
         }
 
