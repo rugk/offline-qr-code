@@ -67,7 +67,7 @@
 
   // context menu
   "contextMenuItemConvertSelection": {
-    "message": "Generate QR code from selection",
+    "message": "QR code from selection",
     "description": "The context menu entry shown for generating QR codes from a slection."
   },
   "contextMenuItemOptions": {
