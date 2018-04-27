@@ -699,7 +699,7 @@ const MessageSender = (function () {
      *
      * @name   MessageSender.send
      * @function
-     * @param  {object} message
+     * @param  {Object} message
      * @returns {Promise}
      */
     me.send = function(message) {

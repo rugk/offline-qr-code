@@ -74,21 +74,21 @@ const MessageListener = (function () {
      * @name   MessageListener.get
      * @function
      * @param {array} request
-     * @returns {object}
+     * @returns {Object}
      */
-     function get(request) {
-         let response = {};
-         for (let i = 0; i < request.length; i++) {
-             const name = request[i];
-             const option = runtimeConfig[name];
-             if (option) {
-                 response[name] = option;
-             }
-         }
-         return response;
-     }
+    function get(request) {
+        const response = {};
+        for (let i = 0; i < request.length; i++) {
+            const name = request[i];
+            const option = runtimeConfig[name];
+            if (option) {
+                response[name] = option;
+            }
+        }
+        return response;
+    }
 
-     /**
+    /**
       * set one or more variables from another script
       *
       * @name   MessageListener.set
@@ -96,13 +96,13 @@ const MessageListener = (function () {
       * @param {array} request
       * @returns {void}
       */
-      function set(request) {
-          for (let key in request) {
-              if (request.hasOwnProperty(key)) {
-                  runtimeConfig[key] = request[key];
-              }
-          }
-      }
+    function set(request) {
+        for (const key in request) {
+            if (request.hasOwnProperty(key)) {
+                runtimeConfig[key] = request[key];
+            }
+        }
+    }
 
     /**
      * Init message handler module.
@@ -112,10 +112,10 @@ const MessageListener = (function () {
      * @returns {void}
      */
     me.init = function() {
-        browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             if (request.get) {
                 const response = get(request.get);
-                sendResponse({response: response});
+                sendResponse({response});
             } else if (request.set) {
                 set(request.set);
             }
