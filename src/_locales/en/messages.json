@@ -68,11 +68,15 @@
   // context menu
   "contextMenuItemConvertSelection": {
     "message": "QR code from selection",
-    "description": "The context menu entry shown for generating QR codes from a slection."
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "QR code from link",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
   },
   "contextMenuItemOptions": {
     "message": "Settings",
-    "description": "The context menu entry shown for generating QR codes ."
+    "description": "The context menu entry shown for opening the settings."
   },
 
   // options

@@ -5,7 +5,7 @@
     "description": "Name of the extension."
   },
   "extensionDescription": {
-    "message": "Elaubt, einen QR-Code für jede Webseite oder Tab zu generieren, die du offen hast.",
+    "message": "Erlaubt, einen QR-Code für jede Webseite oder Tab zu generieren, die du offen hast.",
     "description": "Description of the extension."
   },
   "browserActionButtonTitle": {
@@ -68,11 +68,15 @@
   // context menu
   "contextMenuItemConvertSelection": {
     "message": "QR-Code aus Auswahl",
-    "description": "The context menu entry shown for generating QR codes from a slection."
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "QR-Code aus Link erstellen",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
   },
   "contextMenuItemOptions": {
     "message": "Einstellungen",
-    "description": "The context menu entry shown for generating QR codes ."
+    "description": "The context menu entry shown for opening the settings."
   },
 
   // options
