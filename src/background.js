@@ -59,6 +59,8 @@ const IconHandler = (function () {
 const ContextMenu = (function () {
     const me = {};
 
+    const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
+    const OPEN_OPTIONS = "qr-open-options";
     const MESSAGE_RESENT_TIMEOUT = 100; // ms
 
     /**
@@ -103,6 +105,27 @@ const ContextMenu = (function () {
     }
 
     /**
+     * Creates the items in the context menu.
+     *
+     * @name   ContextMenu.createItems
+     * @function
+     * @returns {void}
+     */
+    function createItems() {
+        browser.menus.create({
+            id: CONVERT_TEXT_SELECTION,
+            title: browser.i18n.getMessage("contextMenuItemConvertSelection"),
+            contexts: ["selection"]
+        }, onCreated);
+
+        browser.menus.create({
+            id: OPEN_OPTIONS,
+            title: browser.i18n.getMessage("contextMenuItemOptions"),
+            contexts: ["browser_action"]
+        }, onCreated);
+    }
+
+    /**
      * Triggers when a menu it clicked.
      *
      * @name   ContextMenu.menuClicked
@@ -113,13 +136,13 @@ const ContextMenu = (function () {
      */
     function menuClicked(event) {
         switch (event.menuItemId) {
-        case "generateQrCode":
+        case CONVERT_TEXT_SELECTION:
             browser.browserAction.openPopup().then(() => {
                 // send message to popup
                 sendQrCodeText(event.selectionText);
             });
             break;
-        case "qrCodeOptions":
+        case OPEN_OPTIONS:
             browser.runtime.openOptionsPage();
             break;
         }
@@ -135,18 +158,7 @@ const ContextMenu = (function () {
      * @returns {void}
      */
     me.init = function() {
-        browser.menus.create({
-            id: "generateQrCode",
-            title: browser.i18n.getMessage("contextMenuQrCode"),
-            contexts: ["selection"]
-        }, onCreated);
-
-        browser.menus.create({
-            id: "qrCodeOptions",
-            title: browser.i18n.getMessage("contextMenuSettings"),
-            contexts: ["browser_action"]
-        }, onCreated);
-
+        createItems();
         browser.menus.onClicked.addListener(menuClicked);
     };
 

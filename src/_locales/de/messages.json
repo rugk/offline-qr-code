@@ -66,11 +66,11 @@
   },
 
   // context menu
-  "contextMenuQrCode": {
-    "message": "Generiere QR-Code aus Markierung",
+  "contextMenuItemConvertSelection": {
+    "message": "Generiere QR-Code aus Auswahl",
     "description": "The context menu entry shown for generating QR codes from a slection."
   },
-  "contextMenuSettings": {
+  "contextMenuItemOptions": {
     "message": "Einstellungen",
     "description": "The context menu entry shown for generating QR codes ."
   },

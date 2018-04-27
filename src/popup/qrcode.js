@@ -693,7 +693,7 @@ const BrowserCommunication = (function () {
 
     const MESSAGE_RESENT_TIMEOUT = 100; // ms
 
-    let overwroteQrode = false;
+    let overwroteQrCode = false;
 
     /**
      * Handles messages received by other parts.
@@ -712,7 +712,7 @@ const BrowserCommunication = (function () {
         case "setQrText":
             QrCreator.setText(request.qrText);
 
-            overwroteQrode = true;
+            overwroteQrCode = true;
             break;
         }
     }
@@ -726,7 +726,7 @@ const BrowserCommunication = (function () {
      * @returns {boolean}
      */
     me.isTextOverwritten = function() {
-        return overwroteQrode;
+        return overwroteQrCode;
     };
 
     /**
