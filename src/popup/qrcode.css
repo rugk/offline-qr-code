@@ -6,7 +6,8 @@ html, body {
 /* on (small) mobile displays */
 @media (max-width: 700px) {
   body {
-    /* for some reason there is a margin in Firefox for Android */
+    /* for some reason there is a margin in Firefox for Android
+       see https://bugzilla.mozilla.org/show_bug.cgi?id=1457696 */
     margin: 0px;
   }
 }
