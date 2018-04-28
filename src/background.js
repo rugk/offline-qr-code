@@ -60,6 +60,7 @@ const ContextMenu = (function () {
     const me = {};
 
     const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
+    const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
     const OPEN_OPTIONS = "qr-open-options";
 
     // TODO: This constant should be usable for all scripts.
@@ -125,6 +126,12 @@ const ContextMenu = (function () {
         }, onCreated);
 
         browser.menus.create({
+            id: CONVERT_LINK_TEXT_SELECTION,
+            title: browser.i18n.getMessage("contextMenuItemConvertLinkSelection"),
+            contexts: ["link"]
+        }, onCreated);
+
+        browser.menus.create({
             id: OPEN_OPTIONS,
             title: browser.i18n.getMessage("contextMenuItemOptions"),
             contexts: ["browser_action"]
@@ -146,6 +153,12 @@ const ContextMenu = (function () {
             browser.browserAction.openPopup().then(() => {
                 // send message to popup
                 sendQrCodeText(event.selectionText);
+            });
+            break;
+        case CONVERT_LINK_TEXT_SELECTION:
+            browser.browserAction.openPopup().then(() => {
+                // send message to popup
+                sendQrCodeText(event.linkUrl);
             });
             break;
         case OPEN_OPTIONS:
