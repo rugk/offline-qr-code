@@ -84,6 +84,10 @@
     "message": "This option is disabled, because it has been configured by your system administrator.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
+  "optionLearnMore": {
+    "message": "Learn more",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
 
   "optionPopupIconColored": {
     "message": "Colored icon",
@@ -150,13 +154,12 @@
     "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionErrorCorrectionDescr": {
-    "message": "!HTML! If a QR code is damaged it can still be scanned. This value indicates how much of the code can be missing. For more information see $URL$.",
-    "description": "The description of the error correction option.",
-    "placeholders": {
-      "url": {
-        "content": "<a href='https://en.wikipedia.org/wiki/QR_code#Error_correction'>this Wikipedia article</a>"
-      }
-    }
+    "message": "This value indicates how much of the code can be missing, so that it can still be scanned.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option."
   },
 
   "optionUseMonospaceFont": {

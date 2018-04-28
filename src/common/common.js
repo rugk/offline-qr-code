@@ -161,7 +161,8 @@ const Localizer = (function () {
 
     const LOCALIZED_ATTRIBUTES = [
         "placeholder",
-        "alt"
+        "alt",
+        "href"
     ];
 
     /**
