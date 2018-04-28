@@ -63,7 +63,8 @@ label + .setting {
 }
 
 /* some margin to align with checkbox */
-input[type=checkbox] ~ .helper-text {
+input[type=checkbox] ~ .helper-text,
+input[type=radio] ~ .helper-text {
   /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
   margin-left: 28px;
 }
