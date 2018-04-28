@@ -20,7 +20,7 @@ a:focus {
 }
 
 a:not([class])[href*="//"]::after {
-  background-image: url(/icons/photon/open-in-new-16.svg);
+  background-image: url(/common/img/open-in-new.svg);
   background-repeat: no-repeat;
   background-size: 16px 16px;
   content: "";

@@ -14,6 +14,15 @@ For more details, [see the official docs](https://developer.mozilla.org/Add-ons/
 
 The English "you" should be translated in a personal way, if the target language differentiates between "you" for "anybody"/"they" and "you" for "the user of this extension". In German, that e.g. means you can translate it with "du [kannst etwas machen]" instead of "man [kann etwas machen]".
 
+### Translations which use HTML
+
+If you need to add HTML to a translation, please add `!HTML!` in front of the sentence. It can only be parsed properly if you do this. Otherwise it will display the HTML as normal characters. A possible sentence should look like this:
+```js
+"boldSentence": {
+  "message": "!HTML! <b>This sentence is bold</b>"
+}
+```
+
 ### Translations of add-on description
 
 All texts shown on AMO (addons.mozilla.org) are maintained in [`assets/texts`](assets/texts). Again, you can use the English template there.

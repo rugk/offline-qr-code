@@ -149,7 +149,7 @@
     "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionErrorCorrectionDescr": {
-    "message": "!HTML! Auch wenn ein QR-Code kaputt ist, kann er immer noch gescannt werden. Dieser Wert zeigt an wie viel von dem Code fehlen kann. <br> Für mehr Information siehe $URL$.",
+    "message": "!HTML! Auch wenn ein QR-Code kaputt ist, kann er immer noch gescannt werden. Dieser Wert zeigt an wie viel von dem Code fehlen kann. Für mehr Information siehe $URL$.",
     "description": "The description of the error correction option.",
     "placeholders": {
       "url": {
