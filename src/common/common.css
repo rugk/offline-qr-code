@@ -2,6 +2,35 @@ body {
   direction: __MSG_@@bidi_dir__;
 }
 
+a {
+  color: #0060df;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  text-decoration: underline;
+}
+
+a:active {
+  color: #003eaa;
+}
+
+a:focus {
+  box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
+}
+
+a:not([class])[href*="//"]::after {
+  background-image: url(/icons/photon/open-in-new-16.svg);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  content: "";
+  display: inline-block;
+  height: 16px;
+  margin: -.3rem .15rem 0 .25rem;
+  vertical-align: middle;
+  width: 16px;
+}
+
 .center-container {
   display: flex;
   flex-direction: column;
