@@ -41,6 +41,7 @@ const IconHandler = (function () {
      * @returns {void}
      */
     me.init = function() {
+        // TODO: use common thing here
         browser.storage.sync.get("popupIconColored").then((res) => {
             const popupIconColored = res.popupIconColored;
 
