@@ -516,7 +516,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             elMessage.textContent = localizedString;
         }
 
-        if (typeof args[1] === "boolean" && args[1]) {
+        if (typeof args[1] === "boolean" && args[1] === true) {
             // add an icon which dismisses the message if clicked
             const iconDismiss = document.createElement("span");
             iconDismiss.classList.add("icon-dismiss");
