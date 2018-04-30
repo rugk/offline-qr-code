@@ -71,11 +71,21 @@ body {
 .success::before {
   background-image: url('/common/img/check.svg');
 }
+
 .icon-dismiss {
   background-image: url('/common/img/close.svg');
   position: absolute;
-  right: 10px;
+  right: 0px;
   cursor: pointer;
+}
+.icon-dismiss:hover {
+  background-color: rgba(12, 12, 13, 0.1);
+}
+.icon-dismiss:active {
+  background-color: rgba(12, 12, 13, 0.2);
+}
+.icon-dismiss:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
 .info {

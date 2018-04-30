@@ -441,7 +441,7 @@ const OptionHandler = (function () {
             elQrCodeSize.removeAttribute("disabled");
 
             return loadOptions().then(() => {
-                MessageHandler.showSuccess("resettingOptionsWorked");
+                MessageHandler.showSuccess("resettingOptionsWorked", true);
             });
         }).catch((error) => {
             Logger.logError(error);
