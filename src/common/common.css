@@ -21,7 +21,9 @@ a:active {
   color: #003eaa;
 }
 
-a:not([class])[href*="//"]::after {
+/* external link symbol*/
+/* currently disabled, because it is not clear what an external link is, in our case */
+/*a:not([class])[href*="//"]::after {
   background-image: url(/common/img/open-in-new.svg);
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -31,7 +33,7 @@ a:not([class])[href*="//"]::after {
   margin: -.3rem .15rem 0 .25rem;
   vertical-align: middle;
   width: 16px;
-}
+}*/
 
 .center-container {
   display: flex;
