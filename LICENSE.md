@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## [lodash](https://github.com/lodash/lodash)
 
-Thos project includes some source code from lodash.
+This project includes some source code from lodash.
 
 The MIT License
 
@@ -77,10 +77,11 @@ The icons `assets/qr-icon*.svg` (used in `src/icons/icon-small-*.svg`) are made 
 
 ## Other third-party components
 
-* [`popup/img/check.svg`](popup/img/check.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
-* [`popup/img/error-white.svg`](popup/img/error-white.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
-* [`popup/img/info-dark.svg`](popup/img/info-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
-* [`popup/img/info-light.svg`](popup/img/info-light.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/check.svg`](common/img/check.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/error-white.svg`](common/img/error-white.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/info-dark.svg`](common/img/info-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/info-light.svg`](common/img/info-light.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/open-in-new.svg`](common/img/open-in-new.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
 ## Special thanks
-* to [SVGO](https://jakearchibald.github.io/svgomg/) for their SVG mnimisation tool
+* to [SVGO](https://jakearchibald.github.io/svgomg/) for their SVG minimisation tool
