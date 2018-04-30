@@ -78,6 +78,7 @@ The icons `assets/qr-icon*.svg` (used in `src/icons/icon-small-*.svg`) are made 
 ## Other third-party components
 
 * [`popup/img/check.svg`](popup/img/check.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`popup/img/close.svg`](popup/img/close.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 * [`popup/img/error-white.svg`](popup/img/error-white.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 * [`popup/img/info-dark.svg`](popup/img/info-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 * [`popup/img/info-light.svg`](popup/img/info-light.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)

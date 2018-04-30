@@ -47,8 +47,8 @@ body {
   color: #ffffff;
   background-color: #d70022;
 }
-/* icon for error message */
-.message-box::before {
+/* icons for the message box */
+.message-box::before, .icon-dismiss {
   display: inline-block;
 
   /* fixed size */
@@ -70,6 +70,12 @@ body {
 }
 .success::before {
   background-image: url('/common/img/check.svg');
+}
+.icon-dismiss {
+  background-image: url('/common/img/close.svg');
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
 }
 
 .info {

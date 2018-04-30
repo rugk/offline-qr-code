@@ -516,6 +516,17 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             elMessage.textContent = localizedString;
         }
 
+        if (elMessage.classList.contains("dismissible")) {
+            // add an icon which dismisses the message if clicked
+            const iconDismiss = document.createElement("span");
+            iconDismiss.classList.add("icon-dismiss");
+            elMessage.appendChild(iconDismiss);
+
+            iconDismiss.addEventListener("click", () => {
+                elMessage.classList.add("invisible");
+            });
+        }
+
         elMessage.classList.remove("invisible");
     }
 
