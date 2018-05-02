@@ -262,7 +262,7 @@ const OptionHandler = (function () {
             [option]: optionValue
         }).catch((error) => {
             Logger.logError("could not save option", option, ": ", error);
-            MessageHandler.showError("couldNotSaveOption");
+            MessageHandler.showError("couldNotSaveOption", true);
         });
     }
 
@@ -281,7 +281,7 @@ const OptionHandler = (function () {
             return;
         }
 
-        MessageHandler.showInfo("someSettingsAreManaged");
+        MessageHandler.showInfo("someSettingsAreManaged", false);
         managedInfoIsShown = true;
     }
 
@@ -445,7 +445,7 @@ const OptionHandler = (function () {
             });
         }).catch((error) => {
             Logger.logError(error);
-            MessageHandler.showError("resettingOptionsFailed");
+            MessageHandler.showError("resettingOptionsFailed", true);
         }).finally(() => {
             // re-enable button
             event.target.removeAttribute("disabled");
@@ -462,7 +462,7 @@ const OptionHandler = (function () {
     me.init = function() {
         loadOptions().catch((error) => {
             Logger.logError(error);
-            MessageHandler.showError("couldNotLoadOptions");
+            MessageHandler.showError("couldNotLoadOptions", false);
         });
 
         document.querySelectorAll(".save-on-input").forEach((currentElem) => {

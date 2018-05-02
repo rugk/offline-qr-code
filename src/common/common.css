@@ -74,18 +74,21 @@ body {
 
 .icon-dismiss {
   background-image: url('/common/img/close.svg');
-  position: absolute;
-  right: 0px;
+  margin-left: auto;
+  margin-right: 0;
   cursor: pointer;
 }
 .icon-dismiss:hover {
   background-color: rgba(12, 12, 13, 0.1);
+  border-radius: 2px;
 }
 .icon-dismiss:active {
   background-color: rgba(12, 12, 13, 0.2);
+  border-radius: 2px;
 }
 .icon-dismiss:focus {
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+  border-radius: 2px;
 }
 
 .info {

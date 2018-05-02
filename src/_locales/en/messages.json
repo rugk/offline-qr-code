@@ -177,5 +177,11 @@
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "Close this message",
+    "description": "The label for the close button of the message box"
   }
 }

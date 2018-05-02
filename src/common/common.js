@@ -161,7 +161,8 @@ const Localizer = (function () {
 
     const LOCALIZED_ATTRIBUTES = [
         "placeholder",
-        "alt"
+        "alt",
+        "aria-label"
     ];
 
     /**
@@ -488,7 +489,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @private
      * @param  {MESSAGE_LEVEL} messagetype
-     * @param  {...*} args optional, if none, the content is not translated
+     * @param  {...*} args optional, if none, the content is not translated, second parameter allows the message to be dismissable
      * @returns {void}
      */
     function showMessage(...args) {
@@ -510,20 +511,24 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             return;
         }
 
+        const isDismissable = args.pop();
+
         // localize string or fallback to first string ignoring all others
         if (typeof args[0] === "string") {
             const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
             elMessage.textContent = localizedString;
         }
 
-        if (typeof args[1] === "boolean" && args[1] === true) {
+        if (isDismissable === true) {
             // add an icon which dismisses the message if clicked
-            const iconDismiss = document.createElement("span");
-            iconDismiss.classList.add("icon-dismiss");
-            elMessage.appendChild(iconDismiss);
+            const iconDismiss= document.getElementById("iconDismiss");
+            const clone = iconDismiss.cloneNode();
+            clone.classList.remove("invisible");
+            elMessage.appendChild(clone);
 
-            iconDismiss.addEventListener("click", (e) => {
+            clone.addEventListener("click", (e) => {
                 e.target.parentElement.classList.add("invisible");
+                e.target.parentElement.removeChild(e.target);
             });
         }
 
