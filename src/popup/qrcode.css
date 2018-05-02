@@ -12,12 +12,20 @@ html, body {
   }
 }
 
-
 .preventScrollbar {
   /* prevent overflow at bottom (applied to body in JS) */
   overflow: hidden;
   max-height: 100%;
   height: 100%;
+}
+/* when the popup is in the overflow menu */
+@media (width: 425px) {
+  /* do not actually prevent the scrollbar */
+  .preventScrollbar {
+    height: unset;
+    min-height: 100%;
+    max-height: unset;
+  }
 }
 
 .qrcode {

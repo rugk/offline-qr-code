@@ -162,6 +162,7 @@ const Localizer = (function () {
     const LOCALIZED_ATTRIBUTES = [
         "placeholder",
         "alt",
+        "href",
         "aria-label"
     ];
 
@@ -197,9 +198,15 @@ const Localizer = (function () {
         // localize main content
         if (tag !== "") {
             const translatedMessage = browser.i18n.getMessage(getMessageTag(tag));
+            const isHTML = translatedMessage.startsWith("!HTML!");
             // only set message if it could be retrieved, i.e. do not override HTML fallback
             if (translatedMessage !== "") {
-                elem.textContent = translatedMessage;
+                if (isHTML) {
+                    const normalizedMessage = translatedMessage.replace(/!HTML!/, "").trimLeft();
+                    elem.innerHTML = normalizedMessage;
+                } else {
+                    elem.textContent = translatedMessage;
+                }
             }
         }
 
@@ -210,9 +217,10 @@ const Localizer = (function () {
             if (elem.hasAttribute(currentLocaleAttribute)) {
                 const attributeTag = elem.getAttribute(currentLocaleAttribute);
                 const translatedMessage = browser.i18n.getMessage(getMessageTag(attributeTag));
+                const isHTML = translatedMessage.startsWith("!HTML!");
                 // only set message if it could be retrieved, i.e. do not override HTML fallback
                 if (translatedMessage !== "") {
-                    elem.setAttribute(currentAttribute, translatedMessage);
+                    elem.setAttribute(currentAttribute, isHTML ? translatedMessage.replace(/!HTML!/, "").trimLeft() : translatedMessage);
                 }
             }
         });

@@ -88,6 +88,10 @@
     "message": "Diese option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
+  "optionLearnMore": {
+    "message": "Weitere Informationen",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
 
   "optionPopupIconColored": {
     "message": "Farbiges Icon",
@@ -151,6 +155,14 @@
   "optionEcHigh": {
     "message": "Level H – High (30%)",
     "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "Dieser Wert zeigt an wie viel von dem Code fehlen kann, damit er immer noch gescannt werden kann.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://de.wikipedia.org/wiki/QR-Code#Kapazit%C3%A4t_und_Fehlertoleranz",
+    "description": "The 'Learn more' link in the description of the error correction option."
   },
 
   "optionUseMonospaceFont": {

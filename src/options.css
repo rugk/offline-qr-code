@@ -58,10 +58,21 @@ label + .setting {
 .helper-text {
   display: block;
   color: #737373; /* Grey 50 */
-  /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
-  margin-left: 28px;
 
   margin-top: 4px;
+}
+
+/* some margin to align with checkbox */
+input[type=checkbox] ~ .helper-text,
+input[type=radio] ~ .helper-text {
+  /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
+  margin-left: 28px;
+}
+
+/* when a link is used in a helper text, add margin */
+.helper-text > a {
+  margin-left: 4px;
+  overflow-wrap: none;
 }
 
 /* special options values */
