@@ -80,8 +80,9 @@ a:active {
   color: #ffffff;
   background-color: #d70022;
 }
-/* icons for the message box */
-.message-box::before, .icon-dismiss {
+
+/* icons for the message boxes */
+.message-box::before {
   display: inline-block;
 
   /* fixed size */
@@ -106,9 +107,13 @@ a:active {
 }
 
 .icon-dismiss {
-  background-image: url('/common/img/close.svg');
+  padding: 4px;
+
+  box-sizing: content-box;
+  width: 16px;
+  height: 16px;
+
   margin-left: auto;
-  margin-right: 0;
   cursor: pointer;
 }
 .icon-dismiss:hover {

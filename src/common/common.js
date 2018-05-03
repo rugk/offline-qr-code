@@ -719,7 +719,6 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showSuccess
      * @function
-     * @param {MESSAGE_LEVEL} messagetype
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {...*} args optional parameters for translation
