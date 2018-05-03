@@ -664,7 +664,7 @@ const UserInterface = (function () {
                 // detect too small size
                 const minimalSize = qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
                 if (window.innerHeight < minimalSize) {
-                    Logger.logError("too small size", window.innerHeight, "shpould be at least: ", minimalSize);
+                    Logger.logError("too small size", window.innerHeight, "should be at least: ", minimalSize);
                 }
             }
 
