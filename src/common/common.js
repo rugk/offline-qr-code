@@ -423,7 +423,7 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
 const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     const me = {};
 
-    // const elWarning = document.getElementById('messageWarning');
+    const elDismissIcon = document.getElementById("iconDismiss");
 
     const ELEMENT_BY_TYPE = Object.freeze({
         [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
@@ -496,8 +496,10 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @name   MessageHandler.showMessage
      * @function
      * @private
-     * @param  {MESSAGE_LEVEL} messagetype
-     * @param  {...*} args optional, if none, the content is not translated, second parameter allows the message to be dismissable
+     * @param {MESSAGE_LEVEL} messagetype
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     function showMessage(...args) {
@@ -519,18 +521,29 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             return;
         }
 
-        const isDismissable = args.pop();
+        /* check value type/usage of first argument */
+        let mainMessage = null;
+        let isDismissable = false; // not dismissable by default
+
+        if (typeof args[0] === "string") {
+            mainMessage = args.shift();
+        }
+        if (typeof args[0] === "boolean") {
+            isDismissable = args.shift();
+        }
 
         // localize string or fallback to first string ignoring all others
-        if (typeof args[0] === "string") {
-            const localizedString = browser.i18n.getMessage.apply(null, args) || args[0] || browser.i18n.getMessage("errorShowingMessage");
+        if (mainMessage !== null) {
+            // add message to beginning of array
+            args.unshift(mainMessage);
+
+            const localizedString = browser.i18n.getMessage.apply(null, args) || mainMessage || browser.i18n.getMessage("errorShowingMessage");
             elMessage.textContent = localizedString;
         }
 
-        if (isDismissable === true) {
+        if (isDismissable === true && elDismissIcon !== null) {
             // add an icon which dismisses the message if clicked
-            const iconDismiss= document.getElementById("iconDismiss");
-            const clone = iconDismiss.cloneNode();
+            const clone = elDismissIcon.cloneNode();
             clone.classList.remove("invisible");
             elMessage.appendChild(clone);
 
@@ -638,7 +651,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showError
      * @function
-     * @param  {...*} args
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     me.showError = function(...args) {
@@ -653,7 +668,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showWarning
      * @function
-     * @param  {...*} args
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     me.showWarning = function(...args) {
@@ -668,7 +685,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showInfo
      * @function
-     * @param  {...*} args
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     me.showInfo = function(...args) {
@@ -683,7 +702,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showLoading
      * @function
-     * @param  {...*} args
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     me.showLoading = function(...args) {
@@ -698,7 +719,10 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.showSuccess
      * @function
-     * @param  {...*} args
+     * @param {MESSAGE_LEVEL} messagetype
+     * @param {string} message optional, string to show or to translate if omitted no new text is shown
+     * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {...*} args optional parameters for translation
      * @returns {void}
      */
     me.showSuccess = function(...args) {
