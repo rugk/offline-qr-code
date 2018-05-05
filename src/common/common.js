@@ -570,7 +570,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * Hides the message type(s), you specify.
      *
      * If you pass no messagetype or "null", it hides all messages.
-     * If an event is passed, it automatically hides the target of the event.
+     * If an transitionend event is passed, it automatically hides the target of the event.
      *
      * @name   MessageHandler.hideMessage
      * @function
@@ -582,14 +582,19 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         let element = null;
 
         // if is event get element
-        if (isObject(messagetype)) {
+        if (isObject(messagetype) && messagetype.type === "transitionend") {
             element = messagetype.target;
+
+            // ignore event, if it is not the correct one from the message box
+            if (!element.classList.contains("message-box")) {
+                return;
+            }
         } else {
             element = ELEMENT_BY_TYPE[messagetype];
         }
 
         if (messagetype !== undefined && messagetype !== null) {
-            element.classList.add("invisbile");
+            element.classList.add("invisible");
             return;
         }
 
