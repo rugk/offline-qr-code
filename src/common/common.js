@@ -1,5 +1,8 @@
 "use strict";
 
+// lodash
+/* globals isObject */
+
 // Globals
 const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
 const ADDON_NAME_SHORT = "Offline QR code";
@@ -542,34 +545,51 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         }
 
         if (isDismissable === true && elDismissIcon !== null) {
+            // add handler to hide message completly after transition
+            elMessage.addEventListener("transitionend", hideMessage);
+
             // add an icon which dismisses the message if clicked
             const clone = elDismissIcon.cloneNode();
             clone.classList.remove("invisible");
             elMessage.appendChild(clone);
 
             clone.addEventListener("click", (e) => {
-                e.target.parentElement.classList.add("invisible");
+                e.target.parentElement.classList.add("fade-hide");
                 e.target.parentElement.removeChild(e.target);
             });
+        } else {
+            // remove potentially set handler
+            elMessage.removeEventListener("transitionend", hideMessage);
         }
 
         elMessage.classList.remove("invisible");
+        elMessage.classList.remove("fade-hide");
     }
 
     /**
      * Hides the message type(s), you specify.
      *
      * If you pass no messagetype or "null", it hides all messages.
+     * If an event is passed, it automatically hides the target of the event.
      *
      * @name   MessageHandler.hideMessage
      * @function
      * @private
-     * @param  {MESSAGE_LEVEL} messagetype
+     * @param  {MESSAGE_LEVEL|event} messagetype
      * @returns {void}
      */
     function hideMessage(messagetype) {
+        let element = null;
+
+        // if is event get element
+        if (isObject(messagetype)) {
+            element = messagetype.target;
+        } else {
+            element = ELEMENT_BY_TYPE[messagetype];
+        }
+
         if (messagetype !== undefined && messagetype !== null) {
-            ELEMENT_BY_TYPE[messagetype].classList.add("invisible");
+            element.classList.add("invisbile");
             return;
         }
 
