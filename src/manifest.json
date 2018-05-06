@@ -32,6 +32,8 @@
 
   "content_security_policy": "default-src 'self'; img-src data:",
   "icons": {
+    "16": "icons/icon-small-colored.svg",
+    "32": "icons/icon-small-colored.svg",
     "48": "icons/icon-large.svg",
     "96": "icons/icon-large.svg"
   },
