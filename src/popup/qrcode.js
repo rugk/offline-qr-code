@@ -786,7 +786,7 @@ qrCreatorInit.then(() => {
         } else {
             queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
                 Logger.logError(error);
-                MessageHandler.showError("couldNotReceiveActiveTab");
+                MessageHandler.showError("couldNotReceiveActiveTab", false);
             });
         }
 
