@@ -117,6 +117,10 @@ const Logger = (function () {
      */
     me.logInfo = function(...args) {
         // skip log only, when deliberately disabled!
+        // NOTE: The effect of this is, taht when the settings are not yet
+        // loaded, we always log all messages. However, we also cannot wait/delay
+        // loading these in some asyncronous way as log messages are time-critical
+        // and must be in the correct order to be useful output.
         if (debugMode === false) {
             return;
         }
