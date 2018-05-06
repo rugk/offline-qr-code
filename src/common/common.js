@@ -1,7 +1,6 @@
 "use strict";
 
 // lodash
-/* globals isObject */
 
 // Globals
 const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
@@ -621,7 +620,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
             return;
         } else {
-            elMessage = ELEMENT_BY_TYPE[event];
+            elMessage = ELEMENT_BY_TYPE[messagetype];
         }
 
         // hide single message

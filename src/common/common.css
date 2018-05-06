@@ -53,7 +53,8 @@ a:active {
 /* message box */
 /* follows https://design.firefox.com/photon/components/message-bars.html */
 .message-box {
-  padding: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
 
   border-radius: 4px;
 
@@ -120,9 +121,9 @@ a:active {
 }
 
 .icon-dismiss {
+  box-sizing: content-box;
   padding: 4px;
 
-  box-sizing: content-box;
   width: 16px;
   height: 16px;
 
