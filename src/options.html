@@ -14,11 +14,18 @@
 
 	<body>
 		<div class="message-container">
-			<span id="messageInfo" class="message-box info invisible fade-hide">Some settings are managed by your administrator and cannot be changed.</span>
-			<span id="messageSuccess" class="message-box success invisible fade-hide">That worked!</span>
-			<span id="messageError" class="message-box error invisible fade-hide">An error happened.</span>
-
-			<img id="iconDismiss" class="icon-dismiss invisible" src="/common/img/close.svg"  width="16" height="16" tabindex="1" aria-label="__MSG_dismissIconDescription__"></span>
+			<div id="messageInfo" class="message-box info invisible fade-hide">
+				<span class="message-text">Some settings are managed by your administrator and cannot be changed.</span>
+				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="16" height="16" tabindex="1" aria-label="__MSG_dismissIconDescription__"></span>
+			</div>
+			<div id="messageSuccess" class="message-box success invisible fade-hide">
+				<span class="message-text">That worked!</span>
+				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="16" height="16" tabindex="1" aria-label="__MSG_dismissIconDescription__"></span>
+			</div>
+			<div id="messageError" class="message-box error invisible fade-hide">
+				<span class="message-text">An error happened.</span>
+				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="16" height="16" tabindex="1" aria-label="__MSG_dismissIconDescription__"></span>
+			</div>
 		</div>
 		<form>
 			<ul>

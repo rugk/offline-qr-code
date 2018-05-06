@@ -426,8 +426,6 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
 const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     const me = {};
 
-    const elDismissIcon = document.getElementById("iconDismiss");
-
     const ELEMENT_BY_TYPE = Object.freeze({
         [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
         [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
@@ -491,6 +489,48 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     }
 
     /**
+     * Dismisses (i.e. hides with animation) a message when the dismiss button is clicked.
+     *
+     * It automatically detects whether it is run as a trigger (click event) or
+     * as the "finish event" ("transitionend") after the hiding is animated and
+     * hides the message.
+     *
+     * @name   MessageHandler.dismissMessage
+     * @function
+     * @private
+     * @param  {Object} event
+     * @returns {void}
+     */
+    function dismissMessage(event) {
+        // if button is just clicked triggere hiding
+        if (event.type === "click") {
+            const elDismissIcon = event.target;
+            const elMessage = elDismissIcon.parentElement;
+
+            // ignore event, if it is not the correct one from the message box
+            if (!elMessage.classList.contains("message-box")) {
+                return;
+            }
+
+            // trigger hiding
+            elMessage.classList.add("fade-hide");
+
+            // add handler to hide message completly after transition
+            elMessage.addEventListener("transitionend", dismissMessage);
+
+            Logger.logInfo("message is dismissed", event);
+        } else if (event.type === "transitionend") {
+            const elMessage = event.target;
+
+            // hide message (and icon)
+            hideMessage(elMessage);
+
+            // remove set handler
+            elMessage.removeEventListener("transitionend", dismissMessage);
+        }
+    }
+
+    /**
      * Shows a message to the user.
      *
      * Pass as many strings/output as you want. They will be localized
@@ -541,25 +581,14 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             args.unshift(mainMessage);
 
             const localizedString = browser.i18n.getMessage.apply(null, args) || mainMessage || browser.i18n.getMessage("errorShowingMessage");
-            elMessage.textContent = localizedString;
+            elMessage.getElementsByClassName("message-text")[0].textContent = localizedString;
         }
 
-        if (isDismissable === true && elDismissIcon !== null) {
-            // add handler to hide message completly after transition
-            elMessage.addEventListener("transitionend", hideMessage);
+        const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
 
+        if (isDismissable === true && elDismissIcon) {
             // add an icon which dismisses the message if clicked
-            const clone = elDismissIcon.cloneNode();
-            clone.classList.remove("invisible");
-            elMessage.appendChild(clone);
-
-            clone.addEventListener("click", (e) => {
-                e.target.parentElement.classList.add("fade-hide");
-                e.target.parentElement.removeChild(e.target);
-            });
-        } else {
-            // remove potentially set handler
-            elMessage.removeEventListener("transitionend", hideMessage);
+            elDismissIcon.classList.remove("invisible");
         }
 
         elMessage.classList.remove("invisible");
@@ -570,39 +599,42 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * Hides the message type(s), you specify.
      *
      * If you pass no messagetype or "null", it hides all messages.
-     * If an transitionend event is passed, it automatically hides the target of the event.
+     * If a HTMLElement is passed, it automatically hides the target of the event.
      *
      * @name   MessageHandler.hideMessage
      * @function
      * @private
-     * @param  {MESSAGE_LEVEL|event} messagetype
+     * @param  {MESSAGE_LEVEL|null|HTMLElement} messagetype
      * @returns {void}
      */
     function hideMessage(messagetype) {
-        let element = null;
+        let elMessage = null;
 
-        // if is event get element
-        if (isObject(messagetype) && messagetype.type === "transitionend") {
-            element = messagetype.target;
+        if (messagetype instanceof HTMLElement) {
+            elMessage = messagetype;
+        } else if (messagetype === null || messagetype === undefined) {
+            // hide all of them
+            MESSAGE_LEVEL.forEach((currentType) => {
+                // recursive call myself to hide element
+                me.hideMessage(currentType);
+            });
 
-            // ignore event, if it is not the correct one from the message box
-            if (!element.classList.contains("message-box")) {
-                return;
-            }
-        } else {
-            element = ELEMENT_BY_TYPE[messagetype];
-        }
-
-        if (messagetype !== undefined && messagetype !== null) {
-            element.classList.add("invisible");
             return;
+        } else {
+            elMessage = ELEMENT_BY_TYPE[event];
         }
 
-        // hide all of them, otherwise
-        MESSAGE_LEVEL.forEach((currentType) => {
-            // recursive call myself to hide element
-            me.hideMessage(currentType);
-        });
+        // hide single message
+        const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
+
+        elMessage.classList.add("invisible");
+        if (elDismissIcon) {
+            elDismissIcon.classList.add("invisible");
+        }
+
+        Logger.logInfo("message is hidden", elMessage);
+
+        return;
     }
 
     /**
@@ -777,10 +809,28 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         hooks[messagetype].hide = hookHidden;
     };
 
+    /**
+     * Initialises the module.
+     *
+     * @name   MessageHandler.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        /* add event listeners */
+        const dismissIcons = document.getElementsByClassName("icon-dismiss");
+
+        for (const elDismissIcon of dismissIcons) {
+            // hide message when dismiss button is clicked
+            elDismissIcon.addEventListener("click", dismissMessage);
+        }
+    };
+
     return me;
 })();
 
 // init modules
 AddonSettings.loadOptions();
 Logger.init();
+MessageHandler.init();
 Localizer.init();
