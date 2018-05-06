@@ -53,7 +53,8 @@ a:active {
 /* message box */
 /* follows https://design.firefox.com/photon/components/message-bars.html */
 .message-box {
-  padding: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
 
   border-radius: 4px;
 
@@ -74,13 +75,27 @@ a:active {
   align-items: center;
 
   z-index: 2;
+
+  /* fade-in transition */
+  /* follow https://design.firefox.com/photon/motion/duration-and-easing.html */
+  opacity: 1;
+  max-height: 100px;
+
+  transition: opacity 150ms cubic-bezier(.07,.95,0,1),
+              max-height 200ms cubic-bezier(.07,.95,0,1);
+}
+.message-box.fade-hide {
+  max-height: 0px;
+  opacity: 0;
+  min-height: 0px;
 }
 
 .error {
   color: #ffffff;
   background-color: #d70022;
 }
-/* icon for error message */
+
+/* icons for the message boxes */
 .message-box::before {
   display: inline-block;
 
@@ -103,6 +118,32 @@ a:active {
 }
 .success::before {
   background-image: url('/common/img/check.svg');
+}
+
+.icon-dismiss {
+  box-sizing: content-box;
+  padding: 4px;
+
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  cursor: pointer;
+
+  /* some animation on hover */
+  transition: background-color 150ms cubic-bezier(.07,.95,0,1);
+}
+.icon-dismiss:hover {
+  background-color: rgba(12, 12, 13, 0.1);
+  border-radius: 2px;
+}
+.icon-dismiss:active {
+  background-color: rgba(12, 12, 13, 0.2);
+  border-radius: 2px;
+}
+.icon-dismiss:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+  border-radius: 2px;
 }
 
 .info {
