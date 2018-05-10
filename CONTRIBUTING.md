@@ -56,6 +56,7 @@ Apart from that, there are some simple rules.
 ### General
 * Do not introduce new unnecessary permissions. The add-on should require as few permissions as possible.
 * Keep the code small. Do not introduce big or unnecessary dependencies. (Better ask before you do.)
+* There is a loose width limit at 80 characters, except for HTML and text/Markdown files. HTML files should always be intended properly. "Loose limit" means I won't care if you add 3-5 characters more, but when the line becomes too long, you better split it on two lines, if it makes sense. Always prefer readability over such an arbitrary limit, however, so e.g. JSDOC can always be split onto the next line, while JS commands sometimes look better on a single line, even though it may be _a bit_ longer.
 
 #### JS
 * Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.

@@ -248,7 +248,7 @@ const Localizer = (function () {
         });
 
         // replace html lang attribut after translation
-        document.querySelectorAll("html")[0].setAttribute("lang", browser.i18n.getUILanguage());
+        document.querySelector("html").setAttribute("lang", browser.i18n.getUILanguage());
     };
 
     return me;
@@ -266,6 +266,7 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
     const defaultValues = Object.freeze({
         debugMode: false,
         popupIconColored: false,
+        qrCodeType: "svg",
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
         qrErrorCorrection: "Q",

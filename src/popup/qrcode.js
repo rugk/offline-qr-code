@@ -10,7 +10,96 @@
 /* globals */
 let initCompleted = false;
 
-// abstracts away all specific handling of QR code library
+const QrLibQrGen = (function () {
+    const me = {};
+
+    /* globals qrcodegen */
+    const QRC = qrcodegen.QrCode;
+
+    const qrBorder = 0;
+    let qrText;
+    let qrSize;
+    let qrColor;
+    let qrBackgroundColor;
+    let qrErrorCorrection;
+
+    /**
+     * Set an option for the QR code.
+     *
+     * @name   QrLibQrGen.set
+     * @function
+     * @param {string} tag the common one you know from the outside, e.g. size
+     * @param {Object} value the value to set for this tag
+     * @returns {void}
+     */
+    me.set = function(tag, value) {
+        switch (tag) {
+        case "size":
+            qrSize = value;
+            break;
+        case "text":
+            qrText = value;
+            break;
+        case "qrColor":
+            qrColor = value;
+            break;
+        case "qrBackgroundColor":
+            qrBackgroundColor = value;
+            break;
+        case "qrErrorCorrection":
+            switch (value) {
+            case "H":
+                qrErrorCorrection = QRC.Ecc.HIGH;
+                break;
+            case "Q":
+                qrErrorCorrection = QRC.Ecc.QUARTILE;
+                break;
+            case "M":
+                qrErrorCorrection = QRC.Ecc.MEDIUM;
+                break;
+            case "L":
+                qrErrorCorrection = QRC.Ecc.LOW;
+                break;
+            default:
+                throw new Error(`unknown error correction option passed: ${value}`);
+            }
+            break;
+        default:
+            throw new Error(`unknown tag passed to set: ${tag}`);
+        }
+    };
+
+    /**
+     * Return new QR code.
+     *
+     * @name   QrLibQrGen.getQr
+     * @function
+     * @returns {HTMlElement}
+     */
+    me.getQr = function() {
+        Logger.logInfo("generated new QrGen qr code");
+
+        const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
+        const qrSvg = qrElem.toSvgString(qrBorder);
+        console.log(qrSvg);
+        return (new DOMParser()).parseFromString(qrSvg, "image/svg+xml").documentElement;
+    };
+
+    /**
+     * Init connector module.
+     *
+     * @name   QrLibKjua.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        me.reset();
+    };
+
+    return me;
+})();
+
+
 const QrLibKjua = (function () {
     const me = {};
 
@@ -132,10 +221,15 @@ const QrLibKjua = (function () {
     return me;
 })();
 
+// abstracts away all specific handling of QR code library
 const QrCreator = (function () {
     const me = {};
 
     let initFinished = false;
+    let qrCodeLib = null;
+
+    // by default "everything" has "been changed" (i.e. nothing has been generated yet)
+    const changedValues = new Set("everything");
 
     /**
      * Provide connection to library and get QR code with current options.
@@ -146,7 +240,7 @@ const QrCreator = (function () {
      * @returns {HTMLElement}
      */
     function getQrCodeFromLib() {
-        return QrLibKjua.getQr();
+        return qrCodeLib.getQr();
     }
 
     /**
@@ -179,7 +273,7 @@ const QrCreator = (function () {
             return;
         }
 
-        QrLibKjua.set("size", size);
+        qrCodeLib.set("size", size);
     };
 
     /**
@@ -211,7 +305,7 @@ const QrCreator = (function () {
      * @returns {void}
      */
     me.setTextInternal = function(text) {
-        QrLibKjua.set("text", text);
+        qrCodeLib.set("text", text);
     };
 
     /**
@@ -251,9 +345,20 @@ const QrCreator = (function () {
     me.init = function() {
         // get all settings
         return AddonSettings.get().then((settings) => {
-            QrLibKjua.set("qrColor", settings.qrColor);
-            QrLibKjua.set("qrBackgroundColor", settings.qrBackgroundColor);
-            QrLibKjua.set("qrErrorCorrection", settings.qrErrorCorrection);
+            switch (settings.qrCodeType) {
+            case "svg":
+                qrCodeLib = QrLibQrGen;
+                break;
+            case "canvas":
+                qrCodeLib = QrLibKjua;
+                break;
+            default:
+                throw new Error("invalid QR code type setting");
+            }
+
+            qrCodeLib.set("qrColor", settings.qrColor);
+            qrCodeLib.set("qrBackgroundColor", settings.qrBackgroundColor);
+            qrCodeLib.set("qrErrorCorrection", settings.qrErrorCorrection);
 
             initFinished = true;
         });
