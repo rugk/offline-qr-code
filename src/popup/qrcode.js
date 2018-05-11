@@ -24,6 +24,16 @@ const QrLibQrGen = (function () {
     let qrErrorCorrection;
 
     /**
+     * The type of QR code this library generates.
+     *
+     * @name QrLibQrGen.GENERATION_TYPE
+     * @type {string}
+     * @const
+     * @default
+     */
+    me.GENERATION_TYPE = "svg";
+
+    /**
      * Set an option for the QR code.
      *
      * @name   QrLibQrGen.set
@@ -74,26 +84,22 @@ const QrLibQrGen = (function () {
      *
      * @name   QrLibQrGen.getQr
      * @function
-     * @returns {HTMlElement}
+     * @returns {SVGSVGElement}
      */
     me.getQr = function() {
         Logger.logInfo("generated new QrGen qr code");
 
         const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
-        const qrSvg = qrElem.toSvgString(qrBorder);
-        console.log(qrSvg);
-        return (new DOMParser()).parseFromString(qrSvg, "image/svg+xml").documentElement;
-    };
+        const qrSvgString = qrElem.toSvgString(qrBorder);
+        const svg = (new DOMParser()).parseFromString(qrSvgString, "image/svg+xml"); // XMlDocument
+        const elSvg = svg.documentElement; // SVGSVGElement
 
-    /**
-     * Init connector module.
-     *
-     * @name   QrLibKjua.init
-     * @function
-     * @returns {void}
-     */
-    me.init = function() {
-        me.reset();
+        // modify SVG
+        // transparent background
+        elSvg.querySelector("rect").setAttribute("fill", "transparent");
+        elSvg.querySelector("path").setAttribute("fill", qrColor);
+
+        return elSvg;
     };
 
     return me;
@@ -106,9 +112,19 @@ const QrLibKjua = (function () {
     /* globals kjua */
 
     /**
+     * The type of QR code this library generates.
+     *
+     * @name QrLibKjua.GENERATION_TYPE
+     * @type {string}
+     * @const
+     * @default
+     */
+    me.GENERATION_TYPE = "canvas";
+
+    /**
      * The saved options for Kjua.
      *
-     * @name QrCreator.kjuaOptions
+     * @name QrLibKjua.kjuaOptions
      * @private
      */
     let kjuaOptions;
@@ -118,7 +134,7 @@ const QrLibKjua = (function () {
      *
      * format: generalOpt => kjua
      *
-     * @name QrCreator.OPTIONS_MAP
+     * @name QrLibKjua.OPTIONS_MAP
      * @private
      */
     const OPTIONS_MAP = Object.freeze({
@@ -218,7 +234,7 @@ const QrLibKjua = (function () {
         me.reset();
     };
 
-    return me;
+    return Object.freeze(me);
 })();
 
 // abstracts away all specific handling of QR code library
@@ -228,8 +244,8 @@ const QrCreator = (function () {
     let initFinished = false;
     let qrCodeLib = null;
 
-    // by default "everything" has "been changed" (i.e. nothing has been generated yet)
-    const changedValues = new Set("everything");
+    // by default everything has "been changed" (i.e. nothing has been generated yet)
+    const changedValues = new Set("text", "color", "size");
 
     /**
      * Provide connection to library and get QR code with current options.
@@ -256,7 +272,18 @@ const QrCreator = (function () {
             return;
         }
 
+        console.log(changedValues);
+        // special shortcuts for SVG output when text does not need to be regenerated
+        if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) {
+            // color won't be changed
+            // size does not need adjustment for SVGs
+
+            return;
+        }
+
         UserInterface.replaceQr(getQrCodeFromLib());
+
+        changedValues.clear();
     };
 
     /**
@@ -279,7 +306,7 @@ const QrCreator = (function () {
     /**
      * Sets the text for the QR code.
      *
-     * Note that this alos triggers all user interface actions to display the
+     * Note that this also triggers all user interface actions to display the
      * test in a nice way. (e.g. selection and scrolling)..
      * As such, it is not a good idea for live updating the text. To only set
      * the option for the QR code itself, use {@link setTextInternal()}.
@@ -299,12 +326,13 @@ const QrCreator = (function () {
      *
      * Usually this should not be used, as it can cause an inconsistent display.
      *
-     * @name   QrCreator.generateFromTab
+     * @name   QrCreator.setTextInternal
      * @function
      * @param  {string} text
      * @returns {void}
      */
     me.setTextInternal = function(text) {
+        changedValues.add("text");
         qrCodeLib.set("text", text);
     };
 
@@ -693,6 +721,17 @@ const UserInterface = (function () {
     };
 
     /**
+     * Get the acual QR code element.
+     *
+     * @name   UserInterface.getQrCodeElement
+     * @function
+     * @returns {HTMLElement}
+     */
+    me.getQrCodeElement = function() {
+        return qrCode.firstElementChild;
+    };
+
+    /**
      * Replace the QR code element with this (new) one.
      *
      * @name   UserInterface.replaceQr
@@ -702,7 +741,7 @@ const UserInterface = (function () {
      */
     me.replaceQr = function(elNewQr) {
         // get old element
-        const elOldQrCode = qrCode.firstElementChild;
+        const elOldQrCode = me.getQrCodeElement();
 
         // and replace it
         Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
@@ -742,7 +781,6 @@ const UserInterface = (function () {
         gettingQrSize.then((qrCodeSize) => {
             // save as module variable
             qrCodeSizeOption = qrCodeSize;
-
 
             if (qrCodeSize.sizeType === "auto") {
                 resizeElements();
@@ -832,7 +870,7 @@ const BrowserCommunication = (function () {
         case COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT:
             QrCreator.setText(request.qrText);
 
-            // if the unlikely case should happen, that the odl QR code has
+            // if the unlikely case should happen, that the old QR code has
             // already been generated/displayed, trigger re-generation
             if (initCompleted) {
                 Logger.logInfo("Initialisation has already been completed, regenerate QR code with new text.");
