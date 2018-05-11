@@ -102,6 +102,27 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
 
+  "optionQrCodeType": {
+    "message": "QR code type",
+    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
+  },
+  "optionQrCodeTypeSvg": {
+    "message": "SVG",
+    "description": "Option to select a scalable vector graphic image (SVG)."
+  },
+  "optionQrCodeTypeSvgHelper": {
+    "message": "Uses a modern generation method with vector graphics that enable smoother re-sizing.",
+    "description": "Helper text for SVG QR code type option."
+  },
+  "optionQrCodeTypeCanvas": {
+    "message": "Canvas image",
+    "description": "Option to select a canvas (pixel) image."
+  },
+  "optionQrCodeTypeCanvasHelper": {
+    "message": "A legacy generation method generating the QR code as an image (\"canvas\").",
+    "description": "Helper text for canvas QR code type option."
+  },
+
   "optionQrCodeSize": {
     "message": "QR code size",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."

@@ -17,10 +17,8 @@ const QrLibQrGen = (function () {
     const QRC = qrcodegen.QrCode;
 
     const qrBorder = 0;
-    let qrText;
-    let qrSize;
+    let qrText
     let qrColor;
-    let qrBackgroundColor;
     let qrErrorCorrection;
 
     /**
@@ -45,7 +43,7 @@ const QrLibQrGen = (function () {
     me.set = function(tag, value) {
         switch (tag) {
         case "size":
-            qrSize = value;
+            // ignore as this property is not availavble in this lib
             break;
         case "text":
             qrText = value;
@@ -54,7 +52,7 @@ const QrLibQrGen = (function () {
             qrColor = value;
             break;
         case "qrBackgroundColor":
-            qrBackgroundColor = value;
+            // ignore as this property is not availavble in this lib
             break;
         case "qrErrorCorrection":
             switch (value) {

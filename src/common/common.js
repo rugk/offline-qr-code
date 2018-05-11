@@ -2,11 +2,31 @@
 
 // lodash
 
-// Globals
+/**
+ * Specifies the long name of this add-on.,
+ *
+ * @readonly
+ * @type {string}
+ * @default
+ */
 const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
+
+/**
+ * Specifies the short name of this add-on.,
+ *
+ * @readonly
+ * @type {string}
+ * @default
+ */
 const ADDON_NAME_SHORT = "Offline QR code";
 
-// "Enums"
+/**
+ * Specifies the message level to use,
+ *
+ * @readonly
+ * @enum {int}
+ * @default
+ */
 const MESSAGE_LEVEL = Object.freeze({
     "ERROR": 3,
     "WARN": 2,
