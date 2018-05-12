@@ -21,7 +21,7 @@ a:active {
   color: #003eaa;
 }
 
-/* external link symbol*/
+/* external link symbol */
 /* currently disabled, because it is not clear what an external link is, in our case */
 /*a:not([class])[href*="//"]::after {
   background-image: url(/common/img/open-in-new.svg);
