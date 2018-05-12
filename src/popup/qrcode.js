@@ -17,9 +17,11 @@ const QrLibQrGen = (function () {
     const QRC = qrcodegen.QrCode;
 
     const qrBorder = 0;
-    let qrText
+    let qrText;
     let qrColor;
     let qrErrorCorrection;
+
+    let savedSvgString;
 
     /**
      * The type of QR code this library generates.
@@ -30,6 +32,27 @@ const QrLibQrGen = (function () {
      * @default
      */
     me.GENERATION_TYPE = "svg";
+
+    /**
+     * Generates an SVG element out of an SVG string.
+     *
+     * @name   QrLibQrGen.getSvgElement
+     * @function
+     * @private
+     * @param {string} svgString the SVG+XML string
+     * @returns {SVGSVGElement}
+     */
+    function getSvgElement(svgString) {
+        const svg = (new DOMParser()).parseFromString(svgString, "image/svg+xml"); // XMlDocument
+        const elSvg = svg.documentElement; // SVGSVGElement
+
+        // modify SVG
+        // transparent background
+        elSvg.querySelector("rect").setAttribute("fill", "transparent");
+        elSvg.querySelector("path").setAttribute("fill", qrColor);
+
+        return elSvg;
+    }
 
     /**
      * Set an option for the QR code.
@@ -88,16 +111,9 @@ const QrLibQrGen = (function () {
         Logger.logInfo("generated new QrGen qr code");
 
         const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
-        const qrSvgString = qrElem.toSvgString(qrBorder);
-        const svg = (new DOMParser()).parseFromString(qrSvgString, "image/svg+xml"); // XMlDocument
-        const elSvg = svg.documentElement; // SVGSVGElement
+        savedSvgString = qrElem.toSvgString(qrBorder);
 
-        // modify SVG
-        // transparent background
-        elSvg.querySelector("rect").setAttribute("fill", "transparent");
-        elSvg.querySelector("path").setAttribute("fill", qrColor);
-
-        return elSvg;
+        return getSvgElement(savedSvgString);
     };
 
     return me;
@@ -270,7 +286,6 @@ const QrCreator = (function () {
             return;
         }
 
-        console.log(changedValues);
         // special shortcuts for SVG output when text does not need to be regenerated
         if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) {
             // color won't be changed
@@ -362,6 +377,19 @@ const QrCreator = (function () {
     };
 
     /**
+     * Returns whether the QR code element is resizable by itself (i.e. an SVG) or not.
+     *
+     * CURRENTLY UNUSED
+     *
+     * @name   QrCreator.isResizable
+     * @function
+     * @returns {bool}
+     */
+    me.isResizable = function() {
+        return qrCodeLib.GENERATION_TYPE === "svg";
+    };
+
+    /**
      * Initiates module.
      *
      * @name   QrCreator.init
@@ -404,10 +432,7 @@ const UserInterface = (function () {
     const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
     const WINDOW_MINIMUM_HEIGHT = 250; // px
     const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
-    const TIMEOUT_HEIGHT_SCROLLBAR_RESTRICT = 100; // ms
 
-    const elHtml = document.querySelector("html");
-    const elBody = document.querySelector("body");
     const qrCode = document.getElementById("qrcode");
     const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
     const qrCodeContainer = document.getElementById("qrcode-container");
@@ -668,7 +693,7 @@ const UserInterface = (function () {
     }
 
     /**
-     * Resize the UI elements when the popup, etc. is resized.
+     * Resize the UI elements when the popup (actually the textarea box), etc. is resized.
      *
      * @name   UserInterface.resizeElements
      * @function
@@ -775,6 +800,9 @@ const UserInterface = (function () {
             }
         });
 
+        // for some very strange reason, initing it as fast as possible gives better performance when resizing later
+        const mutationObserver = new MutationObserver(resizeElements);
+
         const gettingQrSize = AddonSettings.get("qrCodeSize");
         gettingQrSize.then((qrCodeSize) => {
             // save as module variable
@@ -799,7 +827,7 @@ const UserInterface = (function () {
             if (qrCodeSize.sizeType === "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
                 Logger.logInfo("restore qr code text size:", qrCodeSize.sizeText);
                 // is saved as CSS string already
-                qrCodeText.style.height = qrCodeSize.sizeText.height;
+                // height is NOT (anymore) restored, as this may cause display errors (likely due to different content-box settings) and the height does not matter, anyway
                 qrCodeText.style.width = qrCodeSize.sizeText.width;
 
                 // detect too small size
@@ -809,25 +837,12 @@ const UserInterface = (function () {
                 }
             }
 
-            // in any case, apply height restriction only after the size has been set
-            // this prevents overflow/display issues.
-            setTimeout(() => {
-                elHtml.classList.add("preventScrollbar");
-                elBody.classList.add("preventScrollbar");
-            }, TIMEOUT_HEIGHT_SCROLLBAR_RESTRICT);
-        });
-
-        // for some very strange reason, initing it as fast as possible gives better performance when resizing later
-        const mutationObserver = new MutationObserver(resizeElements);
-        // start listening for resize events when size is set or when setting has errors or so
-        const startResize = () => {
-            // listen for resizes at the textarea
+            // start listening for resize events afterwards
             mutationObserver.observe(qrCodeText, {
                 attributes: true,
                 attributeFilter: ["style"]
             });
-        };
-        gettingQrSize.then(startResize).catch(startResize);
+        });
 
         // manually focus (and select) element when starting
         // in brute-force-style as bugs seem to prevent it from working otherwise
