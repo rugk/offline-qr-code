@@ -137,6 +137,11 @@ const ContextMenu = (function () {
             title: browser.i18n.getMessage("contextMenuItemOptions"),
             contexts: ["browser_action"]
         }, onCreated);
+
+        browser.menus.refresh();
+
+        // if listener is set, because items were hidden -> remove it
+        browser.menus.onHidden.removeListener(createItems);
     }
 
     /**
@@ -168,6 +173,33 @@ const ContextMenu = (function () {
         }
     }
 
+
+    /**
+     * Triggers when the menu is shown.
+     *
+     *
+     *
+     * @name   ContextMenu.menuShown
+     * @function
+     * @private
+     * @param {event} info
+     * @param {tabs.Tab} tab
+     * @returns {void}
+     */
+    function menuShown(info, tab) {
+        console.log(JSON.parse(JSON.stringify(tab)));
+        if (!tab.url.startsWith(browser.extension.getURL())) {
+            return;
+        }
+
+        browser.menus.onHidden.addListener(createItems);
+
+        browser.menus.remove(CONVERT_TEXT_SELECTION);
+        browser.menus.remove(CONVERT_LINK_TEXT_SELECTION);
+
+        browser.menus.refresh();
+    }
+
     /**
      * Init context menu module.
      *
@@ -180,6 +212,7 @@ const ContextMenu = (function () {
     me.init = function() {
         createItems();
         browser.menus.onClicked.addListener(menuClicked);
+        browser.menus.onShown.addListener(menuShown);
     };
 
     return me;
