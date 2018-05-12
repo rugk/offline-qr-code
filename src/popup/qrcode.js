@@ -729,6 +729,17 @@ const UserInterface = (function () {
     }
 
     /**
+     * Executes resizeElements, but only when a frame is rendered.
+     *
+     * This depends on the thottle function from lodash that uses requestAnimationFrame.
+     *
+     * @name   UserInterface.throttledResizeElements
+     * @function
+     * @private
+     */
+    const throttledResizeElements = throttle(resizeElements);
+
+    /**
      * Shows the given text in the QR code's input field.
      *
      * Note that this also triggers the actions to show it nicely in the UI.
@@ -803,7 +814,7 @@ const UserInterface = (function () {
         });
 
         // for some very strange reason, initing it as fast as possible gives better performance when resizing later
-        const mutationObserver = new MutationObserver(resizeElements);
+        const mutationObserver = new MutationObserver(throttledResizeElements);
 
         const gettingQrSize = AddonSettings.get("qrCodeSize");
         gettingQrSize.then((qrCodeSize) => {
