@@ -1,3 +1,3 @@
-This add-on allows you to quickly generate a QR code offline with the URL of the open tab or any other text!
+This add-on allows you to quickly generate a QR code offline with the URL of the open tab or any (selected) other text!
 
-It works completely offline protecting your privacy. However, you can still enjoy advanced features like colored QR codes!
+It works completely offline protecting your privacy. However, you can still enjoy features like colored QR codes!
