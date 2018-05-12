@@ -84,9 +84,9 @@ const ContextMenu = (function () {
 
         /* eslint-disable no-console */
         if (lastError) {
-            console.log(`error creating item: ${lastError}`);
+            console.log(`error creating menu item: ${lastError}`);
         } else {
-            console.log("item created successfully");
+            console.log("menu item created successfully");
         }
         /* eslint-enable no-console */
     }
@@ -140,7 +140,7 @@ const ContextMenu = (function () {
     }
 
     /**
-     * Triggers when a menu it clicked.
+     * Triggers when a context menu item has been clicked.
      *
      * @name   ContextMenu.menuClicked
      * @function

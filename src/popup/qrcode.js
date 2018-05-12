@@ -21,8 +21,6 @@ const QrLibQrGen = (function () {
     let qrColor;
     let qrErrorCorrection;
 
-    let savedSvgString;
-
     /**
      * The type of QR code this library generates.
      *
@@ -43,7 +41,7 @@ const QrLibQrGen = (function () {
      * @returns {SVGSVGElement}
      */
     function getSvgElement(svgString) {
-        const svg = (new DOMParser()).parseFromString(svgString, "image/svg+xml"); // XMlDocument
+        const svg = (new DOMParser()).parseFromString(svgString, "image/svg+xml"); // XMLDocument
         const elSvg = svg.documentElement; // SVGSVGElement
 
         // modify SVG
@@ -111,9 +109,9 @@ const QrLibQrGen = (function () {
         Logger.logInfo("generated new QrGen qr code");
 
         const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
-        savedSvgString = qrElem.toSvgString(qrBorder);
+        const svgString = qrElem.toSvgString(qrBorder);
 
-        return getSvgElement(savedSvgString);
+        return getSvgElement(svgString);
     };
 
     return me;
@@ -377,16 +375,16 @@ const QrCreator = (function () {
     };
 
     /**
-     * Returns whether the QR code element is resizable by itself (i.e. an SVG) or not.
+     * Returns the type of the generated QR code.
      *
-     * CURRENTLY UNUSED
-     *
-     * @name   QrCreator.isResizable
+     * @name   QrCreator.getGenerationType
      * @function
-     * @returns {bool}
+     * @returns {Promise}
      */
-    me.isResizable = function() {
-        return qrCodeLib.GENERATION_TYPE === "svg";
+    me.getGenerationType = async function() {
+        await qrCreatorInit; // module needs to be initiated
+
+        return qrCodeLib.GENERATION_TYPE;
     };
 
     /**
@@ -432,6 +430,8 @@ const UserInterface = (function () {
     const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
     const WINDOW_MINIMUM_HEIGHT = 250; // px
     const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
+
+    const CONTEXT_MENU_SAVE_IMAGE = "save-image";
 
     const qrCode = document.getElementById("qrcode");
     const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
@@ -785,6 +785,51 @@ const UserInterface = (function () {
     };
 
     /**
+     * Triggers when a context menu item has been clicked.
+     *
+     * It downloads
+     *
+     * @name   ContextMenu.menuClicked
+     * @function
+     * @private
+     * @param {event} event
+     * @returns {void}
+     */
+    function menuClicked(event) {
+        if (event.menuItemId !== CONTEXT_MENU_SAVE_IMAGE) {
+            return;
+        }
+
+        AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
+            // const svgString = qrCodeLib.getSvgString();
+            const svgElem = document.getElementsByTagName("svg")[0].cloneNode(true);
+
+            // prettify SVG for saving
+            svgElem.setAttribute("height", qrLastSize);
+            svgElem.setAttribute("width", qrLastSize);
+            svgElem.querySelector("rect").setAttribute("fill", qrBackgroundColor); // replace transparent background
+
+            const svgString = (new XMLSerializer()).serializeToString(svgElem);
+
+            const file = new File([svgString], "qrcode.svg", {type: "image/svg+xml;charset=utf-8"});
+            const newObject = URL.createObjectURL(file);
+            browser.downloads.download({
+                url: newObject,
+                filename: "qrcode.svg",
+                // saveAs currently impossible, as this closes the popup and thus
+                // destroys the element it just tried to download
+                // bug:
+                saveAs: false
+            }).finally(() => {
+                // clean-up
+                URL.revokeObjectURL(file);
+            });
+
+            Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+        });
+    }
+
+    /**
      * Initalises the module.
      *
      * @name   UserInterface.init
@@ -813,7 +858,7 @@ const UserInterface = (function () {
             }
         });
 
-        // for some very strange reason, initing it as fast as possible gives better performance when resizing later
+        // for some very strange reason, initiating it as fast as possible gives better performance when resizing later
         const mutationObserver = new MutationObserver(throttledResizeElements);
 
         const gettingQrSize = AddonSettings.get("qrCodeSize");
@@ -863,6 +908,36 @@ const UserInterface = (function () {
         // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
         setTimeout(selectAllText, 50, { target: qrCodeText });
 
+        QrCreator.getGenerationType().then((genType) => {
+            if (genType !== "svg") {
+                // remove menu item if it has been added before
+                browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
+
+                return;
+            }
+
+            // create save menu if needed
+            browser.menus.create({
+                id: CONTEXT_MENU_SAVE_IMAGE,
+                title: browser.i18n.getMessage("contextMenuSaveImage"),
+                contexts: ["page"],
+                documentUrlPatterns: [
+                    document.URL // only apply to own URL = popup
+                ]
+            }, () => { // @TODO unify with background.js (module!)
+                const lastError = browser.runtime.lastError;
+
+                if (lastError) {
+                    Logger.logWarning(`error creating menu item: ${lastError}`);
+                } else {
+                    Logger.logInfo("menu item created successfully");
+                }
+            });
+
+            browser.menus.onClicked.addListener(menuClicked);
+        });
+
+        // return Promise chain
         return gettingQrSize.then(() => {
             return gettingQrColor;
         });
