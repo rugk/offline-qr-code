@@ -1,4 +1,4 @@
-# Offline QR Code Generator
+# Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
 
 <img height="200" width="200" src="assets/qrbig-optimized.svg">
 

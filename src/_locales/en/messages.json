@@ -111,7 +111,7 @@
     "description": "Option to select a scalable vector graphic image (SVG)."
   },
   "optionQrCodeTypeSvgHelper": {
-    "message": "Uses a modern generation method with vector graphics that enable smoother re-sizing.",
+    "message": "Uses a modern generation method with vector graphics that enable smoother resizing.",
     "description": "Helper text for SVG QR code type option."
   },
   "optionQrCodeTypeCanvas": {
