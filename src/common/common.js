@@ -228,7 +228,7 @@ const Localizer = (function () {
             // only set message if it could be retrieved, i.e. do not override HTML fallback
             if (translatedMessage !== "") {
                 if (isHTML) {
-                    const normalizedMessage = translatedMessage.replace(/!HTML!/, "").trimLeft();
+                    const normalizedMessage = translatedMessage.replace("!HTML!", "").trimLeft();
                     elem.innerHTML = normalizedMessage;
                 } else {
                     elem.textContent = translatedMessage;
@@ -246,7 +246,7 @@ const Localizer = (function () {
                 const isHTML = translatedMessage.startsWith("!HTML!");
                 // only set message if it could be retrieved, i.e. do not override HTML fallback
                 if (translatedMessage !== "") {
-                    elem.setAttribute(currentAttribute, isHTML ? translatedMessage.replace(/!HTML!/, "").trimLeft() : translatedMessage);
+                    elem.setAttribute(currentAttribute, isHTML ? translatedMessage.replace("!HTML!", "").trimLeft() : translatedMessage);
                 }
             }
         });
