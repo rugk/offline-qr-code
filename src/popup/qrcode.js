@@ -647,8 +647,10 @@ const UserInterface = (function () {
         // apply new size
         QrCreator.setSize(newSize);
 
-        qrCodeResizeContainer.style.width = `${newSize}px`;
-        qrCodeResizeContainer.style.height = `${newSize}px`;
+        if (qrCodeSizeOption.sizeType !== "auto") {
+            qrCodeResizeContainer.style.width = `${newSize}px`;
+            qrCodeResizeContainer.style.height = `${newSize}px`;
+        }
 
         if (regenerateQr) {
             QrCreator.generate();
@@ -809,7 +811,8 @@ const UserInterface = (function () {
             qrCodeSizeOption = qrCodeSize;
 
             if (qrCodeSize.sizeType === "auto") {
-                resizeElements();
+                // do not resize QR code, but center it horizontally (SVG maximizes automatically)
+                qrCodeResizeContainer.style.width = "auto";
             }
 
             if (qrCodeSize.sizeType === "remember" || qrCodeSize.sizeType === "fixed") {
