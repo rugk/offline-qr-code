@@ -3,6 +3,7 @@
 /* globals Logger */
 /* globals AddonSettings */
 /* globals MessageHandler */
+/* globals RandomTips */
 
 const OptionHandler = (function () {
     const me = {};
@@ -480,3 +481,4 @@ const OptionHandler = (function () {
 // init module
 AddonSettings.loadOptions();
 OptionHandler.init();
+RandomTips.showRandomTip();

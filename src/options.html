@@ -7,12 +7,17 @@
 		<link rel="stylesheet" href="common/common.css">
 		<link rel="stylesheet" href="options.css">
 
+		<script src="common/lib/lodash/lodash.js"></script>
 		<script defer src="common/common.js"></script>
 		<script defer src="options.js"></script>
 	</head>
 
 	<body>
 		<div class="message-container">
+			<div id="messageTips" class="message-box info invisible fade-hide">
+				<span class="message-text"></span>
+				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="1" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
+			</div>
 			<div id="messageInfo" class="message-box info invisible fade-hide">
 				<span class="message-text">Some settings are managed by your administrator and cannot be changed.</span>
 				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="1" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>

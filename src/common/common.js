@@ -294,7 +294,8 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
         qrCodeSize: {
             sizeType: "fixed",
             size: 200
-        }
+        },
+        randomTips: {}
     });
 
     /**
@@ -382,6 +383,21 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
     };
 
     /**
+     * Sets the settings.
+     *
+     * Note you need to pass an key -> value object to set here.
+     *
+     * @name   AddonSettings.set
+     * @see {@link https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/StorageArea/set}
+     * @function
+     * @param  {Object} option keys/values to set
+     * @returns {Promise}
+     */
+    me.set = function(option) {
+        return browser.storage.sync.set(option);
+    };
+
+    /**
      * Fetches all options, so they can be used later.
      *
      * This is basically the init method!
@@ -462,6 +478,8 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         "global": {
             "show": null,
             "hide": null,
+            "dismissStart": null,
+            "dismissEnd": null
         },
         [MESSAGE_LEVEL.ERROR]: {
             "show": null,
@@ -542,12 +560,22 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             // add handler to hide message completly after transition
             elMessage.addEventListener("transitionend", dismissMessage);
 
+            runHook("global", "dismissStart", {
+                elMessage,
+                event
+            });
+
             Logger.logInfo("message is dismissed", event);
         } else if (event.type === "transitionend") {
             const elMessage = event.target;
 
             // hide message (and icon)
-            hideMessage(elMessage);
+            me.hideMessage(elMessage);
+
+            runHook("global", "dismissEnd", {
+                elMessage,
+                event
+            });
 
             // remove set handler
             elMessage.removeEventListener("transitionend", dismissMessage);
@@ -560,20 +588,24 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * Pass as many strings/output as you want. They will be localized
      * automatically, before presented to the user.
      *
+     * If you pass a HtmlElement as the first parameter, you can use your own
+     * custom node for the message.
+     *
      * @name   MessageHandler.showMessage
      * @function
-     * @private
-     * @param {MESSAGE_LEVEL} messagetype
+     * @param {MESSAGE_LEVEL|HtmlElement} messagetype
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
-    function showMessage(...args) {
+    me.showMessage = function(...args) {
         if (arguments.length < 0) {
             Logger.logError("MessageHandler.showMessage has been called without parameters");
             return;
         }
+
+        let elMessage = null;
 
         // also log message to console
         Logger.log.apply(null, args);
@@ -582,7 +614,16 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         const messagetype = args.shift();
 
         // get element by message type
-        const elMessage = ELEMENT_BY_TYPE[messagetype];
+        if (messagetype instanceof HTMLElement) {
+            elMessage = messagetype;
+
+            // a custom element also needs the dismiss listener to be set
+            const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
+            elDismissIcon.addEventListener("click", dismissMessage);
+        } else {
+            elMessage = ELEMENT_BY_TYPE[messagetype];
+        }
+
         if (!elMessage) {
             Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
             return;
@@ -617,7 +658,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
         elMessage.classList.remove("invisible");
         elMessage.classList.remove("fade-hide");
-    }
+    };
 
     /**
      * Hides the message type(s), you specify.
@@ -627,11 +668,10 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.hideMessage
      * @function
-     * @private
      * @param  {MESSAGE_LEVEL|null|HTMLElement} messagetype
      * @returns {void}
      */
-    function hideMessage(messagetype) {
+    me.hideMessage = function(messagetype) {
         let elMessage = null;
 
         if (messagetype instanceof HTMLElement) {
@@ -659,7 +699,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         Logger.logInfo("message is hidden", elMessage);
 
         return;
-    }
+    };
 
     /**
      * Hides the error message.
@@ -670,7 +710,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      */
     me.hideError = function() {
         runHook(MESSAGE_LEVEL.ERROR, "hide");
-        hideMessage(MESSAGE_LEVEL.ERROR);
+        me.hideMessage(MESSAGE_LEVEL.ERROR);
     };
 
     /**
@@ -682,7 +722,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      */
     me.hideWarning = function() {
         runHook(MESSAGE_LEVEL.WARN, "hide");
-        hideMessage(MESSAGE_LEVEL.WARN);
+        me.hideMessage(MESSAGE_LEVEL.WARN);
     };
 
     /**
@@ -694,7 +734,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      */
     me.hideInfo = function() {
         runHook(MESSAGE_LEVEL.INFO, "hide");
-        hideMessage(MESSAGE_LEVEL.INFO);
+        me.hideMessage(MESSAGE_LEVEL.INFO);
     };
 
     /**
@@ -706,7 +746,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      */
     me.hideLoading = function() {
         runHook(MESSAGE_LEVEL.LOADING, "hide");
-        hideMessage(MESSAGE_LEVEL.LOADING);
+        me.hideMessage(MESSAGE_LEVEL.LOADING);
     };
 
     /**
@@ -718,7 +758,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      */
     me.hideSuccess = function() {
         runHook(MESSAGE_LEVEL.SUCCESS, "hide");
-        hideMessage(MESSAGE_LEVEL.SUCCESS);
+        me.hideMessage(MESSAGE_LEVEL.SUCCESS);
     };
 
     /**
@@ -741,7 +781,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         runHook(MESSAGE_LEVEL.ERROR, "show", args);
 
         args.unshift(MESSAGE_LEVEL.ERROR);
-        showMessage(...args);
+        me.showMessage(...args);
     };
 
     /**
@@ -758,7 +798,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         runHook(MESSAGE_LEVEL.WARN, "show", args);
 
         args.unshift(MESSAGE_LEVEL.WARN);
-        showMessage(...args);
+        me.showMessage(...args);
     };
 
     /**
@@ -775,7 +815,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         runHook(MESSAGE_LEVEL.INFO, "show", args);
 
         args.unshift(MESSAGE_LEVEL.INFO);
-        showMessage(...args);
+        me.showMessage(...args);
     };
 
     /**
@@ -792,7 +832,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         runHook(MESSAGE_LEVEL.LOADDING, "show", args);
 
         args.unshift(MESSAGE_LEVEL.LOADDING);
-        showMessage(...args);
+        me.showMessage(...args);
     };
 
     /**
@@ -809,7 +849,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         runHook(MESSAGE_LEVEL.SUCCESS, "show", args);
 
         args.unshift(MESSAGE_LEVEL.SUCCESS);
-        showMessage(...args);
+        me.showMessage(...args);
     };
 
     /**
@@ -821,16 +861,36 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * The errorShown function gets one parameter: The arguments passed to the
      * function, as an array.
      *
-     * @name   MessageHandler.setHooksetHook
+     * @name   MessageHandler.setHook
      * @function
      * @param  {MESSAGE_LEVEL|string} messagetype use string "global" for a global hook
-     * @param {function} hookShown
-     * @param {function} hookHidden
+     * @param {function|null} hookShown
+     * @param {function|null} hookHidden
      * @returns {void}
      */
     me.setHook = function(messagetype, hookShown, hookHidden) {
         hooks[messagetype].show = hookShown;
         hooks[messagetype].hide = hookHidden;
+    };
+
+    /**
+     * Called when a message is dismissed.
+     *
+     + When called, the function does not know, which message is hidden, but you
+     * can determinante it by yourself.
+     * The called hook gets an object with two parameters:
+     * - {HtmlElement} elMessage – the message element, which was hidden
+     * - {event} event – the original click even on the dismiss button
+     *
+     * @name   MessageHandler.setDismissHooks
+     * @function
+     * @param {function|null} startHook
+     * @param {function|null} endHook
+     * @returns {void}
+     */
+    me.setDismissHooks = function(startHook, endHook) {
+        hooks.global.dismissStart = startHook;
+        hooks.global.dismissEnd = endHook;
     };
 
     /**
@@ -853,8 +913,274 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     return me;
 })();
 
+const RandomTips = (function () {// eslint-disable-line no-unused-vars
+    const me = {};
+
+    /* globals debounce */
+
+    const TIP_SETTING_STORAGE_ID = "randomTips";
+    const GLOBAL_RANDOMIZE = 10; // 1:x
+    const DEBOUNCE_SAVING = 5000; // ms
+
+    const elMessageBox = document.getElementById("messageTips");
+
+    /**
+     * The list of all tipDefinition.
+     *
+     * Format:
+     * {
+     *     id {string} – just some ID
+     *     requiredShowCount {integer} – shows the message x times
+     *     allowDismiss {bool} – optional, Set to false to disallow dismissing
+     *          the message. This likely makes no sense for any tip, so the
+     *          default is true.
+     *     requireDismiss {bool|integer} – optional, require that message is
+     *          dismissed to count as a requiredShowCount. True enables this,
+     *          with any integer you can specify a lower value to only require
+     *          x dismisses.
+     *     requiredTriggers {integer} – optional, require some displays
+     *          ("triggers") of shows of tip ebfore showing tip. This is
+     *          effectively just a minimum limit, so it is not shown too "early",
+     *          default: 10
+     *     randomizeDisplay {bool|integer} – optional, Randomizes the display
+     *          with a chance of 1 : 10 by default (when "true" is set). If
+     *          a number isspecified, 1 : x. Note that the tip message display
+     *          in general is already randomized with achance of 1 : 10, see
+     *          {@link GLOBAL_RANDOMIZE}.
+     *     text {string}: The text to actually show. It is passed to the
+     *          {@link MessageHandler}, so you can (& should) use a translatable
+     *          string here.
+     * }
+     *
+     * @type {Object[]}
+     */
+    const tipDefinition = [
+        {
+            id: "likeAddon",
+            requiredShowCount: 3,
+            requireDismiss: 1,
+            requiredTriggers: 100,
+            randomizeDisplay: false,
+            text: "tipYouLikeAddon"
+        },
+        {
+            id: "saveQr",
+            requiredShowCount: 1,
+            requireDismiss: true,
+            requiredTriggers: 10,
+            randomizeDisplay: false,
+            text: "tipSaveQrCode"
+        }
+    ];
+
+    let tipConfig = {};
+    let tipShown = null;
+
+    /**
+     * Save the current config.
+     *
+     * @name   RandomtipDefinition.saveConfig
+     * @function
+     * @private
+     * @returns {void}
+     */
+    const saveConfig = debounce(() => {
+        AddonSettings.set({
+            TIP_SETTING_STORAGE_ID: tipConfig
+        });
+    }, DEBOUNCE_SAVING);
+
+    /**
+     * Hook for the dismiss event.
+     *
+     * @name   RandomtipDefinition.messageDismissed
+     * @function
+     * @private
+     * @param  {Object} param
+     * @returns {void}
+     */
+    function messageDismissed(param) {
+        const elMessage = param.elMessage;
+
+        // ignore other dismissed messages
+        if (elMessage !== elMessageBox) {
+            return;
+        }
+
+        const id = elMessageBox.dataset.tipId;
+        if (tipShown.id !== id) {
+            throw new Error("cached tip and dismissed tip differ");
+        }
+
+        // update config
+        tipConfig[id].dismissedCount = (tipConfig[id].dismissedCount || 0) + 1;
+        saveConfig();
+
+        // remove dismiss hook
+        MessageHandler.setDismissHooks(null);
+
+        // cleanup values
+        tipShown = null;
+        delete elMessageBox.dataset.tipId;
+    }
+
+    /**
+     * Returns true or false at random. The larger the number if you pass in,
+     * the less is the chance you get "true".
+     *
+     * The chance should actually be 1 : max more or less.
+     *
+     * @name   RandomtipDefinition.randomizePassed
+     * @function
+     * @private
+     * @param  {integer} max
+     * @returns {bool}
+     */
+    function randomizePassed(max) {
+        const randomNumber = Math.floor(Math.random() * Math.floor(max));
+
+        return randomNumber === Math.round(max / 2);
+    }
+
+    /**
+     * Shows this tip.
+     *
+     * @name   RandomtipDefinition.showTip
+     * @function
+     * @private
+     * @param  {Object} tip
+     * @returns {void}
+     */
+    function showTip(tip) {
+        // default settings
+        const allowDismiss = tipDefinition.hasOwnProperty("allowDismiss") ? tipDefinition.allowDismiss : true;
+
+        elMessageBox.dataset.tipId = tipDefinition.id;
+        MessageHandler.showMessage(elMessageBox, tip.text, allowDismiss);
+
+        // hook dismiss
+        MessageHandler.setDismissHooks(messageDismissed);
+
+        // update config
+        tipConfig[tipDefinition.id].shownCount = (tipConfig[tipDefinition.id].shownCount || 0) + 1;
+        saveConfig();
+
+        tipShown = tip;
+    }
+
+    /**
+     * Returns whether the tip has already be shown enough times or may not
+     * be shown, because of some other requirement.
+     *
+     * @name   RandomtipDefinition.shouldBeShown
+     * @function
+     * @private
+     * @param  {Object} tip
+     * @returns {bool}
+     */
+    function shouldBeShown(tip) {
+        // default settings
+        tip.triggeredOpen = tip.triggeredOpen !== undefined ? tip.triggeredOpen : 10;
+
+        // create option if needed
+        if (tipConfig[tip.id] === undefined) {
+            tipConfig[tip.id] = {};
+            saveConfig();
+        }
+
+        // special handling
+        if (tipConfig.triggeredOpen < tip.requiredTriggers) {
+            return false;
+        }
+        if (tip.randomizeDisplay) {
+            // default value for tip is 1:10
+            tip.randomizeDisplay = tip.randomizeDisplay !== true ? tip.randomizeDisplay : 10;
+
+            // 1 : x -> if one number is not selected, do not display result
+            if (!randomizePassed(tip.randomizeDisplay)) {
+                return false;
+            }
+        }
+
+        // or has it been shown enough times already?
+
+        // dismiss is shown enough times?
+        let requiredDismissCount;
+        if (Number.isFinite(tip.requireDismiss)) {
+            requiredDismissCount = tip.requireDismiss;
+        } else if (tip.requireDismiss === true) { // bool
+            requiredDismissCount = tip.requiredShowCount;
+        } else {
+            requiredDismissCount = 0;
+        }
+
+        return tipConfig[tip.id].shownCount < tip.requiredShowCount // shown enough times
+            && tipConfig[tip.id].dismissedCount < requiredDismissCount; // dismiss is shown enough times
+    }
+
+    /**
+     * Seloects and shows a random tip.
+     *
+     * @name   RandomtipDefinition.showRandomTip
+     * @function
+     * @returns {void}
+     */
+    me.showRandomTip = function() {
+        // randomly select element
+        const randomNumber = Math.floor(Math.random() * tipDefinition.length);
+        const selectedTip = tipDefinition[randomNumber];
+        Logger.logInfo("selected tip to be shown: ", randomNumber, selectedTip);
+
+        if (!shouldBeShown(selectedTip)) {
+            // remove tip
+            tipDefinition.splice(randomNumber);
+
+            // retry random selection
+            me.showRandomTip();
+            return;
+        }
+
+        showTip(selectedTip);
+    };
+
+    /**
+     * Shows the random tip only randomly so the user is not annoyed.
+     *
+     * @name   RandomtipDefinition.showRandomTipIfWanted
+     * @function
+     * @returns {void}
+     */
+    me.showRandomTipIfWanted = function() {
+        tipConfig.triggeredOpen = (tipConfig.triggeredOpen || 0) + 1;
+        saveConfig();
+
+        // randomize tip showing in general
+        if (!randomizePassed(GLOBAL_RANDOMIZE)) {
+            return;
+        }
+
+        me.showRandomTip();
+    };
+
+    /**
+     * Initialises the module.
+     *
+     * @name   RandomtipDefinition.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
+            tipConfig = randomTips;
+        });
+    };
+
+    return me;
+})();
+
 // init modules
 AddonSettings.loadOptions();
 Logger.init();
 MessageHandler.init();
 Localizer.init();
+RandomTips.init();
