@@ -90,6 +90,11 @@ a:active {
   min-height: 0px;
 }
 
+.message-text {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
 .error {
   color: #ffffff;
   background-color: #d70022;
@@ -122,10 +127,10 @@ a:active {
 
 .icon-dismiss {
   box-sizing: content-box;
-  padding: 4px;
+  padding: 2px;
 
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 
   margin-left: auto;
   cursor: pointer;

@@ -53,8 +53,7 @@ html, body {
 .error.flot-qr {
   width: auto;
 
-  border-radius: 0px;
-
+  /* transparent background */
   background-color: #d70022ee;
 }
 

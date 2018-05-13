@@ -597,7 +597,7 @@ const UserInterface = (function () {
             return;
         }
 
-        // Attention: make sure this does not collide with the rety-property set
+        // Attention: make sure this does not collide with the retry-property set
         // in selectAllText()!
         event.setScrolled = true;
 
@@ -800,6 +800,12 @@ const UserInterface = (function () {
             return;
         }
 
+        // do not trigger when placeholder is shown
+        if (placeholderShown === true) {
+            MessageHandler.showError("Cannot save QR code if it is not displayed.", true);
+            return;
+        }
+
         AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
             // const svgString = qrCodeLib.getSvgString();
             const svgElem = document.getElementsByTagName("svg")[0].cloneNode(true);
@@ -823,9 +829,9 @@ const UserInterface = (function () {
             }).finally(() => {
                 // clean-up
                 URL.revokeObjectURL(file);
-            });
 
-            Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+                Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+            });
         });
     }
 
