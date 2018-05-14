@@ -277,6 +277,9 @@ const Localizer = (function () {
 const AddonSettings = (function () { // eslint-disable-line no-unused-vars
     const me = {};
 
+    // lodash
+    /* globals isObject */
+
     let gettingManagedOption;
     let gettingSyncOption;
 
@@ -295,7 +298,9 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
             sizeType: "fixed",
             size: 200
         },
-        randomTips: {}
+        randomTips: {
+            tips: {}
+        }
     });
 
     /**
@@ -385,16 +390,26 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
     /**
      * Sets the settings.
      *
-     * Note you need to pass an key -> value object to set here.
+     * Note you can pass an key -> value object to set here.
      *
      * @name   AddonSettings.set
      * @see {@link https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/StorageArea/set}
      * @function
-     * @param  {Object} option keys/values to set
+     * @param  {Object|string} option keys/values to set or single value
+     * @param  {Object} value if only a single value is to be set
      * @returns {Promise}
      */
-    me.set = function(option) {
-        return browser.storage.sync.set(option);
+    me.set = function(option, value) {
+        // put params into object if needed
+        if (!isObject(option)) {
+            option = {
+                [option]: value
+            };
+        }
+
+        return browser.storage.sync.set(option).catch((error) => {
+            Logger.logError("Could not save option:", option, error);
+        });
     };
 
     /**
@@ -608,7 +623,11 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         let elMessage = null;
 
         // also log message to console
-        Logger.log.apply(null, args);
+        if (args[0] instanceof HTMLElement) {
+            Logger.logInfo.apply(null, args);
+        } else {
+            Logger.log.apply(null, args);
+        }
 
         // get first element
         const messagetype = args.shift();
@@ -919,23 +938,23 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /* globals debounce */
 
     const TIP_SETTING_STORAGE_ID = "randomTips";
-    const GLOBAL_RANDOMIZE = 10; // 1:x
-    const DEBOUNCE_SAVING = 5000; // ms
+    const GLOBAL_RANDOMIZE = 0.2; // %
+    const DEBOUNCE_SAVING = 1000; // ms
 
     const elMessageBox = document.getElementById("messageTips");
 
     /**
-     * The list of all tipDefinition.
+     * The list of all tips.
      *
      * Format:
      * {
      *     id {string} – just some ID
-     *     requiredShowCount {integer} – shows the message x times
+     *     maxShowCount {integer} – shows the message at most x times
      *     allowDismiss {bool} – optional, Set to false to disallow dismissing
      *          the message. This likely makes no sense for any tip, so the
      *          default is true.
      *     requireDismiss {bool|integer} – optional, require that message is
-     *          dismissed to count as a requiredShowCount. True enables this,
+     *          dismissed to count as a maxShowCount. True enables this,
      *          with any integer you can specify a lower value to only require
      *          x dismisses.
      *     requiredTriggers {integer} – optional, require some displays
@@ -943,10 +962,10 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *          effectively just a minimum limit, so it is not shown too "early",
      *          default: 10
      *     randomizeDisplay {bool|integer} – optional, Randomizes the display
-     *          with a chance of 1 : 10 by default (when "true" is set). If
-     *          a number isspecified, 1 : x. Note that the tip message display
-     *          in general is already randomized with achance of 1 : 10, see
-     *          {@link GLOBAL_RANDOMIZE}.
+     *          with a chance of 50% by default (when "true" is set). You can
+     *          override that percentage (as an integer, e.g. 0.2 instead of 20%).
+     *          Note that the tip message display in general is already randomized
+     *          with achance of 20%, see {@link GLOBAL_RANDOMIZE}.
      *     text {string}: The text to actually show. It is passed to the
      *          {@link MessageHandler}, so you can (& should) use a translatable
      *          string here.
@@ -954,46 +973,46 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *
      * @type {Object[]}
      */
-    const tipDefinition = [
+    const tips = [
         {
             id: "likeAddon",
-            requiredShowCount: 3,
+            maxShowCount: 3,
             requireDismiss: 1,
-            requiredTriggers: 100,
+            requiredTriggers: 10,
             randomizeDisplay: false,
             text: "tipYouLikeAddon"
         },
         {
             id: "saveQr",
-            requiredShowCount: 1,
+            maxShowCount: 1,
             requireDismiss: true,
-            requiredTriggers: 10,
+            requiredTriggers: 0,
             randomizeDisplay: false,
             text: "tipSaveQrCode"
         }
     ];
 
-    let tipConfig = {};
+    let tipConfig = {
+        tips: {}
+    };
     let tipShown = null;
 
     /**
      * Save the current config.
      *
-     * @name   RandomtipDefinition.saveConfig
+     * @name   Randomtips.saveConfig
      * @function
      * @private
      * @returns {void}
      */
     const saveConfig = debounce(() => {
-        AddonSettings.set({
-            TIP_SETTING_STORAGE_ID: tipConfig
-        });
+        AddonSettings.set(TIP_SETTING_STORAGE_ID, tipConfig);
     }, DEBOUNCE_SAVING);
 
     /**
      * Hook for the dismiss event.
      *
-     * @name   RandomtipDefinition.messageDismissed
+     * @name   Randomtips.messageDismissed
      * @function
      * @private
      * @param  {Object} param
@@ -1013,7 +1032,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         }
 
         // update config
-        tipConfig[id].dismissedCount = (tipConfig[id].dismissedCount || 0) + 1;
+        tipConfig.tips[id].dismissedCount = (tipConfig.tips[id].dismissedCount || 0) + 1;
         saveConfig();
 
         // remove dismiss hook
@@ -1022,82 +1041,82 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         // cleanup values
         tipShown = null;
         delete elMessageBox.dataset.tipId;
+
+        Logger.logInfo(`Tip ${id} has been dismissed.`);
     }
 
     /**
-     * Returns true or false at random. The larger the number if you pass in,
-     * the less is the chance you get "true".
+     * Returns true or false at random. The passed procentage indicates how
+     * much of the calls should return "true" on average.
      *
-     * The chance should actually be 1 : max more or less.
-     *
-     * @name   RandomtipDefinition.randomizePassed
+     * @name   Randomtips.randomizePassed
      * @function
      * @private
-     * @param  {integer} max
+     * @param  {number} percentage
      * @returns {bool}
      */
-    function randomizePassed(max) {
-        const randomNumber = Math.floor(Math.random() * Math.floor(max));
-
-        return randomNumber === Math.round(max / 2);
+    function randomizePassed(percentage) {
+        return (Math.random() < percentage);
     }
 
     /**
      * Shows this tip.
      *
-     * @name   RandomtipDefinition.showTip
+     * @name   Randomtips.showTip
      * @function
      * @private
-     * @param  {Object} tip
+     * @param  {Object} tipSpec
      * @returns {void}
      */
-    function showTip(tip) {
+    function showTip(tipSpec) {
         // default settings
-        const allowDismiss = tipDefinition.hasOwnProperty("allowDismiss") ? tipDefinition.allowDismiss : true;
+        const allowDismiss = tips.allowDismiss !== undefined ? tips.allowDismiss : true;
 
-        elMessageBox.dataset.tipId = tipDefinition.id;
-        MessageHandler.showMessage(elMessageBox, tip.text, allowDismiss);
+        elMessageBox.dataset.tipId = tipSpec.id;
+        MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss);
 
         // hook dismiss
         MessageHandler.setDismissHooks(messageDismissed);
 
         // update config
-        tipConfig[tipDefinition.id].shownCount = (tipConfig[tipDefinition.id].shownCount || 0) + 1;
+        tipConfig.tips[tipSpec.id].shownCount = (tipConfig.tips[tipSpec.id].shownCount || 0) + 1;
         saveConfig();
 
-        tipShown = tip;
+        tipShown = tipSpec;
     }
 
     /**
      * Returns whether the tip has already be shown enough times or may not
      * be shown, because of some other requirement.
      *
-     * @name   RandomtipDefinition.shouldBeShown
+     * @name   Randomtips.shouldBeShown
      * @function
      * @private
-     * @param  {Object} tip
+     * @param  {Object} tipSpec
      * @returns {bool}
      */
-    function shouldBeShown(tip) {
+    function shouldBeShown(tipSpec) {
         // default settings
-        tip.triggeredOpen = tip.triggeredOpen !== undefined ? tip.triggeredOpen : 10;
+        tipSpec.requiredTriggers = tipSpec.requiredTriggers !== undefined ? tipSpec.requiredTriggers : 10;
+        tipSpec.maxShowCount = tipSpec.maxShowCount !== undefined ? tipSpec.requiredTriggers : 0;
 
         // create option if needed
-        if (tipConfig[tip.id] === undefined) {
-            tipConfig[tip.id] = {};
+        if (tipConfig.tips[tipSpec.id] === undefined) {
+            tipConfig.tips[tipSpec.id] = {};
             saveConfig();
         }
 
-        // special handling
-        if (tipConfig.triggeredOpen < tip.requiredTriggers) {
+        // require some global triggers, if needed
+        if (tipConfig.triggeredOpen < tipSpec.requiredTriggers) {
             return false;
         }
-        if (tip.randomizeDisplay) {
-            // default value for tip is 1:10
-            tip.randomizeDisplay = tip.randomizeDisplay !== true ? tip.randomizeDisplay : 10;
+        // require some additional randomness if needed
+        if (tipSpec.randomizeDisplay) {
+            // default value for tip is 50%
+            tipSpec.randomizeDisplay = tipSpec.randomizeDisplay !== true ? tipSpec.randomizeDisplay : 0.5;
 
             // 1 : x -> if one number is not selected, do not display result
-            if (!randomizePassed(tip.randomizeDisplay)) {
+            if (!randomizePassed(tipSpec.randomizeDisplay)) {
                 return false;
             }
         }
@@ -1106,47 +1125,57 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 
         // dismiss is shown enough times?
         let requiredDismissCount;
-        if (Number.isFinite(tip.requireDismiss)) {
-            requiredDismissCount = tip.requireDismiss;
-        } else if (tip.requireDismiss === true) { // bool
-            requiredDismissCount = tip.requiredShowCount;
+        if (Number.isFinite(tipSpec.requireDismiss)) {
+            requiredDismissCount = tipSpec.requireDismiss;
+        } else if (tipSpec.requireDismiss === true) { // bool
+            requiredDismissCount = tipSpec.maxShowCount;
         } else {
             requiredDismissCount = 0;
         }
 
-        return tipConfig[tip.id].shownCount < tip.requiredShowCount // shown enough times
-            && tipConfig[tip.id].dismissedCount < requiredDismissCount; // dismiss is shown enough times
+        const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
+        const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
+
+        return tipShowCount < tipSpec.maxShowCount // shown enough times
+            && tipDismissed < requiredDismissCount; // dismiss is shown enough times
     }
 
     /**
      * Seloects and shows a random tip.
      *
-     * @name   RandomtipDefinition.showRandomTip
+     * @name   Randomtips.showRandomTip
      * @function
      * @returns {void}
      */
     me.showRandomTip = function() {
-        // randomly select element
-        const randomNumber = Math.floor(Math.random() * tipDefinition.length);
-        const selectedTip = tipDefinition[randomNumber];
-        Logger.logInfo("selected tip to be shown: ", randomNumber, selectedTip);
+        // only try to select tip, if one is even available
+        if (tips.length === 0) {
+            Logger.logInfo("no tips to show available anymore");
+            return;
+        }
 
-        if (!shouldBeShown(selectedTip)) {
+        // randomly select element
+        const randomNumber = Math.floor(Math.random() * tips.length);
+        const tipSpec = tips[randomNumber];
+
+        if (!shouldBeShown(tipSpec)) {
             // remove tip
-            tipDefinition.splice(randomNumber);
+            tips.splice(randomNumber);
 
             // retry random selection
             me.showRandomTip();
             return;
         }
 
-        showTip(selectedTip);
+        Logger.logInfo("selected tip to be shown:", randomNumber, tipSpec);
+
+        showTip(tipSpec);
     };
 
     /**
      * Shows the random tip only randomly so the user is not annoyed.
      *
-     * @name   RandomtipDefinition.showRandomTipIfWanted
+     * @name   Randomtips.showRandomTipIfWanted
      * @function
      * @returns {void}
      */
@@ -1156,6 +1185,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 
         // randomize tip showing in general
         if (!randomizePassed(GLOBAL_RANDOMIZE)) {
+            Logger.logInfo("show no random tip, because randomize did not pass");
             return;
         }
 
@@ -1165,12 +1195,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Initialises the module.
      *
-     * @name   RandomtipDefinition.init
+     * @name   Randomtips.init
      * @function
-     * @returns {void}
+     * @returns {Promise}
      */
     me.init = function() {
-        AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
+        return AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
             tipConfig = randomTips;
         });
     };
@@ -1183,4 +1213,3 @@ AddonSettings.loadOptions();
 Logger.init();
 MessageHandler.init();
 Localizer.init();
-RandomTips.init();
