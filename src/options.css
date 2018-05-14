@@ -1,7 +1,7 @@
 body {
   /* the style the other options in the settings pane use */
   font-size: 1.25rem; /* TODO: adjust to font size on mobile */
-  color: #333;
+  color: var(--black-70);
 }
 
 /* on (small) mobile displays */
@@ -40,7 +40,7 @@ fieldset {
   /* same border style as separators above */
   border: 1px solid;
   border-radius: 4px;
-  border-color: #d7d7db; /* Firefox: --in-content-box-border-color */
+  border-color: var(--grey-30); /* Firefox: --in-content-box-border-color */
 
   /* a big width, but not too big */
   display: inline-block;
@@ -57,7 +57,7 @@ label + .setting {
 
 .helper-text {
   display: block;
-  color: #737373; /* Grey 50 */
+  color: var(--grey-50); /* Grey 50 */
 
   margin-top: 4px;
 }
