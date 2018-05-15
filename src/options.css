@@ -57,7 +57,7 @@ label + .setting {
 
 .helper-text {
   display: block;
-  color: var(--grey-50); /* Grey 50 */
+  color: var(--grey-50);
 
   margin-top: 4px;
 }

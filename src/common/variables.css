@@ -1,40 +1,36 @@
-/** This Source Code Form is subject to the terms of the Mozilla Public
-- License, v. 2.0. If a copy of the MPL was not distributed with this
-- file, You can obtain one at http://mozilla.org/MPL/2.0/. **/
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/* For more color declaration refer
-   https://firefoxux.github.io/design-tokens/photon-colors/photon-colors.css
+/* Photon Colors CSS Variables v3.2.0 */
+/* only a subset is included, the complete declaration can be found at
+ * https://firefoxux.github.io/design-tokens/photon-colors/photon-colors.css
+ */
 
-   The colors were converted from hex code to rgb,
-   so that in other css file we can go ahead and generate our
-   custom css color with a transparency on the base color,
-   as was in the case of qrcode.css, without the need to declare it as a variable
-*/
 :root {
-    --blue-50: rgb(10, 132, 255);
-    --blue-50-a30: rgba(var(--blue-50), 0.3);
-    --blue-60: rgb(0, 96, 223);
-    --blue-70: rgb(0, 62, 170);
+  --blue-50: #0a84ff;
+  --blue-50-a30: rgba(10, 132, 255, 0.3);
+  --blue-60: #0060df;
+  --blue-70: #003eaa;
 
-    --green-50: rgb(48, 230, 11);
-    --green-90: rgb(0, 55, 6);
+  --green-50: #30e60b;
+  --green-90: #003706;
 
-    --red-60: rgb(214, 0, 32);
+  --red-60: #d70022;
 
-    --grey-20: rgb(237, 237, 240);
-    --grey-30: rgb(215, 215, 219);
-    --grey-50: rgb(115, 115, 115);
-    --grey-90: rgb(12, 12, 13);
-    --grey-90-a10: rgba(var(--grey-90), 0.1);
-    --grey-90-a20: rgba(var(--grey-90), 0.2);
+  --grey-20: #ededf0;
+  --grey-30: #d7d7db;
+  --grey-50: #737373;
+  --grey-90: #0c0c0d;
+  --grey-90-a10: rgba(12, 12, 13, 0.1);
+  --grey-90-a20: rgba(12, 12, 13, 0.2);
 
-    --white-100: rgb(255, 255, 255);
+  --white-100: #ffffff;
 }
 
+/* custom variables, independent of Mozilla's Photon colors
+ * or only based upon them */
 
-/* Below are set of custom variables which we wish to define
-outside the mozillas Photon Color guide */
 :root {
-
-    --red-60-93:rgba(var(--red-60), 0.93);
+  --red-60-a90: rgba(215, 0, 34, 0.9);
 }
