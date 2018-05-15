@@ -1,28 +1,3 @@
-/* Photon Colors CSS Variables v3.2.0
-   https://firefoxux.github.io/design-tokens/photon-colors/photon-colors.css */
-:root {
-  --blue-50: #0a84ff;
-  --blue-50-a30: rgba(10, 132, 255, 0.3);
-  --blue-60: #0060df;
-  --blue-70: #003eaa;
-
-  --green-50: #30e60b;
-  --green-90: #003706;
-
-  --red-60: #d70022;
-  --red-60-a93: rgba(214, 0, 32, 0.93);
-
-  --grey-20: #ededf0;
-  --grey-30: #d7d7db;
-  --grey-50: #737373;
-  --grey-90: #0c0c0d;
-  --grey-90-a10: rgba(12, 12, 13, 0.1);
-  --grey-90-a20: rgba(12, 12, 13, 0.2);
-
-  --white-100: #ffffff;
-
-}
-
 body {
   direction: __MSG_@@bidi_dir__;
 }

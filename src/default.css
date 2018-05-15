@@ -1,0 +1,32 @@
+/** This Source Code Form is subject to the terms of the Mozilla Public
+- License, v. 2.0. If a copy of the MPL was not distributed with this
+- file, You can obtain one at http://mozilla.org/MPL/2.0/. **/
+
+/* For more color declaration refer
+   https://firefoxux.github.io/design-tokens/photon-colors/photon-colors.css
+
+   The colors were converted from hex code to rgb,
+   so that in other css file we can go ahead and generate our
+   custom css color with a transparency on the base color,
+   as was in the case of qrcode.css, without the need to declare it as a variable
+*/
+:root {
+    --blue-50: rgb(10, 132, 255);
+    --blue-50-a30: rgba(var(--blue-50), 0.3);
+    --blue-60: rgb(0, 96, 223);
+    --blue-70: rgb(0, 62, 170);
+
+    --green-50: rgb(48, 230, 11);
+    --green-90: rgb(0, 55, 6);
+
+    --red-60: rgb(214, 0, 32);
+
+    --grey-20: rgb(237, 237, 240);
+    --grey-30: rgb(215, 215, 219);
+    --grey-50: rgb(115, 115, 115);
+    --grey-90: rgb(12, 12, 13);
+    --grey-90-a10: rgba(var(--grey-90), 0.1);
+    --grey-90-a20: rgba(var(--grey-90), 0.2);
+
+    --white-100: rgb(255, 255, 255);
+}
