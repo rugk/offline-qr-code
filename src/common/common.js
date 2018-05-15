@@ -984,8 +984,8 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         },
         {
             id: "saveQr",
-            maxShowCount: 1,
-            requireDismiss: true,
+            maxShowCount: 2,
+            requireDismiss: 1,
             requiredTriggers: 0,
             randomizeDisplay: false,
             text: "tipSaveQrCode"
@@ -1000,7 +1000,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Save the current config.
      *
-     * @name   Randomtips.saveConfig
+     * @name   RandomTips.saveConfig
      * @function
      * @private
      * @returns {void}
@@ -1012,7 +1012,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Hook for the dismiss event.
      *
-     * @name   Randomtips.messageDismissed
+     * @name   RandomTips.messageDismissed
      * @function
      * @private
      * @param  {Object} param
@@ -1049,7 +1049,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      * Returns true or false at random. The passed procentage indicates how
      * much of the calls should return "true" on average.
      *
-     * @name   Randomtips.randomizePassed
+     * @name   RandomTips.randomizePassed
      * @function
      * @private
      * @param  {number} percentage
@@ -1062,7 +1062,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Shows this tip.
      *
-     * @name   Randomtips.showTip
+     * @name   RandomTips.showTip
      * @function
      * @private
      * @param  {Object} tipSpec
@@ -1089,7 +1089,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      * Returns whether the tip has already be shown enough times or may not
      * be shown, because of some other requirement.
      *
-     * @name   Randomtips.shouldBeShown
+     * @name   RandomTips.shouldBeShown
      * @function
      * @private
      * @param  {Object} tipSpec
@@ -1136,14 +1136,14 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
         const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
 
-        return tipShowCount < tipSpec.maxShowCount // shown enough times
-            && tipDismissed < requiredDismissCount; // dismiss is shown enough times
+        return tipShowCount < tipSpec.maxShowCount // shown enough times already?
+            && tipDismissed < requiredDismissCount; // dismiss shown enough times?
     }
 
     /**
      * Seloects and shows a random tip.
      *
-     * @name   Randomtips.showRandomTip
+     * @name   RandomTips.showRandomTip
      * @function
      * @returns {void}
      */
@@ -1175,7 +1175,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Shows the random tip only randomly so the user is not annoyed.
      *
-     * @name   Randomtips.showRandomTipIfWanted
+     * @name   RandomTips.showRandomTipIfWanted
      * @function
      * @returns {void}
      */
@@ -1195,7 +1195,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     /**
      * Initialises the module.
      *
-     * @name   Randomtips.init
+     * @name   RandomTips.init
      * @function
      * @returns {Promise}
      */

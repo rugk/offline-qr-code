@@ -38,7 +38,19 @@ html, body {
   width: 100%;
 }
 
-.message-box {
+#topMessageContainer {
+  width: calc(100% - 8px);
+}
+#topMessageContainer > .message-box {
+  margin-top: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+
+  /* get into padding of QR code */
+  margin-bottom: -15px;
+}
+
+.flot-qr > .message-box {
   text-align: center;
 }
 

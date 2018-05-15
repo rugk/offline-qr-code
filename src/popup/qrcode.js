@@ -3,6 +3,7 @@
 /* globals Logger */
 /* globals AddonSettings */
 /* globals MessageHandler */
+/* globals RandomTips */
 /* globals MESSAGE_LEVEL */
 // lodash
 /* globals throttle, isObject */
@@ -1047,3 +1048,7 @@ qrCreatorInit.then(() => {
         initCompleted = true;
     });
 }).catch(Logger.logError);
+
+RandomTips.init().then(() => {
+    RandomTips.showRandomTipIfWanted();
+});
