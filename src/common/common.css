@@ -4,13 +4,13 @@ body {
 
 /* https://design.firefox.com/photon/components/links.html */
 a {
-  color: #0060df;
+  color: var(--blue-60);
   text-decoration: none;
 }
 
 a:focus {
   border-radius: 4px;
-  box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
+  box-shadow: 0 0 0 2px var(--blue-50), 0 0 0 6px var(--blue-50-a30);
 }
 
 a:hover, a:active {
@@ -18,7 +18,7 @@ a:hover, a:active {
 }
 
 a:active {
-  color: #003eaa;
+  color: var(--blue-70);
 }
 
 /* external link symbol */
@@ -96,8 +96,8 @@ a:active {
 }
 
 .error {
-  color: #ffffff;
-  background-color: #d70022;
+  color: var(--white-100);
+  background-color: var(--red-60);
 }
 
 /* icons for the message boxes */
@@ -139,24 +139,24 @@ a:active {
   transition: background-color 150ms cubic-bezier(.07,.95,0,1);
 }
 .icon-dismiss:hover {
-  background-color: rgba(12, 12, 13, 0.1);
+  background-color: var(--grey-90-a10);
   border-radius: 2px;
 }
 .icon-dismiss:active {
-  background-color: rgba(12, 12, 13, 0.2);
+  background-color: var(--grey-90-a20);
   border-radius: 2px;
 }
 .icon-dismiss:focus {
-  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+  box-shadow: 0 0 0 1px var(--blue-50) inset, 0 0 0 1px var(--blue-50), 0 0 0 4px var(--blue-50-a30);
   border-radius: 2px;
 }
 
 .info {
-  color: #0c0c0d;
-  background-color: #ededf0;
+  color: var(--grey-90);
+  background-color: var(--grey-20);
 }
 
 .success {
-  color: #003706;
-  background-color: #30e60b;
+  color: var(--green-90);
+  background-color: var(--green-50);
 }
