@@ -54,7 +54,7 @@ html, body {
   width: auto;
 
   /* transparent background */
-  background-color: rgba(var(--red-60), 0.93);
+  background-color: var(--red-60-93);
 }
 
 #qrcode-container {

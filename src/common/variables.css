@@ -30,3 +30,11 @@
 
     --white-100: rgb(255, 255, 255);
 }
+
+
+/* Below are set of custom variables which we wish to define
+outside the mozillas Photon Color guide */
+:root {
+
+    --red-60-93:rgba(var(--red-60), 0.93);
+}
