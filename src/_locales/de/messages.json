@@ -55,6 +55,24 @@
     "description": "The message shown, when the user is prompted to confirm the resetting of all options"
   },
 
+  // tips
+  "tipYouLikeAddon": {
+    "message": "Magst du dieses Add-on?",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Bewerte es",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+    "message": "Schon gewusst? QR-Codes kann man als Bild abspeichern",
+    "description": "A tip shown to get the add-on to find the save option."
+  },
+  "tipLearnMore": {
+    "message": "Mehr Infos",
+    "description": "The common button for tips, where you can get more information on click."
+  },
+
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR-Code-Platzhalter-Bild",

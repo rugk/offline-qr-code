@@ -14,6 +14,11 @@ For more details, [see the official docs](https://developer.mozilla.org/Add-ons/
 
 The English "you" should be translated in a personal way, if the target language differentiates between "you" for "anybody"/"they" and "you" for "the user of this extension". In German, that e.g. means you can translate it with "du [kannst etwas machen]" instead of "man [kann etwas machen]".
 
+Please pay attention to the context and UI area the message is used for. Better translate it to a good native statement than a literal translation.
+For example messages like "Learn more" may need special (and different) handling and could also be translated with "More information" or so. Generally in the tips you should be a concise as possible. All other texts – like helper texts in the options page – should also be concise, but on point and factually correct. You may use easy terms to explain a thing and link to more resources instead, however. (See also the "Writing for users" guide linked below, where this is explained in more detail.)
+
+Please have look at [the "Writing for users" guide](https://design.firefox.com/photon/copy/writing-for-users.html) of the Firefox Photon Design for other rules you should adhere to.
+
 ### Using HTML in translations
 
 If you need to use HTML in a translation, please prepend `!HTML!` in front of the text. It will only be parsed as HTML if you do this. Otherwise it will be displayed as text. A sentence could look like this:
@@ -27,12 +32,12 @@ If you need to use HTML in a translation, please prepend `!HTML!` in front of th
 
 All texts shown on AMO (addons.mozilla.org) are maintained in [`assets/texts`](assets/texts). Again, you can use the English template there.
 The files have different formats, but all of them are easily translatable with any text editor.
-Note that the `amoScreenshots.csv` file refers to the screenshot descriptions you can see when you click on the screenshots of AMO. The first column there is the file name, which you can see in [`assets/screenshots`](assets/screenshots), and does _not_ need to be translated.
+Note that the `amoScreenshots.csv` file refers to the screenshot descriptions you can see when you click on the screenshots of AMO. The first column there is the file name, which you can see in [`assets/screenshots`](assets/screenshots), and _must not_ be translated.
 
 ### Internationalisation of HTML files
 
 HTML files are easy to internationalize.
-You just have to add the custom `data-i18n` and add the [`__MSG_translationName__`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Internationalization#Predefined_messages) syntax for selecting the value.. If the value is empty, the content of the tag will not be translated.
+You just have to add the custom `data-i18n` and add the [`__MSG_translationName__`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Internationalization#Predefined_messages) syntax for selecting the value. If the value is empty, the content of the tag will not be translated.
 
 If the `data-i18n` value is present, it will additionally try to translate the hardcoded attributes in `localizedAttributes`, and check whether `data-i18n-attribut` (where `attribut` is an attribut like `alt`) exists and if so, replace the original attribut in the same way. Basically, just have a look at how it is done in the existing parts.
 
@@ -44,7 +49,7 @@ You should always hardcode an English fallback string in the HTML file, so it ca
 
 Developing/improving a WebExtension add-on is easy! **If you have ever made some stuff with HTML/CSS/JS you can do that, too!** It's built on the same technologies.
 
-* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions' dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
+* **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions' dir. In our case, e.g. select `manifest.json` from the `src` dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
 * **Change code:** When it is loaded you can just change the code (and press "Reload", if needed) and you'll see the result. That is it!
 
 ### Coding guidelines

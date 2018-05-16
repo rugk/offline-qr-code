@@ -965,7 +965,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *          with a chance of 50% by default (when "true" is set). You can
      *          override that percentage (as an integer, e.g. 0.2 instead of 20%).
      *          Note that the tip message display in general is already randomized
-     *          with achance of 20%, see {@link GLOBAL_RANDOMIZE}.
+     *          with a chance of 20%, see {@link GLOBAL_RANDOMIZE}.
      *     text {string}: The text to actually show. It is passed to the
      *          {@link MessageHandler}, so you can (& should) use a translatable
      *          string here.
@@ -976,7 +976,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     const tips = [
         {
             id: "likeAddon",
-            maxShowCount: 3,
+            maxShowCount: 5,
             requireDismiss: 1,
             requiredTriggers: 10,
             randomizeDisplay: false,
@@ -984,7 +984,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         },
         {
             id: "saveQr",
-            maxShowCount: 2,
+            maxShowCount: 3,
             requireDismiss: 1,
             requiredTriggers: 0,
             randomizeDisplay: false,
