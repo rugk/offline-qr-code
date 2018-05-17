@@ -662,7 +662,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         if (typeof args[0] === "boolean") {
             isDismissable = args.shift();
         }
-        if (typeof args[0].text !== undefined && typeof args[0].link !== undefined) {
+        if (typeof args[0] !== undefined && args[0].text !== undefined && args[0].link !== undefined) {
             actionButton = args.shift();
         }
 
@@ -992,6 +992,9 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *          ("triggers") of shows of tip ebfore showing tip. This is
      *          effectively just a minimum limit, so it is not shown too "early",
      *          default: 10
+     *     showInContext {bool|} – optional, a key-value object with context -> num
+     *          to require the tip to be shown in a specific context for the given
+     *          number of times.
      *     randomizeDisplay {bool|integer} – optional, Randomizes the display
      *          with a chance of 50% by default (when "true" is set). You can
      *          override that percentage (as an integer, e.g. 0.2 instead of 20%).
@@ -1008,9 +1011,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     const tips = [
         {
             id: "likeAddon",
-            maxShowCount: 5,
-            requireDismiss: 100,
+            maxShowCount: 3,
+            requireDismiss: 1,
             requiredTriggers: 10,
+            showInContext: {
+                "popup": 1
+            },
             randomizeDisplay: false,
             text: "tipYouLikeAddon",
             actionButton: {
@@ -1020,9 +1026,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         },
         {
             id: "saveQr",
-            maxShowCount: 300,
+            maxShowCount: 5,
             requireDismiss: 1,
-            requiredTriggers: 0,
+            requiredTriggers: 5,
+            showInContext: {
+                "popup": 1
+            },
             randomizeDisplay: false,
             text: "tipSaveQrCode",
             actionButton: {
@@ -1035,7 +1044,9 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     let tipConfig = {
         tips: {}
     };
+
     let tipShown = null;
+    let context = null;
 
     /**
      * Save the current config.
@@ -1120,6 +1131,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 
         // update config
         tipConfig.tips[tipSpec.id].shownCount = (tipConfig.tips[tipSpec.id].shownCount || 0) + 1;
+        tipConfig.tips[tipSpec.id].shownContext[context] = (tipConfig.tips[tipSpec.id].shownContext[context] || 0) + 1;
         saveConfig();
 
         tipShown = tipSpec;
@@ -1143,6 +1155,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         // create option if needed
         if (tipConfig.tips[tipSpec.id] === undefined) {
             tipConfig.tips[tipSpec.id] = {};
+            tipConfig.tips[tipSpec.id].shownContext = {};
             saveConfig();
         }
 
@@ -1173,6 +1186,15 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             requiredDismissCount = 0;
         }
 
+        // check context check if needed
+        if (context in tipSpec.showInContext) {
+            const tipShownInCurrentContext = tipConfig.tips[tipSpec.id].shownContext[context] || 0;
+
+            if (tipShownInCurrentContext < tipSpec.showInContext[context]) {
+                return true;
+            }
+        }
+
         const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
         const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
 
@@ -1181,7 +1203,19 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     }
 
     /**
-     * Seloects and shows a random tip.
+     * Sets the context for the current session.
+     *
+     * @name   RandomTips.setContext
+     * @function
+     * @param {string} string
+     * @returns {void}
+     */
+    me.setContext = function(string) {
+        context = string;
+    };
+
+    /**
+     * Selects and shows a random tip.
      *
      * @name   RandomTips.showRandomTip
      * @function

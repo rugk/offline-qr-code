@@ -65,7 +65,7 @@
     "description": "Button for the tip shown to remind the user to rate the addon."
   },
   "tipSaveQrCode": {
-    "message": "Schon gewusst? QR-Codes kann man als Bild abspeichern",
+    "message": "Schon gewusst? Du kannst QR-Codes als Bild abspeichern.",
     "description": "A tip shown to get the add-on to find the save option."
   },
   "tipLearnMore": {
