@@ -77,7 +77,11 @@ a:active {
   z-index: 2;
 
   /* some shadow */
+<<<<<<< Updated upstream
   box-shadow: var(--shadow-10);
+=======
+  box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.1);
+>>>>>>> Stashed changes
 
   /* fade-in transition */
   /* follow https://design.firefox.com/photon/motion/duration-and-easing.html */
@@ -113,6 +117,19 @@ a:active {
   background-color: var(--green-50);
 }
 
+<<<<<<< Updated upstream
+=======
+.info {
+  color: #0c0c0d;
+  background-color: #ededf0;
+}
+
+.success {
+  color: #003706;
+  background-color: #30e60b;
+}
+
+>>>>>>> Stashed changes
 /* message box action button */
 
 
