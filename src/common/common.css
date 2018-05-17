@@ -77,11 +77,7 @@ a:active {
   z-index: 2;
 
   /* some shadow */
-<<<<<<< Updated upstream
   box-shadow: var(--shadow-10);
-=======
-  box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.1);
->>>>>>> Stashed changes
 
   /* fade-in transition */
   /* follow https://design.firefox.com/photon/motion/duration-and-easing.html */
