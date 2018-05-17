@@ -611,6 +611,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @param {MESSAGE_LEVEL|HtmlElement} messagetype
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -651,12 +654,16 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         /* check value type/usage of first argument */
         let mainMessage = null;
         let isDismissable = false; // not dismissable by default
+        let actionButton = null; // no action button by default
 
         if (typeof args[0] === "string") {
             mainMessage = args.shift();
         }
         if (typeof args[0] === "boolean") {
             isDismissable = args.shift();
+        }
+        if (typeof args[0].text !== undefined && typeof args[0].link !== undefined) {
+            actionButton = args.shift();
         }
 
         // localize string or fallback to first string ignoring all others
@@ -669,10 +676,19 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         }
 
         const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
-
         if (isDismissable === true && elDismissIcon) {
             // add an icon which dismisses the message if clicked
             elDismissIcon.classList.remove("invisible");
+        }
+
+        // show action button, if needed
+        const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
+        const elActionButtonLink = elActionButton.parentNode;
+        if (actionButton !== null && elActionButton && elActionButtonLink) {
+            elActionButtonLink.setAttribute("href", actionButton.link);
+            elActionButton.textContent = browser.i18n.getMessage(actionButton.text) || actionButton.text;
+
+            elActionButton.classList.remove("invisible");
         }
 
         elMessage.classList.remove("invisible");
@@ -793,6 +809,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -810,6 +829,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -827,6 +849,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -844,6 +869,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -861,6 +889,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @function
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
+     * @param {Object} actionButton optional to show an action button
+     * @param {string} actionButton.text
+     * @param {string} actionButton.link URL to site to open on link
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -969,6 +1000,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *     text {string}: The text to actually show. It is passed to the
      *          {@link MessageHandler}, so you can (& should) use a translatable
      *          string here.
+     *     actionButton {Object} – optional, adds an action button to the message
      * }
      *
      * @type {Object[]}
@@ -977,7 +1009,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         {
             id: "likeAddon",
             maxShowCount: 5,
-            requireDismiss: 1,
+            requireDismiss: 100,
             requiredTriggers: 10,
             randomizeDisplay: false,
             text: "tipYouLikeAddon",
@@ -1078,10 +1110,10 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      */
     function showTip(tipSpec) {
         // default settings
-        const allowDismiss = tips.allowDismiss !== undefined ? tips.allowDismiss : true;
+        const allowDismiss = tips.tipSpec !== undefined ? tips.tipSpec : true;
 
         elMessageBox.dataset.tipId = tipSpec.id;
-        MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss);
+        MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss, tipSpec.actionButton);
 
         // hook dismiss
         MessageHandler.setDismissHooks(messageDismissed);
@@ -1106,7 +1138,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
     function shouldBeShown(tipSpec) {
         // default settings
         tipSpec.requiredTriggers = tipSpec.requiredTriggers !== undefined ? tipSpec.requiredTriggers : 10;
-        tipSpec.maxShowCount = tipSpec.maxShowCount !== undefined ? tipSpec.requiredTriggers : 0;
+        tipSpec.maxShowCount = tipSpec.maxShowCount !== undefined ? tipSpec.maxShowCount : 0;
 
         // create option if needed
         if (tipConfig.tips[tipSpec.id] === undefined) {

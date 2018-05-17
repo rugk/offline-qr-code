@@ -50,11 +50,37 @@ a:active {
   position: relative;
 }
 
+/* buttons https://design.firefox.com/photon/components/buttons.html */
+.micro-button {
+  height: 24px;
+  border-radius: 2px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  /* not documented, but looks ugly otherwise */
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+  box-sizing: content-box;
+}
+.micro-button.info {
+  background-color: var(--grey-90-a10);
+}
+.micro-button:hover.info {
+  background-color: var(--grey-90-a20);
+}
+.micro-button:active.info {
+  background-color: var(--grey-90-a30);
+}
+.micro-button:focus.info {
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
+}
+
 /* message box */
 /* follows https://design.firefox.com/photon/components/message-bars.html */
 .message-box {
-  padding-right: 4px;
-  padding-left: 4px;
+  padding: 4px;
 
   border-radius: 4px;
 
@@ -76,13 +102,6 @@ a:active {
 
   z-index: 2;
 
-  /* some shadow */
-<<<<<<< Updated upstream
-  box-shadow: var(--shadow-10);
-=======
-  box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.1);
->>>>>>> Stashed changes
-
   /* fade-in transition */
   /* follow https://design.firefox.com/photon/motion/duration-and-easing.html */
   opacity: 1;
@@ -102,9 +121,9 @@ a:active {
   margin-top: 8px;
 }
 
-.message-text {
-  padding-top: 4px;
-  padding-bottom: 4px;
+.error {
+  color: var(--white-100);
+  background-color: var(--red-60);
 }
 
 .info {
@@ -117,21 +136,19 @@ a:active {
   background-color: var(--green-50);
 }
 
-<<<<<<< Updated upstream
-=======
-.info {
-  color: #0c0c0d;
-  background-color: #ededf0;
-}
-
-.success {
-  color: #003706;
-  background-color: #30e60b;
-}
-
->>>>>>> Stashed changes
 /* message box action button */
+.message-action-button {
+  margin-left: 8px;
 
+  /* center vertially */
+  margin-top: auto;
+  margin-bottom: auto;
+
+  border: 0;
+  color: var(--grey-90);
+
+  cursor: pointer;
+}
 
 /* icons for the message boxes */
 .message-box::before {

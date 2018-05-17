@@ -1050,5 +1050,6 @@ qrCreatorInit.then(() => {
 }).catch(Logger.logError);
 
 RandomTips.init().then(() => {
-    RandomTips.showRandomTipIfWanted();
+    RandomTips.showRandomTip();
+    // RandomTips.showRandomTipIfWanted();
 });

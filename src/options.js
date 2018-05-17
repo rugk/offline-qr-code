@@ -482,6 +482,5 @@ const OptionHandler = (function () {
 AddonSettings.loadOptions();
 OptionHandler.init();
 RandomTips.init().then(() => {
-    RandomTips.showRandomTip();
-    // RandomTips.showRandomTipIfWanted();
+    RandomTips.showRandomTipIfWanted();
 });

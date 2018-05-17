@@ -47,7 +47,15 @@ html, body {
   margin-right: 4px;
 
   /* get into padding of QR code */
-  margin-bottom: -15px;
+  margin-bottom: -8px;
+
+  /* some shadow to highlight it a bit more */
+  box-shadow: var(--shadow-10);
+}
+@media (min-width: 500px) {
+  #topMessageContainer {
+    width: auto;
+  }
 }
 
 .flot-qr > .message-box {
