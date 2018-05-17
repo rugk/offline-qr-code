@@ -33,4 +33,9 @@
 
 :root {
   --red-60-a90: rgba(215, 0, 34, 0.9);
+
+  /* shadows https://design.firefox.com/photon/patterns/shadows.html */
+  --shadow-10: 0px 1px 4px var(--grey-90-a20);
+  --shadow-20: 0px 1px 4px var(--grey-90-a20);
+  --shadow-30: 0px 1px 4px var(--grey-90-a20);
 }
