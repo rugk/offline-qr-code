@@ -980,15 +980,23 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             requireDismiss: 1,
             requiredTriggers: 10,
             randomizeDisplay: false,
-            text: "tipYouLikeAddon"
+            text: "tipYouLikeAddon",
+            actionButton: {
+                text: "tipYouLikeAddonButton",
+                link: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/"
+            }
         },
         {
             id: "saveQr",
-            maxShowCount: 3,
+            maxShowCount: 300,
             requireDismiss: 1,
             requiredTriggers: 0,
             randomizeDisplay: false,
-            text: "tipSaveQrCode"
+            text: "tipSaveQrCode",
+            actionButton: {
+                text: "tipLearnMore",
+                link: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
+            }
         }
     ];
 
@@ -1136,8 +1144,8 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
         const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
 
-        return tipShowCount < tipSpec.maxShowCount // shown enough times already?
-            && tipDismissed < requiredDismissCount; // dismiss shown enough times?
+        return tipShowCount < tipSpec.maxShowCount // not already shown enough times already?
+            || tipDismissed < requiredDismissCount; // not dismissed enough times?
     }
 
     /**

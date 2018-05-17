@@ -76,6 +76,9 @@ a:active {
 
   z-index: 2;
 
+  /* some shadow */
+  box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.1);
+
   /* fade-in transition */
   /* follow https://design.firefox.com/photon/motion/duration-and-easing.html */
   opacity: 1;
@@ -90,6 +93,11 @@ a:active {
   min-height: 0px;
 }
 
+/* add margin when messages are stacked on each other */
+.message-box:not(.invisible) ~ .message-box:not(.invisible) {
+  margin-top: 8px;
+}
+
 .message-text {
   padding-top: 4px;
   padding-bottom: 4px;
@@ -99,6 +107,19 @@ a:active {
   color: var(--white-100);
   background-color: var(--red-60);
 }
+
+.info {
+  color: #0c0c0d;
+  background-color: #ededf0;
+}
+
+.success {
+  color: #003706;
+  background-color: #30e60b;
+}
+
+/* message box action button */
+
 
 /* icons for the message boxes */
 .message-box::before {
@@ -150,6 +171,7 @@ a:active {
   box-shadow: 0 0 0 1px var(--blue-50) inset, 0 0 0 1px var(--blue-50), 0 0 0 4px var(--blue-50-a30);
   border-radius: 2px;
 }
+<<<<<<< Updated upstream
 
 .info {
   color: var(--grey-90);
@@ -160,3 +182,5 @@ a:active {
   color: var(--green-90);
   background-color: var(--green-50);
 }
+=======
+>>>>>>> Stashed changes
