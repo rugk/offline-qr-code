@@ -22,6 +22,10 @@
     "message": "Loading…",
     "description": "A general loading message."
   },
+  "messageUndoButton": {
+    "message": "Undo",
+    "description": "The text of a button that undoes the last action."
+  },
   "couldNotGenerateQrCode": {
     "message": "Could not generate QR code.",
     "description": ""
@@ -41,6 +45,10 @@
   "couldNotLoadOptions": {
     "message": "Could not load settings.",
     "description": "When one or all settings could not be loaded."
+  },
+  "couldNotUndoAction": {
+    "message": "Could not undo action.",
+    "description": "Shown when an action cannot be undone."
   },
   "resettingOptionsWorked": {
     "message": "All settings are now back to defaults again!",

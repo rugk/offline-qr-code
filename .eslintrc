@@ -77,7 +77,13 @@
             "prefer": {
                 "return": "returns"
             },
-            "preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string" },
+            "preferType": {
+                "Boolean": "boolean",
+                "Number": "number",
+                "object": "Object",
+                "String": "string",
+                "HTMLElement": "HTMLElement"
+            },
             "requireReturnType": true,
             "matchDescription": ".+",
             "requireParamDescription": false,

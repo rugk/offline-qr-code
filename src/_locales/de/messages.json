@@ -18,6 +18,10 @@
     "message": "unbekannter Fehler",
     "description": ""
   },
+  "messageUndoButton": {
+    "message": "Rückgängig machen",
+    "description": "The text of a button that undoes the last action."
+  },
   "loading": {
     "message": "Laden…",
     "description": "A general loading message."
@@ -41,6 +45,10 @@
   "couldNotLoadOptions": {
     "message": "Konnte Einstellungen nicht laden.",
     "description": "When one or all settings could not be loaded."
+  },
+  "couldNotUndoAction": {
+    "message": "Konnte Aktion nicht rückgängig machen.",
+    "description": "Shown when an action cannot be undone."
   },
   "resettingOptionsWorked": {
     "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",

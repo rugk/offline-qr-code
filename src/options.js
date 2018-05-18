@@ -2,7 +2,7 @@
 
 /* globals Logger */
 /* globals AddonSettings */
-/* globals MessageHandler */
+/* globals MESSAGE_LEVEL, MessageHandler */
 /* globals RandomTips */
 
 const OptionHandler = (function () {
@@ -14,6 +14,7 @@ const OptionHandler = (function () {
     let remeberSizeInterval = null;
 
     let rememberedOptions;
+    let lastOptionsBeforeReset;
 
     /**
      * Applies option to element.
@@ -298,7 +299,7 @@ const OptionHandler = (function () {
      * @param  {string|null|undefined} optionGroup name of the option group,
      *                                             undefined will automatically
      *                                             detect the element
-     * @param  {HtmlElement|null} elOption optional element of the option, will
+     * @param  {HTMLElement|null} elOption optional element of the option, will
      *                                     be autodetected otherwise
      * @returns {Promise}
      */
@@ -343,7 +344,7 @@ const OptionHandler = (function () {
      * @param  {string|null|undefined} optionGroup name of the option group,
      *                                             undefined will automatically
      *                                             detect the element
-     * @param  {HtmlElement|null} elOption optional element of the option, will
+     * @param  {HTMLElement|null} elOption optional element of the option, will
      *                                     be autodetected otherwise
      * @param  {bool} ignoreDisabled set to true to ignore disabled check
      * @returns {Promise|void}
@@ -390,6 +391,10 @@ const OptionHandler = (function () {
         rememberedOptions = {};
         const allPromises = [];
 
+        // needs to reset some custom options, as they may prevent (correctly) loading settings later
+        const elQrCodeSize = document.getElementById("size");
+        elQrCodeSize.removeAttribute("disabled");
+
         // set each option
         document.querySelectorAll(".setting").forEach((currentElem, index) => {
             const elementId = currentElem.id;
@@ -425,24 +430,40 @@ const OptionHandler = (function () {
      * @param {Event} event
      * @returns {void}
      */
-    function resetOptions(event) {
-        const resetOptionsConfirmation = confirm(browser.i18n.getMessage("resetOptionsMessage"));
-        if (!resetOptionsConfirmation) {
-            return;
-        }
-
+    async function resetOptions(event) {
         Logger.logInfo("reset options");
 
         // disable reset button (which triggered this) until process is running
         event.target.setAttribute("disabled", "");
 
-        browser.storage.sync.clear().then(() => {
-            // needs to reset some custom options, as they may prevent (correctly) loading settings later
-            const elQrCodeSize = document.getElementById("size");
-            elQrCodeSize.removeAttribute("disabled");
+        // temporarily save old options
+        await browser.storage.sync.get().then((options) => {
+            lastOptionsBeforeReset = options;
+        });
 
+        // cleanup resetted cached option after message is hidden
+        MessageHandler.setHook(MESSAGE_LEVEL.SUCCESS, null, () => {
+            lastOptionsBeforeReset = null;
+            Logger.logInfo("reset options message hidden, undo vars cleaned");
+        });
+
+        // finally reset options
+        browser.storage.sync.clear().then(() => {
             return loadOptions().then(() => {
-                MessageHandler.showSuccess("resettingOptionsWorked", true);
+                MessageHandler.showSuccess("resettingOptionsWorked", true, {
+                    text: "messageUndoButton",
+                    action: () => {
+                        browser.storage.sync.set(lastOptionsBeforeReset).then(() => {
+                            // re-load the options again
+                            loadOptions();
+                        }).catch((error) => {
+                            Logger.logError("Could not undo option resetting: ", error);
+                            MessageHandler.showError("couldNotUndoAction");
+                        }).finally(() => {
+                            MessageHandler.hideSuccess();
+                        });
+                    }
+                });
             });
         }).catch((error) => {
             Logger.logError(error);

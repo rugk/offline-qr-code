@@ -66,6 +66,7 @@ a:active {
 
   box-sizing: content-box;
 }
+
 .micro-button.info {
   background-color: var(--grey-90-a10);
 }
@@ -75,7 +76,18 @@ a:active {
 .micro-button:active.info {
   background-color: var(--grey-90-a30);
 }
-.micro-button:focus.info {
+
+.micro-button.success {
+  background-color: var(--green-60);
+}
+.micro-button:hover.success {
+  background-color: var(--green-70);
+}
+.micro-button:active.success {
+  background-color: var(--green-80);
+}
+
+.micro-button:focus {
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
 }
 

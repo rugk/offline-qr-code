@@ -1,7 +1,5 @@
 "use strict";
 
-// lodash
-
 /**
  * Specifies the long name of this add-on.,
  *
@@ -494,27 +492,33 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             "show": null,
             "hide": null,
             "dismissStart": null,
-            "dismissEnd": null
+            "dismissEnd": null,
+            "actionButton": null
         },
         [MESSAGE_LEVEL.ERROR]: {
             "show": null,
             "hide": null,
+            "actionButton": null
         },
         [MESSAGE_LEVEL.WARN]: {
             "show": null,
             "hide": null,
+            "actionButton": null
         },
         [MESSAGE_LEVEL.INFO]: {
             "show": null,
             "hide": null,
+            "actionButton": null
         },
         [MESSAGE_LEVEL.SUCCESS]: {
             "show": null,
             "hide": null,
+            "actionButton": null
         },
         [MESSAGE_LEVEL.LOADING]: {
             "show": null,
             "hide": null,
+            "actionButton": null
         },
     };
 
@@ -598,22 +602,79 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     }
 
     /**
+     * The action button event handler, when clicked.
+     *
+     * @name   MessageHandler.getMessageTypeFromElement
+     * @function
+     * @private
+     * @param  {HTMLElement} elMessage
+     * @returns {MESSAGE_LEVEL|HTMLElement}
+     */
+    function getMessageTypeFromElement(elMessage) {
+        const messagetype = Object.keys(ELEMENT_BY_TYPE).find((messagetype) => {
+            // skip, if element does not exist
+            if (!ELEMENT_BY_TYPE[messagetype]) {
+                return false;
+            }
+
+            return ELEMENT_BY_TYPE[messagetype].isEqualNode(elMessage);
+        });
+
+        if (messagetype === undefined) {
+            // verify it is a real message box
+            if (!elMessage.classList.contains("message-box")) {
+                throw new Error(`message element ${elMessage} is no real message box`);
+            }
+
+            // if it is a custom element, return it unmodified
+            return elMessage;
+        }
+
+        return messagetype;
+    }
+
+    /**
+     * The action button event handler, when clicked.
+     *
+     * @name   MessageHandler.actionButtonClicked
+     * @function
+     * @private
+     * @param  {Object} event
+     * @returns {void}
+     */
+    function actionButtonClicked(event) {
+        const elActionButton = event.target;
+        const elActionButtonLink = elActionButton.parentNode;
+        const elMessage = elActionButtonLink.parentNode;
+
+        const messagetype = getMessageTypeFromElement(elMessage);
+
+        Logger.logInfo("action button clicked for ", messagetype, event);
+
+        runHook(messagetype, "actionButton", {
+            elMessage,
+            messagetype,
+            event
+        });
+    }
+
+    /**
      * Shows a message to the user.
      *
      * Pass as many strings/output as you want. They will be localized
      * automatically, before presented to the user.
      *
-     * If you pass a HtmlElement as the first parameter, you can use your own
+     * If you pass a HTMLElement as the first parameter, you can use your own
      * custom node for the message.
      *
      * @name   MessageHandler.showMessage
      * @function
-     * @param {MESSAGE_LEVEL|HtmlElement} messagetype
+     * @param {MESSAGE_LEVEL|HTMLElement} messagetype
      * @param {string} message optional, string to show or to translate if omitted no new text is shown
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {Object} actionButton optional to show an action button
      * @param {string} actionButton.text
-     * @param {string} actionButton.link URL to site to open on link
+     * @param {string|function} actionButton.action URL to site to open on link OR function to execute
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -635,15 +696,24 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         // get first element
         const messagetype = args.shift();
 
-        // get element by message type
-        if (messagetype instanceof HTMLElement) {
-            elMessage = messagetype;
-
-            // a custom element also needs the dismiss listener to be set
-            const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
-            elDismissIcon.addEventListener("click", dismissMessage);
-        } else {
+        if (messagetype in ELEMENT_BY_TYPE) {
             elMessage = ELEMENT_BY_TYPE[messagetype];
+        } else {
+            elMessage = messagetype;
+        }
+
+        // and stuuf inside we need later
+        const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
+        const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
+        let elActionButtonLink = null;
+        if (elActionButton) {
+            elActionButtonLink = elActionButton.parentNode;
+        }
+
+        // a custom element also needs the custom listeners to be set
+        if (messagetype instanceof HTMLElement) {
+            elDismissIcon.addEventListener("click", dismissMessage);
+            elActionButtonLink.addEventListener("click", actionButtonClicked);
         }
 
         if (!elMessage) {
@@ -662,7 +732,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         if (typeof args[0] === "boolean") {
             isDismissable = args.shift();
         }
-        if (typeof args[0] !== undefined && args[0].text !== undefined && args[0].link !== undefined) {
+        if (typeof args[0] !== undefined && args[0].text !== undefined && args[0].action !== undefined) {
             actionButton = args.shift();
         }
 
@@ -675,20 +745,33 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             elMessage.getElementsByClassName("message-text")[0].textContent = localizedString;
         }
 
-        const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
         if (isDismissable === true && elDismissIcon) {
             // add an icon which dismisses the message if clicked
             elDismissIcon.classList.remove("invisible");
+        } else {
+            elDismissIcon.classList.add("invisible");
         }
 
         // show action button, if needed
-        const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
-        const elActionButtonLink = elActionButton.parentNode;
         if (actionButton !== null && elActionButton && elActionButtonLink) {
-            elActionButtonLink.setAttribute("href", actionButton.link);
-            elActionButton.textContent = browser.i18n.getMessage(actionButton.text) || actionButton.text;
+            // see lodash -> isFunction //TODO: refactor to use it here
+            if (isObject(actionButton.action) && typeof actionButton.action === "function") {
+                // save option to be called later
+                hooks[messagetype].actionButton = actionButton.action;
 
+                // potentiall remove previous set thing
+                elActionButtonLink.removeAttribute("href");
+            } else {
+                elActionButtonLink.setAttribute("href", actionButton.link);
+
+                // unset potential previously set handler
+                hooks[messagetype].actionButton = null;
+            }
+
+            elActionButton.textContent = browser.i18n.getMessage(actionButton.text) || actionButton.text;
             elActionButton.classList.remove("invisible");
+        } else {
+            elActionButton.classList.add("invisible");
         }
 
         elMessage.classList.remove("invisible");
@@ -811,7 +894,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {Object} actionButton optional to show an action button
      * @param {string} actionButton.text
-     * @param {string} actionButton.link URL to site to open on link
+     * @param {string|function} actionButton.action URL to site to open on link OR function to execute
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -831,7 +914,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {Object} actionButton optional to show an action button
      * @param {string} actionButton.text
-     * @param {string} actionButton.link URL to site to open on link
+     * @param {string|function} actionButton.action URL to site to open on link OR function to execute
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -871,7 +954,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {Object} actionButton optional to show an action button
      * @param {string} actionButton.text
-     * @param {string} actionButton.link URL to site to open on link
+     * @param {string|function} actionButton.action URL to site to open on link OR function to execute
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -891,7 +974,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
      * @param {Object} actionButton optional to show an action button
      * @param {string} actionButton.text
-     * @param {string} actionButton.link URL to site to open on link
+     * @param {string|function} actionButton.action URL to site to open on link OR function to execute
      * @param {...*} args optional parameters for translation
      * @returns {void}
      */
@@ -913,7 +996,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * @name   MessageHandler.setHook
      * @function
-     * @param  {MESSAGE_LEVEL|string} messagetype use string "global" for a global hook
+     * @param  {MESSAGE_LEVEL|HtmlElement} messagetype use string "global" for a global hook
      * @param {function|null} hookShown
      * @param {function|null} hookHidden
      * @returns {void}
@@ -929,7 +1012,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      + When called, the function does not know, which message is hidden, but you
      * can determinante it by yourself.
      * The called hook gets an object with two parameters:
-     * - {HtmlElement} elMessage – the message element, which was hidden
+     * - {HTMLElement} elMessage – the message element, which was hidden
      * - {event} event – the original click even on the dismiss button
      *
      * @name   MessageHandler.setDismissHooks
@@ -957,6 +1040,13 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         for (const elDismissIcon of dismissIcons) {
             // hide message when dismiss button is clicked
             elDismissIcon.addEventListener("click", dismissMessage);
+        }
+
+        const actionButtons = document.getElementsByClassName("message-action-button");
+
+        for (const elActionButton of actionButtons) {
+            const elActionButtonLink = elActionButton.parentElement;
+            elActionButtonLink.addEventListener("click", actionButtonClicked);
         }
     };
 
@@ -1021,7 +1111,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             text: "tipYouLikeAddon",
             actionButton: {
                 text: "tipYouLikeAddonButton",
-                link: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/"
+                action: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/"
             }
         },
         {
@@ -1036,7 +1126,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             text: "tipSaveQrCode",
             actionButton: {
                 text: "tipLearnMore",
-                link: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
+                action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
             }
         }
     ];
