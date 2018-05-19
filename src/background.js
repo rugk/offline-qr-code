@@ -185,6 +185,74 @@ const ContextMenu = (function () {
     return me;
 })();
 
+// TODO: combine with module in qrcode.js as a new module?
+const BrowserCommunication = (function () {
+    const me = {};
+
+    const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
+        SAVE_FILE_AS: "saveFileAs",
+    });
+
+    /**
+     * Handles messages received by other parts.
+     *
+     * @name   BrowserCommunication.handleMessages
+     * @function
+     * @private
+     * @param {Object} request
+     * @param {Object} sender
+     * @param {function} sendResponse
+     * @returns {Promise|null}
+     */
+    function handleMessages(request, sender, sendResponse) {
+        console.log("Got message", request, "from", sender);
+
+        // declararations here make sense
+        /* eslint-disable no-case-declarations */
+
+        switch (request.type) {
+        // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1461134
+        case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:
+            const objectUrl = URL.createObjectURL(request.file);
+
+            return browser.downloads.download({
+                url: objectUrl,
+                filename: request.filename,
+                saveAs: true
+            }).then(() => {
+                // send response
+                sendResponse();
+            }).finally(() => {
+                // clean-up
+                // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1462926
+                setTimeout(() => {
+                    console.log("objectUrl revoked:", objectUrl);
+                    URL.revokeObjectURL(objectUrl);
+                }, 5000);
+            });
+        }
+        /* eslint-enable no-case-declarations */
+
+        return null;
+    }
+
+    /**
+     * Init context menu module.
+     *
+     * Adds menu elements.
+     *
+     * @name   BrowserCommunication.init
+     * @function
+     * @returns {void}
+     */
+    me.init = function() {
+        browser.runtime.onMessage.addListener(handleMessages);
+    };
+
+    return me;
+})();
+
 // init modules
 IconHandler.init();
 ContextMenu.init();
+BrowserCommunication.init();

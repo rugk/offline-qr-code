@@ -819,19 +819,16 @@ const UserInterface = (function () {
             const svgString = (new XMLSerializer()).serializeToString(svgElem);
 
             const file = new File([svgString], "qrcode.svg", {type: "image/svg+xml;charset=utf-8"});
-            const newObject = URL.createObjectURL(file);
-            browser.downloads.download({
-                url: newObject,
-                filename: "qrcode.svg",
-                // saveAs currently impossible, as this closes the popup and thus
-                // destroys the element it just tried to download
-                // bug:
-                saveAs: false
-            }).finally(() => {
-                // clean-up
-                URL.revokeObjectURL(file);
 
+            browser.runtime.sendMessage({
+                type: "saveFileAs",
+                file: file,
+                filename: "qrcode.svg",
+            }).then(() => {
                 Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+            }).catch(() => {
+                Logger.logError("Could not save SVG image saved on disk", svgElem, svgString);
+                MessageHandler.showError("errorDownloadingFile", true);
             });
         });
     }
@@ -957,7 +954,7 @@ const BrowserCommunication = (function () {
     const me = {};
 
     const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
-        "SET_QR_TEXT": "setQrText",
+        SET_QR_TEXT: "setQrText",
     });
 
     let overwroteQrCode = false;
@@ -970,7 +967,7 @@ const BrowserCommunication = (function () {
      * @private
      * @param {Object} request
      * @param {Object} sender
-     * @returns {HTMLElement}
+     * @returns {void}
      */
     function handleMessages(request, sender) {
         Logger.logInfo("Got message", request, "from", sender);
