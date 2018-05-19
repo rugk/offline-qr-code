@@ -732,7 +732,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         if (typeof args[0] === "boolean") {
             isDismissable = args.shift();
         }
-        if (typeof args[0] !== undefined && args[0].text !== undefined && args[0].action !== undefined) {
+        if (typeof args[0] !== "undefined" && args[0].text !== "undefined" && args[0].action !== "undefined") {
             actionButton = args.shift();
         }
 
@@ -770,7 +770,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
             elActionButton.textContent = browser.i18n.getMessage(actionButton.text) || actionButton.text;
             elActionButton.classList.remove("invisible");
-        } else {
+        } else if (elActionButton) {
             elActionButton.classList.add("invisible");
         }
 

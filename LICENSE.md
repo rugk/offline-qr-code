@@ -95,6 +95,7 @@ The icons `assets/qr-icon*.svg` (used in `src/icons/icon-small-*.svg`) are made 
 * [`common/img/info-dark.svg`](common/img/info-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 * [`common/img/info-light.svg`](common/img/info-light.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 * [`common/img/open-in-new.svg`](common/img/open-in-new.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+* [`common/img/warning-dark.svg`](common/img/warning-dark.svg) by Mozilla, license: [MPL v2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
 The MPLv2.0 license is reproduced below:
 
