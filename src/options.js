@@ -213,15 +213,14 @@ const OptionHandler = (function () {
             const qrCodeBackgroundColor = hexToRgb(elQrBackgroundColor.value);
 
             const colorContrast = contrast(qrCodeColor, qrCodeBackgroundColor);
-            // TODO: what is the right value here?
-            if (colorContrast <= 4) {
+            if (colorContrast <= 6) {
                 MessageHandler.hideError();
                 MessageHandler.showWarning("lowContrastRatio", false);
             } else {
                 MessageHandler.hideWarning();
             }
 
-            if (elQrColor.value === elQrBackgroundColor.value) {
+            if (colorContrast <= 3) {
                 MessageHandler.hideWarning();
                 MessageHandler.showError("sameColor", false);
             } else {

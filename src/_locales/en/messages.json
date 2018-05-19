@@ -67,7 +67,7 @@
     "desription": "The message shown when the contrast ratio is too low"
   },
   "sameColor": {
-    "message": "The background and the foreground color are equal. You should change this!",
+    "message": "The background and the foreground color are too similar. You should change this!",
     "description": "The message shown when the color for the QR code and the background are equal"
   },
 
