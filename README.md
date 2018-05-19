@@ -9,11 +9,11 @@ Effectively, the add-on [prevents any web connection](src/manifest.json#L33) for
 
 It has a radically **simple, yet powerful** interface, allowing you to tweak many things in the settings, but being lightweight when you use it. A powerful usability improvement is the feature to **just resize the QR code** with your mouse by dragging and dropping. It's **lightweight** size also make it fast and easy to install – even on mobile connections.
 
-It is inspired by [the old Offline QR code generator add-on](https://github.com/catholicon/OfflineQR) for Firefox 56 and lower. This extension only works with Firefox Quantum (Firefox 57) and higher.
+It is inspired by [the old Offline QR code generator add-on](https://github.com/catholicon/OfflineQR) for Firefox 56 and lower. This extension only works with modern Firefox versions.
 
 ## Download
 
-:arrow_right: **[Get it for Firefox!](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)**
+**[![Get it for Firefox!](assets/amobutton.png)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)**
 
 ## In action…
 
