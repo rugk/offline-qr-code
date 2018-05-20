@@ -770,7 +770,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
             elActionButton.textContent = browser.i18n.getMessage(actionButton.text) || actionButton.text;
             elActionButton.classList.remove("invisible");
-        } else {
+        } elseif (elActionButton) {
             elActionButton.classList.add("invisible");
         }
 
