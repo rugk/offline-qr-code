@@ -103,7 +103,7 @@ const ContextMenu = (function () {
     function sendQrCodeText(qrText) {
         browser.runtime.sendMessage({
             type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
-            qrText
+            qrText: qrText
         }).then(() => {
             console.log(`QR code text "${qrText}" sent to tab successfully`); // TODO: we need the Logger here…
         }).catch(() => {
@@ -111,7 +111,7 @@ const ContextMenu = (function () {
             setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
         });
     }
-
+browser.downloads.onChanged.addListener(handleChanged);
     /**
      * Creates the items in the context menu.
      *
