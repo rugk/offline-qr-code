@@ -2,13 +2,17 @@
 
 Für eine allgemeine Erklärung von Add-on-Berechtigungen siehe [diesen Support-Artikel](https://support.mozilla.org/kb/permission-request-messages-firefox-extensions).
 
-## Hauptberechtigungen
+## Berechtigungen bei Installation
 
-Diese Berechtigungen werden bei Installation des Add-ons oder beim Update abgefragt.
+Zurzeit werden bei Installation des Add-ons oder beim Update keine Berechtigungen abgefragt.
 
-| Interne ID  | Berechtigung                                                                  | Erklärung                                                                                                                                                                                   |
-|:------------|:------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `downloads` | Dateien herunter laden und die Browser’s Download Chronik lesen und schreiben | Benötigt um SVG-version des QR-Code herunter zu laden/zu speichern. Dieses Add-on greift nicht auf Downloads zu, es benötigt diese Berechtigung nur, um den Download des Bildes zu starten. |
+## Feature-spezifische (optionale) Berechtigungen
+
+Diese Berechtigungen werden bei bestimmten Aktionen abgefragt, wenn sie dafür benötigt werden.
+
+| Interne ID  | Berechtigung                                                       | Abgefragt bei…                 | Erklärung                                                                                                                                                                                                                               |
+|:------------|:-------------------------------------------------------------------|:-------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `downloads` | Dateien herunterladen und die Download-Chronik lesen und verändern | Speichern des QR-Codes als SVG | Benötigt um den SVG-Download zu starten und dem Nutzer eine Möglichkeit zur Auswahl des Speicherortes zu geben. Dieses Add-on greift nicht auf Downloads zu, es benötigt diese Berechtigung nur, um den Download des Bildes zu starten. |
 
 ## Versteckte Berechtigungen
 

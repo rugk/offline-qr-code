@@ -65,16 +65,20 @@ html, body {
 /* Let the element float (at the bottom on top of the qr) */
 .flot-qr {
   position: absolute;
+
+  width: auto;
 }
 .float-qr-bottom {
   bottom: 30px;
 }
 /* make background transparent when floating */
 .error.flot-qr {
-  width: auto;
-
   /* transparent background */
   background-color: var(--red-60-a90);
+}
+.info.flot-qr {
+  /* transparent background */
+  background-color: var(--grey-20-a90);
 }
 
 #qrcode-container {
