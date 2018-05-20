@@ -19,7 +19,7 @@ const OptionHandler = (function () {
     /**
      * Applies option to element.
      *
-     * @name   OptionHandler.applyOptionToElementToElement
+     * @name   OptionHandler.applyOptionToElement
      * @function
      * @private
      * @param  {string} option string ob object ID
@@ -151,6 +151,8 @@ const OptionHandler = (function () {
                 // run for each option, which we know to handle
                 applyOptionLive("popupIconColored", res.popupIconColored);
                 applyOptionLive("qrCodeSize", res.qrCodeSize);
+                applyOptionLive("qrColor", res.qrColor);
+                applyOptionLive("qrBackgroundColor", res.qrBackgroundColor);
             });
         }
 
@@ -200,8 +202,80 @@ const OptionHandler = (function () {
 
         case "debugMode":
             Logger.setDebugMode(optionValue);
+            break;
+
+        case "qrColor":
+        case "qrBackgroundColor": {
+            const elQrColor = document.getElementById("qrColor");
+            const elQrBackgroundColor = document.getElementById("qrBackgroundColor");
+
+            const qrCodeColor = hexToRgb(elQrColor.value);
+            const qrCodeBackgroundColor = hexToRgb(elQrBackgroundColor.value);
+
+            const colorContrast = contrast(qrCodeColor, qrCodeBackgroundColor);
+            if (colorContrast <= 6) {
+                MessageHandler.hideError();
+                MessageHandler.showWarning("lowContrastRatio", false);
+            } else {
+                MessageHandler.hideWarning();
+            }
+
+            if (colorContrast <= 3) {
+                MessageHandler.hideWarning();
+                MessageHandler.showError("sameColor", false);
+            } else {
+                MessageHandler.hideError();
+            }
+        }
         }
 
+        return null;
+    }
+
+    /**
+     * Calculates the contrast between the QR code color and the background.
+     *
+     * @name   OptionHandler.contrast
+     * @function
+     * @private
+     * @param  {Array} rgb1
+     * @param  {Array} rgb2
+     * @returns {int}
+     */
+    function contrast(rgb1, rgb2) {
+        const colors = [rgb1[0], rgb1[1], rgb1[2], rgb2[0], rgb2[1], rgb2[2]];
+        for (let i = 0; i < colors.length; i++) {
+            // Formula: https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+            const c = colors[i] / 255;
+            // I'm using 0.04045 here instead of 0.03928 because 0.04045 is the number
+            // used in the actual sRGB standard.
+            // See also: https://github.com/w3c/wcag21/issues/815
+            colors[i] = c < 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        }
+        // Formula: https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+        const l1 = 0.2126 * colors[0] + 0.7152 * colors[1] + 0.0722 * colors[2];
+        const l2 = 0.2126 * colors[3] + 0.7152 * colors[4] + 0.0722 * colors[5];
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+
+    /**
+     * Converts a hex color string to RGB.
+     *
+     * @name   OptionHandler.hexToRgb
+     * @function
+     * @private
+     * @param  {string} hex
+     * @returns {Array|null}
+     */
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        if (result) {
+            return [
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16)
+            ];
+        }
         return null;
     }
 
@@ -475,9 +549,9 @@ const OptionHandler = (function () {
     }
 
     /**
-     * Localizes static strings in the HTML file.
+     * Initializes the options.
      *
-     * @name   Localizer.init
+     * @name   OptionHandler.init
      * @function
      * @returns {void}
      */

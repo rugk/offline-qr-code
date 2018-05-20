@@ -150,6 +150,11 @@ a:active {
   background-color: var(--green-50);
 }
 
+.warning {
+  color: var(--yellow-90);
+  background-color: var(--yellow-50);
+}
+
 /* message box action button */
 .message-action-button {
   margin-left: 8px;
@@ -187,6 +192,9 @@ a:active {
 }
 .success::before {
   background-image: url('/common/img/check.svg');
+}
+.warning::before {
+  background-image: url('/common/img/warning-dark.svg');
 }
 
 .icon-dismiss {

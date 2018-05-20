@@ -66,6 +66,14 @@
     "message": "Bist du sicher, dass du alle Optionen zurücksetzen willst?",
     "description": "The message shown, when the user is prompted to confirm the resetting of all options"
   },
+  "lowContrastRatio": {
+    "message": "Das Kontrastverhältnis zwischen der Farbe des QR-Codes und dem Hintergrund ist wahrscheinlich zu niedrig um von QR-Code-Scannern erkannt zu werden",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "sameColor": {
+    "message": "Die Farbe des QR-Codes und des Hintergrunds ist zu ähnlich. Das solltest du ändern!",
+    "description": "The message shown when the color for the QR code and the background are nearly equal"
+  },
 
   // tips
   "tipYouLikeAddon": {
