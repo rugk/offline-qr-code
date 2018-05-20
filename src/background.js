@@ -111,7 +111,6 @@ const ContextMenu = (function () {
             setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
         });
     }
-browser.downloads.onChanged.addListener(handleChanged);
     /**
      * Creates the items in the context menu.
      *
@@ -249,6 +248,16 @@ const BrowserCommunication = (function () {
 
         const objectUrl = URL.createObjectURL(request.file);
 
+        // cleanup object URL after download is completed
+        browser.downloads.onChanged.addListener((delta) => {
+            if (!delta.state || delta.state.current !== "complete") {
+                return;
+            }
+
+            console.log("objectUrl revoked:", objectUrl);
+            URL.revokeObjectURL(objectUrl);
+        });
+
         return browser.downloads.download({
             url: objectUrl,
             filename: request.filename,
@@ -256,13 +265,6 @@ const BrowserCommunication = (function () {
         }).then(() => {
             // send response
             sendResponse();
-        }).finally(() => {
-            // clean-up
-            // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1462926
-            setTimeout(() => {
-                console.log("objectUrl revoked:", objectUrl);
-                URL.revokeObjectURL(objectUrl);
-            }, 5000);
         });
     }
 
