@@ -732,7 +732,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         if (typeof args[0] === "boolean") {
             isDismissable = args.shift();
         }
-        if (args[0] !== undefined && args[0].text !== "undefined" && args[0].action !== "undefined") {
+        if (args[0] !== undefined && args[0].text !== undefined && args[0].action !== undefined) {
             actionButton = args.shift();
         }
 
