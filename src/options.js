@@ -232,14 +232,14 @@ const OptionHandler = (function () {
             };
 
             // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
-            if (colorContrast <= Colors.ContrastBreakpoints.A) {
-                // show an error when nearly no QR code scanner can read it (WCAG 2.0 A)
+            if (colorContrast <= Colors.CONTRAST_RATIO.WAY_TOO_LOW) {
+                // show an error when nearly no QR code scanner can read it
                 MessageHandler.showError("lowContrastRatioError", false, actionButton);
-            } else if (colorContrast <= Colors.ContrastBreakpoints.AA) {
-                // show a warning when approx. 50% of the QR code scanners can read it (WCAG 2.0 AA)
+            } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AA) {
+                // show a warning when approx. 50% of the QR code scanners can read it
                 MessageHandler.showWarning("lowContrastRatioWarning", false, actionButton);
-            } else if (colorContrast <= Colors.ContrastBreakpoints.AAA) {
-                // show only an info when the contrast is low but most of the scanners can still read it (WCAG 2.0 AAA)
+            } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AAA) {
+                // show only an info when the contrast is low but most of the scanners can still read it
                 MessageHandler.showInfo("lowContrastRatioInfo", false, actionButton);
             } else {
                 MessageHandler.hideInfo();

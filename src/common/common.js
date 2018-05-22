@@ -1375,10 +1375,26 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 const Colors = (() => { // eslint-disable-line no-unused-vars
     const me = {};
 
-    me.ContrastBreakpoints = {
-        A: 2,
-        AA: 3,
-        AAA: 4.5,
+    /**
+     * Some breakpoints for specific color ratios.
+     *
+     * This includes definitions from WCAG and some custom ones.
+     *
+     * @name Colors.CONTRAST_RATIO
+     * @type {object} with integers
+     * @const
+     * @default
+     */
+    me.CONTRAST_RATIO = {
+        WAY_TOO_LOW: 2,
+        // WCAG 2.1 AA text: https://www.w3.org/TR/WCAG/#contrast-minimum
+        LARGE_AA: 3.1,
+        SMALL_AA: 4.5,
+        // WCAG 2.1 AAA text: https://www.w3.org/TR/WCAG/#contrast-enhanced
+        LARGE_AAA: 4.5,
+        SMALL_AAA: 7.5,
+        // WCAG 2.1 AA non-text: https://www.w3.org/TR/WCAG/#non-text-contrast
+        NON_TEXT_AA: 3.1
     };
 
     /**
