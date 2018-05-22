@@ -1375,6 +1375,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 const Colors = (() => { // eslint-disable-line no-unused-vars
     const me = {};
 
+    me.ContrastBreakpoints = {
+        A: 2,
+        AA: 3,
+        AAA: 4.5,
+    };
+
     /**
      * Calculates the contrast between two colors
      *
