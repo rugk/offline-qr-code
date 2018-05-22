@@ -222,7 +222,7 @@ const OptionHandler = (function () {
                     browser.storage.sync.set({
                         "qrBackgroundColor": invertedColor
                     }).catch((error) => {
-                        Logger.logError("could not save option", option, ": ", error);
+                        Logger.logError("could not save option", option, ":", error);
                         MessageHandler.showError("couldNotSaveOption", true);
                     }).finally(() => {
                         applyOptionLive();
@@ -232,11 +232,14 @@ const OptionHandler = (function () {
             };
 
             // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
-            if (colorContrast <= 2) {
+            if (colorContrast <= Colors.ContrastBreakpoints.A) {
+                // show an error when nearly no QR code scanner can read it (WCAG 2.0 A)
                 MessageHandler.showError("lowContrastRatioError", false, actionButton);
-            } else if (colorContrast <= 3) {
+            } else if (colorContrast <= Colors.ContrastBreakpoints.AA) {
+                // show a warning when approx. 50% of the QR code scanners can read it (WCAG 2.0 AA)
                 MessageHandler.showWarning("lowContrastRatioWarning", false, actionButton);
-            } else if (colorContrast <= 4.5) {
+            } else if (colorContrast <= Colors.ContrastBreakpoints.AAA) {
+                // show only an info when the contrast is low but most of the scanners can still read it (WCAG 2.0 AAA)
                 MessageHandler.showInfo("lowContrastRatioInfo", false, actionButton);
             } else {
                 MessageHandler.hideInfo();
@@ -307,7 +310,7 @@ const OptionHandler = (function () {
         browser.storage.sync.set({
             [option]: optionValue
         }).catch((error) => {
-            Logger.logError("could not save option", option, ": ", error);
+            Logger.logError("could not save option", option, ":", error);
             MessageHandler.showError("couldNotSaveOption", true);
         });
     }
