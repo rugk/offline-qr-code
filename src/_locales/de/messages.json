@@ -42,6 +42,14 @@
     "message": "Konnte Datei nicht herunter laden.",
     "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
   },
+  "errorPermissionRequired": {
+    "message": "Kann ohne Berechtigung nicht fortfahren.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Berechtigungsabfrage fehlgeschlagen.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  },
   "couldNotSaveOption": {
     "message": "Konnte diese Einstellung nicht speichern.",
     "description": "When a setting could not be saved."
@@ -62,17 +70,25 @@
     "message": "Konnte Optionen nicht zurück setzen!",
     "description": "The message shown, when the options of the settings could not have been reset."
   },
-  "resetOptionsMessage": {
-    "message": "Bist du sicher, dass du alle Optionen zurücksetzen willst?",
-    "description": "The message shown, when the user is prompted to confirm the resetting of all options"
+  "requestDownloadPermissionForQr": {
+    "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
   },
-  "lowContrastRatio": {
-    "message": "Das Kontrastverhältnis zwischen der Farbe des QR-Codes und dem Hintergrund ist wahrscheinlich zu niedrig um von QR-Code-Scannern erkannt zu werden",
+  "lowContrastRatioInfo": {
+    "message": "Der QR-Code kann wahrscheinlich nicht von allen Scannern erkannt werden, weil der Kontrast zu niedrig ist.",
     "desription": "The message shown when the contrast ratio is too low"
   },
-  "sameColor": {
-    "message": "Die Farbe des QR-Codes und des Hintergrunds ist zu ähnlich. Das solltest du ändern!",
-    "description": "The message shown when the color for the QR code and the background are nearly equal"
+  "lowContrastRatioWarning": {
+    "message": "Das Kontrastverhältnis zwischen der Farbe des QR-Codes und dem Hintergrund ist wahrscheinlich zu niedrig um von den meisten QR-Code-Scannern erkannt zu werden",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "Die Farbe des QR-Codes und des Hintergrunds ist zu ähnlich.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Besten Kontrast berechnen",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
   },
 
   // tips
