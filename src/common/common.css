@@ -55,6 +55,7 @@ a:active {
 /* buttons https://design.firefox.com/photon/components/buttons.html */
 .micro-button {
   height: 24px;
+  height: auto;
   border-radius: 2px;
 
   padding-left: 8px;
@@ -99,6 +100,7 @@ a:active {
 
 .micro-button.error {
   background-color: var(--red-70);
+  color: var(--white-100);
 }
 .micro-button:hover.error {
   background-color: var(--red-80);
