@@ -41,7 +41,7 @@
         "prefer-template": 1,
         "template-curly-spacing": 1,
         "symbol-description": 2,
-        "object-shorthand": 1,
+        "object-shorthand": ["warn", "consistent-as-needed"],
         "prefer-promise-reject-errors": 2,
         /* "prefer-destructuring": 1, */ // https://github.com/eslint/eslint/issues/10250
 

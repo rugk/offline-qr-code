@@ -797,9 +797,18 @@ const UserInterface = (function () {
      * @returns {void}
      */
     function menuClicked(event) {
+        const SAVE_FILE_AS = "saveFileAs";
+        const SAVE_FILE_AS_STOP_RETRY = "saveFileAsStopRetry";
+        const DOWNLOAD_PERMISSIONS = {
+            permissions: ["downloads"]
+        };
+
         if (event.menuItemId !== CONTEXT_MENU_SAVE_IMAGE) {
             return;
         }
+
+        const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSIONS);
+        const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSIONS);
 
         // do not trigger when placeholder is shown
         if (placeholderShown === true) {
@@ -819,19 +828,61 @@ const UserInterface = (function () {
             const svgString = (new XMLSerializer()).serializeToString(svgElem);
 
             const file = new File([svgString], "qrcode.svg", {type: "image/svg+xml;charset=utf-8"});
-            const newObject = URL.createObjectURL(file);
-            browser.downloads.download({
-                url: newObject,
-                filename: "qrcode.svg",
-                // saveAs currently impossible, as this closes the popup and thus
-                // destroys the element it just tried to download
-                // bug:
-                saveAs: false
-            }).finally(() => {
-                // clean-up
-                URL.revokeObjectURL(file);
 
-                Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+            downloadPermissionGranted.then((isAlreadyGranted) => {
+                let usePermissionWorkaround = false;
+
+                // if permission is not yet required
+                // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
+                if (!isAlreadyGranted) {
+                    usePermissionWorkaround = true;
+                    MessageHandler.showInfo("requestDownloadPermissionForQr");
+                }
+
+                browser.runtime.sendMessage({
+                    type: SAVE_FILE_AS,
+                    usePermissionWorkaround: usePermissionWorkaround,
+                    file: file,
+                    filename: "qrcode.svg",
+                }).then(() => {
+                    Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+                }).catch((error) => {
+                    Logger.logError("Could not save SVG image saved on disk", error, svgElem, svgString);
+
+                    // in case of user error (i.e. user cancelled e.g.) do not show error message
+                    if (error.message.includes("user")) {
+                        return;
+                    }
+
+                    MessageHandler.showError("errorDownloadingFile", error);
+                });
+
+                // show error when promise is rejected
+                requestDownloadPermissions.then((permissionGranted) => {
+                    if (usePermissionWorkaround) {
+                        // if permission result is there, hide info message
+                        MessageHandler.hideInfo();
+                    }
+
+                    // in case of success there is nothing else to do
+                    if (permissionGranted) {
+                        return;
+                    }
+
+                    // and stop retrying to download in background script
+                    if (usePermissionWorkaround) {
+                        browser.runtime.sendMessage({
+                            type: SAVE_FILE_AS_STOP_RETRY
+                        });
+                    }
+
+                    // if permission is declined, make user aware that this permission was required
+                    Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined:");
+                    MessageHandler.showError("errorPermissionRequired", true);
+                }).catch((error) => {
+                    Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+                    MessageHandler.showError("errorPermissionRequestFailed", true);
+                });
             });
         });
     }
@@ -957,7 +1008,7 @@ const BrowserCommunication = (function () {
     const me = {};
 
     const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
-        "SET_QR_TEXT": "setQrText",
+        SET_QR_TEXT: "setQrText",
     });
 
     let overwroteQrCode = false;
@@ -970,7 +1021,7 @@ const BrowserCommunication = (function () {
      * @private
      * @param {Object} request
      * @param {Object} sender
-     * @returns {HTMLElement}
+     * @returns {void}
      */
     function handleMessages(request, sender) {
         Logger.logInfo("Got message", request, "from", sender);

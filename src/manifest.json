@@ -42,8 +42,10 @@
   "permissions": [
     "activeTab",
     "storage",
-    "downloads",
     "menus"
+  ],
+  "optional_permissions": [
+    "downloads"
   ],
   "applications": {
     "gecko": {

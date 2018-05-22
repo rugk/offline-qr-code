@@ -1,2 +1,3 @@
 Dieses Add-on wird (und kann) niemals Informationen zum Add-on-Autor oder einer Drittpartei senden. Es ist technisch so eingeschränkt, dass es keine Möglichkeit zum Zugriffs auf das Internet hat.
 
+Eine Erklärung aller Berechtigungen, die dieses Add-on erfragt kann auf https://github.com/rugk/offline-qr-code/blob/master/assets/texts/de/permissions.md gefunden werden.
