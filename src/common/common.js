@@ -643,8 +643,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @returns {void}
      */
     function actionButtonClicked(event) {
-        const elActionButton = event.target;
-        const elActionButtonLink = elActionButton.parentNode;
+        const elActionButtonLink = event.currentTarget;
         const elMessage = elActionButtonLink.parentNode;
 
         const messagetype = getMessageTypeFromElement(elMessage);
