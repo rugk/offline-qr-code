@@ -4,6 +4,10 @@
     "message": "Offline QR-Code-Generator",
     "description": "Name of the extension."
   },
+  "extensionNameShort": {
+    "message": "Offline QR-Code",
+    "description": "Name of the extension."
+  },
   "extensionDescription": {
     "message": "Erlaubt, einen QR-Code für jede Webseite oder Tab zu generieren, die du offen hast.",
     "description": "Description of the extension."
