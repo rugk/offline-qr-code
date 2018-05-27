@@ -91,6 +91,7 @@
         }],
         "wrap-iife": ["error", "inside"],
         "no-loop-func": 2,
+        "no-unused-expressions": 2,
         "linebreak-style": 1, // may be disabled if contributing on Windows
     }
 }
