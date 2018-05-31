@@ -24,7 +24,7 @@ See:
 * [More screenshots](assets/screenshots)
 
 ## Features
-* Puts privacy first! Privacy should be the default, so it is generating QR codes offline.
+* Puts privacy first! Privacy is the default here, so it is generating QR codes offline.
 * Follows [Firefox Photon Design](https://design.firefox.com/photon/welcome.html).
 * Has a simple, but intuitively and usable User Interface.
 * Uses up-to-date, great and customizable [QR code](https://github.com/nayuki/QR-Code-generator) [libraries](https://larsjung.de/kjua/).
