@@ -1,4 +1,4 @@
-body {
+body, .micro-button {
   /* the style the other options in the settings pane use */
   font-size: 1.25rem; /* TODO: adjust to font size on mobile */
   color: #333;
