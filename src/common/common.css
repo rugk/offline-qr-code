@@ -55,6 +55,7 @@ a:active {
 /* buttons https://design.firefox.com/photon/components/buttons.html */
 .micro-button {
   height: 24px;
+  height: auto;
   border-radius: 2px;
 
   padding-left: 8px;
@@ -85,6 +86,27 @@ a:active {
 }
 .micro-button:active.success {
   background-color: var(--green-80);
+}
+
+.micro-button.warning {
+  background-color: var(--yellow-60);
+}
+.micro-button:hover.warning {
+  background-color: var(--yellow-70);
+}
+.micro-button:active.warning {
+  background-color: var(--yellow-80);
+}
+
+.micro-button.error {
+  background-color: var(--red-70);
+  color: var(--white-100);
+}
+.micro-button:hover.error {
+  background-color: var(--red-80);
+}
+.micro-button:active.error {
+  background-color: var(--red-90);
 }
 
 .micro-button:focus {
@@ -150,6 +172,11 @@ a:active {
   background-color: var(--green-50);
 }
 
+.warning {
+  color: var(--yellow-90);
+  background-color: var(--yellow-50);
+}
+
 /* message box action button */
 .message-action-button {
   margin-left: 8px;
@@ -187,6 +214,9 @@ a:active {
 }
 .success::before {
   background-image: url('/common/img/check.svg');
+}
+.warning::before {
+  background-image: url('/common/img/warning-dark.svg');
 }
 
 .icon-dismiss {

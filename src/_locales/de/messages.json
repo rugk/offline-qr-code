@@ -78,6 +78,22 @@
     "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
     "description": "Shown, when the user is asked to allow the download permission to save the QR code."
   },
+  "lowContrastRatioInfo": {
+    "message": "Der QR-Code kann wahrscheinlich nicht von allen Scannern erkannt werden, weil der Kontrast zu niedrig ist.",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioWarning": {
+    "message": "Das Kontrastverhältnis zwischen der Farbe des QR-Codes und dem Hintergrund ist wahrscheinlich zu niedrig um von den meisten QR-Code-Scannern erkannt zu werden",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "Die Farbe des QR-Codes und des Hintergrunds ist zu ähnlich.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Besten Kontrast berechnen",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
 
   // tips
   "tipYouLikeAddon": {

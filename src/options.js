@@ -4,6 +4,7 @@
 /* globals AddonSettings */
 /* globals MESSAGE_LEVEL, MessageHandler */
 /* globals RandomTips */
+/* globals Colors */
 
 const OptionHandler = (function () {
     const me = {};
@@ -19,7 +20,7 @@ const OptionHandler = (function () {
     /**
      * Applies option to element.
      *
-     * @name   OptionHandler.applyOptionToElementToElement
+     * @name   OptionHandler.applyOptionToElement
      * @function
      * @private
      * @param  {string} option string ob object ID
@@ -151,6 +152,8 @@ const OptionHandler = (function () {
                 // run for each option, which we know to handle
                 applyOptionLive("popupIconColored", res.popupIconColored);
                 applyOptionLive("qrCodeSize", res.qrCodeSize);
+                applyOptionLive("qrColor", res.qrColor);
+                applyOptionLive("qrBackgroundColor", res.qrBackgroundColor);
             });
         }
 
@@ -200,6 +203,47 @@ const OptionHandler = (function () {
 
         case "debugMode":
             Logger.setDebugMode(optionValue);
+            break;
+
+        case "qrColor":
+        case "qrBackgroundColor": {
+            const elQrColor = document.getElementById("qrColor");
+            const elQrBackgroundColor = document.getElementById("qrBackgroundColor");
+
+            const qrCodeColor = Colors.hexToRgb(elQrColor.value);
+            const qrCodeBackgroundColor = Colors.hexToRgb(elQrBackgroundColor.value);
+
+            const colorContrast = Colors.contrastRatio(qrCodeColor, qrCodeBackgroundColor);
+
+            const actionButton = {
+                text: "messageAutoSelectColorButton",
+                action: () => {
+                    const invertedColor = Colors.invertColor(qrCodeColor);
+                    browser.storage.sync.set({
+                        "qrBackgroundColor": invertedColor
+                    }).catch((error) => {
+                        Logger.logError("could not save option", option, ": ", error);
+                        MessageHandler.showError("couldNotSaveOption", true);
+                    }).finally(() => {
+                        applyOptionLive();
+                        elQrBackgroundColor.value = invertedColor;
+                    });
+                }
+            };
+
+            // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
+            if (colorContrast <= 2) {
+                MessageHandler.showError("lowContrastRatioError", false, actionButton);
+            } else if (colorContrast <= 3) {
+                MessageHandler.showWarning("lowContrastRatioWarning", false, actionButton);
+            } else if (colorContrast <= 4.5) {
+                MessageHandler.showInfo("lowContrastRatioInfo", false, actionButton);
+            } else {
+                MessageHandler.hideInfo();
+                MessageHandler.hideWarning();
+                MessageHandler.hideError();
+            }
+        }
         }
 
         return null;
@@ -475,9 +519,9 @@ const OptionHandler = (function () {
     }
 
     /**
-     * Localizes static strings in the HTML file.
+     * Initializes the options.
      *
-     * @name   Localizer.init
+     * @name   OptionHandler.init
      * @function
      * @returns {void}
      */
