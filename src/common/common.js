@@ -1071,8 +1071,8 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      * {
      *     id {string} – just some ID
      *     maxShowCount {integer} – shows the message at most x times
-     *     maximumDismiss {integer|null} – hides the message, if it has been dismissed
-     *          x times
+     *     maximumDismiss {integer|null} – (optional) hides the message, if it
+     *          has been dismissed x times.
      *     allowDismiss {bool} – optional, Set to false to disallow dismissing
      *          the message. This likely makes no sense for any tip, so the
      *          default is true.
