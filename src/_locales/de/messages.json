@@ -108,6 +108,10 @@
     "message": "Schon gewusst? Du kannst QR-Codes als Bild abspeichern.",
     "description": "A tip shown to get the add-on to find the save option."
   },
+  "tipQrCodeHotkey": {
+    "message": "Die Tastenkombination für dieses Add-on ist Strg+Umschalt+F10.",
+    "description": "A tip shown to get the user to notice that there is a hot key."
+  },
   "tipLearnMore": {
     "message": "Mehr Infos",
     "description": "The common button for tips, where you can get more information on click."
@@ -248,6 +252,10 @@
     "description": "The 'Learn more' link in the description of the error correction option."
   },
 
+  "optionAutoGetSelectedText": {
+    "message": "Nutze automatisch den auf der Seite markierten Text",
+    "description": "This is an option shown in the add-on settings."
+  },
   "optionUseMonospaceFont": {
     "message": "Benutze Monospace-Schrift",
     "description": "This is an option shown in the add-on settings."

@@ -1071,6 +1071,8 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      * {
      *     id {string} – just some ID
      *     maxShowCount {integer} – shows the message at most x times
+     *     maximumDismiss {integer|null} – hides the message, if it has been dismissed
+     *          x times
      *     allowDismiss {bool} – optional, Set to false to disallow dismissing
      *          the message. This likely makes no sense for any tip, so the
      *          default is true.
@@ -1128,6 +1130,14 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
                 text: "tipLearnMore",
                 action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
             }
+        },
+        {
+            id: "qrCodeHotkey",
+            maxShowCount: 3,
+            maximumDismiss: 1,
+            requiredTriggers: 2,
+            randomizeDisplay: false,
+            text: "tipQrCodeHotkey",
         }
     ];
 
@@ -1211,10 +1221,10 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      */
     function showTip(tipSpec) {
         // default settings
-        const allowDismiss = tips.tipSpec !== undefined ? tips.tipSpec : true;
+        tipSpec.allowDismiss = tipSpec.allowDismiss !== undefined ? tipSpec.allowDismiss : true;
 
         elMessageBox.dataset.tipId = tipSpec.id;
-        MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss, tipSpec.actionButton);
+        MessageHandler.showMessage(elMessageBox, tipSpec.text, tipSpec.allowDismiss, tipSpec.actionButton);
 
         // hook dismiss
         MessageHandler.setDismissHooks(messageDismissed);
@@ -1264,6 +1274,14 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             }
         }
 
+        const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
+        const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
+
+        // do not show if it has been dismissed enough times
+        if (tipSpec.maximumDismiss && tipDismissed >= tipSpec.maximumDismiss) {
+            return false;
+        }
+
         // or has it been shown enough times already?
 
         // dismiss is shown enough times?
@@ -1277,16 +1295,15 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         }
 
         // check context check if needed
-        if (context in tipSpec.showInContext) {
-            const tipShownInCurrentContext = tipConfig.tips[tipSpec.id].shownContext[context] || 0;
+        if (tipSpec.showInContext) {
+            if (context in tipSpec.showInContext) {
+                const tipShownInCurrentContext = tipConfig.tips[tipSpec.id].shownContext[context] || 0;
 
-            if (tipShownInCurrentContext < tipSpec.showInContext[context]) {
-                return true;
+                if (tipShownInCurrentContext < tipSpec.showInContext[context]) {
+                    return true;
+                }
             }
         }
-
-        const tipShowCount = tipConfig.tips[tipSpec.id].shownCount || 0;
-        const tipDismissed = tipConfig.tips[tipSpec.id].dismissedCount || 0;
 
         return tipShowCount < tipSpec.maxShowCount // not already shown enough times already?
             || tipDismissed < requiredDismissCount; // not dismissed enough times?
@@ -1324,7 +1341,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 
         if (!shouldBeShown(tipSpec)) {
             // remove tip
-            tips.splice(randomNumber);
+            tips.splice(randomNumber, 1);
 
             // retry random selection
             me.showRandomTip();
