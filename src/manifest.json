@@ -30,6 +30,13 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F10"
+      }
+    }
+  },
 
   "content_security_policy": "default-src 'self'; img-src data:",
   "icons": {
