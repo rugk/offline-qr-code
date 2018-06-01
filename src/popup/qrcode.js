@@ -1095,22 +1095,28 @@ const userInterfaceInit = UserInterface.init();
 
 // check for selected text
 // current tab is used by default
-const getSelection = browser.tabs.executeScript({
-    code: "window.getSelection().toString();",
-    allFrames: true // TODO: does not work currently
-}).then((injectResults) => {
-    let selection;
-    // iterate through results and find selection (if there are multiple ones)
-    do {
-        selection = injectResults.pop();
-    } while (selection === "");
-
-    // throw error if there is still nothing selected (or everything was popped, so it is undefined)
-    if (!selection) {
-        throw new Error("nothing selected");
+const getSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
+    if (autoGetSelectedText !== true) {
+        throw new Error("using selection is disabled");
     }
 
-    return selection;
+    return browser.tabs.executeScript({
+        code: "window.getSelection().toString();",
+        allFrames: true // TODO: does not work currently
+    }).then((injectResults) => {
+        let selection;
+        // iterate through results and find selection (if there are multiple ones)
+        do {
+            selection = injectResults.pop();
+        } while (selection === "");
+
+        // throw error if there is still nothing selected (or everything was popped, so it is undefined)
+        if (!selection) {
+            throw new Error("nothing selected");
+        }
+
+        return selection;
+    });
 });
 
 // generate QR code from tab or selected text or message, if everything is set up

@@ -291,6 +291,7 @@ const AddonSettings = (function () { // eslint-disable-line no-unused-vars
         qrColor: "#0c0c0d",
         qrBackgroundColor: "#ffffff",
         qrErrorCorrection: "Q",
+        autoGetSelectedText: false,
         monospaceFont: false,
         qrCodeSize: {
             sizeType: "fixed",
