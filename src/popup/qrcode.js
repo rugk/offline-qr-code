@@ -357,6 +357,10 @@ const QrCreator = (function () {
      * @returns {void}
      */
     me.generateFromTab = function(tab) {
+        if (tab.url === undefined) {
+            throw new Error("URL not yet available.");
+        }
+
         me.setText(tab.url);
         me.generate();
     };
@@ -498,6 +502,7 @@ const UserInterface = (function () {
      * @returns {void}
      */
     function refreshQrCode(event) {
+        // TODO: use lodash throttle!
         // if a timer is already running and the current call does not finish it
         if (qrCodeRefreshTimer !== null && !event.hasOwnProperty("isTimer")) {
             // do nothing, as this is an additional call during the
@@ -522,6 +527,7 @@ const UserInterface = (function () {
             return;
         } else if (placeholderShown) {
             hidePlaceholder();
+            MessageHandler.hideError();
         }
 
         QrCreator.setTextInternal(text);
