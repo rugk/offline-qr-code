@@ -794,9 +794,9 @@ const UserInterface = (function () {
     /**
      * Triggers when a context menu item has been clicked.
      *
-     * It downloads
+     * It downloads the QR code image.
      *
-     * @name   ContextMenu.menuClicked
+     * @name   UserInterface.menuClicked
      * @function
      * @private
      * @param {event} event
@@ -883,7 +883,7 @@ const UserInterface = (function () {
                     }
 
                     // if permission is declined, make user aware that this permission was required
-                    Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined:");
+                    Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
                     MessageHandler.showError("errorPermissionRequired", true);
                 }).catch((error) => {
                     Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
@@ -892,6 +892,20 @@ const UserInterface = (function () {
             });
         });
     }
+
+    /**
+     * Initiates after the QR code has been generated.
+     *
+     * @name   UserInterface.lateInit
+     * @function
+     * @returns {void}
+     */
+    me.lateInit = function() {
+        // manually focus (and select) element when starting
+        // in brute-force-style as bugs seem to prevent it from working otherwise
+        // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
+        setTimeout(selectAllText, 50, { target: qrCodeText });
+    };
 
     /**
      * Initalises the module.
@@ -966,11 +980,6 @@ const UserInterface = (function () {
                 attributeFilter: ["style"]
             });
         });
-
-        // manually focus (and select) element when starting
-        // in brute-force-style as bugs seem to prevent it from working otherwise
-        // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
-        setTimeout(selectAllText, 50, { target: qrCodeText });
 
         QrCreator.getGenerationType().then((genType) => {
             if (genType !== "svg") {
@@ -1097,7 +1106,7 @@ const getSelection = browser.tabs.executeScript({
     return selection;
 });
 
-// generate QR code from tab, if everything is set up
+// generate QR code from tab or selected text or message, if everything is set up
 qrCreatorInit.then(() => {
     userInterfaceInit.then(() => {
         // do not generate tabs if text is already overwritten
@@ -1105,18 +1114,22 @@ qrCreatorInit.then(() => {
             Logger.logInfo("Text is already overwritten by some message.");
             // generate QR code
             QrCreator.generate();
+
+            UserInterface.lateInit();
         } else {
             // get text from selected text, if possible
-            getSelection.then((selection) => {
+            let setInitialQrCode = getSelection.then((selection) => {
                 QrCreator.setText(selection);
                 QrCreator.generate();
             }).catch(() => {
                 // …or fallback to tab URL
-                queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+                setInitialQrCode = queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
                     Logger.logError(error);
                     MessageHandler.showError("couldNotReceiveActiveTab", false);
                 });
             });
+
+            setInitialQrCode.then(UserInterface.lateInit);
         }
 
         // hide loading message shown by default
