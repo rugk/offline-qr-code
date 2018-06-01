@@ -1096,10 +1096,17 @@ const userInterfaceInit = UserInterface.init();
 // check for selected text
 // current tab is used by default
 const getSelection = browser.tabs.executeScript({
-    code: "window.getSelection().toString();"
+    code: "window.getSelection().toString();",
+    allFrames: true // TODO: does not work currently
 }).then((injectResults) => {
-    const selection = injectResults[0];
-    if (selection === "") {
+    let selection;
+    // iterate through results and find selection (if there are multiple ones)
+    do {
+        selection = injectResults.pop();
+    } while (selection === "");
+
+    // throw error if there is still nothing selected (or everything was popped, so it is undefined)
+    if (!selection) {
         throw new Error("nothing selected");
     }
 
