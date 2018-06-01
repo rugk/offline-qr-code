@@ -1102,7 +1102,7 @@ const getSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelec
 
     return browser.tabs.executeScript({
         code: "window.getSelection().toString();",
-        allFrames: true // TODO: does not work currently
+        allFrames: true // TODO: does not work currently, https://discourse.mozilla.org/t/activetab-permission-does-not-include-iframes-in-current-tab/29084
     }).then((injectResults) => {
         let selection;
         // iterate through results and find selection (if there are multiple ones)
