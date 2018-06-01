@@ -1084,6 +1084,19 @@ BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init();
 const userInterfaceInit = UserInterface.init();
 
+// check for selected text
+// current tab is used by default
+const getSelection = browser.tabs.executeScript({
+    code: "window.getSelection().toString();"
+}).then((injectResults) => {
+    const selection = injectResults[0];
+    if (selection === "") {
+        throw new Error("nothing selected");
+    }
+
+    return selection;
+});
+
 // generate QR code from tab, if everything is set up
 qrCreatorInit.then(() => {
     userInterfaceInit.then(() => {
@@ -1093,9 +1106,16 @@ qrCreatorInit.then(() => {
             // generate QR code
             QrCreator.generate();
         } else {
-            queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-                Logger.logError(error);
-                MessageHandler.showError("couldNotReceiveActiveTab", false);
+            // get text from selected text, if possible
+            getSelection.then((selection) => {
+                QrCreator.setText(selection);
+                QrCreator.generate();
+            }).catch(() => {
+                // …or fallback to tab URL
+                queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+                    Logger.logError(error);
+                    MessageHandler.showError("couldNotReceiveActiveTab", false);
+                });
             });
         }
 
