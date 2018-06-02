@@ -33,7 +33,9 @@
         "no-implied-eval": 2,
 
         // great new EcmaScript features
-        "prefer-const": 2,
+        "prefer-const": ["error", {
+            "destructuring": "all"
+        }],
         "no-var": 1,
         "prefer-arrow-callback": 1,
         "prefer-rest-params": 2,
@@ -47,8 +49,6 @@
 
         // additional rules
         "no-new-object": 2,
-        "no-useless-call:": 2,
-        "prefer-spread": 2,
         "eqeqeq": ["error", "smart"],
         "curly": ["error", "all"],
         "dot-location": 1,
@@ -57,6 +57,7 @@
         "no-throw-literal": 2,
         "no-self-compare": 2,
         "no-useless-call": 1,
+        /* "no-use-before-define": 1, */
         "consistent-return": 2,
         "spaced-comment": 1,
         "no-multi-spaces": 1,
