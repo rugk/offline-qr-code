@@ -112,6 +112,14 @@
     "message": "Die Tastenkombination für dieses Add-on ist Strg+Umschalt+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
   },
+  "tipDonate": {
+    "message": "Magst du dieses kostenlose Add-on?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Unterstütze die Entwicklung mit einer Spende",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
   "tipLearnMore": {
     "message": "Mehr Infos",
     "description": "The common button for tips, where you can get more information on click."

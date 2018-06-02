@@ -612,7 +612,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @returns {MESSAGE_LEVEL|HTMLElement}
      */
     function getMessageTypeFromElement(elMessage) {
-        const messagetype = Object.keys(ELEMENT_BY_TYPE).find((messagetype) => {
+        let messagetype = Object.keys(ELEMENT_BY_TYPE).find((messagetype) => {
             // skip, if element does not exist
             if (!ELEMENT_BY_TYPE[messagetype]) {
                 return false;
@@ -627,8 +627,8 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
                 throw new Error(`message element ${elMessage} is no real message box`);
             }
 
-            // if it is a custom element, return it unmodified
-            return elMessage;
+            // if it is a custom element, use ID of element
+            messagetype = elMessage.id;
         }
 
         return messagetype;
@@ -666,6 +666,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * If you pass a HTMLElement as the first parameter, you can use your own
      * custom node for the message.
+     * Attention: This is a "low-level function" and does thus not run the show hook!
      *
      * @name   MessageHandler.showMessage
      * @function
@@ -694,15 +695,26 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         }
 
         // get first element
-        const messagetype = args.shift();
+        let messagetype = args.shift();
 
         if (messagetype in ELEMENT_BY_TYPE) {
             elMessage = ELEMENT_BY_TYPE[messagetype];
         } else {
             elMessage = messagetype;
+            // use ID of element as message type
+            messagetype = elMessage.id;
+
+            // automatically register/setup hook object when new message is passed
+            if (hooks[messagetype] === undefined) {
+                hooks[messagetype] = {
+                    "show": null,
+                    "hide": null,
+                    "actionButton": null
+                };
+            }
         }
 
-        // and stuuf inside we need later
+        // and stuff inside we need later
         const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
         const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
         let elActionButtonLink = null;
@@ -762,7 +774,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
                 // potentiall remove previous set thing
                 elActionButtonLink.removeAttribute("href");
             } else {
-                elActionButtonLink.setAttribute("href", actionButton.link);
+                elActionButtonLink.setAttribute("href", actionButton.action);
 
                 // unset potential previously set handler
                 hooks[messagetype].actionButton = null;
@@ -783,6 +795,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      *
      * If you pass no messagetype or "null", it hides all messages.
      * If a HTMLElement is passed, it automatically hides the target of the event.
+     * Attention: This is a "low-level function" and does thus not run the hide hook!
      *
      * @name   MessageHandler.hideMessage
      * @function
@@ -794,6 +807,8 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
         if (messagetype instanceof HTMLElement) {
             elMessage = messagetype;
+            // use ID of element as message type
+            messagetype = elMessage.id;
         } else if (messagetype === null || messagetype === undefined) {
             // hide all of them
             MESSAGE_LEVEL.forEach((currentType) => {
@@ -1105,6 +1120,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             id: "likeAddon",
             maxShowCount: 3,
             requireDismiss: 1,
+            maximumDismiss: 2,
             requiredTriggers: 10,
             showInContext: {
                 "popup": 1
@@ -1120,6 +1136,7 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             id: "saveQr",
             maxShowCount: 5,
             requireDismiss: 1,
+            maximumDismiss: 2,
             requiredTriggers: 5,
             showInContext: {
                 "popup": 1
@@ -1129,6 +1146,23 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             actionButton: {
                 text: "tipLearnMore",
                 action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
+            }
+        },
+        {
+            id: "donate",
+            // do not show on options page as Firefox already displays a donate button there
+            maxShowCount: 0,
+            requireDismiss: 1,
+            maximumDismiss: 2,
+            requiredTriggers: 50,
+            showInContext: {
+                "popup": 4
+            },
+            randomizeDisplay: 0.4,
+            text: "tipDonate",
+            actionButton: {
+                text: "tipDonateButton",
+                action: "https://liberapay.com/rugk/"
             }
         },
         {

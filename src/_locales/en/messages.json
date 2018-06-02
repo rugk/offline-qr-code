@@ -112,6 +112,14 @@
     "message": "Remember the hot key for this add-on is Ctrl+Shift+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
   },
+  "tipDonate": {
+    "message": "Enjoy using this add-on for free?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Support development by donating",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
   "tipLearnMore": {
     "message": "Learn more",
     "description": "The common button for tips, where you can get more information on click."
