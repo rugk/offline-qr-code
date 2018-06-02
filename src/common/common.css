@@ -54,7 +54,7 @@ a:active {
 
 /* buttons https://design.firefox.com/photon/components/buttons.html */
 .micro-button {
-  height: 24px;
+  min-height: 24px;
   height: auto;
   border-radius: 2px;
 
@@ -66,6 +66,20 @@ a:active {
   padding-bottom: 2px;
 
   box-sizing: content-box;
+
+  /* do not break over multiple lines */
+  /* white-space: nowrap; */
+  height: auto; /* currently, we rather prefer breaking until https://github.com/rugk/offline-qr-code/issues/12 is done */
+}
+
+/* use light color for dark backgrounds */
+.micro-button:hover.success,
+.micro-button:active.success,
+.micro-button:hover.warning,
+.micro-button:active.warning,
+.micro-button:hover.error,
+.micro-button:active.error {
+  color: var(--white-100);
 }
 
 .micro-button.info {

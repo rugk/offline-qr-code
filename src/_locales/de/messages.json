@@ -83,7 +83,7 @@
     "desription": "The message shown when the contrast ratio is too low"
   },
   "lowContrastRatioWarning": {
-    "message": "Das Kontrastverhältnis zwischen der Farbe des QR-Codes und dem Hintergrund ist wahrscheinlich zu niedrig um von den meisten QR-Code-Scannern erkannt zu werden",
+    "message": "Der Kontrast zwischen der Farbe des QR-Codes und dessen Hintergrund ist zu niedrig um von den meisten QR-Code-Scannern erkannt zu werden",
     "desription": "The warning shown when the contrast ratio is too low"
   },
   "lowContrastRatioError": {

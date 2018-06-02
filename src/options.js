@@ -222,7 +222,7 @@ const OptionHandler = (function () {
                     browser.storage.sync.set({
                         "qrBackgroundColor": invertedColor
                     }).catch((error) => {
-                        Logger.logError("could not save option", option, ": ", error);
+                        Logger.logError("could not save option", option, ":", error);
                         MessageHandler.showError("couldNotSaveOption", true);
                     }).finally(() => {
                         applyOptionLive();
@@ -232,11 +232,20 @@ const OptionHandler = (function () {
             };
 
             // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
-            if (colorContrast <= 2) {
+            if (colorContrast <= Colors.CONTRAST_RATIO.WAY_TOO_LOW) {
+                // show an error when nearly no QR code scanner can read it
+                MessageHandler.hideInfo();
+                MessageHandler.hideWarning();
                 MessageHandler.showError("lowContrastRatioError", false, actionButton);
-            } else if (colorContrast <= 3) {
+            } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AA) {
+                // show a warning when approx. 50% of the QR code scanners can read it
+                MessageHandler.hideInfo();
+                MessageHandler.hideError();
                 MessageHandler.showWarning("lowContrastRatioWarning", false, actionButton);
-            } else if (colorContrast <= 4.5) {
+            } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AAA) {
+                // show only an info when the contrast is low but most of the scanners can still read it
+                MessageHandler.hideWarning();
+                MessageHandler.hideError();
                 MessageHandler.showInfo("lowContrastRatioInfo", false, actionButton);
             } else {
                 MessageHandler.hideInfo();
