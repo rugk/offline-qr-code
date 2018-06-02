@@ -86,13 +86,13 @@ const Logger = (function () {
         /* eslint-disable no-console */
         switch (messagetype) {
         case MESSAGE_LEVEL.ERROR:
-            console.error.apply(null, args);
+            console.error(...args);
             break;
         case MESSAGE_LEVEL.WARN:
-            console.warn.apply(null, args);
+            console.warn(...args);
             break;
         default:
-            console.log.apply(null, args);
+            console.log(...args);
         }
         /* eslint-enable no-console */
     };
@@ -108,7 +108,7 @@ const Logger = (function () {
     me.logError = function(...args) {
         args.unshift(MESSAGE_LEVEL.ERROR);
 
-        me.log.apply(null, args);
+        me.log(...args);
     };
 
     /**
@@ -122,7 +122,7 @@ const Logger = (function () {
     me.logWarning = function(...args) {
         args.unshift(MESSAGE_LEVEL.WARN);
 
-        me.log.apply(null, args);
+        me.log(...args);
     };
 
     /**
@@ -147,7 +147,7 @@ const Logger = (function () {
 
         args.unshift(MESSAGE_LEVEL.INFO);
 
-        me.log.apply(null, args);
+        me.log(...args);
     };
 
     /**
@@ -689,9 +689,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
 
         // also log message to console
         if (args[0] instanceof HTMLElement) {
-            Logger.logInfo.apply(null, args);
+            Logger.logInfo(...args);
         } else {
-            Logger.log.apply(null, args);
+            Logger.log(...args);
         }
 
         // get first element

@@ -47,6 +47,8 @@
 
         // additional rules
         "no-new-object": 2,
+        "no-useless-call:": 2,
+        "prefer-spread": 2,
         "eqeqeq": ["error", "smart"],
         "curly": ["error", "all"],
         "dot-location": 1,
