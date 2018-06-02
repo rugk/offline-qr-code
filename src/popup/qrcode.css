@@ -38,10 +38,9 @@ html, body {
   width: 100%;
 }
 
-#topMessageContainer {
-  width: calc(100% - 8px);
-}
 #topMessageContainer > .message-box {
+  width: calc(100% - 8px);
+
   margin-top: 4px;
   margin-left: 4px;
   margin-right: 4px;
@@ -51,11 +50,6 @@ html, body {
 
   /* some shadow to highlight it a bit more */
   box-shadow: var(--shadow-10);
-}
-@media (min-width: 500px) {
-  #topMessageContainer {
-    width: auto;
-  }
 }
 
 .flot-qr > .message-box {

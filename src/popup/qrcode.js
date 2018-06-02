@@ -932,7 +932,7 @@ const UserInterface = (function () {
         const gettingQrColor = AddonSettings.get("qrBackgroundColor");
         gettingQrColor.then((qrBackgroundColor) => {
             if (qrBackgroundColor) {
-                qrCodeContainer.style.backgroundColor = qrBackgroundColor;
+                document.body.style.backgroundColor = qrBackgroundColor;
             }
         });
 

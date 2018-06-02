@@ -185,6 +185,9 @@ a:active {
   margin-top: auto;
   margin-bottom: auto;
 
+  /* some minimum margin to dismiss button or similar */
+  margin-right: 4px;
+
   border: 0;
   color: var(--grey-90);
 
