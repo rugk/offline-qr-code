@@ -488,6 +488,15 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
     });
 
+    // documents the classes for the different message styles
+    const DESIGN_BY_TYPE = Object.freeze({
+        [MESSAGE_LEVEL.ERROR]: "error",
+        [MESSAGE_LEVEL.WARN]: "warning",
+        [MESSAGE_LEVEL.INFO]: "info",
+        [MESSAGE_LEVEL.SUCCESS]: "success",
+        [MESSAGE_LEVEL.LOADING]: "info"
+    });
+
     const hooks = {
         "global": {
             "show": null,
@@ -603,13 +612,34 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     }
 
     /**
-     * The action button event handler, when clicked.
+     * Returns the message type (ID) of a custom message.
+     *
+     * @name   MessageHandler.getCustomMessageType
+     * @function
+     * @private
+     * @param  {HTMLElement} elMessage
+     * @returns {string}
+     * @throws {Error}
+     */
+    function getCustomMessageType(elMessage) {
+        // verify it is a real message box
+        if (!elMessage.classList.contains("message-box")) {
+            throw new Error(`message element ${elMessage} is no real message box`);
+        }
+
+        // use ID of element as message type
+        return elMessage.id;
+    }
+
+    /**
+     * Returns the message type based on the passed element.
      *
      * @name   MessageHandler.getMessageTypeFromElement
      * @function
      * @private
      * @param  {HTMLElement} elMessage
      * @returns {MESSAGE_LEVEL|HTMLElement}
+     * @throws {Error}
      */
     function getMessageTypeFromElement(elMessage) {
         let messagetype = Object.keys(ELEMENT_BY_TYPE).find((messagetype) => {
@@ -622,16 +652,49 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         });
 
         if (messagetype === undefined) {
-            // verify it is a real message box
-            if (!elMessage.classList.contains("message-box")) {
-                throw new Error(`message element ${elMessage} is no real message box`);
-            }
-
-            // if it is a custom element, use ID of element
-            messagetype = elMessage.id;
+            // this throws if it is no real (custom) message
+            messagetype = getCustomMessageType(elMessage);
         }
 
         return messagetype;
+    }
+
+    /**
+     * Returns the HTMLElement based on the passed message type.
+     *
+     * It supports custom elements, i.e. when the element itself is already passed.
+     * Because of that, it returns both the message type back as a string and the
+     * HTMLElement.
+     * As an addition it returns a boolean as the last variable, which is true
+     * when the element is a custom message.
+     * Note that it does not verify whether the DOM element actualyl exists.
+     *
+     * @name   MessageHandler.getElementFromMessageType
+     * @function
+     * @private
+     * @param {MESSAGE_LEVEL|HTMLElement} messagetype
+     * @returns {Array.<string, HTMLElement, boolean>}
+     * @throws {Error}
+     */
+    function getElementFromMessageType(messagetype) {
+        let elMessage,
+            isCustomMessage = false;
+
+        if (messagetype instanceof HTMLElement) {
+            // handle custom messages first
+            elMessage = messagetype;
+
+            messagetype = getCustomMessageType(elMessage);
+
+            isCustomMessage = true;
+        } else if (messagetype in ELEMENT_BY_TYPE) {
+            // verify string message types are valid
+            elMessage = ELEMENT_BY_TYPE[messagetype];
+        } else {
+            throw new Error(`message type ${messagetype} is/belong to an unknown element`);
+        }
+
+        return [messagetype, elMessage, isCustomMessage];
     }
 
     /**
@@ -657,6 +720,36 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             event
         });
     }
+
+    /**
+     * Returns the design this message resembles.
+     *
+     * Please DO NOT use this with the built-in message elements.
+     *
+     * @name   MessageHandler.cloneMessage
+     * @function
+     * @param  {HTMLElement} elMessage
+     * @param  {MESSAGE_LEVEL} newDesignType
+     * @returns {void}
+     */
+    me.setMessageDesign = function(elMessage, newDesignType) {
+        const newDesign = DESIGN_BY_TYPE[newDesignType];
+        const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
+
+        // set new design
+        elMessage.classList.add(newDesign);
+        elActionButton.classList.add(newDesign);
+
+        // unset old design
+        Object.values(DESIGN_BY_TYPE).forEach((oldDesign) => {
+            if (oldDesign === newDesign) {
+                return;
+            }
+
+            elMessage.classList.remove(oldDesign);
+            elActionButton.classList.remove(oldDesign);
+        });
+    };
 
     /**
      * Shows a message to the user.
@@ -685,8 +778,6 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             return;
         }
 
-        let elMessage = null;
-
         // also log message to console
         if (args[0] instanceof HTMLElement) {
             Logger.logInfo(...args);
@@ -695,15 +786,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         }
 
         // get first element
-        let messagetype = args.shift();
+        const [messagetype, elMessage, isCustomMessage] = getElementFromMessageType(args.shift());
 
-        if (messagetype in ELEMENT_BY_TYPE) {
-            elMessage = ELEMENT_BY_TYPE[messagetype];
-        } else {
-            elMessage = messagetype;
-            // use ID of element as message type
-            messagetype = elMessage.id;
-
+        if (isCustomMessage) {
             // automatically register/setup hook object when new message is passed
             if (hooks[messagetype] === undefined) {
                 hooks[messagetype] = {
@@ -793,7 +878,7 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
     /**
      * Hides the message type(s), you specify.
      *
-     * If you pass no messagetype or "null", it hides all messages.
+     * If you pass no messagetype or "null", it hides all messages. (except custom ones)
      * If a HTMLElement is passed, it automatically hides the target of the event.
      * Attention: This is a "low-level function" and does thus not run the hide hook!
      *
@@ -803,13 +888,8 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
      * @returns {void}
      */
     me.hideMessage = function(messagetype) {
-        let elMessage = null;
-
-        if (messagetype instanceof HTMLElement) {
-            elMessage = messagetype;
-            // use ID of element as message type
-            messagetype = elMessage.id;
-        } else if (messagetype === null || messagetype === undefined) {
+        // hide all messages if type is not specified
+        if (messagetype === null || messagetype === undefined) {
             // hide all of them
             MESSAGE_LEVEL.forEach((currentType) => {
                 // recursive call myself to hide element
@@ -817,9 +897,9 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
             });
 
             return;
-        } else {
-            elMessage = ELEMENT_BY_TYPE[messagetype];
         }
+
+        const [, elMessage] = getElementFromMessageType(messagetype);
 
         // hide single message
         const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
@@ -832,6 +912,39 @@ const MessageHandler = (function () {// eslint-disable-line no-unused-vars
         Logger.logInfo("message is hidden", elMessage);
 
         return;
+    };
+
+    /**
+     * Clones a message HTMLElement you specify.
+     *
+     * It sorts the message directly after the message you clone.
+     * The message is hidden by default – regardless of the state of the origin
+     * message (type).
+     *
+     * CURRENTLY UNUSED; UNTESTED!!
+     *
+     * @name   MessageHandler.cloneMessage
+     * @function
+     * @param  {MESSAGE_LEVEL|HTMLElement} messagetype
+     * @param  {string} newId New ID to use for that element
+     * @returns {HTMLElement}
+     */
+    me.cloneMessage = function(messagetype, newId) {
+        let elMessage = null;
+
+        [messagetype, elMessage] = getElementFromMessageType(messagetype);
+
+        // clone message
+        const closedElMessage = elMessage.cloneNode(elMessage);
+        closedElMessage.id = newId;
+
+        // hide the message to reset it if needed
+        me.hideMessage(closedElMessage);
+
+        // attach to DOM
+        elMessage.insertAdjacentElement("afterend", closedElMessage);
+
+        return closedElMessage;
     };
 
     /**
@@ -1425,6 +1538,28 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
 
 const Colors = (() => { // eslint-disable-line no-unused-vars
     const me = {};
+
+    /**
+     * Some breakpoints for specific color ratios.
+     *
+     * This includes definitions from WCAG and some custom ones.
+     *
+     * @name Colors.CONTRAST_RATIO
+     * @type {object} with integers
+     * @const
+     * @default
+     */
+    me.CONTRAST_RATIO = {
+        WAY_TOO_LOW: 2,
+        // WCAG 2.1 AA text: https://www.w3.org/TR/WCAG/#contrast-minimum
+        LARGE_AA: 3.1,
+        SMALL_AA: 4.5,
+        // WCAG 2.1 AAA text: https://www.w3.org/TR/WCAG/#contrast-enhanced
+        LARGE_AAA: 4.5,
+        SMALL_AAA: 7.5,
+        // WCAG 2.1 AA non-text: https://www.w3.org/TR/WCAG/#non-text-contrast
+        NON_TEXT_AA: 3.1
+    };
 
     /**
      * Calculates the contrast between two colors
