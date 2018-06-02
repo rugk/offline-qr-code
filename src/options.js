@@ -253,14 +253,14 @@ const OptionHandler = (function () {
 
             // find out which is the "other" element (the one that was not changed),
             // which is used as a comparision to the current (changed) value
-            let optionCompare, elColorCompare;
+            let optionCompare, elColor, elColorCompare;
             if (option === "qrColor") {
                 optionCompare = "qrBackgroundColor";
-                // elColor = elQrColor;
+                elColor = elQrColor;
                 elColorCompare = elQrBackgroundColor;
             } else { // option === "qrBackgroundColor"
                 optionCompare = "qrColor";
-                // elColor = elQrBackgroundColor;
+                elColor = elQrBackgroundColor;
                 elColorCompare = elQrColor;
             }
 
@@ -281,6 +281,10 @@ const OptionHandler = (function () {
                         Logger.logError("could not save option", optionCompare, ":", error);
                         MessageHandler.showError("couldNotSaveOption", true);
                     }).finally(() => {
+                        // also display/"preview" other compared color,
+                        // (This is needed when users change the color of the preview only (via customOptionTrigger()) and click the action button.)
+                        elColor.value = optionValue;
+
                         elColorCompare.value = invertedColor;
                         // re-check color options again
                         applyOptionLive(optionCompare, invertedColor);
