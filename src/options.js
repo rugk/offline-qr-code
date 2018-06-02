@@ -212,24 +212,39 @@ const OptionHandler = (function () {
             const elQrColor = document.getElementById("qrColor");
             const elQrBackgroundColor = document.getElementById("qrBackgroundColor");
 
-            const qrCodeColor = Colors.hexToRgb(elQrColor.value);
-            const qrCodeBackgroundColor = Colors.hexToRgb(elQrBackgroundColor.value);
+            // find out which is the "other" element (the one that was not changed),
+            // which is used as a comparision to the current (changed) value
+            let optionCompare, elColorCompare;
+            if (option === "qrColor") {
+                optionCompare = "qrBackgroundColor";
+                // elColor = elQrColor;
+                elColorCompare = elQrBackgroundColor;
+            } else { // option === "qrBackgroundColor"
+                optionCompare = "qrColor";
+                // elColor = elQrBackgroundColor;
+                elColorCompare = elQrColor;
+            }
 
-            const colorContrast = Colors.contrastRatio(qrCodeColor, qrCodeBackgroundColor);
+            const color = Colors.hexToRgb(optionValue);
+            const colorCompare = Colors.hexToRgb(elColorCompare.value);
+
+            const colorContrast = Colors.contrastRatio(color, colorCompare);
 
             const actionButton = {
                 text: "messageAutoSelectColorButton",
                 action: () => {
-                    const invertedColor = Colors.invertColor(qrCodeColor);
+                    // invert comparison color, because the one the user just changed
+                    // is likely the one the want to keep
+                    const invertedColor = Colors.invertColor(colorCompare);
                     browser.storage.sync.set({
-                        "qrBackgroundColor": invertedColor
+                        [optionCompare]: invertedColor
                     }).catch((error) => {
-                        Logger.logError("could not save option", option, ":", error);
+                        Logger.logError("could not save option", optionCompare, ":", error);
                         MessageHandler.showError("couldNotSaveOption", true);
                     }).finally(() => {
-                        elQrBackgroundColor.value = invertedColor;
+                        elColorCompare.value = invertedColor;
                         // re-check color options again
-                        applyOptionLive("qrBackgroundColor", invertedColor);
+                        applyOptionLive(optionCompare, invertedColor);
                     });
                 }
             };
