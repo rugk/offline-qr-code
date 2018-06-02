@@ -1212,9 +1212,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
      *          ("triggers") of shows of tip ebfore showing tip. This is
      *          effectively just a minimum limit, so it is not shown too "early",
      *          default: 10
-     *     showInContext {bool|} – optional, a key-value object with context -> num
-     *          to require the tip to be shown in a specific context for the given
-     *          number of times.
+     *     showInContext {Object<id: bool>} – optional, a key-value object with
+     *          context -> num to require the tip to be shown in a specific
+     *          context for the given number of times.
+     *     maximumInContest {{Object<id: bool>} – optional, a key-value object with
+     *          context -> num to only show the tip in a specific context at
+     *          most for the given number of times.
      *     randomizeDisplay {bool|integer} – optional, Randomizes the display
      *          with a chance of 50% by default (when "true" is set). You can
      *          override that percentage (as an integer, e.g. 0.2 instead of 20%).
@@ -1264,12 +1267,12 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
         {
             id: "donate",
             // do not show on options page as Firefox already displays a donate button there
-            maxShowCount: 0,
+            maxShowCount: 4,
             requireDismiss: 1,
             maximumDismiss: 2,
             requiredTriggers: 50,
-            showInContext: {
-                "popup": 4
+            maximumInContest: {
+                "options": 1
             },
             randomizeDisplay: 0.4,
             text: "tipDonate",
@@ -1429,6 +1432,18 @@ const RandomTips = (function () {// eslint-disable-line no-unused-vars
             return false;
         }
 
+        // block when it is shown too much times in a given context
+        if (tipSpec.maximumInContest) {
+            if (context in tipSpec.maximumInContest) {
+                const tipShownInCurrentContext = tipConfig.tips[tipSpec.id].shownContext[context] || 0;
+
+                if (tipShownInCurrentContext >= tipSpec.maximumInContest[context]) {
+                    return false;
+                }
+            }
+        }
+
+        // NOTE: do not return true above this line (for obvious reasons)
         // or has it been shown enough times already?
 
         // dismiss is shown enough times?
