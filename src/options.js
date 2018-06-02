@@ -133,6 +133,45 @@ const OptionHandler = (function () {
     }
 
     /**
+     * Returns the option ID and value or all values from an option group associated to it.
+     *
+     * @name   OptionHandler.getIdAndOptionsFromElement
+     * @function
+     * @private
+     * @param  {HTMLElement} elOption the element to read option from
+     * @returns {Array.<string, Object>} first the ID, then the option value
+     */
+    function getIdAndOptionsFromElement(elOption) {
+        let option, optionValue;
+
+        // if option has a group assigned, first fetch all options of the group for saving
+        if (elOption.hasAttribute("data-optiongroup")) {
+            const optionGroup = elOption.getAttribute("data-optiongroup");
+
+            // if options are cached/saved use them to prevent them from getting lost
+            if (rememberedOptions.hasOwnProperty(optionGroup)) {
+                optionValue = rememberedOptions[optionGroup];
+            } else {
+                // otherwise just init empty array
+                optionValue = {};
+            }
+
+            document.querySelectorAll(`[data-optiongroup=${optionGroup}]`).forEach((elCurrentOption) => {
+                optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
+            });
+
+            // use group name as ID for saving
+            option = optionGroup;
+        } else {
+            // use ID for saving
+            option = elOption.id;
+            optionValue = getOptionFromElement(elOption);
+        }
+
+        return [option, optionValue];
+    }
+
+    /**
      * Applies settings directly, if needed.
      *
      * E.g. used when a setting is saved, so it.
@@ -273,6 +312,31 @@ const OptionHandler = (function () {
     }
 
     /**
+     * Triggered by "trigger-on-…" classes.
+     *
+     * Can be used to do do some stuff per option, but do not save the option in
+     * contrast to when {@link applyOptionLive()} is usually called.
+     *
+     * @name   OptionHandler.applyOptionLive
+     * @function
+     * @private
+     * @param  {Event} event
+     * @returns {void}
+     */
+    function customOptionTrigger(event) {
+        const elOption = event.target;
+
+        const [option, optionValue] = getIdAndOptionsFromElement(elOption);
+
+        switch (option) {
+        case "qrColor":
+        case "qrBackgroundColor":
+            // redirect calls to apply
+            applyOptionLive(option, optionValue);
+        }
+    }
+
+    /**
      * Saves all settings.
      *
      * @name   OptionHandler.saveOption
@@ -292,38 +356,13 @@ const OptionHandler = (function () {
 
         // do not save if managed
         if (elOption.hasAttribute("disabled")) {
-            Logger.logInfo(option, "is disabled, ignore sync setting");
+            Logger.logInfo(elOption, "is disabled, ignore sync setting");
             return;
         }
 
-        let option;
-        let optionValue;
+        const [option, optionValue] = getIdAndOptionsFromElement(elOption);
 
-        // if option has a group assigned, first fetch all options of the group for saving
-        if (elOption.hasAttribute("data-optiongroup")) {
-            const optionGroup = elOption.getAttribute("data-optiongroup");
-
-            // if options are cached/saved use them to prevent them from getting lost
-            if (rememberedOptions.hasOwnProperty(optionGroup)) {
-                optionValue = rememberedOptions[optionGroup];
-            } else {
-                // otherwise just init empty array
-                optionValue = {};
-            }
-
-            document.querySelectorAll(`[data-optiongroup=${optionGroup}]`).forEach((elCurrentOption) => {
-                optionValue[elCurrentOption.id] = getOptionFromElement(elCurrentOption);
-            });
-
-            // use group name as ID for saving
-            option = optionGroup;
-        } else {
-            // use ID for saving
-            option = elOption.id;
-            optionValue = getOptionFromElement(elOption);
-        }
-
-        Logger.logInfo("save option", elOption, JSON.parse(JSON.stringify(optionValue)));
+        Logger.logInfo("save option", elOption, option, JSON.parse(JSON.stringify(optionValue)));
 
         applyOptionLive(option, optionValue);
 
@@ -554,12 +593,21 @@ const OptionHandler = (function () {
             MessageHandler.showError("couldNotLoadOptions", false);
         });
 
+        // add event listeners for all options
         document.querySelectorAll(".save-on-input").forEach((currentElem) => {
             currentElem.addEventListener("input", saveOption);
         });
         document.querySelectorAll(".save-on-change").forEach((currentElem) => {
             currentElem.addEventListener("change", saveOption);
         });
+
+        document.querySelectorAll(".trigger-on-update").forEach((currentElem) => {
+            currentElem.addEventListener("input", customOptionTrigger);
+        });
+        document.querySelectorAll(".trigger-on-change").forEach((currentElem) => {
+            currentElem.addEventListener("change", customOptionTrigger);
+        });
+
         document.getElementById("resetButton").addEventListener("click", resetOptions);
     };
 
