@@ -1036,23 +1036,25 @@ const BrowserCommunication = (function () {
      * @private
      * @param {Object} request
      * @param {Object} sender
+     * @param {function} sendResponse
      * @returns {void}
      */
-    function handleMessages(request, sender) {
+    function handleMessages(request, sender, sendResponse) {
         Logger.logInfo("Got message", request, "from", sender);
 
         switch (request.type) {
         case COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT:
             QrCreator.setText(request.qrText);
 
-            // if the unlikely case should happen, that the old QR code has
-            // already been generated/displayed, trigger re-generation
+            // if the old QR code has already been generated/displayed, trigger re-generation
             if (initCompleted) {
                 Logger.logInfo("Initialisation has already been completed, regenerate QR code with new text.");
                 QrCreator.generate();
             }
 
             overwroteQrCode = true;
+
+            sendResponse();
             break;
         }
     }

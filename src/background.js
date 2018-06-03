@@ -69,7 +69,7 @@ const ContextMenu = (function () {
         "SET_QR_TEXT": "setQrText",
     });
 
-    const MESSAGE_RESENT_TIMEOUT = 100; // ms
+    const MESSAGE_RESENT_TIMEOUT = 200; // ms
 
     /**
      * Log error while creating menu item.
@@ -101,6 +101,7 @@ const ContextMenu = (function () {
      * @returns {void}
      */
     function sendQrCodeText(qrText) {
+        console.log("send QR code text from background");
         browser.runtime.sendMessage({
             type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
             qrText: qrText
@@ -108,6 +109,7 @@ const ContextMenu = (function () {
             console.log(`QR code text "${qrText}" sent to tab successfully`); // TODO: we need the Logger here…
         }).catch(() => {
             // recusively re-try message sending
+            // This is e.g. needed when the popup has not yet opened and could not get the message.
             setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
         });
     }
