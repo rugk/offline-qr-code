@@ -193,7 +193,7 @@
     "description": "Option to select a canvas (pixel) image."
   },
   "optionQrCodeTypeCanvasHelper": {
-    "message": "A legacy generation method generating the QR code as an image (\"canvas\").",
+    "message": "A generation method generating the QR code as an image (\"canvas\").",
     "description": "Helper text for canvas QR code type option."
   },
 

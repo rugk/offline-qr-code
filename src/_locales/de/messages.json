@@ -193,7 +193,7 @@
     "description": "Option to select a canvas (pixel) image."
   },
   "optionQrCodeTypeCanvasHelper": {
-    "message": "Eine veraltete Generierungsmethode, die den QR-Code als Bild (\"Canvas\") erstellt.",
+    "message": "Eine Generierungsmethode, die den QR-Code als Bild (\"Canvas\") erstellt.",
     "description": "Helper text for canvas QR code type option."
   },
 
