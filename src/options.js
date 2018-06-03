@@ -272,9 +272,10 @@ const OptionHandler = (function () {
             const actionButton = {
                 text: "messageAutoSelectColorButton",
                 action: () => {
-                    // invert comparison color, because the one the user just changed
-                    // is likely the one the want to keep
-                    const invertedColor = Colors.invertColor(colorCompare);
+                    // replace comparison color with inverted color of QR code,
+                    // because the one the user just changed is likely the one
+                    // they want to keep
+                    const invertedColor = Colors.invertColor(color);
                     browser.storage.sync.set({
                         [optionCompare]: invertedColor
                     }).catch((error) => {
