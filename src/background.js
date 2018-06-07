@@ -113,6 +113,7 @@ const ContextMenu = (function () {
             setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
         });
     }
+
     /**
      * Creates the items in the context menu.
      *
@@ -284,9 +285,6 @@ const BrowserCommunication = (function () {
     function handleMessages(request, sender, sendResponse) {
         console.log("Got message", request, "from", sender);
 
-        // declararations here make sense
-        /* eslint-disable no-case-declarations */
-
         switch (request.type) {
         case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:
             saveFileAsContinueRetry = request.usePermissionWorkaround;
@@ -296,7 +294,6 @@ const BrowserCommunication = (function () {
         case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY:
             saveFileAsContinueRetry = true;
         }
-        /* eslint-enable no-case-declarations */
 
         return null;
     }
