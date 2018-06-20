@@ -10,6 +10,7 @@
 
 /* globals */
 let initCompleted = false;
+let initialClick = false;
 
 const QrLibQrGen = (function () {
     const me = {};
@@ -710,6 +711,7 @@ const UserInterface = (function () {
      * @returns {void}
      */
     function resizeElements() {
+      if (initialClick) { 
         const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
         const qrSizeDiff = newQrCodeSize - qrLastSize;
 
@@ -733,6 +735,10 @@ const UserInterface = (function () {
 
         // do not regenerate QR code if an error or so is shown
         setNewQrCodeSize(newQrCodeSize, !placeholderShown);
+      }
+      else{
+        initialClick = true;
+      }
     }
 
     /**
