@@ -10,7 +10,6 @@
 
 /* globals */
 let initCompleted = false;
-let initialClick = false;
 
 const QrLibQrGen = (function () {
     const me = {};
@@ -451,6 +450,7 @@ const UserInterface = (function () {
     // default/last size
     let qrLastSize = 200;
     let qrCodeSizeOption = {};
+    let initialClick = false;
 
     /**
      * Hide QR code and show placeholder instead.
@@ -711,34 +711,36 @@ const UserInterface = (function () {
      * @returns {void}
      */
     function resizeElements() {
-      if (initialClick) { 
-        const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
-        const qrSizeDiff = newQrCodeSize - qrLastSize;
+        // The variable initialClick makes sure the qrCode is not resized when the user first clicks on the add-on icon (newQrCodeSize = 151px).
+        // That happens because during the click event newQrCodeSize is not equal to qrLastSize.
+        // Therefore, only after the user clicks on the add-on icon will the qrCode be allowed to be resized. 
+        if (initialClick) { 
+            const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+            const qrSizeDiff = newQrCodeSize - qrLastSize;
 
-        // rezizing at small window heights (e.g. when popup is being constructed)
-        // could cause it to be resized to 0px or so
-        const windowHeight = window.innerHeight;
-        if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
-            Logger.logInfo("Skipped resize due to low window height", windowHeight);
-            return;
+            // resizing at small window heights (e.g. when popup is being constructed)
+            // could cause it to be resized to 0px or so
+            const windowHeight = window.innerHeight;
+            if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
+                Logger.logInfo("Skipped resize due to low window height", windowHeight);
+                return;
+            }
+
+            // do not resize if size is not *increased* by 5 px or *decreased* by 2px
+            if (qrSizeDiff < QR_CODE_SIZE_SNAP && qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP) {
+                // but allow resize of input text, if needed
+                saveQrCodeTextSize();
+
+                return;
+            }
+
+            Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
+
+            // do not regenerate QR code if an error or so is shown
+            setNewQrCodeSize(newQrCodeSize, !placeholderShown);
+        } else {
+            initialClick = true;
         }
-
-        // do not resize if size is not *increased* by 5 px or *decreased* by 2px
-        if (qrSizeDiff < QR_CODE_SIZE_SNAP && qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP) {
-            // but allow resize of input text, if needed
-            saveQrCodeTextSize();
-
-            return;
-        }
-
-        Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
-
-        // do not regenerate QR code if an error or so is shown
-        setNewQrCodeSize(newQrCodeSize, !placeholderShown);
-      }
-      else{
-        initialClick = true;
-      }
     }
 
     /**
