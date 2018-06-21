@@ -17,7 +17,7 @@ The English "you" should be translated in a personal way, if the target language
 Please pay attention to the context and UI area the message is used for. Better translate it to a good native statement than a literal translation.
 For example messages like "Learn more" may need special (and different) handling and could also be translated with "More information" or so. Generally in the tips you should be a concise as possible. All other texts – like helper texts in the options page – should also be concise, but on point and factually correct. You may use easy terms to explain a thing and link to more resources instead, however. (See also the "Writing for users" guide linked below, where this is explained in more detail.)
 
-Please have look at [the "Writing for users" guide](https://design.firefox.com/photon/copy/writing-for-users.html) of the Firefox Photon Design for other rules you should adhere to.
+Please have look at [the "Writing for users" guide](https://design.firefox.com/photon/copy/writing-for-users.html) of the Firefox Photon Design for other rules you should adhere to. The [Mozilla localisation style guide](https://mozilla-l10n.github.io/styleguides/) can also help.
 
 ### Using HTML in translations
 
