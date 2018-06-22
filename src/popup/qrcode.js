@@ -973,12 +973,12 @@ const UserInterface = (function () {
                 }
             }
             
-            // MutationObserver starts observing changes only after all resources have finished loading.
+            // MutationObserver starts observing resize events only after all resources have finished loading.
             window.addEventListener("load", function(event) {
-              mutationObserver.observe(qrCodeText, {
-                attributes: true,
-                attributeFilter: ["style"]
-              });
+                mutationObserver.observe(qrCodeText, {
+                  attributes: true,
+                  attributeFilter: ["style"]
+                });
             });
         });
 
