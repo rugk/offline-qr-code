@@ -450,7 +450,6 @@ const UserInterface = (function () {
     // default/last size
     let qrLastSize = 200;
     let qrCodeSizeOption = {};
-    let initialClick = false;
 
     /**
      * Hide QR code and show placeholder instead.
@@ -665,7 +664,7 @@ const UserInterface = (function () {
         }
 
         qrLastSize = newSize;
-        
+
         // also save new QR code size if needed
         if (qrCodeSizeOption.sizeType === "remember") {
             qrCodeSizeOption.size = qrLastSize;
