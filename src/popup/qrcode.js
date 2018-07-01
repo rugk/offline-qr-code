@@ -444,6 +444,8 @@ const UserInterface = (function () {
     const qrCodeResizeContainer = document.getElementById("qrcode-resize-container");
     const qrCodeText = document.getElementById("qrcodetext");
 
+    let resizeMutationObserver;
+
     let placeholderShown = true;
     let qrCodeRefreshTimer = null;
 
@@ -905,6 +907,16 @@ const UserInterface = (function () {
         // in brute-force-style as bugs seem to prevent it from working otherwise
         // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
         setTimeout(selectAllText, 50, { target: qrCodeText });
+
+        // for some very strange reason, initiating it as fast as possible gives better performance when resizing later
+        resizeMutationObserver = new MutationObserver(throttledResizeElements);
+
+        // start listening for resize events very late, so taht it does not
+        // conflict with restoring the popup size
+        resizeMutationObserver.observe(qrCodeText, {
+            attributes: true,
+            attributeFilter: ["style"]
+        });
     };
 
     /**
@@ -936,8 +948,8 @@ const UserInterface = (function () {
             }
         });
 
-        // for some very strange reason, initiating it as fast as possible gives better performance when resizing later
-        const mutationObserver = new MutationObserver(throttledResizeElements);
+        // for some very strange reason, the MutationObserver only works when it is initiated as fast as possible gives better performance when resizing later
+        resizeMutationObserver = new MutationObserver(throttledResizeElements);
 
         const gettingQrSize = AddonSettings.get("qrCodeSize");
         gettingQrSize.then((qrCodeSize) => {
@@ -973,12 +985,6 @@ const UserInterface = (function () {
                     Logger.logError("too small size", window.innerHeight, "should be at least: ", minimalSize);
                 }
             }
-
-            // start listening for resize events afterwards
-            mutationObserver.observe(qrCodeText, {
-                attributes: true,
-                attributeFilter: ["style"]
-            });
         });
 
         QrCreator.getGenerationType().then((genType) => {
