@@ -1,38 +1,5 @@
 "use strict";
 
-/**
- * Specifies the long name of this add-on.,
- *
- * @readonly
- * @type {string}
- * @default
- */
-const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
-
-/**
- * Specifies the short name of this add-on.,
- *
- * @readonly
- * @type {string}
- * @default
- */
-const ADDON_NAME_SHORT = "Offline QR code";
-
-/**
- * Specifies the message level to use,
- *
- * @readonly
- * @enum {int}
- * @default
- */
-const MESSAGE_LEVEL = Object.freeze({
-    "ERROR": 3,
-    "WARN": 2,
-    "INFO": 1,
-    "LOADING": -2,
-    "SUCCESS": -3
-});
-
 /* GLOBAL FUNCTIONS */
 
 /**
@@ -46,137 +13,6 @@ const MESSAGE_LEVEL = Object.freeze({
 function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
-
-const Logger = (function () {
-    const me = {};
-
-    let debugMode = null;
-
-    const MESSAGE_LEVEL_NAME = Object.freeze({
-        [MESSAGE_LEVEL.ERROR]: "ERROR",
-        [MESSAGE_LEVEL.WARN]: "WARN",
-        [MESSAGE_LEVEL.INFO]: "INFO",
-        [MESSAGE_LEVEL.LOADING]: "LOADING",
-        [MESSAGE_LEVEL.SUCCESS]: "SUCCESS"
-    });
-
-    /**
-     * Logs a string to console.
-     *
-     * Pass as many strings/output as you want.
-     * For brevity, better prefer the other functions (logError, etc.) instead
-     * of this one.
-     *
-     * @name   Logger.log
-     * @function
-     * @param  {MESSAGE_LEVEL} messagetype
-     * @param  {...*} args
-     * @returns {void}
-     */
-    me.log = function(...args) {
-        if (arguments.length < 0) {
-            // recursive call, it's secure, because this won't fail
-            me.log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
-            return;
-        }
-
-        const messagetype = args[0];
-        args[0] = `${ADDON_NAME_SHORT} [${MESSAGE_LEVEL_NAME[messagetype]}]`;
-
-        /* eslint-disable no-console */
-        switch (messagetype) {
-        case MESSAGE_LEVEL.ERROR:
-            console.error(...args);
-            break;
-        case MESSAGE_LEVEL.WARN:
-            console.warn(...args);
-            break;
-        default:
-            console.log(...args);
-        }
-        /* eslint-enable no-console */
-    };
-
-    /**
-     * Logs a fatal error.
-     *
-     * @name   Logger.logError
-     * @function
-     * @param  {...*} args
-     * @returns {void}
-     */
-    me.logError = function(...args) {
-        args.unshift(MESSAGE_LEVEL.ERROR);
-
-        me.log(...args);
-    };
-
-    /**
-     * Logs a warning.
-     *
-     * @name   Logger.logWarning
-     * @function
-     * @param  {...*} args
-     * @returns {void}
-     */
-    me.logWarning = function(...args) {
-        args.unshift(MESSAGE_LEVEL.WARN);
-
-        me.log(...args);
-    };
-
-    /**
-     * Logs some information.
-     *
-     * Note: This log may be skipped, when not in debug mode.
-     *
-     * @name   Logger.logInfo
-     * @function
-     * @param  {...*} args
-     * @returns {void}
-     */
-    me.logInfo = function(...args) {
-        // skip log only, when deliberately disabled!
-        // NOTE: The effect of this is, taht when the settings are not yet
-        // loaded, we always log all messages. However, we also cannot wait/delay
-        // loading these in some asyncronous way as log messages are time-critical
-        // and must be in the correct order to be useful output.
-        if (debugMode === false) {
-            return;
-        }
-
-        args.unshift(MESSAGE_LEVEL.INFO);
-
-        me.log(...args);
-    };
-
-    /**
-     * Enable or disable the debug mode.
-     *
-     * @name   Logger.setDebugMode
-     * @function
-     * @param  {boolean} isDebug
-     * @returns {void}
-     */
-    me.setDebugMode = function(isDebug) {
-        debugMode = isDebug;
-    };
-
-    /**
-     * Inits some information.
-     *
-     * @name   Logger.init
-     * @function
-     * @returns {void}
-     */
-    me.init = function() {
-        AddonSettings.get("debugMode").then((isDebug) => {
-            me.setDebugMode(isDebug);
-        });
-    };
-
-    return me;
-})();
 
 const Localizer = (function () {
     const me = {};
@@ -1673,6 +1509,5 @@ const Colors = (() => { // eslint-disable-line no-unused-vars
 
 // init modules
 AddonSettings.loadOptions();
-Logger.init();
 MessageHandler.init();
 Localizer.init();
