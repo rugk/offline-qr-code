@@ -28,7 +28,7 @@
   },
 
   "background": {
-    "scripts": ["background/background.js"]
+    "page": "background/background.html"
   },
   "commands": {
     "_execute_browser_action": {
