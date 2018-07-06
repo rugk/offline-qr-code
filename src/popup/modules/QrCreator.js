@@ -1,7 +1,9 @@
 import * as Logger from "/common/modules/Logger.js";
+import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 import * as QrLibQrGen from "./QrLibQrGen.js";
 import * as QrLibKjua from "./QrLibKjua.js";
+import * as UserInterface from "./UserInterface.js";
 
 // abstracts away all specific handling of QR code library
 let initFinished = false;

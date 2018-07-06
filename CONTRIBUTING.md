@@ -71,7 +71,7 @@ Apart from that, there are some simple rules.
    * use inline JavaScript
    * use eval, or other insecure features
    * modify the [CSP](src/manifest.json#L33) :wink:
-* The code uses a kind of "Revealing Module Pattern", where the variable `me` contains all public methods (and properties).
+* We do use [ES6 Modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/).
 * Avoid `this`, it mostly causes confusion. The pattern used here, usually does not need `this`.
 * Use early return instead of nested if blocks to keep the code readable.
 * Use `const` whenever possible (also in local variables in functions), only use `let` when the variable needs to be changed. Don't use `var`.
