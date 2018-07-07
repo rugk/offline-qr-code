@@ -1,3 +1,5 @@
+import * as Logger from "/common/modules/Logger.js";
+
 /**
  * Sets a popup icon variant.
  *
@@ -48,3 +50,5 @@ export function init() {
         }
     });
 }
+
+Logger.logInfo("IconHandler module loaded.");

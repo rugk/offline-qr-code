@@ -1,7 +1,8 @@
+import * as Logger from "/common/modules/Logger.js";
+
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
-
 // TODO: This constant should be usable for all scripts.
 const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
     "SET_QR_TEXT": "setQrText",
@@ -39,12 +40,12 @@ function onCreated() {
  * @returns {void}
  */
 function sendQrCodeText(qrText) {
-    console.log("send QR code text from background");
+    Logger.logInfo("send QR code text from background");
     browser.runtime.sendMessage({
         type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
         qrText: qrText
     }).then(() => {
-        console.log(`QR code text "${qrText}" sent to tab successfully`); // TODO: we need the Logger here…
+        Logger.logInfo(`QR code text "${qrText}" sent to tab successfully`);
     }).catch(() => {
         // recusively re-try message sending
         // This is e.g. needed when the popup has not yet opened and could not get the message.
@@ -121,3 +122,5 @@ export function init() {
     createItems();
     browser.menus.onClicked.addListener(menuClicked);
 }
+
+Logger.logInfo("ContextMenu module loaded.");

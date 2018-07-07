@@ -1,5 +1,7 @@
 // TODO: combine with module in qrcode.js as a new module?
 
+import * as Logger from "/common/modules/Logger.js";
+
 const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
     SAVE_FILE_AS: "saveFileAs",
 });
@@ -25,7 +27,7 @@ let saveAsRetries = 0;
  * @returns {Promise}
  */
 function saveFileAs(request, sender, sendResponse) {
-    console.log("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
+    Logger.logInfo("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
 
     // if we should handle permission errors and apply re-try workaround
     // that's the actual workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
@@ -66,7 +68,7 @@ function saveFileAs(request, sender, sendResponse) {
             return;
         }
 
-        console.log("objectUrl revoked:", objectUrl);
+        Logger.logInfo("objectUrl revoked:", objectUrl);
         URL.revokeObjectURL(objectUrl);
     });
 
@@ -92,7 +94,7 @@ function saveFileAs(request, sender, sendResponse) {
  * @returns {Promise|null}
  */
 function handleMessages(request, sender, sendResponse) {
-    console.log("Got message", request, "from", sender);
+    Logger.logInfo("Got message", request, "from", sender);
 
     switch (request.type) {
     case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:
@@ -119,3 +121,5 @@ function handleMessages(request, sender, sendResponse) {
 export function init() {
     browser.runtime.onMessage.addListener(handleMessages);
 }
+
+Logger.logInfo("BrowserCommunication module loaded.");
