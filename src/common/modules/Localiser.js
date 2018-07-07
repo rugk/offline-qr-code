@@ -90,3 +90,5 @@ export function init() {
 
 // automatically init module
 init();
+
+Logger.logInfo("Localiser module loaded.");

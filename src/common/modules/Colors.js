@@ -1,3 +1,5 @@
+import * as Logger from "/common/modules/Logger.js";
+
 /**
  * Some breakpoints for specific color ratios.
  *
@@ -8,7 +10,7 @@
  * @const
  * @default
  */
-export const CONTRAST_RATIO = {
+export const CONTRAST_RATIO = Object.freeze({
     WAY_TOO_LOW: 2,
     // WCAG 2.1 AA text: https://www.w3.org/TR/WCAG/#contrast-minimum
     LARGE_AA: 3.1,
@@ -18,7 +20,7 @@ export const CONTRAST_RATIO = {
     SMALL_AAA: 7.5,
     // WCAG 2.1 AA non-text: https://www.w3.org/TR/WCAG/#non-text-contrast
     NON_TEXT_AA: 3.1
-};
+});
 
 /**
  * Calculates the contrast between two colors
@@ -111,3 +113,5 @@ export function hexToRgb(hex) {
     }
     return null;
 }
+
+Logger.logInfo("Colors module loaded.");

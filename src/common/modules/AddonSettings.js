@@ -166,10 +166,11 @@ export function loadOptions() {
         Logger.logError("could not get sync options", error);
     });
 
-    return gettingManagedOption.then(() => {
-        return gettingSyncOption;
-    });
+    // if the settings have been received anywhere, they could be loaded
+    return Promise.race([gettingManagedOption, gettingSyncOption]);
 }
 
 // automatically fetch options
-loadOptions();
+loadOptions().then(() => {
+    Logger.logInfo("AddonSettings module loaded.");
+});

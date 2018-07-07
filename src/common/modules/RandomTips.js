@@ -366,3 +366,5 @@ export function init() {
         tipConfig = randomTips;
     });
 }
+
+Logger.logInfo("RandomTips module loaded.");

@@ -123,13 +123,15 @@ export function setDebugMode(isDebug) {
  *
  * @name   Logger.init
  * @function
- * @returns {void}
+ * @returns {Promise}
  */
 export function init() {
-    AddonSettings.get("debugMode").then((isDebug) => {
+    return AddonSettings.get("debugMode").then((isDebug) => {
         setDebugMode(isDebug);
     });
 }
 
 // init module automatically
-init();
+init().then(() => {
+    logInfo("Logger module loaded.");
+});
