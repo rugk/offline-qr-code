@@ -1,11 +1,12 @@
-/* globals debounce */
+// lodash
+import debounce from "/common/modules/lib/lodash/debounce.js";
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 const TIP_SETTING_STORAGE_ID = "randomTips";
-const GLOBAL_RANDOMIZE = 0.2; // %
+const GLOBAL_RANDOMIZE = 0.2; // (%)
 const DEBOUNCE_SAVING = 1000; // ms
 
 const elMessageBox = document.getElementById("messageTips");

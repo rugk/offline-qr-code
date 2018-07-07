@@ -1,5 +1,6 @@
 // lodash
-/* globals throttle, isObject */
+import isObject from "/common/modules/lib/lodash/isObject.js";
+import throttle from "/common/modules/lib/lodash/throttle.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 

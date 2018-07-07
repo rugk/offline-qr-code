@@ -1,5 +1,5 @@
 // lodash
-/* globals isObject */
+import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
 import {MESSAGE_LEVEL} from "/common/modules/internal/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
@@ -375,8 +375,7 @@ export function showMessage(...args) {
 
     // show action button, if needed
     if (actionButton !== null && elActionButton && elActionButtonLink) {
-        // see lodash -> isFunction //TODO: refactor to use it here
-        if (isObject(actionButton.action) && typeof actionButton.action === "function") {
+        if (isFunction(actionButton.action)) {
             // save option to be called later
             hooks[messagetype].actionButton = actionButton.action;
 

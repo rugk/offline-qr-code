@@ -1,2 +1,3 @@
 src/common/lib/*
+src/common/modules/lib/*
 src/popup/lib/*

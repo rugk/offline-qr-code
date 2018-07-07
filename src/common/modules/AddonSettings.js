@@ -1,5 +1,5 @@
 // lodash
-/* globals isObject */
+import isObject from "/common/modules/lib/lodash/isObject.js";
 
 import * as Logger from "/common/modules/Logger.js";
 
