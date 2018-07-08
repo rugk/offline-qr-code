@@ -12,7 +12,6 @@ let overwroteQrCode = false;
 /**
  * Handles messages received by other parts.
  *
- * @name   BrowserCommunication.handleMessages
  * @function
  * @private
  * @param {Object} request
@@ -43,7 +42,6 @@ function handleMessages(request, sender, sendResponse) {
 /**
  * Returns whether the text has been overwritten.
  *
- * @name   BrowserCommunication.isTextOverwritten
  * @function
  * @private
  * @returns {boolean}
@@ -57,7 +55,6 @@ export function isTextOverwritten() {
  *
  * Adds menu elements.
  *
- * @name   BrowserCommunication.init
  * @function
  * @returns {void}
  */

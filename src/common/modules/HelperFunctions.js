@@ -3,7 +3,6 @@
 /**
  * Determinates whether an object is empty or not.
  *
- * @name   objectIsEmpty
  * @function
  * @param  {Object} obj
  * @returns {boolean}

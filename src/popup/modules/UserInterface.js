@@ -39,7 +39,6 @@ let qrCodeSizeOption = {};
 /**
  * Hide QR code and show placeholder instead.
  *
- * @name   UserInterface.showPlaceholder
  * @function
  * @private
  * @returns {void}
@@ -60,7 +59,6 @@ function showPlaceholder() {
 /**
  * Show QR code and hide placeholder.
  *
- * @name   UserInterface.hidePlaceholder
  * @function
  * @private
  * @returns {void}
@@ -80,7 +78,6 @@ function hidePlaceholder() {
 /**
  * Refreshes the QR code, if the text has been changed in the input field.
  *
- * @name   UserInterface.refreshQrCode
  * @function
  * @private
  * @param {event} event
@@ -122,7 +119,6 @@ function refreshQrCode(event) {
 /**
  * Returns whether an (inpout/textare/…) element is selected or not.
  *
- * @name   UserInterface.isSelected
  * @function
  * @private
  * @param {HTMLElement} input the input element this is about
@@ -135,7 +131,6 @@ function isSelected(input) {
 /**
  * Selects all text of a textarea.
  *
- * @name   UserInterface.selectAllText
  * @function
  * @private
  * @param {Event} event
@@ -171,7 +166,6 @@ function selectAllText(event) {
 /**
  * Scrolls to the top of the element.
  *
- * @name   UserInterface.scrollToTop
  * @function
  * @private
  * @param {Event} event
@@ -201,7 +195,6 @@ function scrollToTop(event) {
 /**
  * Saves the qr code size as an option.
  *
- * @name   UserInterface.saveQrCodeSizeOption
  * @function
  * @private
  * @returns {Promise}
@@ -219,7 +212,6 @@ function saveQrCodeSizeOption() {
  *
  * This depends on the thottle function from lodash.
  *
- * @name   UserInterface.throttledSaveQrCodeSizeOption
  * @function
  * @private
  */
@@ -228,7 +220,6 @@ const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, THROTTLE_SI
 /**
  * Sets the new size of the QR code.
  *
- * @name   UserInterface.setNewQrCodeSize
  * @function
  * @private
  * @param {int} newSize the new size in px
@@ -262,7 +253,6 @@ function setNewQrCodeSize(newSize, regenerateQr) {
 /**
  * Saves the current size of the input field. (if setting is set to "remember")
  *
- * @name   UserInterface.saveQrCodeTextSize
  * @function
  * @private
  * @returns {Promise} to go on
@@ -287,7 +277,6 @@ function saveQrCodeTextSize() {
 /**
  * Resize the UI elements when the popup (actually the textarea box), etc. is resized.
  *
- * @name   UserInterface.resizeElements
  * @function
  * @private
  * @returns {void}
@@ -323,7 +312,6 @@ function resizeElements() {
  *
  * This depends on the thottle function from lodash that uses requestAnimationFrame.
  *
- * @name   UserInterface.throttledResizeElements
  * @function
  * @private
  */
@@ -334,7 +322,6 @@ const throttledResizeElements = throttle(resizeElements);
  *
  * Note that this also triggers the actions to show it nicely in the UI.
  *
- * @name   UserInterface.setQrInputFieldText
  * @function
  * @param  {string} text
  * @returns {void}
@@ -349,7 +336,6 @@ export function setQrInputFieldText(text) {
 /**
  * Get the acual QR code element.
  *
- * @name   UserInterface.getQrCodeElement
  * @function
  * @returns {HTMLElement}
  */
@@ -360,7 +346,6 @@ export function getQrCodeElement() {
 /**
  * Replace the QR code element with this (new) one.
  *
- * @name   UserInterface.replaceQr
  * @function
  * @param  {HTMLElement} elNewQr
  * @returns {void}
@@ -379,7 +364,6 @@ export function replaceQr(elNewQr) {
  *
  * It downloads the QR code image.
  *
- * @name   UserInterface.menuClicked
  * @function
  * @private
  * @param {event} event
@@ -479,7 +463,6 @@ function menuClicked(event) {
 /**
  * Initiates after the QR code has been generated.
  *
- * @name   UserInterface.lateInit
  * @function
  * @returns {void}
  */
@@ -500,7 +483,6 @@ export function lateInit() {
 /**
  * Initalises the module.
  *
- * @name   UserInterface.init
  * @function
  * @returns {Promise}
  */

@@ -32,7 +32,6 @@ const defaultValues = Object.freeze({
  *
  * Returns undefined, if option cannot be found.
  *
- * @name   AddonSettings.getDefaultValue
  * @function
  * @param  {string|null} option name of the option
  * @returns {Object|undefined}
@@ -58,7 +57,6 @@ export function getDefaultValue(option) {
  * If only a single option is requested (option=string) the result of the
  * promise will be that return value;
  *
- * @name   AddonSettings.get
  * @function
  * @param  {string|null} option name of the option
  * @returns {Promise}
@@ -116,7 +114,6 @@ export async function get(option) {
  *
  * Note you can pass an key -> value object to set here.
  *
- * @name   AddonSettings.set
  * @see {@link https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/StorageArea/set}
  * @function
  * @param  {Object|string} option keys/values to set or single value
@@ -144,7 +141,6 @@ export function set(option, value) {
  * built in a way, so that the actual getting of the options is waiting for
  * the promise.
  *
- * @name   AddonSettings.loadOptions
  * @function
  * @returns {Promise}
  */

@@ -20,7 +20,6 @@ const MESSAGE_LEVEL_NAME = Object.freeze({
  * For brevity, better prefer the other functions (logError, etc.) instead
  * of this one.
  *
- * @name   Logger.log
  * @function
  * @param  {MESSAGE_LEVEL} messagetype
  * @param  {...*} args
@@ -53,7 +52,6 @@ export function log(...args) {
 /**
  * Logs a fatal error.
  *
- * @name   Logger.logError
  * @function
  * @param  {...*} args
  * @returns {void}
@@ -67,7 +65,6 @@ export function logError(...args) {
 /**
  * Logs a warning.
  *
- * @name   Logger.logWarning
  * @function
  * @param  {...*} args
  * @returns {void}
@@ -83,7 +80,6 @@ export function logWarning(...args) {
  *
  * Note: This log may be skipped, when not in debug mode.
  *
- * @name   Logger.logInfo
  * @function
  * @param  {...*} args
  * @returns {void}
@@ -106,7 +102,6 @@ export function logInfo(...args) {
 /**
  * Enable or disable the debug mode.
  *
- * @name   Logger.setDebugMode
  * @function
  * @param  {boolean} isDebug
  * @returns {void}
@@ -118,7 +113,6 @@ export function setDebugMode(isDebug) {
 /**
  * Inits some information.
  *
- * @name   Logger.init
  * @function
  * @returns {Promise}
  */

@@ -19,7 +19,6 @@ let saveAsRetries = 0;
  *
  * This is basically a workaround for {@link https://bugzilla.mozilla.org/show_bug.cgi?id=1461134}.
  *
- * @name   ContextMenu.saveFileAs
  * @function
  * @private
  * @param {Object} request
@@ -88,7 +87,6 @@ function saveFileAs(request, sender, sendResponse) {
 /**
  * Handles messages received by other parts.
  *
- * @name   BrowserCommunication.handleMessages
  * @function
  * @private
  * @param {Object} request
@@ -124,7 +122,6 @@ function handleMessages(request, sender, sendResponse) {
  *
  * Adds menu elements.
  *
- * @name   BrowserCommunication.init
  * @function
  * @returns {void}
  */

@@ -12,7 +12,6 @@ let qrErrorCorrection;
 /**
  * The type of QR code this library generates.
  *
- * @name QrLibQrGen.GENERATION_TYPE
  * @type {string}
  * @const
  * @default
@@ -22,7 +21,6 @@ export const GENERATION_TYPE = "svg";
 /**
  * Generates an SVG element out of an SVG string.
  *
- * @name   QrLibQrGen.getSvgElement
  * @function
  * @private
  * @param {string} svgString the SVG+XML string
@@ -43,7 +41,6 @@ function getSvgElement(svgString) {
 /**
  * Set an option for the QR code.
  *
- * @name   QrLibQrGen.set
  * @function
  * @param {string} tag the common one you know from the outside, e.g. size
  * @param {Object} value the value to set for this tag
@@ -89,7 +86,6 @@ export function set(tag, value) {
 /**
  * Return new QR code.
  *
- * @name   QrLibQrGen.getQr
  * @function
  * @returns {SVGSVGElement}
  */

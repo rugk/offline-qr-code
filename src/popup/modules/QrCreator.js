@@ -16,7 +16,6 @@ const changedValues = new Set("text", "color", "size");
 /**
  * Provide connection to library and get QR code with current options.
  *
- * @name   QrCreator.getQrCodeFromLib
  * @function
  * @private
  * @returns {HTMLElement}
@@ -28,7 +27,6 @@ function getQrCodeFromLib() {
 /**
  * Displays the QR code when options have been set.
  *
- * @name   QrCreator.generate
  * @function
  * @returns {void}
  */
@@ -54,7 +52,6 @@ export function generate() {
 /**
  * Sets the size of the QR code.
  *
- * @name   QrCreator.setSize
  * @function
  * @param  {int} size
  * @returns {void}
@@ -76,7 +73,6 @@ export function setSize(size) {
  * As such, it is not a good idea for live updating the text. To only set
  * the option for the QR code itself, use {@link setTextInternal()}.
  *
- * @name   QrCreator.setText
  * @function
  * @param  {string} text
  * @returns {void}
@@ -91,7 +87,6 @@ export function setText(text) {
  *
  * Usually this should not be used, as it can cause an inconsistent display.
  *
- * @name   QrCreator.setTextInternal
  * @function
  * @param  {string} text
  * @returns {void}
@@ -104,7 +99,6 @@ export function setTextInternal(text) {
 /**
  * Generates a QR code from a given tab.
  *
- * @name   QrCreator.generateFromTab
  * @function
  * @param  {browser.tabs} tab
  * @returns {void}
@@ -123,7 +117,6 @@ export function generateFromTab(tab) {
  *
  * Attention: Currently just uses the first tab, only!
  *
- * @name   QrCreator.generateFromTabs
  * @function
  * @param  {browser.tabs} tabs tabs passed from browser.tabs
  * @returns {void}
@@ -135,7 +128,6 @@ export function generateFromTabs(tabs) {
 /**
  * Returns the type of the generated QR code.
  *
- * @name   QrCreator.getGenerationType
  * @function
  * @returns {Promise}
  */
@@ -148,7 +140,6 @@ export async function getGenerationType() {
 /**
  * Initiates module.
  *
- * @name   QrCreator.init
  * @function
  * @returns {Promise}
  */

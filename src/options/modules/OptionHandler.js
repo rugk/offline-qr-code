@@ -18,7 +18,6 @@ const elContrastMessage = document.getElementById("messageContrast");
 /**
  * Applies option to element.
  *
- * @name   OptionHandler.applyOptionToElement
  * @function
  * @private
  * @param  {string} option string ob object ID
@@ -87,7 +86,6 @@ function applyOptionToElement(option, optionGroup, elOption, optionValues) {
 /**
  * Returns the option value from an element.
  *
- * @name   OptionHandler.getOptionFromElement
  * @function
  * @private
  * @param  {HTMLElement} elOption the element to read option from
@@ -131,7 +129,6 @@ function getOptionFromElement(elOption) {
 /**
  * Returns the option ID and value or all values from an option group associated to it.
  *
- * @name   OptionHandler.getIdAndOptionsFromElement
  * @function
  * @private
  * @param  {HTMLElement} elOption the element to read option from
@@ -173,7 +170,6 @@ function getIdAndOptionsFromElement(elOption) {
  * E.g. used when a setting is saved, so it.
  * If no parameters are passed, this gets and applies all options.
  *
- * @name   OptionHandler.applyOptionLive
  * @function
  * @private
  * @param  {string|undefined} option
@@ -318,7 +314,6 @@ function applyOptionLive(option, optionValue) {
  * Can be used to do do some stuff per option, but do not save the option in
  * contrast to when {@link applyOptionLive()} is usually called.
  *
- * @name   OptionHandler.applyOptionLive
  * @function
  * @private
  * @param  {Event} event
@@ -340,7 +335,6 @@ function customOptionTrigger(event) {
 /**
  * Saves all settings.
  *
- * @name   OptionHandler.saveOption
  * @function
  * @private
  * @param  {Object} event
@@ -378,7 +372,6 @@ function saveOption(event) {
 /**
  * Saves all settings.
  *
- * @name   OptionHandler.showManagedInfo
  * @function
  * @private
  * @returns {void}
@@ -399,7 +392,6 @@ function showManagedInfo() {
  *
  * They override users selection, so the user control is disabled.
  *
- * @name   OptionHandler.setManagedOption
  * @function
  * @private
  * @param  {string} option name of the option
@@ -444,7 +436,6 @@ function setManagedOption(option, optionGroup, elOption) {
  *
  * If the option is not saved already, it uses the default from common.js.
  *
- * @name   OptionHandler.setOption
  * @function
  * @private
  * @param  {string} option name of the option
@@ -488,7 +479,6 @@ function setOption(option, optionGroup, elOption, ignoreDisabled) {
 /**
  * Loads all options of the page.
  *
- * @name   OptionHandler.loadOptions
  * @function
  * @private
  * @returns {Promise}
@@ -530,7 +520,6 @@ function loadOptions() {
 /**
  * Resets all options.
  *
- * @name   OptionHandler.resetOptions
  * @function
  * @private
  * @param {Event} event
@@ -583,7 +572,6 @@ async function resetOptions(event) {
 /**
  * Initializes the options.
  *
- * @name   OptionHandler.init
  * @function
  * @returns {void}
  */

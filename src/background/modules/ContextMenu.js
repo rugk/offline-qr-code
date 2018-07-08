@@ -13,7 +13,6 @@ const MESSAGE_RESENT_TIMEOUT = 200; // ms
 /**
  * Log error while creating menu item.
  *
- * @name   ContextMenu.onCreated
  * @function
  * @private
  * @returns {void}
@@ -33,7 +32,6 @@ function onCreated() {
 /**
  * Send new text for the QR code.
  *
- * @name   ContextMenu.sendQrCodeText
  * @function
  * @private
  * @param {string} qrText
@@ -56,7 +54,6 @@ function sendQrCodeText(qrText) {
 /**
  * Creates the items in the context menu.
  *
- * @name   ContextMenu.createItems
  * @function
  * @returns {void}
  */
@@ -83,7 +80,6 @@ function createItems() {
 /**
  * Triggers when a context menu item has been clicked.
  *
- * @name   ContextMenu.menuClicked
  * @function
  * @private
  * @param {event} event
@@ -114,7 +110,6 @@ function menuClicked(event) {
  *
  * Adds menu elements.
  *
- * @name   ContextMenu.init
  * @function
  * @returns {void}
  */

@@ -120,7 +120,6 @@ let context = null;
 /**
  * Save the current config.
  *
- * @name   RandomTips.saveConfig
  * @function
  * @private
  * @returns {void}
@@ -132,7 +131,6 @@ const saveConfig = debounce(() => {
 /**
  * Hook for the dismiss event.
  *
- * @name   RandomTips.messageDismissed
  * @function
  * @private
  * @param  {Object} param
@@ -169,7 +167,6 @@ function messageDismissed(param) {
  * Returns true or false at random. The passed procentage indicates how
  * much of the calls should return "true" on average.
  *
- * @name   RandomTips.randomizePassed
  * @function
  * @private
  * @param  {number} percentage
@@ -182,7 +179,6 @@ function randomizePassed(percentage) {
 /**
  * Shows this tip.
  *
- * @name   RandomTips.showTip
  * @function
  * @private
  * @param  {Object} tipSpec
@@ -210,7 +206,6 @@ function showTip(tipSpec) {
  * Returns whether the tip has already be shown enough times or may not
  * be shown, because of some other requirement.
  *
- * @name   RandomTips.shouldBeShown
  * @function
  * @private
  * @param  {Object} tipSpec
@@ -293,7 +288,6 @@ function shouldBeShown(tipSpec) {
 /**
  * Sets the context for the current session.
  *
- * @name   RandomTips.setContext
  * @function
  * @param {string} string
  * @returns {void}
@@ -305,7 +299,6 @@ export function setContext(string) {
 /**
  * Selects and shows a random tip.
  *
- * @name   RandomTips.showRandomTip
  * @function
  * @returns {void}
  */
@@ -337,7 +330,6 @@ export function showRandomTip() {
 /**
  * Shows the random tip only randomly so the user is not annoyed.
  *
- * @name   RandomTips.showRandomTipIfWanted
  * @function
  * @returns {void}
  */
@@ -357,7 +349,6 @@ export function showRandomTipIfWanted() {
 /**
  * Initialises the module.
  *
- * @name   RandomTips.init
  * @function
  * @returns {Promise}
  */

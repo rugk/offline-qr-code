@@ -5,7 +5,6 @@ import * as Logger from "/common/modules/Logger.js";
 /**
  * The type of QR code this library generates.
  *
- * @name QrLibKjua.GENERATION_TYPE
  * @type {string}
  * @const
  * @default
@@ -15,7 +14,6 @@ export const GENERATION_TYPE = "canvas";
 /**
  * The saved options for Kjua.
  *
- * @name QrLibKjua.kjuaOptions
  * @private
  */
 let kjuaOptions;
@@ -25,7 +23,6 @@ let kjuaOptions;
  *
  * format: generalOpt => kjua
  *
- * @name QrLibKjua.OPTIONS_MAP
  * @private
  */
 const OPTIONS_MAP = Object.freeze({
@@ -37,7 +34,6 @@ const OPTIONS_MAP = Object.freeze({
 /**
  * Resets all options for the QR code.
  *
- * @name   QrLibKjua.reset
  * @function
  * @returns {HTMLElement}
  */
@@ -86,7 +82,6 @@ export function reset() {
 /**
  * Set an option for the QR code.
  *
- * @name   QrLibKjua.set
  * @function
  * @param {string} tag the common one you know from the outside, e.g. size
  * @param {Object} value the value to set for this tag
@@ -105,7 +100,6 @@ export function set(tag, value) {
 /**
  * Return new QR code.
  *
- * @name   QrLibKjua.getQr
  * @function
  * @returns {HTMLElement}
  */
@@ -117,7 +111,6 @@ export function getQr() {
 /**
  * Init connector module.
  *
- * @name   QrLibKjua.init
  * @function
  * @returns {void}
  */

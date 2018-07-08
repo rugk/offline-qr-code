@@ -62,7 +62,6 @@ const hooks = {
  * It automatically also runs the global hook, but you can still specify a
  * 'global' to ruin it manually.
  *
- * @name   MessageHandler.hideMessage
  * @function
  * @private
  * @param  {MESSAGE_LEVEL|global} messagetype
@@ -90,7 +89,6 @@ function runHook(messagetype, hooktype, param) {
  * as the "finish event" ("transitionend") after the hiding is animated and
  * hides the message.
  *
- * @name   MessageHandler.dismissMessage
  * @function
  * @private
  * @param  {Object} event
@@ -138,7 +136,6 @@ function dismissMessage(event) {
 /**
  * Returns the message type (ID) of a custom message.
  *
- * @name   MessageHandler.getCustomMessageType
  * @function
  * @private
  * @param  {HTMLElement} elMessage
@@ -158,7 +155,6 @@ function getCustomMessageType(elMessage) {
 /**
  * Returns the message type based on the passed element.
  *
- * @name   MessageHandler.getMessageTypeFromElement
  * @function
  * @private
  * @param  {HTMLElement} elMessage
@@ -193,7 +189,6 @@ function getMessageTypeFromElement(elMessage) {
  * when the element is a custom message.
  * Note that it does not verify whether the DOM element actualyl exists.
  *
- * @name   MessageHandler.getElementFromMessageType
  * @function
  * @private
  * @param {MESSAGE_LEVEL|HTMLElement} messagetype
@@ -224,7 +219,6 @@ function getElementFromMessageType(messagetype) {
 /**
  * The action button event handler, when clicked.
  *
- * @name   MessageHandler.actionButtonClicked
  * @function
  * @private
  * @param  {Object} event
@@ -250,7 +244,6 @@ function actionButtonClicked(event) {
  *
  * Please DO NOT use this with the built-in message elements.
  *
- * @name   MessageHandler.cloneMessage
  * @function
  * @param  {HTMLElement} elMessage
  * @param  {MESSAGE_LEVEL} newDesignType
@@ -285,7 +278,6 @@ export function setMessageDesign(elMessage, newDesignType) {
  * custom node for the message.
  * Attention: This is a "low-level function" and does thus not run the show hook!
  *
- * @name   MessageHandler.showMessage
  * @function
  * @param {MESSAGE_LEVEL|HTMLElement} messagetype
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
@@ -405,7 +397,6 @@ export function showMessage(...args) {
  * If a HTMLElement is passed, it automatically hides the target of the event.
  * Attention: This is a "low-level function" and does thus not run the hide hook!
  *
- * @name   MessageHandler.hideMessage
  * @function
  * @param  {MESSAGE_LEVEL|null|HTMLElement} messagetype
  * @returns {void}
@@ -446,7 +437,6 @@ export function hideMessage(messagetype) {
  *
  * CURRENTLY UNUSED; UNTESTED!!
  *
- * @name   MessageHandler.cloneMessage
  * @function
  * @param  {MESSAGE_LEVEL|HTMLElement} messagetype
  * @param  {string} newId New ID to use for that element
@@ -473,7 +463,6 @@ export function cloneMessage(messagetype, newId) {
 /**
  * Hides the error message.
  *
- * @name   MessageHandler.hideError
  * @function
  * @returns {void}
  */
@@ -485,7 +474,6 @@ export function hideError() {
 /**
  * Hide error message.
  *
- * @name   MessageHandler.hideError
  * @function
  * @returns {void}
  */
@@ -497,7 +485,6 @@ export function hideWarning() {
 /**
  * Hide info message.
  *
- * @name   MessageHandler.hideInfo
  * @function
  * @returns {void}
  */
@@ -509,7 +496,6 @@ export function hideInfo() {
 /**
  * Hide loading message.
  *
- * @name   MessageHandler.hiudeLoading
  * @function
  * @returns {void}
  */
@@ -521,7 +507,6 @@ export function hideLoading() {
 /**
  * Hide success message.
  *
- * @name   MessageHandler.hideSuccess
  * @function
  * @returns {void}
  */
@@ -539,7 +524,6 @@ export function hideSuccess() {
  * Also pay attention to the fact, that it currently can only show one error
  * once.
  *
- * @name   MessageHandler.showError
  * @function
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
@@ -559,7 +543,6 @@ export function showError(...args) {
 /**
  * Show an warning message.
  *
- * @name   MessageHandler.showWarning
  * @function
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
@@ -579,7 +562,6 @@ export function showWarning(...args) {
 /**
  * Show an info message.
  *
- * @name   MessageHandler.showInfo
  * @function
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
@@ -599,7 +581,6 @@ export function showInfo(...args) {
 /**
  * Shows a loading message.
  *
- * @name   MessageHandler.showLoading
  * @function
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
@@ -619,7 +600,6 @@ export function showLoading(...args) {
 /**
  * Show a success message.
  *
- * @name   MessageHandler.showSuccess
  * @function
  * @param {string} message optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
@@ -645,7 +625,6 @@ export function showSuccess(...args) {
  * The errorShown function gets one parameter: The arguments passed to the
  * function, as an array.
  *
- * @name   MessageHandler.setHook
  * @function
  * @param  {MESSAGE_LEVEL|HtmlElement} messagetype use string "global" for a global hook
  * @param {function|null} hookShown
@@ -666,7 +645,6 @@ export function setHook(messagetype, hookShown, hookHidden) {
  * - {HTMLElement} elMessage – the message element, which was hidden
  * - {event} event – the original click even on the dismiss button
  *
- * @name   MessageHandler.setDismissHooks
  * @function
  * @param {function|null} startHook
  * @param {function|null} endHook
@@ -680,7 +658,6 @@ export function setDismissHooks(startHook, endHook) {
 /**
  * Initialises the module.
  *
- * @name   MessageHandler.init
  * @function
  * @returns {void}
  */

@@ -12,7 +12,6 @@ const LOCALIZED_ATTRIBUTES = [
 /**
  * Splits the _MSG__*__ format and returns the actual tag.
  *
- * @name   Localizer.getMessageFromTag
  * @function
  * @private
  * @param  {string} tag
@@ -30,7 +29,6 @@ function getMessageTag(tag) {
  *
  * Pass as many strings/output as you want.
  *
- * @name   Localizer.replaceI18n
  * @function
  * @private
  * @param  {HTMLElement} elem
@@ -72,7 +70,6 @@ function replaceI18n(elem, tag) {
 /**
  * Localizes static strings in the HTML file.
  *
- * @name   Localizer.init
  * @function
  * @returns {void}
  */

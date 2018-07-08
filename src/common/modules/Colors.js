@@ -5,7 +5,6 @@ import * as Logger from "/common/modules/Logger.js";
  *
  * This includes definitions from WCAG and some custom ones.
  *
- * @name Colors.CONTRAST_RATIO
  * @type {object} with integers
  * @const
  * @default
@@ -25,7 +24,6 @@ export const CONTRAST_RATIO = Object.freeze({
 /**
  * Calculates the contrast between two colors
  *
- * @name   Colors.contrastRatio
  * @function
  * @param  {Array} rgb1
  * @param  {Array} rgb2
@@ -41,7 +39,6 @@ export function contrastRatio(rgb1, rgb2) {
 /**
  * Calculates the luminance of a given RGB color.
  *
- * @name   Colors.luminance
  * @function
  * @private
  * @param  {Array} rgb
@@ -64,7 +61,6 @@ function luminance(rgb) {
 /**
  * Returns the complementary color of a given RGB array.
  *
- * @name   Colors.invertColor
  * @function
  * @param  {Array} rgb
  * @returns {string}
@@ -81,7 +77,6 @@ export function invertColor(rgb) {
 /**
  * Adds missing zeros in front of a string.
  *
- * @name   Colors.padZero
  * @function
  * @private
  * @param  {string} string
@@ -97,7 +92,6 @@ function padZero(string, length) {
 /**
  * Converts a hex color string to RGB.
  *
- * @name   Colors.hexToRgb
  * @function
  * @param  {string} hex
  * @returns {Array|null}

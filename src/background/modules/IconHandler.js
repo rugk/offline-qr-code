@@ -3,7 +3,6 @@ import * as Logger from "/common/modules/Logger.js";
 /**
  * Sets a popup icon variant.
  *
- * @name   IconHandler.setPopupIcon
  * @function
  * @private
  * @param {string} icon version or "null"/"undefined" to reset to default
@@ -33,7 +32,6 @@ function setPopupIcon(icon) {
 /**
  * Init icon module.
  *
- * @name   IconHandler.init
  * @function
  * @returns {void}
  */
