@@ -490,9 +490,6 @@ export function lateInit() {
     // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
     setTimeout(selectAllText, 50, { target: qrCodeText });
 
-    // for some very strange reason, initiating it as fast as possible gives better performance when resizing later
-    resizeMutationObserver = new MutationObserver(throttledResizeElements);
-
     // start listening for resize events very late, so taht it does not
     // conflict with restoring the popup size
     resizeMutationObserver.observe(qrCodeText, {
