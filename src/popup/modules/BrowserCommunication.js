@@ -1,6 +1,7 @@
 import * as Logger from "/common/modules/Logger.js";
 
-import * as QrCreator from "./modules/QrCreator.js";
+import * as QrCreator from "./QrCreator.js";
+import {initCompleted} from "./InitQrCode.js";
 
 const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
     SET_QR_TEXT: "setQrText",

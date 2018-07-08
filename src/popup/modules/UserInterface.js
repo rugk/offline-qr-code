@@ -4,10 +4,11 @@ import throttle from "/common/modules/lib/lodash/throttle.js";
 
 import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 
-import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as Logger from "/common/modules/Logger.js";
-import * as QrCreator from "./modules/QrCreator.js";
-import * as MessageHandler from "./modules/MessageHandler.js";
+import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as MessageHandler from "/common/modules/MessageHandler.js";
+
+import * as QrCreator from "./QrCreator.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
 const SELECT_TEXT_TIMEOUT = 100; // ms
@@ -269,9 +270,7 @@ function setNewQrCodeSize(newSize, regenerateQr) {
 function saveQrCodeTextSize() {
     // if setting is disabled, ignore and always return a successful promise
     if (qrCodeSizeOption.sizeType !== "remember") {
-        return new Promise((resolve) => {
-            resolve();
-        });
+        return Promise.resolve();
     }
 
     if (!isObject(qrCodeSizeOption.sizeText)) {
@@ -514,14 +513,13 @@ export function init() {
     qrCodeText.addEventListener("input", refreshQrCode);
     qrCodeText.addEventListener("focus", selectAllText);
 
-    AddonSettings.get("monospaceFont").then((monospaceFont) => {
+    const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
         if (monospaceFont) {
             qrCodeText.style.fontFamily = "monospace";
         }
     });
 
-    const gettingQrColor = AddonSettings.get("qrBackgroundColor");
-    gettingQrColor.then((qrBackgroundColor) => {
+    const applyingQrColor = AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
         if (qrBackgroundColor) {
             document.body.style.backgroundColor = qrBackgroundColor;
         }
@@ -530,8 +528,7 @@ export function init() {
     // for some very strange reason, the MutationObserver only works when it is initiated as fast as possible gives better performance when resizing later
     resizeMutationObserver = new MutationObserver(throttledResizeElements);
 
-    const gettingQrSize = AddonSettings.get("qrCodeSize");
-    gettingQrSize.then((qrCodeSize) => {
+    const applyingQrSize = AddonSettings.get("qrCodeSize").then((qrCodeSize) => {
         // save as module variable
         qrCodeSizeOption = qrCodeSize;
 
@@ -566,7 +563,8 @@ export function init() {
         }
     });
 
-    QrCreator.getGenerationType().then((genType) => {
+    // initiate sett8ings dependent on the type of the QR code
+    const initQrTypespecificSettings = QrCreator.getGenerationType().then((genType) => {
         if (genType !== "svg") {
             // remove menu item if it has been added before
             browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
@@ -596,7 +594,5 @@ export function init() {
     });
 
     // return Promise chain
-    return gettingQrSize.then(() => {
-        return gettingQrColor;
-    });
+    return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
 }

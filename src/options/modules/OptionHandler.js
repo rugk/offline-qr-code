@@ -521,11 +521,10 @@ function loadOptions() {
 
     // when everything is finished, apply live elements for values if needed
     const allOptionsLoaded = Promise.all(allPromises);
-    allOptionsLoaded.then(() => {
+
+    return allOptionsLoaded.then(() => {
         applyOptionLive();
     });
-
-    return allOptionsLoaded;
 }
 
 /**

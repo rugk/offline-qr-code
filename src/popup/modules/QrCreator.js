@@ -1,11 +1,12 @@
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
-import * as QrLibQrGen from "./QrLibQrGen.js";
-import * as QrLibKjua from "./QrLibKjua.js";
+import * as QrLibQrGen from "./QrLib/qrgen.js";
+import * as QrLibKjua from "./QrLib/kjua.js";
 import * as UserInterface from "./UserInterface.js";
 
 // abstracts away all specific handling of QR code library
+let qrCreatorInit;
 let initFinished = false;
 let qrCodeLib = null;
 
@@ -155,7 +156,7 @@ export function init() {
     QrLibKjua.init();
 
     // get all settings
-    return AddonSettings.get().then((settings) => {
+    qrCreatorInit = AddonSettings.get().then((settings) => {
         switch (settings.qrCodeType) {
         case "svg":
             qrCodeLib = QrLibQrGen;
@@ -173,4 +174,6 @@ export function init() {
 
         initFinished = true;
     });
+
+    return qrCreatorInit;
 }

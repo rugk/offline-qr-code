@@ -37,9 +37,7 @@ function saveFileAs(request, sender, sendResponse) {
             // stop retrying at maximum time
             // (this happens when the user just declines the permission request)
             if (saveAsRetries >= MAX_SAVE_AS_RETRIES) {
-                return new Promise((resolve, reject) => {
-                    reject(new Error("saveAs retry timeout"));
-                });
+                return new Promise.reject(new Error("saveAs retry timeout"));
             }
 
             return new Promise((resolve, reject) => {

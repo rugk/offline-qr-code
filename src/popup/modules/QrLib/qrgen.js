@@ -1,6 +1,7 @@
+/* globals qrcodegen */
+
 import * as Logger from "/common/modules/Logger.js";
 
-/* globals qrcodegen */
 const QRC = qrcodegen.QrCode;
 
 const qrBorder = 0;
