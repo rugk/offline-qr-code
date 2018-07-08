@@ -1,7 +1,8 @@
 // lodash
+import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
-import * as Logger from "/common/modules/Logger.js"; /* globals MESSAGE_LEVEL */
+import * as Logger from "/common/modules/Logger.js";
 
 const ELEMENT_BY_TYPE = Object.freeze({
     [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),

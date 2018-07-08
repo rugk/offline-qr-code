@@ -1,4 +1,6 @@
-import * as Logger from "/common/modules/Logger.js"; /* globals MESSAGE_LEVEL */
+import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
+
+import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as Colors from "/common/modules/Colors.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
@@ -609,3 +611,5 @@ export function init() {
 
     document.getElementById("resetButton").addEventListener("click", resetOptions);
 }
+
+Logger.logInfo("OptionHandler module loaded.");

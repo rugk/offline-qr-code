@@ -2,9 +2,10 @@
 import isObject from "/common/modules/lib/lodash/isObject.js";
 import throttle from "/common/modules/lib/lodash/throttle.js";
 
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 
-import * as Logger from "/common/modules/Logger.js"; /* globals MESSAGE_LEVEL */
+import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as Logger from "/common/modules/Logger.js";
 import * as QrCreator from "./modules/QrCreator.js";
 import * as MessageHandler from "./modules/MessageHandler.js";
 
