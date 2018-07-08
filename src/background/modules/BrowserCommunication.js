@@ -10,7 +10,8 @@ const SAVE_AS_RETRY_TIMEOUT = 500; // ms
 // 60x * 0,5s = 30s retries = retry for one minute
 const MAX_SAVE_AS_RETRIES = 60;
 
-let saveFileAsContinueRetry = true;
+// whether to retry the file saving or not, acts both as a status indicator and a setting
+let saveFileAsRetry = null;
 let saveAsRetries = 0;
 
 /**
@@ -28,16 +29,20 @@ let saveAsRetries = 0;
  */
 function saveFileAs(request, sender, sendResponse) {
     Logger.logInfo("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
+    // TODO: Logger does not work here for some reason!
+    // console.log("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
 
     // if we should handle permission errors and apply re-try workaround
     // that's the actual workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
-    if (request.usePermissionWorkaround && saveFileAsContinueRetry) {
+    if (request.usePermissionWorkaround && saveFileAsRetry) {
         // if permission is not yet granted
         if (browser.downloads === undefined) {
             // stop retrying at maximum time
             // (this happens when the user just declines the permission request)
             if (saveAsRetries >= MAX_SAVE_AS_RETRIES) {
-                return new Promise.reject(new Error("saveAs retry timeout"));
+                // stop re-trying
+                saveFileAsRetry = false;
+                throw new Error("saveAs retry timeout");
             }
 
             return new Promise((resolve, reject) => {
@@ -54,7 +59,7 @@ function saveFileAs(request, sender, sendResponse) {
             });
         } else {
             // stop actually retrying after this execution
-            saveFileAsContinueRetry = false;
+            saveFileAsRetry = false;
         }
     }
 
@@ -96,12 +101,19 @@ function handleMessages(request, sender, sendResponse) {
 
     switch (request.type) {
     case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:
-        saveFileAsContinueRetry = request.usePermissionWorkaround;
+        // if retrying is already triggered just reset timer, but do not call again
+        // (calling again would result in the file being saved multiple times)
+        if (request.usePermissionWorkaround && saveFileAsRetry) {
+            saveAsRetries = 0;
+            return null; // cannot return a Promise here, as chain is already running
+        }
+
+        saveFileAsRetry = request.usePermissionWorkaround;
         saveAsRetries = 0;
 
         return saveFileAs(request, sender, sendResponse);
     case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY:
-        saveFileAsContinueRetry = true;
+        saveFileAsRetry = true;
     }
 
     return null;
