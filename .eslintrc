@@ -28,6 +28,9 @@
         // just to make sure (are defaults)
         "indent": ["error", 4],
 
+        // downgrade rules (only warning)
+        "no-console": 1,
+
         // technically required, because of CSP
         "no-eval": 2,
         "no-implied-eval": 2,
