@@ -5,12 +5,13 @@ import * as MessageHandler from "/common/modules/MessageHandler.js";
 import * as QrCreator from "./QrCreator.js";
 import * as BrowserCommunication from "./BrowserCommunication.js";
 import * as UserInterface from "./UserInterface.js";
+import retryPromise from "./QrLib/retryPromise.js";
 
 /* globals */
 export let initCompleted = false;
 
 // init modules
-const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
+const queryBrowserTabs = () => browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
@@ -64,8 +65,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+        getsTabWithValidUrl().then(QrCreator.generateFromTabs).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
@@ -85,3 +85,38 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 }).catch((error) => {
     Logger.logError(error);
 });
+
+/**
+ * Queries Tabs API for 20 times with a delay of 300ms until the tabs have a defined url.
+ * Will reject if url is not defined.
+ * @returns {Promise}
+ */
+async function getsTabWithValidUrl() {
+    let retryCount = 0;
+    const maxRetries = 20;
+    const delay = 300;
+
+    try {
+        return await retryPromise(async () => {
+            if (retryCount === maxRetries) {
+                throw new Error("No tabs with url.");
+            }
+
+            try {
+                retryCount++;
+
+                const tabs = await queryBrowserTabs();
+
+                if (tabs && tabs[0].url) {
+                    return tabs;
+                } else {
+                    throw new Error("Url not found.");
+                }
+            } catch (error) {
+                throw error;
+            }
+        }, delay);
+    } catch (error) {
+        return error;
+    }
+}
