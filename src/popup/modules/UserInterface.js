@@ -34,6 +34,7 @@ let placeholderShown = true;
 // default/last size
 let qrLastSize = 200;
 let qrCodeSizeOption = {};
+let savingQrCodeSize = null; // promise
 
 /**
  * Hide QR code and show placeholder instead.
@@ -175,24 +176,28 @@ function scrollToTop(event) {
 }
 
 /**
- * Saves the qr code size as an option.
+ * Saves the QR code size option (to remember the size).
  *
  * @function
  * @private
  * @returns {Promise}
  */
-function saveQrCodeSizeOption() {
+async function saveQrCodeSizeOption() {
+    // never start saving an option, when the old one is stll being saved
+    await savingQrCodeSize;
+
     Logger.logInfo("saved qr code text size/style", JSON.parse(JSON.stringify(qrCodeSizeOption)));
 
-    return browser.storage.sync.set({
+    savingQrCodeSize = browser.storage.sync.set({
         "qrCodeSize": qrCodeSizeOption
     });
+    return savingQrCodeSize;
 }
 
 /**
- * Executes saveQrCodeTextSize, but only one time each second.
+ * Regularely calls saveQrCodeSizeOption to save the option, but not too often.
  *
- * This depends on the thottle function from lodash.
+ * This depends on the throttle function from lodash.
  *
  * @function
  * @private
