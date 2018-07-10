@@ -79,6 +79,7 @@ function hidePlaceholder() {
  * Refreshes the QR code, if the text has been changed in the input field.
  *
  * @function
+ * @name saveConfig
  * @private
  * @returns {void}
  */
@@ -200,6 +201,7 @@ async function saveQrCodeSizeOption() {
  * This depends on the throttle function from lodash.
  *
  * @function
+ * @name throttledSaveQrCodeSizeOption
  * @private
  */
 const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, THROTTLE_SIZE_SAVING_FOR_REMEMBER);
@@ -300,6 +302,7 @@ function resizeElements() {
  * This depends on the thottle function from lodash that uses requestAnimationFrame.
  *
  * @function
+ * @name throttledResizeElements
  * @private
  */
 const throttledResizeElements = throttle(resizeElements);
