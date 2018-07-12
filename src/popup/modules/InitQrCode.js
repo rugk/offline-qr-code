@@ -5,7 +5,7 @@ import * as MessageHandler from "/common/modules/MessageHandler.js";
 import * as QrCreator from "./QrCreator.js";
 import * as BrowserCommunication from "./BrowserCommunication.js";
 import * as UserInterface from "./UserInterface.js";
-import retryPromise from "./QrLib/retryPromise.js";
+import { retryPromise } from "../../common/modules/HelperFunctions.js";
 
 /* globals */
 export let initCompleted = false;
@@ -65,7 +65,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        getsTabWithValidUrl().then(QrCreator.generateFromTabs).catch(error => {
+        getTabWithValidUrl().then(QrCreator.generateFromTab).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
@@ -91,32 +91,25 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
  * Will reject if url is not defined.
  * @returns {Promise}
  */
-async function getsTabWithValidUrl() {
+function getTabWithValidUrl() {
     let retryCount = 0;
     const maxRetries = 20;
     const delay = 300;
 
-    try {
-        return await retryPromise(async () => {
-            if (retryCount === maxRetries) {
-                throw new Error("No tabs with url.");
-            }
+    return retryPromise(async () => {
+        if (retryCount === maxRetries) {
+            throw new Error("No tabs with url.");
+        }
 
-            try {
-                retryCount++;
+        retryCount++;
 
-                const tabs = await queryBrowserTabs();
+        const tabs = await queryBrowserTabs();
+        const tab = tabs[0];
 
-                if (tabs && tabs[0].url) {
-                    return tabs;
-                } else {
-                    throw new Error("Url not found.");
-                }
-            } catch (error) {
-                throw error;
-            }
-        }, delay);
-    } catch (error) {
-        return error;
-    }
+        if (tab && tab.url) {
+            return tab;
+        } else {
+            throw new Error("Url not found.");
+        }
+    }, delay);
 }
