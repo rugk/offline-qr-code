@@ -11,7 +11,6 @@ import { retryPromise } from "../../common/modules/HelperFunctions.js";
 export let initCompleted = false;
 
 // init modules
-const queryBrowserTabs = () => browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
@@ -92,6 +91,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
  * @returns {Promise}
  */
 function getTabWithValidUrl() {
+    const queryBrowserTabs = () => browser.tabs.query({active: true, currentWindow: true});
     let retryCount = 0;
     const maxRetries = 20;
     const delay = 300;

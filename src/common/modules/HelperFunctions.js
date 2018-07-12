@@ -12,7 +12,8 @@ export function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
 }
 
 /**
- * Try fn when the return promise is rejected
+ * Recall the function with a delay when the returned promise is rejected
+ *
  * @param {Function} fn function to retry
  * @param {number} delay retry delay in ms
  * @returns {Promise}
