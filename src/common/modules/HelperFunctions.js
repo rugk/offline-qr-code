@@ -14,15 +14,15 @@ export function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
 /**
  * Recall the function with a delay when the returned promise is rejected
  *
- * @param {Function} fn function to retry
+ * @param {Function} invokedFunction function to retry
  * @param {number} delay retry delay in ms
  * @returns {Promise}
  */
-export function retryPromise(fn, delay) {
+export function retryPromise(invokedFunction, delay) {
     return new Promise(resolve => {
-        fn().then(resolve).catch(() => {
+        invokedFunction().then(resolve).catch(() => {
             setTimeout(() => {
-                retryPromise(fn, delay).then(resolve);
+                retryPromise(invokedFunction, delay).then(resolve);
             }, delay);
         });
     });

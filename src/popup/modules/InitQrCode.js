@@ -5,7 +5,7 @@ import * as MessageHandler from "/common/modules/MessageHandler.js";
 import * as QrCreator from "./QrCreator.js";
 import * as BrowserCommunication from "./BrowserCommunication.js";
 import * as UserInterface from "./UserInterface.js";
-import { retryPromise } from "../../common/modules/HelperFunctions.js";
+import { retryPromise } from "/common/modules/HelperFunctions.js";
 
 /* globals */
 export let initCompleted = false;
@@ -88,10 +88,10 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 /**
  * Queries Tabs API for 20 times with a delay of 300ms until the tabs have a defined url.
  * Will reject if url is not defined.
+ *
  * @returns {Promise}
  */
 function getTabWithValidUrl() {
-    const queryBrowserTabs = () => browser.tabs.query({active: true, currentWindow: true});
     let retryCount = 0;
     const maxRetries = 20;
     const delay = 300;
@@ -103,7 +103,7 @@ function getTabWithValidUrl() {
 
         retryCount++;
 
-        const tabs = await queryBrowserTabs();
+        const tabs = await browser.tabs.query({active: true, currentWindow: true});
         const tab = tabs[0];
 
         if (tab && tab.url) {
