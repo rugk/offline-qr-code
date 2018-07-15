@@ -184,8 +184,9 @@ function applyOptionLive(option, optionValue) {
         const gettingOption = AddonSettings.get();
         return gettingOption.then((res) => {
             // run for each option, which we know to handle
-            applyOptionLive("popupIconColored", res.popupIconColored);
             applyOptionLive("qrCodeSize", res.qrCodeSize);
+            applyOptionLive("popupIconColored", res.popupIconColored);
+            applyOptionLive("debugMode", res.qrColor);
             applyOptionLive("qrColor", res.qrColor);
             applyOptionLive("qrBackgroundColor", res.qrBackgroundColor);
         });
