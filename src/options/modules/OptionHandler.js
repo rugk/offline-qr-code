@@ -165,9 +165,10 @@ function getIdAndOptionsFromElement(elOption) {
 }
 
 /**
- * Applies settings directly, if needed.
+ * Executes special handling for applying certain settings.
  *
- * E.g. used when a setting is saved, so it.
+ * E.g. when a setting is saved, it executes to apply some options live, so the
+ * user immediately sees the change or the change is immediately applied.
  * If no parameters are passed, this gets and applies all options.
  *
  * @function
@@ -222,6 +223,7 @@ function applyOptionLive(option, optionValue) {
         } else if (remeberSizeInterval !== null) {
             clearInterval(remeberSizeInterval);
         }
+
         break;
     }
 
