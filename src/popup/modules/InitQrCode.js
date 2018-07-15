@@ -92,17 +92,10 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
  * @returns {Promise}
  */
 function getTabWithValidUrl() {
-    let retryCount = 0;
-    const maxRetries = 20;
     const delay = 300;
+    const maxRetries = 20;
 
     return retryPromise(async () => {
-        if (retryCount === maxRetries) {
-            throw new Error("No tabs with url.");
-        }
-
-        retryCount++;
-
         const tabs = await browser.tabs.query({active: true, currentWindow: true});
         const tab = tabs[0];
 
@@ -111,5 +104,5 @@ function getTabWithValidUrl() {
         } else {
             throw new Error("Url not found.");
         }
-    }, delay);
+    }, delay, maxRetries);
 }

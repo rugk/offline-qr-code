@@ -12,17 +12,24 @@ export function objectIsEmpty(obj) { // eslint-disable-line no-unused-vars
 }
 
 /**
- * Recall the function with a delay when the returned promise is rejected
+ * Recall the function for the given number of maximum retries with a delay when the returned promise is rejected
  *
  * @param {Function} invokedFunction function to retry
  * @param {number} delay retry delay in ms
+ * @param {number} maxRetries number of times invokedFunction is invoked
  * @returns {Promise}
  */
-export function retryPromise(invokedFunction, delay) {
-    return new Promise(resolve => {
-        invokedFunction().then(resolve).catch(() => {
+export function retryPromise(invokedFunction, delay, maxRetries) {
+    return new Promise((resolve, reject) => {
+        invokedFunction().then(resolve).catch((error) => {
+            if (maxRetries === 0) {
+                reject(error);
+
+                return;
+            }
+
             setTimeout(() => {
-                retryPromise(invokedFunction, delay).then(resolve);
+                retryPromise(invokedFunction, delay, maxRetries - 1).then(resolve);
             }, delay);
         });
     });
