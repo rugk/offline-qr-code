@@ -2,10 +2,11 @@ Nice to see you want to contribute! :+1:
 
 ## Translations
 
-It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSON files directly.
-To do so, go to [`src/_locales/en`](src/_locales/en) and copy the English (or German) [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
+It would be great, if you can contribute your translations! You can either translate the JSON files directly or use [this online translator service](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code).
+**Manually:** To translate it manually, go to [`src/_locales/en`](src/_locales/en) and copy the English (or German) [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
+**web-ext-translator:** Go to [this page](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code) and translate it online. Download the result by clicking on "Export to ZIP" at the bottom.
 
-At the end, just submit a Pull Request.
+At the end, just submit a Pull Request with your changed files.
 Of course, you can (and should) improve existing translations.
 
 For more details, [see the official docs](https://developer.mozilla.org/Add-ons/WebExtensions/Internationalization#Providing_localized_strings_in__locales).
