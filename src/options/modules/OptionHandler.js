@@ -165,9 +165,10 @@ function getIdAndOptionsFromElement(elOption) {
 }
 
 /**
- * Applies settings directly, if needed.
+ * Executes special handling for applying certain settings.
  *
- * E.g. used when a setting is saved, so it.
+ * E.g. when a setting is saved, it executes to apply some options live, so the
+ * user immediately sees the change or the change is immediately applied.
  * If no parameters are passed, this gets and applies all options.
  *
  * @function
@@ -183,8 +184,9 @@ function applyOptionLive(option, optionValue) {
         const gettingOption = AddonSettings.get();
         return gettingOption.then((res) => {
             // run for each option, which we know to handle
-            applyOptionLive("popupIconColored", res.popupIconColored);
             applyOptionLive("qrCodeSize", res.qrCodeSize);
+            applyOptionLive("popupIconColored", res.popupIconColored);
+            applyOptionLive("debugMode", res.qrColor);
             applyOptionLive("qrColor", res.qrColor);
             applyOptionLive("qrBackgroundColor", res.qrBackgroundColor);
         });
@@ -222,6 +224,7 @@ function applyOptionLive(option, optionValue) {
         } else if (remeberSizeInterval !== null) {
             clearInterval(remeberSizeInterval);
         }
+
         break;
     }
 
