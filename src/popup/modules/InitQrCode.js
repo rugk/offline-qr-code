@@ -90,25 +90,27 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
  * @returns {Promise}
  */
 function getCurrentTab() {
-    const queryTabs = () => browser.tabs.query({active: true, currentWindow: true});
+    const queryActiveTab = () => browser.tabs.query({active: true, currentWindow: true});
     const bindOnUpdatedListener = (requestedTabId) => {
         return new Promise((resolve, reject) => {
             browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-                if (tab.status === "complete" && tabId === requestedTabId) {
-                    queryTabs().then(tabs => {
-                        resolve(tabs[0]);
-                    }).catch(error => {
-                        reject(error);
-                    }).finally(() => {
-                        browser.tabs.onUpdated.removeListener(bindOnUpdatedListener);
-                    });
+                if (tab.status !== "complete" || tabId !== requestedTabId) {
+                    return;
                 }
+
+                queryActiveTab().then(tabs => {
+                    resolve(tabs[0]);
+                }).catch(error => {
+                    reject(error);
+                }).finally(() => {
+                    browser.tabs.onUpdated.removeListener(bindOnUpdatedListener);
+                });
             });
         });
     };
 
     return new Promise((resolve, reject) => {
-        queryTabs().then((tabs) => {
+        queryActiveTab().then((tabs) => {
             const tab = tabs[0];
 
             if (tab.url) {
