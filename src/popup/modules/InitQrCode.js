@@ -154,6 +154,47 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 function getCurrentTab() {
     //let waitForActiveCompleted;
 
+
+
+      const bindOnUpdatedListenerY = new Promise((resolve, reject) => {
+          /**
+           * Gets the current tab
+           *
+           * @param {int} tabId
+           * @param {Object} changeInfo
+           * @param {tabs.Tab} tab
+           * @returns {Promise}
+           */
+          waitForActiveCompleted = function(tabId, changeInfo, tab) {
+              console.log(tabId, changeInfo, tab)
+              if (tab.status !== "complete" || (requestedTabId !== null && tabId !== requestedTabId)) {
+                  // ignore, as we wait for the "correct" event
+                  return;
+              }
+              console.log("process")
+
+              queryActiveTab().then(tab => {
+                  // If requestedTabId was not yet set, set it
+                  if (requestedTabId === null) {
+                      requestedTabId = tab.id;
+
+                      // if it does equal the event, ignore it (same behaviour the syncronous check as above)
+                      if (requestedTabId !== tabId) {
+                          return;
+                      }
+                  }
+
+                  // resolve, if we found the data of the active tab
+                  console.log("OK", tab)
+                  resolve(tab);
+              }).catch((error) => {
+                  console.log(new Error("onUpdated: " + error.message));
+              });
+          };
+
+          browser.tabs.onUpdated.addListener(waitForActiveCompleted);
+      });
+
     const bindOnUpdatedListenerX = async () => {
         // only to get ID
         const activeTab = await browser.tabs.query({active: true, currentWindow: true});
