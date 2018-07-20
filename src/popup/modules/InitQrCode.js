@@ -10,7 +10,6 @@ import * as UserInterface from "./UserInterface.js";
 export let initCompleted = false;
 
 // init modules
-const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
@@ -64,8 +63,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+        getCurrentTab().then(QrCreator.generateFromTab).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
@@ -85,3 +83,43 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 }).catch((error) => {
     Logger.logError(error);
 });
+
+/**
+ * Get the current tab
+ *
+ * @returns {Promise}
+ */
+function getCurrentTab() {
+    const queryActiveTab = () => browser.tabs.query({active: true, currentWindow: true});
+    const bindOnUpdatedListener = (requestedTabId) => {
+        return new Promise((resolve, reject) => {
+            browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+                if (tab.status !== "complete" || tabId !== requestedTabId) {
+                    return;
+                }
+
+                queryActiveTab().then(tabs => {
+                    resolve(tabs[0]);
+                }).catch(error => {
+                    reject(error);
+                }).finally(() => {
+                    browser.tabs.onUpdated.removeListener(bindOnUpdatedListener);
+                });
+            });
+        });
+    };
+
+    return new Promise((resolve, reject) => {
+        queryActiveTab().then((tabs) => {
+            const tab = tabs[0];
+
+            if (tab.url) {
+                resolve(tab);
+
+                return;
+            }
+
+            bindOnUpdatedListener(tab.id).then(resolve).catch(reject);
+        }).catch(reject);
+    });
+}
