@@ -63,7 +63,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        getCurrentTab().then(QrCreator.generateFromTab).catch(error => {
+        return getCurrentTab().then(QrCreator.generateFromTab).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
@@ -84,42 +84,93 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     Logger.logError(error);
 });
 
+let requestedTabId = null;
+
 /**
- * Get the current tab
+ * Gets the current tab
+ *
+ * @returns {Promise}
+ */
+async function queryActiveTab() {
+    const tabs = await browser.tabs.query({active: true, currentWindow: true});
+
+    const tab = tabs[0];
+    requestedTabId = tab.id;
+
+    if (tab.url === undefined) {
+        throw new Error("no tab URL defined");
+    }
+
+    return tab;
+}
+
+/**
+ * Returns a successful promise, if the tab has been loaded.
+ *
+ * @param {int} requestedTabId
+ * @param {int} timeout default=5000; in ms
+ * @returns {Promise}
+ */
+function IsLoadingEnd(requestedTabId, timeout = 5000) {
+    let waitHandler;
+    console.log(requestedTabId);
+
+    return new Promise((resolve, reject) => {
+        waitHandler = (tabId, changeInfo, tab) => {
+            console.log(tabId, changeInfo, tab);
+            if (tab.status !== "complete" || tabId !== requestedTabId) {
+                // ignore, as we wait for the "correct" event
+                return;
+            }
+
+            console.log("IS COMPLETE");
+            resolve();
+        }
+
+        browser.tabs.onUpdated.addListener(waitHandler);
+
+        setTimeout(() => {
+            reject(new Error("timeout"));
+        }, timeout);
+    }).finally(() => {
+        browser.tabs.onUpdated.removeListener(waitHandler);
+    });
+}
+
+browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+    console.log("TEST")
+    const activeTab = await browser.tabs.query({active: true, currentWindow: true});
+    console.log(activeTab)
+
+    setTimeout()
+});
+
+
+/**
+ * Gets the current tab
  *
  * @returns {Promise}
  */
 function getCurrentTab() {
-    const queryActiveTab = () => browser.tabs.query({active: true, currentWindow: true});
-    const bindOnUpdatedListener = (requestedTabId) => {
-        return new Promise((resolve, reject) => {
-            browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-                if (tab.status !== "complete" || tabId !== requestedTabId) {
-                    return;
-                }
+    //let waitForActiveCompleted;
 
-                queryActiveTab().then(tabs => {
-                    resolve(tabs[0]);
-                }).catch(error => {
-                    reject(error);
-                }).finally(() => {
-                    browser.tabs.onUpdated.removeListener(bindOnUpdatedListener);
-                });
-            });
-        });
+    const bindOnUpdatedListenerX = async () => {
+        // only to get ID
+        const activeTab = await browser.tabs.query({active: true, currentWindow: true});
+        await IsLoadingEnd(activeTab[0].id);
+
+        // re-query tab
+        return queryActiveTab();
     };
+    const bindOnUpdatedListener = bindOnUpdatedListenerX();
 
-    return new Promise((resolve, reject) => {
-        queryActiveTab().then((tabs) => {
-            const tab = tabs[0];
-
-            if (tab.url) {
-                resolve(tab);
-
-                return;
-            }
-
-            bindOnUpdatedListener(tab.id).then(resolve).catch(reject);
-        }).catch(reject);
+    const firstActiveTabQuery = queryActiveTab();
+    return Promise.race([firstActiveTabQuery, bindOnUpdatedListener]).catch(() => {
+        // in case of error, ensure that both promises ran and only if both errored, error
+        return firstActiveTabQuery.catch(() => {
+            return bindOnUpdatedListener;
+        });
+    }).finally(() => {
+        //browser.tabs.onUpdated.removeListener(waitForActiveCompleted);
     });
 }
