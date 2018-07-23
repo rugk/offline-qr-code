@@ -1,0 +1,23 @@
+{
+  "name": "offline-qr-code",
+  "version": "1.2.1",
+  "description": "Browser add-on allowing you to quickly generate a QR code offline with the URL of the open tab or other text!",
+  "main": "src/manifest.json",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rugk/offline-qr-code.git"
+  },
+  "author": "rugk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rugk/offline-qr-code/issues"
+  },
+  "homepage": "https://github.com/rugk/offline-qr-code#readme"
+}
