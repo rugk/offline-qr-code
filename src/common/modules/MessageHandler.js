@@ -116,7 +116,7 @@ function dismissMessage(event) {
             event
         });
 
-        Logger.logInfo("message is dismissed", event);
+        Logger.logInfo("message is dismissed", JSON.parse(JSON.stringify(event)));
     } else if (event.type === "transitionend") {
         const elMessage = event.target;
 
@@ -230,7 +230,7 @@ function actionButtonClicked(event) {
 
     const messagetype = getMessageTypeFromElement(elMessage);
 
-    Logger.logInfo("action button clicked for ", messagetype, event);
+    Logger.logInfo("action button clicked for ", messagetype, JSON.parse(JSON.stringify(event)));
 
     runHook(messagetype, "actionButton", {
         elMessage,
@@ -296,9 +296,9 @@ export function showMessage(...args) {
 
     // also log message to console
     if (args[0] instanceof HTMLElement) {
-        Logger.logInfo(...args);
+        Logger.logInfo(JSON.parse(JSON.stringify(args)));
     } else {
-        Logger.log(...args);
+        Logger.log(JSON.parse(JSON.stringify(args)));
     }
 
     // get first element
@@ -330,7 +330,7 @@ export function showMessage(...args) {
     }
 
     if (!elMessage) {
-        Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, args);
+        Logger.logError("The message could not be shown, because the DOM element is missing.", messagetype, JSON.parse(JSON.stringify(args)));
         return;
     }
 
@@ -423,7 +423,7 @@ export function hideMessage(messagetype) {
         elDismissIcon.classList.add("invisible");
     }
 
-    Logger.logInfo("message is hidden", elMessage);
+    Logger.logInfo("message is hidden", JSON.parse(JSON.stringify(elMessage)));
 
     return;
 }

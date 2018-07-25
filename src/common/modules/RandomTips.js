@@ -323,7 +323,7 @@ export function showRandomTip() {
         return;
     }
 
-    Logger.logInfo("selected tip to be shown:", randomNumber, tipSpec);
+    Logger.logInfo("selected tip to be shown:", randomNumber, JSON.parse(JSON.stringify(tipSpec)));
 
     showTip(tipSpec);
 }

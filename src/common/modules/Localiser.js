@@ -75,7 +75,7 @@ function replaceI18n(elem, tag) {
  */
 export function init() {
     document.querySelectorAll(`[${I18N_ATTRIBUTE}]`).forEach((currentElem) => {
-        Logger.logInfo("init translate", currentElem);
+        Logger.logInfo("init translate", JSON.parse(JSON.stringify(currentElem)));
 
         const contentString = currentElem.getAttribute(I18N_ATTRIBUTE);
         replaceI18n(currentElem, contentString);

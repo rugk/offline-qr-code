@@ -104,7 +104,7 @@ export function set(tag, value) {
  * @returns {HTMLElement}
  */
 export function getQr() {
-    Logger.logInfo("generated new qr kjua code", kjuaOptions);
+    Logger.logInfo("generated new qr kjua code", JSON.parse(JSON.stringify(kjuaOptions)));
     return kjua(kjuaOptions);
 }
 

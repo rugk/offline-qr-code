@@ -274,7 +274,7 @@ function applyOptionLive(option, optionValue) {
                 browser.storage.sync.set({
                     [optionCompare]: invertedColor
                 }).catch((error) => {
-                    Logger.logError("could not save option", optionCompare, ":", error);
+                    Logger.logError("could not save option", optionCompare, ":", JSON.parse(JSON.stringify(error)));
                     MessageHandler.showError("couldNotSaveOption", true);
                 }).finally(() => {
                     // also display/"preview" other compared color,
@@ -354,20 +354,20 @@ function saveOption(event) {
 
     // do not save if managed
     if (elOption.hasAttribute("disabled")) {
-        Logger.logInfo(elOption, "is disabled, ignore sync setting");
+        Logger.logInfo(JSON.parse(JSON.stringify(elOption)), "is disabled, ignore sync setting");
         return;
     }
 
     const [option, optionValue] = getIdAndOptionsFromElement(elOption);
 
-    Logger.logInfo("save option", elOption, option, JSON.parse(JSON.stringify(optionValue)));
+    Logger.logInfo("save option", JSON.parse(JSON.stringify(elOption)), option, optionValue);
 
     applyOptionLive(option, optionValue);
 
     browser.storage.sync.set({
         [option]: optionValue
     }).catch((error) => {
-        Logger.logError("could not save option", option, ": ", error);
+        Logger.logError("could not save option", option, ": ", JSON.parse(JSON.stringify(error)));
         MessageHandler.showError("couldNotSaveOption", true);
     });
 }
@@ -424,7 +424,7 @@ function setManagedOption(option, optionGroup, elOption) {
     return gettingOption.then((res) => {
         showManagedInfo();
 
-        Logger.logInfo("managed config found", res, elOption);
+        Logger.logInfo("managed config found", JSON.parse(JSON.stringify(res)), JSON.parse(JSON.stringify(elOption)));
 
         applyOptionToElement(option, optionGroup, elOption, res);
         // and disable control
@@ -467,7 +467,7 @@ function setOption(option, optionGroup, elOption, ignoreDisabled) {
     }
 
     return gettingOption.then((res) => {
-        Logger.logInfo("sync config found", JSON.parse(JSON.stringify(res)), elOption);
+        Logger.logInfo("sync config found", JSON.parse(JSON.stringify(res)), JSON.parse(JSON.stringify(elOption)));
 
         // do not modify if managed
         if (ignoreDisabled !== true && elOption.hasAttribute("disabled")) {
@@ -505,7 +505,7 @@ function loadOptions() {
 
         allPromises[index] = setManagedOption(elementId, optionGroup, currentElem).catch((error) => {
             /* only log warning as that is expected when no manifest file is found */
-            Logger.logWarning("could not get managed options", error);
+            Logger.logWarning("could not get managed options", JSON.parse(JSON.stringify(error)));
 
             // now set "real"/"usual" option
             return setOption(elementId, optionGroup, currentElem);
@@ -555,7 +555,7 @@ async function resetOptions(event) {
                         // re-load the options again
                         loadOptions();
                     }).catch((error) => {
-                        Logger.logError("Could not undo option resetting: ", error);
+                        Logger.logError("Could not undo option resetting: ", JSON.parse(JSON.stringify(error)));
                         MessageHandler.showError("couldNotUndoAction");
                     }).finally(() => {
                         MessageHandler.hideSuccess();
@@ -564,7 +564,7 @@ async function resetOptions(event) {
             });
         });
     }).catch((error) => {
-        Logger.logError(error);
+        Logger.logError(JSON.parse(JSON.stringify(error)));
         MessageHandler.showError("resettingOptionsFailed", true);
     }).finally(() => {
         // re-enable button
@@ -580,7 +580,7 @@ async function resetOptions(event) {
  */
 export function init() {
     loadOptions().catch((error) => {
-        Logger.logError(error);
+        Logger.logError(JSON.parse(JSON.stringify(error)));
         MessageHandler.showError("couldNotLoadOptions", false);
     });
 

@@ -127,7 +127,7 @@ function selectAllText(event) {
         return;
     }
 
-    Logger.logInfo("selectAllText", event);
+    Logger.logInfo("selectAllText", JSON.parse(JSON.stringify(event)));
 
     event.retry = event.retry + 1 || 0;
 
@@ -156,7 +156,7 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    Logger.logInfo("scrollToTop", event);
+    Logger.logInfo("scrollToTop", JSON.parse(JSON.stringify(event)));
 
     if (event.target.scrollTop !== 0) {
         event.target.scrollTop = 0;
@@ -345,7 +345,7 @@ export function replaceQr(elNewQr) {
     const elOldQrCode = getQrCodeElement();
 
     // and replace it
-    Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
+    Logger.logInfo("replace qr code from", JSON.parse(JSON.stringify(elOldQrCode)), "to", JSON.parse(JSON.stringify(elNewQr)));
     qrCode.replaceChild(elNewQr, elOldQrCode);
 }
 
@@ -408,9 +408,13 @@ function menuClicked(event) {
                 file: file,
                 filename: "qrcode.svg",
             }).then(() => {
-                Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+                Logger.logInfo("SVG image saved on disk", JSON.parse(JSON.stringify(svgElem)), svgString);
             }).catch((error) => {
-                Logger.logError("Could not save SVG image saved on disk", error, svgElem, svgString);
+                Logger.logError("Could not save SVG image saved on disk",
+                    JSON.parse(JSON.stringify(error)),
+                    JSON.parse(JSON.stringify(svgElem)),
+                    JSON.parse(JSON.stringify(svgString))
+                );
 
                 // in case of user error (i.e. user cancelled e.g.) do not show error message
                 if (error.message.includes("user")) {
@@ -443,7 +447,7 @@ function menuClicked(event) {
                 Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
                 MessageHandler.showError("errorPermissionRequired", true);
             }).catch((error) => {
-                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", JSON.parse(JSON.stringify(error)));
                 MessageHandler.showError("errorPermissionRequestFailed", true);
             });
         });
@@ -556,7 +560,7 @@ export function init() {
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
-                Logger.logWarning(`error creating menu item: ${lastError}`);
+                Logger.logWarning(`error creating menu item: ${JSON.parse(JSON.stringify(lastError))}`);
             } else {
                 Logger.logInfo("menu item created successfully");
             }
