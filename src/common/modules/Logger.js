@@ -14,6 +14,36 @@ const MESSAGE_LEVEL_NAME = Object.freeze({
 });
 
 /**
+ * Checks if value is a object.
+ *
+ * @function
+ * @param  {*} value
+ * @returns {boolean}
+ */
+function isObject(value){
+    const type = typeof value;
+    return value != null && (type === "object" || type === "function");
+}
+
+/**
+ * Copy nested objects to ensure a properly output.
+ *
+ * @function
+ * @param  {...*} args
+ * @returns {Object}
+ */
+function verifyArgs(args) {
+    for(const key in args) {
+        if (args.hasOwnProperty(key)) {
+            if(isObject(args[key])) {
+                args[key] = JSON.parse(JSON.stringify(args[key]));
+            }
+        }
+    }
+    return args;
+}
+
+/**
  * Logs a string to console.
  *
  * Pass as many strings/output as you want.
@@ -35,16 +65,18 @@ export function log(...args) {
     const messagetype = args[0];
     args[0] = `${ADDON_NAME_SHORT} [${MESSAGE_LEVEL_NAME[messagetype]}]`;
 
+    args = verifyArgs(args);
+
     /* eslint-disable no-console */
     switch (messagetype) {
-    case MESSAGE_LEVEL.ERROR:
-        console.error(...args);
-        break;
-    case MESSAGE_LEVEL.WARN:
-        console.warn(...args);
-        break;
-    default:
-        console.log(...args);
+        case MESSAGE_LEVEL.ERROR:
+            console.error(...args);
+            break;
+        case MESSAGE_LEVEL.WARN:
+            console.warn(...args);
+            break;
+        default:
+            console.log(...args);
     }
     /* eslint-enable no-console */
 }
@@ -59,6 +91,8 @@ export function log(...args) {
 export function logError(...args) {
     args.unshift(MESSAGE_LEVEL.ERROR);
 
+    args = verifyArgs(args);
+
     log(...args);
 }
 
@@ -71,6 +105,8 @@ export function logError(...args) {
  */
 export function logWarning(...args) {
     args.unshift(MESSAGE_LEVEL.WARN);
+
+    args = verifyArgs(args);
 
     log(...args);
 }
@@ -95,6 +131,8 @@ export function logInfo(...args) {
     }
 
     args.unshift(MESSAGE_LEVEL.INFO);
+
+    args = verifyArgs(args);
 
     log(...args);
 }
