@@ -1,5 +1,10 @@
 # Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
 
+[![Mozilla Add-on Version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)
+[![Mozilla Add-on Downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)
+[![Mozilla Add-on Users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/statistics/)
+[![Mozilla Add-on STars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/)
+
 <img height="200" width="200" src="assets/qrbig-optimized.svg">
 
 This is a (Firefox) add-on (WebExtension) allowing you to generate a QR code from any website and any text.
