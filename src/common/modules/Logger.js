@@ -3,6 +3,8 @@ import {ADDON_NAME_SHORT} from "/common/modules/GlobalConsts.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
+import isObject from "/common/modules/lib/lodash/isObject.js";
+
 let debugMode = null;
 
 const MESSAGE_LEVEL_NAME = Object.freeze({
@@ -12,6 +14,22 @@ const MESSAGE_LEVEL_NAME = Object.freeze({
     [MESSAGE_LEVEL.LOADING]: "LOADING",
     [MESSAGE_LEVEL.SUCCESS]: "SUCCESS"
 });
+
+/**
+ * Copy nested objects to ensure a properly output.
+ *
+ * @function
+ * @param  {array} args
+ * @returns {Object}
+ */
+function prepareObjectsForLogging(args) {
+    for(const [index, value] of args.entries()) {
+        if(isObject(value)) {
+            args[index] = JSON.parse(JSON.stringify(value));
+        }
+    }
+    return args;
+}
 
 /**
  * Logs a string to console.
@@ -34,6 +52,8 @@ export function log(...args) {
 
     const messagetype = args[0];
     args[0] = `${ADDON_NAME_SHORT} [${MESSAGE_LEVEL_NAME[messagetype]}]`;
+
+    args = prepareObjectsForLogging(args);
 
     /* eslint-disable no-console */
     switch (messagetype) {
