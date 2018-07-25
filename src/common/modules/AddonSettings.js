@@ -129,7 +129,7 @@ export function set(option, value) {
     }
 
     return browser.storage.sync.set(option).catch((error) => {
-        Logger.logError("Could not save option:", option, JSON.parse(JSON.stringify(error)));
+        Logger.logError("Could not save option:", option, error);
     });
 }
 
@@ -153,13 +153,13 @@ export function loadOptions() {
         managedOptions = options;
     }).catch((error) => {
         /* only log warning as that is expected when no manifest file is found */
-        Logger.logWarning("could not get managed options", JSON.parse(JSON.stringify(error)));
+        Logger.logWarning("could not get managed options", error);
     });
 
     gettingSyncOption.then((options) => {
         syncOptions = options;
     }).catch((error) => {
-        Logger.logError("could not get sync options", JSON.parse(JSON.stringify(error)));
+        Logger.logError("could not get sync options", error);
     });
 
     // if the settings have been received anywhere, they could be loaded

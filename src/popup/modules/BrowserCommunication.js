@@ -20,7 +20,7 @@ let overwroteQrCode = false;
  * @returns {void}
  */
 function handleMessages(request, sender, sendResponse) {
-    Logger.logInfo("Got message", JSON.parse(JSON.stringify(request)), "from", JSON.parse(JSON.stringify(sender)));
+    Logger.logInfo("Got message", request, "from", sender);
 
     switch (request.type) {
     case COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT:

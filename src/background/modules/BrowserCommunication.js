@@ -95,7 +95,7 @@ function saveFileAs(request, sender, sendResponse) {
  * @returns {Promise|null}
  */
 function handleMessages(request, sender, sendResponse) {
-    Logger.logInfo("Got message", JSON.parse(JSON.stringify(request)), "from", JSON.parse(JSON.stringify(sender)));
+    Logger.logInfo("Got message", request, "from", sender);
 
     switch (request.type) {
     case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:

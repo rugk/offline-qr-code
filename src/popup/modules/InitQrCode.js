@@ -66,7 +66,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     }).catch(() => {
         // …or fallback to tab URL
         return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            Logger.logError(JSON.parse(JSON.stringify(error)));
+            Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
             // re-throw error
@@ -83,5 +83,5 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     // init is done, set variable to syncronously get values
     initCompleted = true;
 }).catch((error) => {
-    Logger.logError(JSON.parse(JSON.stringify(error)));
+    Logger.logError(error);
 });
