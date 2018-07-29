@@ -3,7 +3,7 @@ import {ADDON_NAME_SHORT} from "/common/modules/GlobalConsts.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
-import isObject from "/common/modules/lib/lodash/isObject.js";
+import isPlainObject from "/common/modules/lib/lodash/isPlainObject.js";
 
 let debugMode = null;
 
@@ -16,15 +16,15 @@ const MESSAGE_LEVEL_NAME = Object.freeze({
 });
 
 /**
- * Copy nested objects to ensure a properly output.
+ * Freeze (nested) objects to ensure a proper output.
  *
  * @function
  * @param  {array} args
  * @returns {Object}
  */
 function prepareObjectsForLogging(args) {
-    for(const [index, value] of args.entries()) {
-        if(isObject(value)) {
+    for (const [index, value] of args.entries()) {
+        if (isPlainObject(value)) {
             args[index] = JSON.parse(JSON.stringify(value));
         }
     }
