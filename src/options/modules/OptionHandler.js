@@ -360,7 +360,7 @@ function saveOption(event) {
 
     const [option, optionValue] = getIdAndOptionsFromElement(elOption);
 
-    Logger.logInfo("save option", elOption, option, JSON.parse(JSON.stringify(optionValue)));
+    Logger.logInfo("save option", elOption, option, optionValue);
 
     applyOptionLive(option, optionValue);
 
@@ -467,7 +467,7 @@ function setOption(option, optionGroup, elOption, ignoreDisabled) {
     }
 
     return gettingOption.then((res) => {
-        Logger.logInfo("sync config found", JSON.parse(JSON.stringify(res)), elOption);
+        Logger.logInfo("sync config found", res, elOption);
 
         // do not modify if managed
         if (ignoreDisabled !== true && elOption.hasAttribute("disabled")) {

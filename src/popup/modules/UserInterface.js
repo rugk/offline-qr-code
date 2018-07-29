@@ -187,7 +187,7 @@ async function saveQrCodeSizeOption() {
     // never start saving an option, when the old one is stll being saved
     await savingQrCodeSize;
 
-    Logger.logInfo("saved qr code text size/style", JSON.parse(JSON.stringify(qrCodeSizeOption)));
+    Logger.logInfo("saved qr code text size/style", qrCodeSizeOption);
 
     savingQrCodeSize = browser.storage.sync.set({
         "qrCodeSize": qrCodeSizeOption
