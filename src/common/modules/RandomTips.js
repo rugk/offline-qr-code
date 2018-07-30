@@ -121,6 +121,7 @@ let context = null;
  * Save the current config.
  *
  * @function
+ * @name saveConfig
  * @private
  * @returns {void}
  */

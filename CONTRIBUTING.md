@@ -2,10 +2,11 @@ Nice to see you want to contribute! :+1:
 
 ## Translations
 
-It would be great, if you can contribute your translations! Currently, it is unfortunately only possible to translate the JSON files directly.
-To do so, go to [`src/_locales/en`](src/_locales/en) and copy the English (or German) [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
+It would be great, if you can contribute your translations! You can either translate the JSON files directly or use [this online translator service](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code).
+**Manually:** To translate it manually, go to [`src/_locales/en`](src/_locales/en) and copy the English (or German) [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.
+**web-ext-translator:** Go to [this page](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code) and translate it online. Download the result by clicking on "Export to ZIP" at the bottom.
 
-At the end, just submit a Pull Request.
+At the end, just submit a Pull Request with your changed files.
 Of course, you can (and should) improve existing translations.
 
 For more details, [see the official docs](https://developer.mozilla.org/Add-ons/WebExtensions/Internationalization#Providing_localized_strings_in__locales).
@@ -52,6 +53,8 @@ Developing/improving a WebExtension add-on is easy! **If you have ever made some
 * **Debug extension:** Just visit `about:debugging` and load the extension by selecting any file from the Web Extensions' dir. In our case, e.g. select `manifest.json` from the `src` dir. [See a video here.](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Your_first_WebExtension#Installing).
 * **Change code:** When it is loaded you can just change the code (and press "Reload", if needed) and you'll see the result. That is it!
 
+If you use Visual Studio Code, you can use [the Firefox debugger](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug) to run it. Follow the instructions there, and start it with `F5`.
+
 ### Coding guidelines
 
 As for simple indentation issues, please refer to the [editorconfig file](.editorconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
@@ -65,18 +68,18 @@ Apart from that, there are some simple rules.
 
 #### JS
 * Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.
-* We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines.
+* We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines. If you use NodeJs, you can just run `npm install` to install it.
   When something is not specified just use common sense and look at how other code in the project is written.
 * Especially, as we use a [CSP](src/manifest.json), please do _not_:
    * use inline JavaScript
    * use eval, or other insecure features
    * modify the [CSP](src/manifest.json#L33) :wink:
 * We do use [ES6 Modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/).
-* Avoid `this`, it mostly causes confusion. The pattern used here, usually does not need `this`.
+* Avoid `this`, it mostly causes confusion. The pattern used here usually does not need `this`.
 * Use early return instead of nested if blocks to keep the code readable.
 * Use `const` whenever possible (also in local variables in functions), only use `let` when the variable needs to be changed. Don't use `var`.
-* Use the [spread](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax) and  [rest operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) instead of `.apply` or similar.
-* If you write real constants (i.e. `const` variables not written in functions, if their scope e.g. is a "module" or whole project, and which do represent static _literals_, e.g. simple variable types, such as integers, strings, but not selected HTML elements), do write them in UPPERCASE (as "real" constants are usually written in other languages), otherwise write them as usual variables in camelCase.
+* Use the [spread](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax) and [rest operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) instead of `.apply` or similar.
+* If you write real constants (i.e. `const` variables not written in functions, if their scope e.g. is a "module" or whole project, and they do represent static _literals_, e.g. simple variable types, such as integers, strings, but not selected HTML elements), do write them in UPPERCASE_LETTERS (as "real" constants are usually written in other languages), otherwise always write variable names in camelCase.
 * Objects, which should never be modified, should be frozen with `Object.freeze`, so they cannot be modified.
 * Do _not_ use magic numbers. Use (global/module-scoped) constants instead.
 * Do log important things you do in your code. Use the `Logger` for that. In production code no `console.log()` or similar should appear.
@@ -84,6 +87,7 @@ Apart from that, there are some simple rules.
 * Avoid naming variables by their variable type only, e.g. `element`. Instead try to use the same variable name for an element whenever you refer to it in the source code. E.g. name a message box `elMessage`, so one can search for it in the whole code base to find out, where it is touched.
 * You should start the variable names of HTML elements with `el` as they are not obvious to differentiate from other variable names. Otherwise, do not prepend the variable type to the variable name.
 * Avoid anonymous functions, which have no name (i.e. not really assigned ) unless they do really do simple things. In most cases bigger anonymous functions are a point one may refactor. Consider introducing some (private) function in the module instead, so the function is described, documented and maybe re-used.
+* In JSDOC use the [`@name`](http://usejsdoc.org/tags-name.html) tag, if you declare a function by assigning it to a variable, i.e. `const thisIsAFunc = …`. This is needed, so that JSDOC knows, what this is.
 
 ### CSS
 

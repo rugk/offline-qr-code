@@ -30,11 +30,11 @@ const qrCodeText = document.getElementById("qrcodetext");
 let resizeMutationObserver;
 
 let placeholderShown = true;
-let qrCodeRefreshTimer = null;
 
 // default/last size
 let qrLastSize = 200;
 let qrCodeSizeOption = {};
+let savingQrCodeSize = null; // promise
 
 /**
  * Hide QR code and show placeholder instead.
@@ -79,27 +79,11 @@ function hidePlaceholder() {
  * Refreshes the QR code, if the text has been changed in the input field.
  *
  * @function
+ * @name saveConfig
  * @private
- * @param {event} event
  * @returns {void}
  */
-function refreshQrCode(event) {
-    // TODO: use lodash throttle!
-    // if a timer is already running and the current call does not finish it
-    if (qrCodeRefreshTimer !== null && !event.hasOwnProperty("isTimer")) {
-        // do nothing, as this is an additional call during the
-        // timeout, which we want to omit/
-        return;
-    } else if (qrCodeRefreshTimer === null) {
-        // if the timer has not been started yet, start it
-        event.isTimer = true;
-        qrCodeRefreshTimer = setTimeout(refreshQrCode, QR_CODE_REFRESH_TIMEOUT, event);
-        return;
-    }
-
-    // if timer has been reached, reset timer
-    qrCodeRefreshTimer = null;
-
+const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
     Logger.logInfo("new value from textarea: ", text);
 
@@ -114,7 +98,7 @@ function refreshQrCode(event) {
 
     QrCreator.setTextInternal(text);
     QrCreator.generate();
-}
+}, QR_CODE_REFRESH_TIMEOUT);
 
 /**
  * Returns whether an (inpout/textare/…) element is selected or not.
@@ -193,26 +177,31 @@ function scrollToTop(event) {
 }
 
 /**
- * Saves the qr code size as an option.
+ * Saves the QR code size option (to remember the size).
  *
  * @function
  * @private
  * @returns {Promise}
  */
-function saveQrCodeSizeOption() {
-    Logger.logInfo("saved qr code text size/style", JSON.parse(JSON.stringify(qrCodeSizeOption)));
+async function saveQrCodeSizeOption() {
+    // never start saving an option, when the old one is stll being saved
+    await savingQrCodeSize;
 
-    return browser.storage.sync.set({
+    Logger.logInfo("saved qr code text size/style", qrCodeSizeOption);
+
+    savingQrCodeSize = browser.storage.sync.set({
         "qrCodeSize": qrCodeSizeOption
     });
+    return savingQrCodeSize;
 }
 
 /**
- * Executes saveQrCodeTextSize, but only one time each second.
+ * Regularely calls saveQrCodeSizeOption to save the option, but not too often.
  *
- * This depends on the thottle function from lodash.
+ * This depends on the throttle function from lodash.
  *
  * @function
+ * @name throttledSaveQrCodeSizeOption
  * @private
  */
 const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, THROTTLE_SIZE_SAVING_FOR_REMEMBER);
@@ -313,6 +302,7 @@ function resizeElements() {
  * This depends on the thottle function from lodash that uses requestAnimationFrame.
  *
  * @function
+ * @name throttledResizeElements
  * @private
  */
 const throttledResizeElements = throttle(resizeElements);

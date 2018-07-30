@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+          "name": "Launch addon",
+          "type": "firefox",
+          "request": "attach",
+          "addonType": "webExtension",
+          "addonPath": "${workspaceFolder}/src"
+      }
+    ],
+
+}
