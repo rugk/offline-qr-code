@@ -2,6 +2,7 @@ import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
+import * as ActiveTab from "./ActiveTab.js";
 import * as QrCreator from "./QrCreator.js";
 import * as BrowserCommunication from "./BrowserCommunication.js";
 import * as UserInterface from "./UserInterface.js";
@@ -23,7 +24,7 @@ const userInterfaceInit = UserInterface.init().then(() => {
 // current tab is used by default
 const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
     if (autoGetSelectedText !== true) {
-        throw new Error("using selection is disabled");
+        return Promise.reject(new Error("using selection is disabled"));
     }
 
     return browser.tabs.executeScript({
@@ -63,7 +64,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        getCurrentTab().then(QrCreator.generateFromTab).catch(error => {
+        ActiveTab.getActiveTab().then(QrCreator.generateFromTab).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
@@ -83,43 +84,3 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 }).catch((error) => {
     Logger.logError(error);
 });
-
-/**
- * Get the current tab
- *
- * @returns {Promise}
- */
-function getCurrentTab() {
-    const queryActiveTab = () => browser.tabs.query({active: true, currentWindow: true});
-    const bindOnUpdatedListener = (requestedTabId) => {
-        return new Promise((resolve, reject) => {
-            browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-                if (tab.status !== "complete" || tabId !== requestedTabId) {
-                    return;
-                }
-
-                queryActiveTab().then(tabs => {
-                    resolve(tabs[0]);
-                }).catch(error => {
-                    reject(error);
-                }).finally(() => {
-                    browser.tabs.onUpdated.removeListener(bindOnUpdatedListener);
-                });
-            });
-        });
-    };
-
-    return new Promise((resolve, reject) => {
-        queryActiveTab().then((tabs) => {
-            const tab = tabs[0];
-
-            if (tab.url) {
-                resolve(tab);
-
-                return;
-            }
-
-            bindOnUpdatedListener(tab.id).then(resolve).catch(reject);
-        }).catch(reject);
-    });
-}
