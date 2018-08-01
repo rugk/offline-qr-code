@@ -113,6 +113,19 @@ export function generateFromTab(tab) {
 }
 
 /**
+ * Generates a QR code for multiple tabs.
+ *
+ * Attention: Currently just uses the first tab, only!
+ *
+ * @function
+ * @param  {browser.tabs} tabs tabs passed from browser.tabs
+ * @returns {void}
+ */
+export function generateFromTabs(tabs) {
+    generateFromTab(tabs[0]);
+}
+
+/**
  * Returns the type of the generated QR code.
  *
  * @function
