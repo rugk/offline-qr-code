@@ -39,8 +39,7 @@ export function getActiveTab(timeout = DEFAULT_TIMEOUT) {
          * @param {int} tabId
          * @returns {Promise}
          */
-        waitHandler = async (tabId, a, b) => {
-            console.log(tabId, a, b);
+        waitHandler = async (tabId) => {
             // Logger.logInfo(tabId, a, b);
             if (tabId !== requestedTabId) {
                 // ignore, as we wait for the "correct" tab
@@ -48,7 +47,6 @@ export function getActiveTab(timeout = DEFAULT_TIMEOUT) {
             }
 
             const tab = await queryCurrentTab().catch(reject);
-            console.log("queryCurrentTab:", tab);
             // Logger.logInfo("queryCurrentTab:", tab);
             if (tabHasUrl(tab)) {
                 resolve(tab);

@@ -1,4 +1,5 @@
 import * as Logger from "/common/modules/Logger.js";
+import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 /**
  * Sets a popup icon variant.
@@ -36,8 +37,7 @@ function setPopupIcon(icon) {
  * @returns {void}
  */
 export function init() {
-    // TODO: use common thing here
-    browser.storage.sync.get("popupIconColored").then((res) => {
+    AddonSettings.get("popupIconColored").then((res) => {
         const popupIconColored = res.popupIconColored;
 
         if (popupIconColored === true) {
