@@ -2,6 +2,7 @@ import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
+import * as ActiveTab from "./ActiveTab.js";
 import * as QrCreator from "./QrCreator.js";
 import * as BrowserCommunication from "./BrowserCommunication.js";
 import * as UserInterface from "./UserInterface.js";
@@ -10,7 +11,6 @@ import * as UserInterface from "./UserInterface.js";
 export let initCompleted = false;
 
 // init modules
-const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
@@ -24,7 +24,7 @@ const userInterfaceInit = UserInterface.init().then(() => {
 // current tab is used by default
 const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
     if (autoGetSelectedText !== true) {
-        throw new Error("using selection is disabled");
+        return Promise.reject(new Error("using selection is disabled"));
     }
 
     return browser.tabs.executeScript({
@@ -64,8 +64,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
+        ActiveTab.getActiveTab().then(QrCreator.generateFromTab).catch(error => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
