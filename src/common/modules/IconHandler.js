@@ -1,6 +1,8 @@
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
+const POPUP_ICON_OPTION = "popupIconColored";
+
 /**
  * Sets a popup icon variant.
  *
@@ -27,7 +29,23 @@ function setPopupIcon(icon) {
         return;
     }
 
-    browser.browserAction.setIcon({path: `icons/icon-small-${icon}.svg`});
+    browser.browserAction.setIcon({path: `/icons/icon-small-${icon}.svg`});
+}
+
+/**
+ * Set icon depending on whether it should be colored, or not.
+ *
+ * @function
+ * @param {boolean} popupIconColored if popupIconColored is colored or not
+ * @returns {void}
+ */
+export function changeIconIfColored(popupIconColored) {
+    if (popupIconColored === true) {
+        setPopupIcon("colored");
+    } else {
+        // reset icon
+        setPopupIcon(null);
+    }
 }
 
 /**
@@ -37,15 +55,8 @@ function setPopupIcon(icon) {
  * @returns {void}
  */
 export function init() {
-    AddonSettings.get("popupIconColored").then((res) => {
-        const popupIconColored = res.popupIconColored;
-
-        if (popupIconColored === true) {
-            setPopupIcon("colored");
-        } else {
-            // reset icon
-            setPopupIcon(null);
-        }
+    AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => {
+        changeIconIfColored(popupIconColored);
     });
 }
 
