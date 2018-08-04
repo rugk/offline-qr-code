@@ -92,3 +92,7 @@ Apart from that, there are some simple rules.
 ### CSS
 
 * Remember that [WebExtensions automatically](https://discourse.mozilla.org/t/add-ons-have-box-sizing-border-box-by-default/28359) have the CSS property [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) set to `border-box` instead of `content-box` as on the web.
+
+### Tests
+
+

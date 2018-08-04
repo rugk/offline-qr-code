@@ -41,6 +41,7 @@
         }],
         "no-var": 1,
         "prefer-arrow-callback": 1,
+        "no-confusing-arrow": 1,
         "prefer-rest-params": 2,
         "prefer-spread": 2,
         "prefer-template": 1,

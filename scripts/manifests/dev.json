@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "OfflineQR DEV VERSION",
+  "name": "OfflineQr DEV VERSION",
   "short_name": "__MSG_extensionNameShort__",
   "version": "1.2.1",
   "author": "rugk",
