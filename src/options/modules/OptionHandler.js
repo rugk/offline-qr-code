@@ -230,7 +230,7 @@ function applyOptionLive(option, optionValue) {
 
     case "popupIconColored":
         if (optionValue === true) {
-            browser.browserAction.setIcon({path: "icons/icon-small-colored.svg"});
+            browser.browserAction.setIcon({path: "/icons/icon-small-colored.svg"});
         } else {
             // reset icon
             browser.browserAction.setIcon({path: null});
