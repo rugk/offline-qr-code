@@ -55,7 +55,7 @@ Developing/improving a WebExtension add-on is easy! **If you have ever made some
 
 If you use Visual Studio Code, you can use [the Firefox debugger](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug) to run it. Follow the instructions there, and start it with `F5`.
 
-If you have made your changes, please ensure that the unit tests still run. See [the secon on unit tests] for the (easy) way to run them.
+If you have made your changes, please ensure that the unit tests still run. See [the section on testing](#tests) for the (easy) way to run them.
 
 ### Coding guidelines
 
@@ -102,10 +102,20 @@ We use _Mocha_, _Chai_ and _Sinon_ for unit tests. However, you do not need to c
 * You'll see the `manifest.json`. Now change the address in the address bar to `moz-extension://<uuid here>/tests/index.html`. This is the test site, which then runs the tests automatically!
 * You do not need to install anything, test libraries are downloaded from the web, automatically. If that does not work, you may have the wrong `manifest.json`, which does not allow loading of these test frameworks. Make sure you have the dev version ([`dev.json`](scripts/manifests/dev.json) in `scripts/manifests/`) loaded in the `src` dir of this add-on.
 
-Tests are defined in the [`src/tests/`](src/tests/) dir. 
+Tests are defined in the [`src/tests/`](src/tests/) dir.
 
 Due to the fact that we use ES6 modules, [Mocha cannot yet run the tests on the command line](https://github.com/mochajs/mocha/issues/3006) though.
 
-## Various stuff
+#### Coding tests
 
-* It is possible to use [symbolic links on Windows with git](https://stackoverflow.com/a/49913019/5008962). You have to make sure to enable that option at installation of git for Windows and maybe need to re-clone the repo with `git clone -c core.symlinks=true <URL>`.
+As for the Mocha tests, we do have [another EsLint config](src/tests/.eslintrc). To be able to use them, you have to install the [EsLint mocha plugin](https://github.com/lo1tuma/eslint-plugin-mocha), but if you only adjust the 
+
+Here some simple rules:
+* Do not describe tests as "should". This is superflous, as we know that tests may behave correct or not. Just use the third-person present tense (e.g. `.it("does something useful")`). Describe the working test, not the error, if it fails.
+* Use messages (often third parameter) in the assertions of chai, if useful. Here, describe the case, if it fails (e.g. "failed to do XY"), as these strings are only shown in case of an error.
+* As for chai, write them [in the assert syntax](http://www.chaijs.com/api/assert/).
+* Always use `.chai.assert.strictEqual` and not only `.equal` for comparison in tests, unless there is a specific reason, not to do so. This way, you also do not need to check for the varaible type, yet again. 
+
+### Various stuff
+
+* It is possible to use [symbolic links on Windows with git](https://stackoverflow.com/a/49913019/5008962). You have to make sure to enable that option at the installation of git for Windows and maybe need to re-clone the repo with `git clone -c core.symlinks=true <URL>`.
