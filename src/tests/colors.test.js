@@ -10,8 +10,8 @@ const COLOR_ARRAY = Object.freeze({
     BLACK: [0, 0, 0],
 
     // contrast 2
-    "#00FEFF": [0, 254, 255],
-    "#FF0000": [255, 0, 0],
+    "#00FEFF": [0, 254, 255], // nearly Cyan (#00FFFF), teal50 from Firefox Photon
+    "#FF0000": [255, 0, 0], // red
 
     // contrast 3
     "#4F477D": [79, 71, 125],
@@ -25,7 +25,7 @@ describe("common module: Color", function () {
             chai.assert.isNotEmpty(Colors.CONTRAST_RATIO);
         });
 
-        it("and frozen", function () {
+        it("is frozen", function () {
             chai.assert.isFrozen(Colors.CONTRAST_RATIO);
         });
     });
