@@ -99,10 +99,13 @@ Apart from that, there are some simple rules.
 
 We use _Mocha_, _Chai_ and _Sinon_ for unit tests. However, you do not need to care for these insides if you just want to run them, as they are really easy to run:
 * When your add-on is loaded in [`about:debugging`], click on "Manifest URL" next to the "Internal UUID".
-* You'll see the `manifest.json`. Now change the address in the address bar to `moz-extension://<uuid here>/test/index.html`. This is the test site, which then runs the tests automatically!
+* You'll see the `manifest.json`. Now change the address in the address bar to `moz-extension://<uuid here>/tests/index.html`. This is the test site, which then runs the tests automatically!
 * You do not need to install anything, test libraries are downloaded from the web, automatically. If that does not work, you may have the wrong `manifest.json`, which does not allow loading of these test frameworks. Make sure you have the dev version ([`dev.json`](scripts/manifests/dev.json) in `scripts/manifests/`) loaded in the `src` dir of this add-on.
 
-Tests are defined in the [`src/test/`](src/test/) dir. 
+Tests are defined in the [`src/tests/`](src/tests/) dir. 
 
 Due to the fact that we use ES6 modules, [Mocha cannot yet run the tests on the command line](https://github.com/mochajs/mocha/issues/3006) though.
 
+## Various stuff
+
+* It is possible to use [symbolic links on Windows with git](https://stackoverflow.com/a/49913019/5008962). You have to make sure to enable that option at installation of git for Windows and maybe need to re-clone the repo with `git clone -c core.symlinks=true <URL>`.
