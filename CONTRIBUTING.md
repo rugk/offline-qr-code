@@ -55,6 +55,8 @@ Developing/improving a WebExtension add-on is easy! **If you have ever made some
 
 If you use Visual Studio Code, you can use [the Firefox debugger](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug) to run it. Follow the instructions there, and start it with `F5`.
 
+If you have made your changes, please ensure that the unit tests still run. See [the secon on unit tests] for the (easy) way to run them.
+
 ### Coding guidelines
 
 As for simple indentation issues, please refer to the [editorconfig file](.editorconfig). Just use a [plugin](http://editorconfig.org/#download), if needed, for your editor.
@@ -95,4 +97,12 @@ Apart from that, there are some simple rules.
 
 ### Tests
 
+We use _Mocha_, _Chai_ and _Sinon_ for unit tests. However, you do not need to care for these insides if you just want to run them, as they are really easy to run:
+* When your add-on is loaded in [`about:debugging`], click on "Manifest URL" next to the "Internal UUID".
+* You'll see the `manifest.json`. Now change the address in the address bar to `moz-extension://<uuid here>/test/index.html`. This is the test site, which then runs the tests automatically!
+* You do not need to install anything, test libraries are downloaded from the web, automatically. If that does not work, you may have the wrong `manifest.json`, which does not allow loading of these test frameworks. Make sure you have the dev version ([`dev.json`](scripts/manifests/dev.json) in `scripts/manifests/`) loaded in the `src` dir of this add-on.
+
+Tests are defined in the [`src/test/`](src/test/) dir. 
+
+Due to the fact that we use ES6 modules, [Mocha cannot yet run the tests on the command line](https://github.com/mochajs/mocha/issues/3006) though.
 
