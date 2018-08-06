@@ -33,11 +33,11 @@ See:
 * Has a simple, but intuitively and usable User Interface.
 * Uses up-to-date, great and customizable [QR code](https://github.com/nayuki/QR-Code-generator) [libraries](https://larsjung.de/kjua/).
 * You can generate and save QR codes as SVG or Canvas (PNG image)!
-* Lets you choose the size of the QR code and customize things.
-* Is completly internationalized (i18n).
-* Let's you use a shortcut (Ctrl+Shift+F10) for generating the QR code.
-* Generate QR codes from selected text on the website.
-* Complete Unicode/UTF-8/Emoji support.
+* You can choose the size of the QR code and customize things.
+* Is completely internationalized (i18n).
+* You can use a shortcut (Ctrl+Shift+F10) for generating the QR code.
+* Generates QR codes from selected text on the website.
+* Completes Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
 * Translated in English and German already. [Contribute your own language!](CONTRIBUTING.md#Translations)
 * Compatible with Firefox for Android
