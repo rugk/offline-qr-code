@@ -37,7 +37,7 @@ See:
 * Is completely internationalized (i18n).
 * You can use a shortcut (Ctrl+Shift+F10) for generating the QR code.
 * Generates QR codes from selected text on the website.
-* Completes Unicode/UTF-8/Emoji support.
+* Has complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
 * Translated in English and German already. [Contribute your own language!](CONTRIBUTING.md#Translations)
 * Compatible with Firefox for Android
