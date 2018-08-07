@@ -64,7 +64,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.setText(selection);
         QrCreator.generate();
     }).catch(() => {
-        ActiveTab.getActiveTab().then(QrCreator.generateFromTab).catch(error => {
+        ActiveTab.getActiveTab().then(QrCreator.generateFromTab).catch((error) => {
             Logger.logError(error);
             MessageHandler.showError("couldNotReceiveActiveTab", false);
 
