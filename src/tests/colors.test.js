@@ -1,6 +1,5 @@
 import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
-import "https://unpkg.com/sinon@6.1.4/pkg/sinon.js"; /* globals sinon */
 
 import * as Colors from "/common/modules/Colors.js";
 
@@ -15,7 +14,7 @@ const COLOR_ARRAY = Object.freeze({
 
     // contrast 3
     "#4F477D": [79, 71, 125],
-    "757D47": [79, 71, 125]
+    "#757D47": [79, 71, 125]
 });
 
 describe("common module: Color", function () {
@@ -105,7 +104,7 @@ describe("common module: Color", function () {
         });
 
         it("splits color correctly: #00feff", function () {
-            chai.assert.deepEqual(Colors.hexToRgb("#00feff"), COLOR_ARRAY["#00FEFF"], "hex with # does not work")
+            chai.assert.deepEqual(Colors.hexToRgb("#00feff"), COLOR_ARRAY["#00FEFF"], "hex with # does not work");
             chai.assert.deepEqual(Colors.hexToRgb("00feff"), COLOR_ARRAY["#00FEFF"], "hex without # does not work");
         });
 

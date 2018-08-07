@@ -108,13 +108,13 @@ Due to the fact that we use ES6 modules, [Mocha cannot yet run the tests on the 
 
 #### Coding tests
 
-As for the Mocha tests, we do have [another EsLint config](src/tests/.eslintrc). To be able to use them, you have to install the [EsLint mocha plugin](https://github.com/lo1tuma/eslint-plugin-mocha), but if you only adjust the 
+As for the Mocha tests, we do have [another EsLint config](src/tests/.eslintrc). To be able to use them, you have to install the [EsLint mocha plugin](https://github.com/lo1tuma/eslint-plugin-mocha), but if you only adjust the
 
 Here some simple rules:
-* Do not describe tests as "should". This is superflous, as we know that tests may behave correct or not. Just use the third-person present tense (e.g. `.it("does something useful")`). Describe the working test, not the error, if it fails.
+* Do not describe tests as "should". This is superfluous, as we know that tests may behave correct or not. Just use the third-person present tense (e.g. `.it("does something useful")`). Describe the working test, not the error, if it fails.
 * Use messages (often third parameter) in the assertions of chai, if useful. Here, describe the case, if it fails (e.g. "failed to do XY"), as these strings are only shown in case of an error.
 * As for chai, write them [in the assert syntax](http://www.chaijs.com/api/assert/).
-* Always use `.chai.assert.strictEqual` and not only `.equal` for comparison in tests, unless there is a specific reason, not to do so. This way, you also do not need to check for the varaible type, yet again. 
+* Always use `.chai.assert.strictEqual` and not only `.equal` for comparison in tests, unless there is a specific reason, not to do so. This way, you also do not need to check for the variable type, yet again.
 
 ### Various stuff
 
