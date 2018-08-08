@@ -115,7 +115,6 @@ Here some simple rules:
 * Use messages (often third parameter) in the assertions of chai, if useful. Here, describe the case, if it fails (e.g. "failed to do XY"), as these strings are only shown in case of an error.
 * As for chai, write them [in the assert syntax](http://www.chaijs.com/api/assert/).
 * Always use `.chai.assert.strictEqual` and not only `.equal` for comparison in tests, unless there is a specific reason, not to do so. This way, you also do not need to check for the variable type, yet again.
-* Do not use write/change HTML code in the `tests/index.html` to use it in a test. Considering it may later outside of a web browser, please rather fake the functions or whole document.
 
 ### Various stuff
 
