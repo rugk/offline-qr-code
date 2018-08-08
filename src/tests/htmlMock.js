@@ -1,20 +1,34 @@
 const TEST_AREA_ID = "testArea";
 
-const elTestArea = document.getElementById(TEST_AREA_ID)
+const elTestArea = document.getElementById(TEST_AREA_ID);
 
+/**
+ * Downloads the test file and attach it to the test area.
+ *
+ * @function
+ * @private
+ * @param  {string} filename
+ * @returns {void}
+ */
 export function setTestHtmlFile(filename) {
-    return fetch(`./` + filename).then((response) => {
+    return fetch(`./${filename}`).then((response) => {
         console.log(response);
         if (!response.ok) {
-            throw new Error("Error in network response when fetching " + filename + ".");
+            throw new Error(`Error in network response when fetching ${filename}.`);
         }
 
         return response.text();
-    }).then((responseBlob) => {
-        return setTestHtml(responseBlob);
-    });
+    }).then((responseBlob) => setTestHtml(responseBlob));
 }
 
+/**
+ * Set the HTML code as a test code in the test area.
+ *
+ * @function
+ * @private
+ * @param  {string} htmlText
+ * @returns {void}
+ */
 export function setTestHtml(htmlText) {
     elTestArea.innerHTML = htmlText;
 }

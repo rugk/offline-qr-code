@@ -60,7 +60,7 @@
         "no-new-object": 2,
         "eqeqeq": ["error", "smart"],
         "curly": ["error", "all"],
-        "dot-location": 1,
+        "dot-location": ["error", "property"],
         "dot-notation": 2,
         "no-array-constructor": 2,
         "no-throw-literal": 2,
