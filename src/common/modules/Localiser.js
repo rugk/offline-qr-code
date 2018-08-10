@@ -12,13 +12,16 @@ const LOCALIZED_ATTRIBUTES = [
 /**
  * Splits the _MSG__*__ format and returns the actual tag.
  *
+ * The format is defined in {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/i18n/Locale-Specific_Message_reference#name}.
+ *
  * @function
  * @private
  * @param  {string} tag
- * @returns {string}
+ * @returns {string|undefined} undefined if the string format was not valid
  */
 function getMessageTag(tag) {
-    const splitMessage = tag.split(/^__MSG_(\w+)__$/);
+    /** {@link https://regex101.com/r/LAC5Ib/1} **/
+    const splitMessage = tag.split(/^__MSG_([\w@]+)__$/);
 
     // this may throw exceptions, but then the input is just invalid
     return splitMessage[1];
@@ -38,7 +41,13 @@ function getMessageTag(tag) {
 function replaceI18n(elem, tag) {
     // localize main content
     if (tag !== "") {
-        const translatedMessage = browser.i18n.getMessage(getMessageTag(tag));
+        const messageName = getMessageTag(tag);
+        // ignore invalid strings
+        if (!messageName) {
+            return;
+        }
+
+        const translatedMessage = browser.i18n.getMessage(messageName);
         const isHTML = translatedMessage.startsWith("!HTML!");
         // only set message if it could be retrieved, i.e. do not override HTML fallback
         if (translatedMessage !== "") {

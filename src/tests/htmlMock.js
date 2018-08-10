@@ -12,7 +12,6 @@ const elTestArea = document.getElementById(TEST_AREA_ID);
  */
 export function setTestHtmlFile(filename) {
     return fetch(`./${filename}`).then((response) => {
-        console.log(response);
         if (!response.ok) {
             throw new Error(`Error in network response when fetching ${filename}.`);
         }
@@ -31,4 +30,15 @@ export function setTestHtmlFile(filename) {
  */
 export function setTestHtml(htmlText) {
     elTestArea.innerHTML = htmlText;
+}
+
+/**
+ * Removes any test HTML code.
+ *
+ * @function
+ * @private
+ * @returns {void}
+ */
+export function cleanup() {
+    elTestArea.innerHTML = "";
 }
