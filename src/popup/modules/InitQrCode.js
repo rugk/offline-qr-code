@@ -24,7 +24,7 @@ const userInterfaceInit = UserInterface.init().then(() => {
 // current tab is used by default
 const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
     if (autoGetSelectedText !== true) {
-        throw new Error("using selection is disabled");
+        return Promise.reject(new Error("using selection is disabled"));
     }
 
     return browser.tabs.executeScript({
