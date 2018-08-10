@@ -41,15 +41,35 @@ describe("common module: Localiser", function () {
          *
          * @function
          * @private
-         * @param {string} messageName
-         * @param {string} [wholeString=] (optional)
-         * @param {string} [localizedValue="VALID REPLACEMENT VALUE"] (optional) the localized string/message
+         * @param {string} localizedValue the localized string/message
          * @param {string} [expectedResult=[localizedValue]] (optional) the expected replacement
          * @returns {void}
          */
-        function testReplacesText(messageName, wholeString = `__MSG_${messageName}__`,
-            localizedValue = "VALID REPLACEMENT VALUE", expectedResult = localizedValue
-        ) {
+        function testReplaceValue(localizedValue, expectedResult = localizedValue) {
+            HtmlMock.setTestHtml('<span id="testElement" data-i18n="__MSG_someId__">Hardcoded Fallback Value!</span>');
+
+            const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
+
+            // run test
+            Localiser.init();
+
+            // "unstub"
+            stub.restore();
+
+            const replacedString = document.getElementById("testElement").innerHTML;
+            chai.assert.strictEqual(replacedString, expectedResult);
+        }
+
+        /**
+         * Verify the text is replaced in the HTML.
+         *
+         * @function
+         * @private
+         * @param {string} messageName
+         * @param {string} [wholeString=] (optional)
+         * @returns {void}
+         */
+        function testReplacesText(messageName, wholeString = `__MSG_${messageName}__`) {
             HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeString}">Hardcoded Fallback Value!</span>`);
 
             const mockI18n = sinon.mock(browser.i18n);
@@ -57,7 +77,7 @@ describe("common module: Localiser", function () {
             /* eslint-disable indent */
             mockI18n.expects("getMessage")
                     .once().withArgs(messageName)
-                    .returns(localizedValue);
+                    .returns("VALID REPLACEMENT VALUE");
 
             // run test
             Localiser.init();
@@ -66,7 +86,7 @@ describe("common module: Localiser", function () {
             mockI18n.verify();
 
             const replacedString = document.getElementById("testElement").innerHTML;
-            chai.assert.strictEqual(replacedString, expectedResult, `did not replace span with correct content for message ID "${messageName}"`);
+            chai.assert.strictEqual(replacedString, "VALID REPLACEMENT VALUE", `did not replace span with correct content for message ID "${messageName}"`);
         }
 
         /**
@@ -132,8 +152,13 @@ describe("common module: Localiser", function () {
 
         it("does not evaluate HTML format in data-i18n", function () {
             // WARNING: Security-relevant test!
-            testReplacesText("someId", undefined, "<b>bold text</b>", "&lt;b&gt;bold text&lt;/b&gt;");
-            testReplacesText("someId", undefined, "<div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
+            testReplaceValue("<b>bold text</b>", "&lt;b&gt;bold text&lt;/b&gt;");
+            testReplaceValue("<div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
+        });
+
+        it("does evaluate HTML if specified in data-i18n", function () {
+            testReplaceValue("!HTML! <b>bold text</b>", "<b>bold text</b>");
+            testReplaceValue("!HTML! <div>ok</div>", "<div>ok</div>");
         });
     });
 
