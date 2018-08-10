@@ -539,7 +539,7 @@ describe("common module: Localiser", function () {
         }
 
         it("correctly localises QR code example", function () {
-            return testModifiesHtml("localizer/popupIn.html", "localizer/popupOut.html", Object.freeze({
+            return testModifiesHtml("localizer/qrcode-in.html", "localizer/qrcode-out.html", Object.freeze({
                 dismissIconDescription: "Close this message",
                 qrCodePlaceholder: "QR code placeholder image",
                 textareaPlaceholder: "Enter text for QR code here to generate it.",
