@@ -28,9 +28,7 @@ function getMessageTag(tag) {
 }
 
 /**
- * Logs a string to console.
- *
- * Pass as many strings/output as you want.
+ * Localises the strings to localize in the HTMLElement.
  *
  * @function
  * @private
@@ -43,19 +41,17 @@ function replaceI18n(elem, tag) {
     if (tag !== "") {
         const messageName = getMessageTag(tag);
         // ignore invalid strings
-        if (!messageName) {
-            return;
-        }
-
-        const translatedMessage = browser.i18n.getMessage(messageName);
-        const isHTML = translatedMessage.startsWith("!HTML!");
-        // only set message if it could be retrieved, i.e. do not override HTML fallback
-        if (translatedMessage !== "") {
-            if (isHTML) {
-                const normalizedMessage = translatedMessage.replace("!HTML!", "").trimLeft();
-                elem.innerHTML = normalizedMessage;
-            } else {
-                elem.textContent = translatedMessage;
+        if (messageName) {
+            const translatedMessage = browser.i18n.getMessage(messageName);
+            const isHTML = translatedMessage.startsWith("!HTML!");
+            // only set message if it could be retrieved, i.e. do not override HTML fallback
+            if (translatedMessage !== "") {
+                if (isHTML) {
+                    const normalizedMessage = translatedMessage.replace("!HTML!", "").trimLeft();
+                    elem.innerHTML = normalizedMessage;
+                } else {
+                    elem.textContent = translatedMessage;
+                }
             }
         }
     }
@@ -66,7 +62,13 @@ function replaceI18n(elem, tag) {
 
         if (elem.hasAttribute(currentLocaleAttribute)) {
             const attributeTag = elem.getAttribute(currentLocaleAttribute);
-            const translatedMessage = browser.i18n.getMessage(getMessageTag(attributeTag));
+            const messageName = getMessageTag(attributeTag);
+            // ignore invalid strings
+            if (!messageName) {
+                return;
+            }
+
+            const translatedMessage = browser.i18n.getMessage(messageName);
             const isHTML = translatedMessage.startsWith("!HTML!");
             // only set message if it could be retrieved, i.e. do not override HTML fallback
             if (translatedMessage !== "") {

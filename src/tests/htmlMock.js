@@ -8,16 +8,28 @@ const elTestArea = document.getElementById(TEST_AREA_ID);
  * @function
  * @private
  * @param  {string} filename
- * @returns {void}
+ * @returns {Promise}
  */
 export function setTestHtmlFile(filename) {
+    return getTestHtmlFile(filename).then((responseBlob) => setTestHtml(responseBlob));
+}
+
+/**
+ * Get test HTML code froma file name.
+ *
+ * @function
+ * @private
+ * @param  {string} filename
+ * @returns {Promise}
+ */
+export function getTestHtmlFile(filename) {
     return fetch(`./${filename}`).then((response) => {
         if (!response.ok) {
             throw new Error(`Error in network response when fetching ${filename}.`);
         }
 
         return response.text();
-    }).then((responseBlob) => setTestHtml(responseBlob));
+    });
 }
 
 /**
@@ -30,6 +42,17 @@ export function setTestHtmlFile(filename) {
  */
 export function setTestHtml(htmlText) {
     elTestArea.innerHTML = htmlText;
+}
+
+/**
+ * Get's the current test HTML code.
+ *
+ * @function
+ * @private
+ * @returns {string}
+ */
+export function getTestHtml() {
+    return elTestArea.innerHTML;
 }
 
 /**
