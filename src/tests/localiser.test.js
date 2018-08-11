@@ -53,23 +53,23 @@ describe("common module: Localiser", function () {
      * @returns {void}
      */
     function runReplaceTests(descrSuffix, testReplacesText, testDoesNotReplaceText) {
-        it(`replaces simple alphanumeric message IDs in data-i18n${descrSuffix}`, function () {
+        it(`replaces simple alphanumeric message IDs ${descrSuffix}`, function () {
             testReplacesText("extensionNameShort");
             testReplacesText("AnotherGoodExample");
             testReplacesText("AndSomeNumbers01234");
             testReplacesText("08234");
         });
 
-        it(`replaces message IDs with underscores in data-i18n${descrSuffix}`, function () {
+        it(`replaces message IDs with underscores${descrSuffix}`, function () {
             testReplacesText("We_have_underscores__here___many____");
             testReplacesText("_yep_this_is_valid_");
         });
 
-        it(`replaces message IDs in data-i18n${descrSuffix}`, function () {
+        it(`replaces message IDs${descrSuffix}`, function () {
             testReplacesText("with@message");
         });
 
-        it(`does not replace invalid message IDs in data-i18n${descrSuffix}`, function () {
+        it(`does not replace invalid message IDs${descrSuffix}`, function () {
             testDoesNotReplaceText("invalid//ID");
             testDoesNotReplaceText("some spaces in here");
             testDoesNotReplaceText("some spaces in here");
@@ -149,75 +149,6 @@ describe("common module: Localiser", function () {
         runReplaceTests(" in data-i18n", testReplacesText, testDoesNotReplaceText); // eslint-disable-line mocha/no-setup-in-describe
     });
 
-    describe("init() – HTML replacement", function () {
-        /**
-         * Verify the text is replaced in the HTML.
-         *
-         * @function
-         * @private
-         * @param {string} localizedValue the localized string/message
-         * @param {string} [expectedResult=[localizedValue]] (optional) the expected replacement
-         * @returns {void}
-         */
-        function testReplaceValue(localizedValue, expectedResult = localizedValue) {
-            HtmlMock.setTestHtml('<span id="testElement" data-i18n="__MSG_someId__">Hardcoded Fallback Value!</span>');
-
-            const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
-
-            // run test
-            Localiser.init();
-
-            // "unstub"
-            stub.restore();
-
-            const replacedString = document.getElementById("testElement").innerHTML;
-            chai.assert.strictEqual(replacedString, expectedResult);
-        }
-
-        /**
-         * Verify the text is replaced in the HTML.
-         *
-         * @function
-         * @private
-         * @param {string} attribute
-         * @param {string} localizedValue the localized string/message
-         * @param {string} [expectedResult=[localizedValue]] (optional) the expected replacement
-         * @returns {void}
-         */
-        function testReplaceAttribute(attribute, localizedValue, expectedResult = localizedValue) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Fallback value!" data-i18n-${attribute}="__MSG_someId__"></span>`);
-
-            const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
-
-            // run test
-            Localiser.init();
-
-            // "unstub"
-            stub.restore();
-
-            const replacedString = document.getElementById("testElement").getAttribute(attribute);
-            chai.assert.strictEqual(replacedString, expectedResult, `did not replace attribute "${attribute}" correctly`);
-        }
-
-        it("does not evaluate HTML format in data-i18n", function () {
-            // WARNING: Security-relevant test!
-            testReplaceValue("<b>bold text</b>", "&lt;b&gt;bold text&lt;/b&gt;");
-            testReplaceValue("<div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
-        });
-
-        it("does evaluate HTML if specified in data-i18n", function () {
-            testReplaceValue("!HTML! <b>bold text</b>", "<b>bold text</b>");
-            testReplaceValue("!HTML! <div>ok</div>", "<div>ok</div>");
-        });
-
-        it("does strip/ignore \"!HTML!\" marker in attributes", function () {
-            TEST_ATTRIBUTES.forEach((attribute) => {
-                testReplaceAttribute(attribute, "!HTML! <b>bold text</b>", "<b>bold text</b>");
-                testReplaceAttribute(attribute, "!HTML! <div>ok</div>", "<div>ok</div>");
-            });
-        });
-    });
-
     describe("init() – attribute replacement", function () {
         /**
          * Verify the text is replaced in the attribute.
@@ -290,6 +221,75 @@ describe("common module: Localiser", function () {
             });
         });
         /* eslint-enable mocha/no-setup-in-describe, mocha/prefer-arrow-callback */
+    });
+
+    describe("init() – HTML replacement", function () {
+        /**
+         * Verify the text is replaced in the HTML.
+         *
+         * @function
+         * @private
+         * @param {string} localizedValue the localized string/message
+         * @param {string} [expectedResult=[localizedValue]] (optional) the expected replacement
+         * @returns {void}
+         */
+        function testReplaceValue(localizedValue, expectedResult = localizedValue) {
+            HtmlMock.setTestHtml('<span id="testElement" data-i18n="__MSG_someId__">Hardcoded Fallback Value!</span>');
+
+            const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
+
+            // run test
+            Localiser.init();
+
+            // "unstub"
+            stub.restore();
+
+            const replacedString = document.getElementById("testElement").innerHTML;
+            chai.assert.strictEqual(replacedString, expectedResult);
+        }
+
+        /**
+         * Verify the text is replaced in the HTML.
+         *
+         * @function
+         * @private
+         * @param {string} attribute
+         * @param {string} localizedValue the localized string/message
+         * @param {string} [expectedResult=[localizedValue]] (optional) the expected replacement
+         * @returns {void}
+         */
+        function testReplaceAttribute(attribute, localizedValue, expectedResult = localizedValue) {
+            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Fallback value!" data-i18n-${attribute}="__MSG_someId__"></span>`);
+
+            const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
+
+            // run test
+            Localiser.init();
+
+            // "unstub"
+            stub.restore();
+
+            const replacedString = document.getElementById("testElement").getAttribute(attribute);
+            chai.assert.strictEqual(replacedString, expectedResult, `did not replace attribute "${attribute}" correctly`);
+        }
+
+        it("does not evaluate HTML format in data-i18n", function () {
+            // WARNING: Security-relevant test!
+            testReplaceValue("<b>bold text</b>", "&lt;b&gt;bold text&lt;/b&gt;");
+            testReplaceValue("<div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
+        });
+
+        it("does evaluate HTML if specified in data-i18n", function () {
+            testReplaceValue("!HTML! <b>bold text</b>", "<b>bold text</b>");
+            testReplaceValue("!HTML! <div>ok</div>", "<div>ok</div>");
+        });
+
+        it("does strip/ignore \"!HTML!\" marker in attributes", function () {
+            TEST_ATTRIBUTES.forEach((attribute) => {
+                testReplaceAttribute(attribute, "!HTML! <b>bold text</b>", "<b>bold text</b>");
+                testReplaceAttribute(attribute, "!HTML! <div>ok</div>", "<div>ok</div>");
+            });
+        });
     });
 
     describe("init() – no unexpected HTML modification", function () {
