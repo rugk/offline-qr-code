@@ -1,9 +1,8 @@
 import * as isPlainObject from "/common/modules/lib/lodash/isPlainObject.js";
 import * as isString from "/common/modules/lib/lodash/isString.js";
 
-export class FakeStorage extends browser.storage.StorageArea {
+export class FakeStorage {
     constructor() {
-        super();
         this.clear();
     }
 

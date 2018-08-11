@@ -4,7 +4,7 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
-// import * as FakeStorage from "./FakeStorage.js";
+import {FakeStorage} from "./modules/FakeStorage.js";
 
 describe("common module: AddonSettings", function () {
     let managedStorage;
