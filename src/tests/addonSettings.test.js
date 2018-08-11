@@ -6,23 +6,46 @@ import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 import {FakeStorage} from "./modules/FakeStorage.js";
 
+const storageMethods = ["get", "set", "remove", "clear"]; // getBytesInUse not yet implemented in Firefox
+
 describe("common module: AddonSettings", function () {
     let managedStorage;
     let syncStorage;
 
-    beforeEach(function() {
-        // managedStorage = new FakeStorage();
-        // syncStorage = new FakeStorage();
-        //
-        // const fakeManaged = sinon.fake(managedStorage);
-        // const fakeSync = sinon.fake(syncStorage);
+    before(function () {
+        // Mocked function needs to be accessed at least once to get initiated and not be just a getter/property.
+        // Otherwise "TypeError: Attempted to wrap undefined property getUILanguage as functioncheckWrappedMethod" is shown.
+        // See https://discourse.mozilla.org/t/webextension-apis-made-as-getter-setter-lazily-evaluating-to-functions-beware-of-mocking-for-unit-tests/30849
 
-        // sinon.replace(browser.storage, "managed", fakeManaged);
-        // sinon.replace(browser.storage, "sync", fakeSync);
+        /* eslint-disable no-unused-expressions */
+        for (const call of storageMethods) {
+            browser.storage.managed[call];
+            browser.storage.sync[call];
+        }
+        /* eslint-enable no-unused-expressions */
     });
+
     afterEach(function() {
         sinon.restore();
     });
+
+    /**
+     * Stubs the used storage APIs, so no actual data is saved/modified
+     * permanently.
+     *
+     * @function
+     * @private
+     * @returns {void}
+     */
+    function stubStorages() {
+        managedStorage = new FakeStorage();
+        syncStorage = new FakeStorage();
+
+        for (const call of storageMethods) {
+            sinon.replace(browser.storage.managed, call, sinon.fake(managedStorage[call]));
+            sinon.replace(browser.storage.sync, call, sinon.fake(syncStorage[call]));
+        }
+    }
 
     describe("loadOptions()", function () {
         it("loads managed options", function () {
