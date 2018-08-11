@@ -137,7 +137,7 @@ export function set(option, value) {
  * Fetches all options, so they can be used later.
  *
  * This is basically the init method!
- * It returns a promise, but that must not be used, because the module is
+ * It returns a promise, but that does not have to be used, because the module is
  * built in a way, so that the actual getting of the options is waiting for
  * the promise.
  *
@@ -163,7 +163,7 @@ export function loadOptions() {
     });
 
     // if the settings have been received anywhere, they could be loaded
-    return Promise.race([gettingManagedOption, gettingSyncOption]);
+    return gettingManagedOption.catch(() => gettingSyncOption);
 }
 
 // automatically fetch options

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "OfflineQR DEV VERSION",
+  "name": "OfflineQr DEV VERSION",
   "short_name": "__MSG_extensionNameShort__",
   "version": "1.2.1",
   "author": "rugk",
@@ -38,7 +38,7 @@
     }
   },
 
-  "content_security_policy": "default-src 'self'; img-src data:; style-src 'self' https://unpkg.com; script-src 'self' https://unpkg.com https://cdn.rawgit.com",
+  "content_security_policy": "default-src 'self'; img-src data:; style-src 'self' https://unpkg.com; script-src 'self' https://unpkg.com",
   "icons": {
     "16": "icons/icon-small-colored.svg",
     "32": "icons/icon-small-colored.svg",

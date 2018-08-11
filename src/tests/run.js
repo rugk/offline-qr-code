@@ -5,6 +5,7 @@ import "./selftest.test.js";
 import "./globalConsts.test.js";
 import "./colors.test.js";
 import "./localiser.test.js";
+import "./addonSettings.test.js";
 
 mocha.checkLeaks();
 mocha.run();
