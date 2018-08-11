@@ -509,7 +509,7 @@ describe("common module: Localiser", function () {
          * @param {string} htmlFile the HTML to input
          * @param {string} resultHtmlFile the expected HTML code
          * @param {Object} [localizedValues={}] assignment of message strings to values
-         * @param {function} [moreAssert=null] attach more assertion functions, the function gets passed the stub
+         * @param {function} [moreAssert=null] attach more assertion functions, the function gets passed the stub and localizedValues
          * @returns {Promise}
          */
         async function testModifiesHtml(htmlFile, resultHtmlFile, localizedValues = {}, moreAssert = null) {
@@ -531,7 +531,7 @@ describe("common module: Localiser", function () {
             );
 
             if (moreAssert !== null) {
-                moreAssert(stub);
+                moreAssert(stub, localizedValues);
             }
 
             // "unstub"
@@ -545,7 +545,14 @@ describe("common module: Localiser", function () {
                 textareaPlaceholder: "Enter text for QR code here to generate it.",
                 optionLearnMore: "Learn more",
                 optionErrorCorrectionDescrLink: "https://en.wikipedia.org/wiki/QR_code#Error_correction"
-            }));
+            }), function (stub, localizedValues) { // eslint-disable-line mocha/prefer-arrow-callback
+                // 5 translations -> 5 times called
+                sinon.assert.callCount(stub, 5);
+
+                for (const messageName of Object.keys(localizedValues)) {
+                    sinon.assert.calledWithExactly(stub, messageName);
+                }
+            });
         });
     });
 
