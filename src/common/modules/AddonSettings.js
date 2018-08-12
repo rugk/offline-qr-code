@@ -50,60 +50,114 @@ export function getDefaultValue(option) {
         return undefined;
     }
 }
+/**
+ * Makes sure, that the synced o0ptions are available.
+ *
+ * @private
+ * @function
+ * @returns {Promise}
+ * @throws {Error}
+ */
+async function requireSyncedOptions() {
+    await gettingSyncOption.catch(() => {
+    // fatal error (already logged), as we now require synced options
+        throw new Error("synced options not available");
+    });
+}
+
+/**
+ * Get all available options.
+ *
+ * It assumes gettingManagedOption is not pending anymore.
+ *
+ * @private
+ * @function
+ * @returns {Object}
+ */
+async function getAllOptions() {
+    const result = {};
+
+    // also need to wait for synced options
+    await requireSyncedOptions();
+
+    // if all values should be returned, also include all default ones in addition to fetched ones
+    Object.assign(result, getDefaultValue());
+
+    if (syncOptions !== null) {
+        Object.assign(result, syncOptions);
+    }
+
+    if (managedOptions !== null) {
+        Object.assign(result, managedOptions);
+    }
+
+    return result;
+}
+
+/**
+ * Clears the stored/cached values.
+ *
+ * This is private to not leave the module in an unexpected/uninitalized state.
+ * Do call {@link loadOptions()} if you want to reload the options.
+ *
+ * @private
+ * @function
+ * @returns {void}
+ */
+export function clear() {
+    managedOptions = null;
+    syncOptions = null;
+}
 
 /**
  * Returns the add-on setting to use in add-on.
  *
  * If only a single option is requested (option=string) the result of the
- * promise will be that return value;
+ * promise will be that return value.
+ * Otherwise, you can pass no parmeter or "null" and it will return all
+ * saved config values.
  *
  * @function
- * @param  {string|null} option name of the option
- * @returns {Promise}
+ * @param  {string|null} [option=null] name of the option
+ * @returns {Promise} resulting in single value or object of values or undefined
+ * @throws {Error} if option is not available or other (internal) error happened
  */
-export async function get(option) {
+export async function get(option = null) {
     let result = undefined;
-    option = option || null; // null requests for all options
 
-    await gettingManagedOption.catch(() => {
-        // ignore error, as failing is expected here
-    });
+    // verify managed opotions are loaded (or are not available)
+    await gettingManagedOption;
+
+    // return all options
+    if (option === null) {
+        return getAllOptions();
+    }
 
     // first try to get managed option
-    if (managedOptions != null) {
-        if (!option) {
-            result = managedOptions;
-        } else if (managedOptions.hasOwnProperty(option)) {
-            result = managedOptions[option];
-            Logger.logInfo(`Managed setting got for "${option}".`, result);
-        }
+    if (managedOptions !== null && managedOptions.hasOwnProperty(option)) {
+        result = managedOptions[option];
+        Logger.logInfo(`Managed setting got for "${option}".`, result);
+        return result;
     } else {
-        // get synced option, otherwise
-        await gettingSyncOption.catch(() => {
-            // fatal error (likely already logged), requires synced options
-            Promise.reject(new Error("synced options not available"));
-        });
+        await requireSyncedOptions();
 
-        if (syncOptions != null) {
-            if (!option) {
-                result = syncOptions;
-            } else if (syncOptions.hasOwnProperty(option)) {
-                result = syncOptions[option];
-                Logger.logInfo(`Synced setting got for "${option}".`, result);
-            }
+        if (syncOptions !== null && syncOptions.hasOwnProperty(option)) {
+            result = syncOptions[option];
+            Logger.logInfo(`Synced setting got for "${option}".`, result);
+            return result;
         }
     }
 
-    // if result is still undefined, get default value
     if (result === undefined) {
         // get default value as a last fallback
         result = getDefaultValue(option);
+
+        if (result === undefined) {
+            throw new Error(`Could not get option "${option}". No default value defined.`);
+        }
+
         // last fallback: default value
         Logger.logWarning(`Could not get option "${option}". Using default.`, result);
-
-    } else if (!option) {
-        // if all values should be returned, also include all default ones in addition to fetched ones
-        result = Object.assign({}, getDefaultValue(option), result);
     }
 
     return result;
@@ -145,24 +199,39 @@ export function set(option, value) {
  * @returns {Promise}
  */
 export function loadOptions() {
-    // just fetch everything
-    gettingManagedOption = browser.storage.managed.get();
-    gettingSyncOption = browser.storage.sync.get();
+    if (browser.storage === undefined) {
+        throw new Error("Storage API is not available.");
+    }
 
-    gettingManagedOption.then((options) => {
-        managedOptions = options;
-    }).catch((error) => {
+    // clear storage first
+    clear();
+
+    // just fetch everything
+    try {
+        gettingManagedOption = browser.storage.managed.get().then((options) => {
+            managedOptions = options;
+        });
+    } catch (error) {
+        // rethrow error if it is not just due to missing storage manifest
+        if (error.message !== "Managed storage manifest not found") {
+            throw error;
+        }
+
         /* only log warning as that is expected when no manifest file is found */
         Logger.logWarning("could not get managed options", error);
-    });
+    }
 
-    gettingSyncOption.then((options) => {
+    gettingSyncOption = browser.storage.sync.get().then((options) => {
         syncOptions = options;
     }).catch((error) => {
         Logger.logError("could not get sync options", error);
+
+        // re-throw, so Promise is not marked as handled
+        throw error;
     });
 
     // if the settings have been received anywhere, they could be loaded
+    // Also catches any error of gettingManagedOption promise.
     return gettingManagedOption.catch(() => gettingSyncOption);
 }
 

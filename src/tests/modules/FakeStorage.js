@@ -1,5 +1,7 @@
-import * as isPlainObject from "/common/modules/lib/lodash/isPlainObject.js";
-import * as isString from "/common/modules/lib/lodash/isString.js";
+import isPlainObject from "/common/modules/lib/lodash/isPlainObject.js";
+import isString from "/common/modules/lib/lodash/isString.js";
+
+// NOTE: When using, remember this uses "this". So better .bind(thisObject) here.
 
 export class FakeStorage {
     constructor() {
@@ -47,7 +49,7 @@ export class FakeStorage {
      * @returns {Promise}
      */
     remove(keys) {
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             if (Array.isArray(keys)) {
                 for (const item of keys) {
                     if (!isString(item)) {
@@ -76,7 +78,7 @@ export class FakeStorage {
      * @returns {Promise}
      */
     clear() {
-        this.internalStorage = Object.create(null);
+        this.internalStorage = {};
 
         return Promise.resolve();
     }
@@ -89,7 +91,7 @@ export class FakeStorage {
      * @returns {Promise}
      */
     get(keys) {
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             if (keys === undefined || keys === null) {
                 resolve(this.internalStorage);
             }

@@ -20,8 +20,8 @@
 
         // style
         "mocha/max-top-level-suites": 1,
-        "mocha/valid-suite-description": ["warn", "^([a-zA-Z]+\\(\\)|[[A-Z0-9_]+|[\\w\\s:]+)( – .*)?$", ["describe", "context", "suite"]], // function name or function call or header with :
-        // RegEx:for "valid-suite-description": https://regex101.com/r/MKJw59/4
+        "mocha/valid-suite-description": ["warn", "^([a-zA-Z]+\\(.*\\)|[[A-Z0-9_]+|[\\w\\s:]+)( – .*)?$", ["describe", "context", "suite"]], // function name or function call or header with :
+        // RegEx:for "valid-suite-description": https://regex101.com/r/MKJw59/6
         "mocha/valid-test-description": ["warn", "^((?!should).)*$", ["it", "specify", "test"]], // must not contain "should", but should be third-person present tense
         // RegEx for "valid-test-description": https://regex101.com/r/9gYH8f/1, thanks to https://stackoverflow.com/a/406408/5008962
 
