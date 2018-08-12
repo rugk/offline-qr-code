@@ -125,9 +125,10 @@ export function clear() {
 export async function get(option = null) {
     let result = undefined;
 
-    // verify managed opotions are loaded (or are not available)
+    // verify managed options are loaded (or are not available)
     await gettingManagedOption.catch(() => {
-        // ignore errors, as it is expected and fallback to other storages allowed
+        // ignore errors, as fallback to other storages is allowed
+        // (altghough "no manifest" error is already handled)
     });
 
     // return all options
@@ -213,12 +214,15 @@ export function loadOptions() {
         managedOptions = options;
     }).catch((error) => {
         // rethrow error if it is not just due to missing storage manifest
-        if (error.message !== "Managed storage manifest not found") {
-            throw error;
+        if (error.message === "Managed storage manifest not found") {
+            /* only log warning as that is expected when no manifest file is found */
+            Logger.logWarning("could not get managed options", error);
+
+            // This error is now handled.
+            return;
         }
 
-        /* only log warning as that is expected when no manifest file is found */
-        Logger.logWarning("could not get managed options", error);
+        throw error;
     });
 
     gettingSyncOption = browser.storage.sync.get().then((options) => {
@@ -231,7 +235,6 @@ export function loadOptions() {
     });
 
     // if the settings have been received anywhere, they could be loaded
-    // Also catches any error of gettingManagedOption promise.
     return gettingManagedOption.catch(() => gettingSyncOption);
 }
 
