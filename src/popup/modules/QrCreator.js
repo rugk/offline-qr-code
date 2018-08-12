@@ -6,7 +6,7 @@ import * as QrLibKjua from "./QrLib/kjua.js";
 import * as UserInterface from "./UserInterface.js";
 
 // abstracts away all specific handling of QR code library
-let qrCreatorInit;
+export let qrCreatorInit;
 let initFinished = false;
 let qrCodeLib = null;
 
@@ -144,8 +144,6 @@ export async function getGenerationType() {
  * @returns {Promise}
  */
 export function init() {
-    QrLibKjua.init();
-
     // get all settings
     qrCreatorInit = AddonSettings.get().then((settings) => {
         switch (settings.qrCodeType) {
@@ -153,6 +151,8 @@ export function init() {
             qrCodeLib = QrLibQrGen;
             break;
         case "canvas":
+            QrLibKjua.init();
+
             qrCodeLib = QrLibKjua;
             break;
         default:
