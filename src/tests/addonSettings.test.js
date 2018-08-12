@@ -12,6 +12,8 @@ describe("common module: AddonSettings", function () {
     let managedStorage;
     let syncStorage;
 
+    let storageStub = {};
+
     before(function () {
         // Mocked function needs to be accessed at least once to get initiated and not be just a getter/property.
         // Otherwise "TypeError: Attempted to wrap undefined property getUILanguage as functioncheckWrappedMethod" is shown.
@@ -25,30 +27,31 @@ describe("common module: AddonSettings", function () {
         /* eslint-enable no-unused-expressions */
     });
 
-    afterEach(function() {
-        sinon.restore();
-    });
-
-    /**
-     * Stubs the used storage APIs, so no actual data is saved/modified
-     * permanently.
-     *
-     * @function
-     * @private
-     * @returns {void}
-     */
-    function stubStorages() {
+    beforeEach(function() {
+        // Stubs the used storage APIs, so no actual data is saved/modified
+        // permanently.
         managedStorage = new FakeStorage();
         syncStorage = new FakeStorage();
 
+        storageStub.managed = {};
+        storageStub.sync = {};
+
         for (const call of storageMethods) {
-            sinon.replace(browser.storage.managed, call, sinon.fake(managedStorage[call]));
-            sinon.replace(browser.storage.sync, call, sinon.fake(syncStorage[call]));
+            storageStub.managed[call] = sinon.stub(browser.storage.managed, call).callsFake(managedStorage[call]);
+            storageStub.sync[call] = sinon.stub(browser.storage.sync, call).callsFake(syncStorage[call]);
         }
-    }
+    });
+
+    afterEach(function() {
+        sinon.restore();
+        storageStub = {};
+    });
 
     describe("loadOptions()", function () {
         it("loads managed options", function () {
+            // unstub functions, we want to mock
+            storageStub.managed.get.restore();
+
             const mockManaged = sinon.mock(browser.storage.managed);
 
             /* eslint-disable indent */
@@ -57,7 +60,7 @@ describe("common module: AddonSettings", function () {
                     .resolves({});
 
             // ignore sync promise
-            sinon.stub(browser.storage.sync, "get").rejects("browser.storage.sync is supposed to reject");
+            storageStub.sync.get.rejects("browser.storage.sync is supposed to reject");
 
             const loadPromise = AddonSettings.loadOptions();
 
@@ -72,6 +75,9 @@ describe("common module: AddonSettings", function () {
         });
 
         it("loads sync options", function () {
+            // unstub functions, we want to mock
+            storageStub.sync.get.restore();
+
             const mockSync = sinon.mock(browser.storage.sync);
 
             /* eslint-disable indent */
@@ -80,7 +86,7 @@ describe("common module: AddonSettings", function () {
                     .resolves({});
 
             // ignore managed promise
-            sinon.stub(browser.storage.managed, "get").rejects("browser.storage.managed is supposed to reject");
+            storageStub.managed.get.rejects("browser.storage.managed is supposed to reject");
 
             const loadPromise = AddonSettings.loadOptions();
 
