@@ -58,8 +58,8 @@ export function getDefaultValue(option) {
  * @returns {Promise}
  * @throws {Error}
  */
-async function requireSyncedOptions() {
-    await gettingSyncOption.catch(() => {
+function requireSyncedOptions() {
+    return gettingSyncOption.catch(() => {
     // fatal error (already logged), as we now require synced options
         throw new Error("synced options not available");
     });
@@ -126,7 +126,9 @@ export async function get(option = null) {
     let result = undefined;
 
     // verify managed opotions are loaded (or are not available)
-    await gettingManagedOption;
+    await gettingManagedOption.catch(() => {
+        // ignore errors, as it is expected and fallback to other storages allowed
+    });
 
     // return all options
     if (option === null) {

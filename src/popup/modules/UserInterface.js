@@ -500,7 +500,7 @@ export function init() {
     // for some very strange reason, the MutationObserver only works when it is initiated as fast as possible gives better performance when resizing later
     resizeMutationObserver = new MutationObserver(throttledResizeElements);
 
-    const applyingQrSize = AddonSettings.get("qrCodeSize").then((qrCodeSize) => {
+    const applyingQrSize = AddonSettings.get("qrCodeSize").then(async (qrCodeSize) => {
         // save as module variable
         qrCodeSizeOption = qrCodeSize;
 
@@ -510,6 +510,8 @@ export function init() {
         }
 
         if (qrCodeSize.sizeType === "remember" || qrCodeSize.sizeType === "fixed") {
+            await QrCreator.qrCreatorInit;
+
             if (qrLastSize === qrCodeSize.size) {
                 Logger.logInfo("QR code last size is the same as current setting, so do not reset");
                 // BUT set CSS stuff to make it consistent
@@ -535,7 +537,7 @@ export function init() {
         }
     });
 
-    // initiate sett8ings dependent on the type of the QR code
+    // initiate settings dependent on the type of the QR code
     const initQrTypespecificSettings = QrCreator.getGenerationType().then((genType) => {
         if (genType !== "svg") {
             // remove menu item if it has been added before
