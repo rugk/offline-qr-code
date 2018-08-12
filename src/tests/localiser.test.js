@@ -25,6 +25,11 @@ describe("common module: Localiser", function () {
         /* eslint-enable no-unused-expressions */
     });
 
+    afterEach(function() {
+        sinon.restore();
+        HtmlMock.cleanup();
+    });
+
     describe("init() – basic", function () {
         it("sets html lang attribute", function () {
             const mockI18n = sinon.mock(browser.i18n);
@@ -554,10 +559,5 @@ describe("common module: Localiser", function () {
                 }
             });
         });
-    });
-
-    afterEach(function() {
-        sinon.restore();
-        HtmlMock.cleanup();
     });
 });
