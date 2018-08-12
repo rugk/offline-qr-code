@@ -482,75 +482,75 @@ describe("common module: AddonSettings", function () {
                 "did not prefer managed store over all others"
             );
         });
+    });
 
-        describe("get(…) – failures", function () {
-            /**
-             * Tests, if the .get() function correctly throws when sync storage
-             * not available anymore.
-             *
-             * @returns {void}
-             */
-            function testThrowsSyncNotAvailable() {
-                // remove sync API
-                storageStub.sync.get.rejects(new Error("expected test error"));
+    describe("get(…) – failures", function () {
+        /**
+         * Tests, if the .get() function correctly throws when sync storage
+         * not available anymore.
+         *
+         * @returns {void}
+         */
+        function testThrowsSyncNotAvailable() {
+            // remove sync API
+            storageStub.sync.get.rejects(new Error("expected test error"));
 
-                // need to load options
-                AddonSettings.loadOptions();
+            // need to load options
+            AddonSettings.loadOptions();
 
-                // verify case, where one values is requested
-                const promiseGetValue = AddonSettings.get("exampleValue").then((value) => {
-                    chai.assert.fail("succeed", "reject",
-                        `AddonSettings.get(exampleValue) has been succeed, but was expected to reject. Return value: "${value}")`);
-                }).catch((error) => {
-                    if (error instanceof Error && error.message === "synced options not available") {
-                        // expected to throw/reject this, so ignore error
-                        return;
-                    }
+            // verify case, where one values is requested
+            const promiseGetValue = AddonSettings.get("exampleValue").then((value) => {
+                chai.assert.fail("succeed", "reject",
+                    `AddonSettings.get(exampleValue) has been succeed, but was expected to reject. Return value: "${value}")`);
+            }).catch((error) => {
+                if (error instanceof Error && error.message === "synced options not available") {
+                    // expected to throw/reject this, so ignore error
+                    return;
+                }
 
-                    throw error;
-                });
-
-                // verify case, where all values are requested
-                const promiseGetAll = AddonSettings.get().then((value) => {
-                    chai.assert.fail(value, "reject",
-                        `AddonSettings.get() has been succeed, but was expected to reject. Return value: "${value}")`);
-                }).catch((error) => {
-                    if (error instanceof Error && error.message === "synced options not available") {
-                        // expected to throw/reject this, so ignore error
-                        return;
-                    }
-
-                    throw error;
-                });
-
-                return Promise.all([promiseGetValue, promiseGetAll]);
-            }
-
-            it("throws, if sync store is not available", function () {
-                testThrowsSyncNotAvailable();
+                throw error;
             });
 
-            it("throws, if sync and managed storage are not available", function () {
-                disableManagedStore();
+            // verify case, where all values are requested
+            const promiseGetAll = AddonSettings.get().then((value) => {
+                chai.assert.fail(value, "reject",
+                    `AddonSettings.get() has been succeed, but was expected to reject. Return value: "${value}")`);
+            }).catch((error) => {
+                if (error instanceof Error && error.message === "synced options not available") {
+                    // expected to throw/reject this, so ignore error
+                    return;
+                }
 
-                testThrowsSyncNotAvailable();
+                throw error;
             });
 
-            it("throws, if non-existant value without default is requested", function () {
-                // need to load options
-                AddonSettings.loadOptions();
+            return Promise.all([promiseGetValue, promiseGetAll]);
+        }
 
-                return AddonSettings.get("exampleValue").then((value) => {
-                    chai.assert.fail("succeed", "reject",
-                        `AddonSettings.get(exampleValue) has been succeed, but was expected to reject. Return value: "${value}")`);
-                }).catch((error) => {
-                    if (error instanceof Error && error.message === "Could not get option \"exampleValue\". No default value defined.") {
-                        // expected to throw/reject this, so ignore error
-                        return;
-                    }
+        it("throws, if sync store is not available", function () {
+            testThrowsSyncNotAvailable();
+        });
 
-                    throw error;
-                });
+        it("throws, if sync and managed storage are not available", function () {
+            disableManagedStore();
+
+            testThrowsSyncNotAvailable();
+        });
+
+        it("throws, if non-existant value without default is requested", function () {
+            // need to load options
+            AddonSettings.loadOptions();
+
+            return AddonSettings.get("exampleValue").then((value) => {
+                chai.assert.fail("succeed", "reject",
+                    `AddonSettings.get(exampleValue) has been succeed, but was expected to reject. Return value: "${value}")`);
+            }).catch((error) => {
+                if (error instanceof Error && error.message === "Could not get option \"exampleValue\". No default value defined.") {
+                    // expected to throw/reject this, so ignore error
+                    return;
+                }
+
+                throw error;
             });
         });
     });
