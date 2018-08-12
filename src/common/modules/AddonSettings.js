@@ -60,7 +60,7 @@ export function getDefaultValue(option) {
  */
 function requireSyncedOptions() {
     return gettingSyncOption.catch(() => {
-    // fatal error (already logged), as we now require synced options
+        // fatal error (already logged), as we now require synced options
         throw new Error("synced options not available");
     });
 }
@@ -151,17 +151,15 @@ export async function get(option = null) {
         }
     }
 
+    // get default value as a last fallback
+    result = getDefaultValue(option);
+
     if (result === undefined) {
-        // get default value as a last fallback
-        result = getDefaultValue(option);
-
-        if (result === undefined) {
-            throw new Error(`Could not get option "${option}". No default value defined.`);
-        }
-
-        // last fallback: default value
-        Logger.logWarning(`Could not get option "${option}". Using default.`, result);
+        throw new Error(`Could not get option "${option}". No default value defined.`);
     }
+
+    // last fallback: default value
+    Logger.logWarning(`Could not get option "${option}". Using default.`, result);
 
     return result;
 }
