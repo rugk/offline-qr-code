@@ -59,10 +59,10 @@ describe("common module: AddonSettings", function () {
      * @returns {void}
      */
     function disableManagedStore() {
-        storageStub.managed.get.throws("Error", "Managed storage manifest not found");
-        storageStub.managed.set.throws("Error", "Error: storage.managed is read-only");
-        storageStub.managed.remove.throws("Error", "Error: storage.managed is read-only");
-        storageStub.managed.clear.throws("Error", "Error: storage.managed is read-only");
+        storageStub.managed.get.rejects(new Error("Managed storage manifest not found"));
+        storageStub.managed.set.rejects(new Error("storage.managed is read-only"));
+        storageStub.managed.remove.rejects(new Error("storage.managed is read-only"));
+        storageStub.managed.clear.rejects(new Error("storage.managed is read-only"));
     }
 
     describe("loadOptions()", function () {
