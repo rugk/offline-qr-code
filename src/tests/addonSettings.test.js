@@ -319,7 +319,7 @@ describe("common module: AddonSettings", function () {
             chai.assert.deepNestedInclude(options, savedStorage);
         });
 
-        it("returns default values when managed storage is used and empty", async function () {
+        it("returns default values when managed and sync storage is used and empty", async function () {
             // need to load options
             AddonSettings.loadOptions();
             const options = await AddonSettings.get();
@@ -671,6 +671,68 @@ describe("common module: AddonSettings", function () {
             }
         });
 
+        it("overrides old values", async function () {
+            let i = 0;
+            for (const valueToSave of TEST_VALUES) {
+                i++;
+                const key = "testKey";
+
+                const objectItShouldSave = {
+                    [key]: valueToSave
+                };
+
+                // pre-set storage
+                syncStorage.internalStorage = {
+                    [key]: Symbol("veryOldValue")
+                };
+                await AddonSettings.loadOptions();
+
+                await AddonSettings.set(key, valueToSave).catch((error) => {
+                    chai.assert.fail(`reject: ${error}`, "succeed",
+                        `AddonSettings.set(key, valueToSave) has been rejected, but was expected to succeed while saving "${valueToString(valueToSave)}". Error: "${error}")`
+                    );
+                });
+
+                // verify results
+                chai.assert.deepEqual(
+                    syncStorage.internalStorage,
+                    objectItShouldSave,
+                    `Could not save value "${valueToString(valueToSave)}".`
+                );
+
+                // verify save API was correctly called
+                sinon.assert.callCount(storageStub.sync.set, i);
+                sinon.assert.calledWith(storageStub.sync.set, objectItShouldSave);
+            }
+        });
+
+        it("adds new values", async function () {
+            const testObject = {};
+
+            let i = 0;
+            for (const valueToSave of TEST_VALUES) {
+                i++;
+                const key = `newKey #${i}`;
+
+                Object.assign(testObject, {
+                    [key]: valueToSave
+                });
+
+                await AddonSettings.set(key, valueToSave).catch((error) => {
+                    chai.assert.fail(`reject: ${error}`, "succeed",
+                        `AddonSettings.set(key, valueToSave) has been rejected, but was expected to succeed while saving "${valueToString(valueToSave)}". Error: "${error}")`
+                    );
+                });
+
+                // verify results
+                chai.assert.deepEqual(
+                    syncStorage.internalStorage,
+                    testObject,
+                    `Invalid internal storage state after saving "${valueToString(valueToSave)}".`
+                );
+            }
+        });
+
         it("throws if it could not save value", async function () {
             // remove sync API
             storageStub.sync.set.rejects(new Error("expected test error: sync API not there"));
@@ -711,6 +773,31 @@ describe("common module: AddonSettings", function () {
 
             // verify results
             chai.assert.isEmpty(syncStorage.internalStorage);
+        });
+    });
+
+    describe("getDefaultValue()", function () {
+        it("returns default value", async function () {
+            // there should no need to load the options before doing the test
+            // await AddonSettings.loadOptions();
+
+            const value = await AddonSettings.getDefaultValue("qrColor");
+
+            // verify results
+            chai.assert.strictEqual(value, "#0c0c0d");
+        });
+
+        it("returns all default values", async function () {
+            // there should no need to load the options before doing the test
+            // await AddonSettings.loadOptions();
+
+            const options = await AddonSettings.getDefaultValue();
+
+            // just verify two default values to not need to hardcode them here again
+            chai.assert.deepNestedInclude(options, {
+                qrColor: "#0c0c0d",
+                qrBackgroundColor: "#ffffff"
+            });
         });
     });
 
