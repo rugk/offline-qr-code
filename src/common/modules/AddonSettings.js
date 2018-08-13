@@ -188,7 +188,16 @@ export function set(option, value) {
         };
     }
 
-    return browser.storage.sync.set(option).catch((error) => {
+    return browser.storage.sync.set(option).then(() => {
+        // syncOptions is only null, if loadOptions() -> gettingSyncOption has not yet been resolved
+        // As such, we still have to save it already, as we do not want to introduce latency.
+        if (syncOptions === null) {
+            syncOptions = {};
+        }
+
+        // add to cache
+        Object.assign(syncOptions, option);
+    }).catch((error) => {
         Logger.logError("Could not save option:", option, error);
 
         // re-throw error to make user aware something failed
@@ -232,7 +241,12 @@ export function loadOptions() {
     });
 
     gettingSyncOption = browser.storage.sync.get().then((options) => {
-        syncOptions = options;
+        if (syncOptions === null) {
+            syncOptions = options;
+        } else {
+            // In case set() is called before this Promise here resolves, we need to keep the old values, but prefer the newly set ones.
+            Object.assign(options, syncOptions);
+        }
     }).catch((error) => {
         Logger.logError("could not get sync options", error);
 

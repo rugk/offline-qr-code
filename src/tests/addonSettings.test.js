@@ -802,5 +802,277 @@ describe("common module: AddonSettings", function () {
     });
 
     describe("get() – cache usage", function () {
+        it("loads managed storage values only once into cache", async function () {
+            const oldValue = Symbol("old");
+
+            managedStorage.internalStorage = {
+                "cachedData": oldValue
+            };
+
+            // reload options
+            await AddonSettings.loadOptions();
+
+            // modify state of underlying storage
+            managedStorage.internalStorage = {
+                "cachedData": Symbol("newFakeOne"),
+                "hasFakeData": true,
+            };
+
+            const value = await AddonSettings.get("cachedData");
+
+            // verify it still has the old one
+            chai.assert.strictEqual(
+                value,
+                oldValue,
+                "did not correctly cache old value"
+            );
+
+            const options = await AddonSettings.get();
+            chai.assert.notInclude(
+                options,
+                {"hasFakeData": true},
+                "did incorrectly include value of not cached new value"
+            );
+
+            // verify get was only called once, i.e. all values were only loaded once
+            sinon.assert.calledOnce(storageStub.managed.get);
+        });
+
+        it("returns last cached value when preset before loading", async function () {
+            disableManagedStore();
+
+            const oldValue = Symbol("old");
+
+            syncStorage.internalStorage = {
+                "cachedData": oldValue
+            };
+
+            // reload options
+            await AddonSettings.loadOptions();
+
+            // modify state of underlying storage
+            syncStorage.internalStorage = {
+                "cachedData": Symbol("newFakeOne"),
+                "hasFakeData": true,
+            };
+
+            const value = await AddonSettings.get("cachedData");
+
+            // verify it still has the old one
+            chai.assert.strictEqual(
+                value,
+                oldValue,
+                "did not correctly cache old value"
+            );
+
+            const options = await AddonSettings.get();
+            chai.assert.notInclude(
+                options,
+                {"hasFakeData": true},
+                "did incorrectly include value of not cached new value"
+            );
+
+            // verify get was only called once, i.e. all values were only loaded once
+            sinon.assert.calledOnce(storageStub.sync.get);
+        });
+
+        it("returns last cached value when manually set", async function () {
+            disableManagedStore();
+
+            const oldValue = Symbol("old");
+
+            await AddonSettings.set({
+                "cachedData": oldValue
+            });
+
+            // modify state of underlying storage
+            syncStorage.internalStorage = {
+                "cachedData": Symbol("newFakeOne"),
+                "hasFakeData": true,
+            };
+
+            const value = await AddonSettings.get("cachedData");
+
+            // verify it still has the old one
+            chai.assert.strictEqual(
+                value,
+                oldValue,
+                "did not correctly cache old value"
+            );
+
+            const options = await AddonSettings.get();
+            chai.assert.notInclude(
+                options,
+                {"hasFakeData": true},
+                "did incorrectly include value of not cached new value"
+            );
+
+            // verify get was not called in this test, i.e. data was not reloaded (called before once during loading)
+            sinon.assert.notCalled(storageStub.sync.get);
+        });
+
+        it("returns newly set value from cache", async function () {
+            disableManagedStore();
+
+            const oldValue = Symbol("old cached value");
+            const newValue = Symbol("new value");
+
+            await AddonSettings.set({
+                "cachedData": oldValue
+            });
+
+            await AddonSettings.set({
+                "cachedData": newValue,
+                "hasNewCachedValue": true
+            });
+
+            const options = await AddonSettings.get();
+
+            // verify it now has the new one
+            chai.assert.include(
+                options,
+                { "hasNewCachedValue": true },
+                "did not correctly add newly set value into cache"
+            );
+
+            chai.assert.strictEqual(
+                options.cachedData,
+                newValue,
+                "did not correctly invalidate old cached value"
+            );
+        });
+    });
+
+    describe("get() – asyncronous actions", function () {
+        /**
+         * Wait for a defined amount of time (and optionally) do something afterwards,
+         *
+         * @function
+         * @param {int} timeInMs the time to wait
+         * @param {function} doAfterwards a function to execute afterwards
+         * @returns {void}
+         */
+        function wait(timeInMs, doAfterwards) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(doAfterwards);
+                }, timeInMs);
+            });
+        }
+
+        before(function() {
+            sinon.addBehavior("delayAndResolve", ((fake, delayTimeInMs, resolveValue) => {
+                fake.callsFake(() => wait(delayTimeInMs, resolveValue));
+            }));
+        });
+
+        /**
+         * Tests, that the get() function waits for the storage API before (trying to return) any values.
+         *
+         * Note we cannot use sinon's fake timer here, as we need to use the real asyncronity of JS and need
+         * some delay to
+         *
+         * @function
+         * @param {storageStub.managed.get|storageStub.sync.get} storageStubGet
+         * @returns {Promise}
+         */
+        async function testWaitPromises(storageStubGet) {
+            const singleValue = Symbol("preloaded");
+            const allOptions = {
+                "qrColor": singleValue
+            };
+            const promiseArray = [];
+
+            storageStubGet
+                .withArgs().delayAndResolve(15, allOptions)
+                .withArgs("qrColor").delayAndResolve(15, singleValue);
+
+            promiseArray.push(AddonSettings.loadOptions());
+
+            // test getting a single value
+            let loadedSingleValue = null;
+            promiseArray.push(AddonSettings.get("qrColor").then((value) => {
+                loadedSingleValue = value;
+            }));
+
+            // test getting all values
+            let loadedOptions = {};
+            promiseArray.push(AddonSettings.get().then((value) => {
+                loadedOptions = value;
+            }));
+
+            // verify no data is there yet
+            await wait(5);
+
+            chai.assert.notStrictEqual(loadedSingleValue, singleValue, "AddonSettings.get(testValue): Data for single value is prematurely available.");
+            chai.assert.notInclude(loadedOptions, allOptions, "AddonSettings.get(): Data for all values is prematurely available.");
+
+            // verify it also did not return default (and thus wrong) value
+            chai.assert.notStrictEqual(loadedSingleValue, "#0c0c0d", "AddonSettings.get(testValue): Data for single value has been prematurely returned as default (incorrect) value.");
+            chai.assert.notInclude(loadedOptions, { "qrColor": "#0c0c0d" }, "AddonSettings.get(): Data for all values has been prematurely returned as default (incorrect) value.");
+
+            // let promise resolve, so give enough time to also let values to be set by .then() clauses
+            await wait(15);
+
+            // verify data has now been loaded
+            chai.assert.strictEqual(loadedSingleValue, singleValue, "AddonSettings.get(testValue): Data for single value is still not available after Promise is resolved.");
+            chai.assert.include(loadedOptions, allOptions, "AddonSettings.get(): Data for all values is still not available after Promise is resolved.");
+
+            return Promise.all(promiseArray);
+        }
+
+        it("waits for managed storage", function () {
+            return testWaitPromises(storageStub.managed.get);
+        });
+
+        it("waits for sync storage", function () {
+            return testWaitPromises(storageStub.sync.get);
+        });
+
+        it("waits for sync storage with managed storage disabled", function () {
+            disableManagedStore();
+
+            return testWaitPromises(storageStub.sync.get);
+        });
+
+        it("combines prematurely set values set when browser.sync.get() loads very late", async function () {
+            const oldValue = Symbol("old value");
+            const oldOptions = {
+                "testValue": oldValue
+            };
+
+            storageStub.sync.get
+                .withArgs().delayAndResolve(5, oldOptions)
+                .withArgs("testValue").delayAndResolve(5, oldValue);
+
+            const loadSettings = AddonSettings.loadOptions();
+
+            // set value (in cache) while options are still loading
+            const newValue = Symbol("overwritten value");
+            const newOptions = {
+                "testValue": newValue,
+                "hasNewValue": true
+            };
+            AddonSettings.set(newOptions);
+
+            // test getting all values
+            const options = await AddonSettings.get();
+
+            // verify it now has the new one
+            chai.assert.include(
+                options,
+                { "hasNewValue": true },
+                "did not correctly add newly set value"
+            );
+
+            chai.assert.strictEqual(
+                options.testValue,
+                newValue,
+                "did not correctly replace old cached value"
+            );
+
+            // not really needed, as this Promise is very likely already resolved, but better safe than sorry
+            return loadSettings;
+        });
     });
 });
