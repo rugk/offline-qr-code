@@ -26,6 +26,8 @@ export class FakeStorage {
 
             // automcatically changes target object
             Object.assign(this.internalStorage, keys);
+
+            resolve();
         }));
     }
 

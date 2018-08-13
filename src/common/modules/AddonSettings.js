@@ -172,12 +172,17 @@ export async function get(option = null) {
  * @see {@link https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/StorageArea/set}
  * @function
  * @param  {Object|string} option keys/values to set or single value
- * @param  {Object} value if only a single value is to be set
+ * @param  {Object} [value=] if only a single value is to be set
  * @returns {Promise}
+ * @throws {TypeError}
  */
 export function set(option, value) {
     // put params into object if needed
     if (!isObject(option)) {
+        if (value === undefined) {
+            return Promise.reject(new TypeError("Second argument 'value' has not been passed."));
+        }
+
         option = {
             [option]: value
         };
@@ -185,6 +190,9 @@ export function set(option, value) {
 
     return browser.storage.sync.set(option).catch((error) => {
         Logger.logError("Could not save option:", option, error);
+
+        // re-throw error to make user aware something failed
+        throw error;
     });
 }
 

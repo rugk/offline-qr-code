@@ -8,6 +8,21 @@ import {FakeStorage} from "./modules/FakeStorage.js";
 
 const storageMethods = ["get", "set", "remove", "clear"]; // getBytesInUse not yet implemented in Firefox
 
+/**
+ * Safely returns the string representation of the value.
+ *
+ * @function
+ * @param {Object} value any value
+ * @returns {void}
+ */
+function valueToString(value) {
+    if (typeof value === "symbol") {
+        return value.toString();
+    }
+
+    return value;
+}
+
 describe("common module: AddonSettings", function () {
     let managedStorage;
     let syncStorage;
@@ -159,6 +174,21 @@ describe("common module: AddonSettings", function () {
         });
 
         it("returns saved value in sync storage", async function () {
+            // modify internal state of storage
+            const savedValue = Symbol("exactlyThisValue in sync storage");
+            syncStorage.internalStorage = {
+                "exampleValue": savedValue
+            };
+
+            // need to load options
+            await AddonSettings.loadOptions();
+            const value = await AddonSettings.get("exampleValue");
+
+            // verify results
+            chai.assert.strictEqual(value, savedValue);
+        });
+
+        it("returns saved value in sync storage if managed storage is disabled", async function () {
             disableManagedStore();
 
             // modify internal state of storage
@@ -184,7 +214,7 @@ describe("common module: AddonSettings", function () {
             chai.assert.strictEqual(value, "#0c0c0d");
         });
 
-        it("returns default value if managed store is disabled", async function () {
+        it("returns default value if managed storage is disabled", async function () {
             disableManagedStore();
 
             // need to load options
@@ -556,6 +586,132 @@ describe("common module: AddonSettings", function () {
     });
 
     describe("set()", function () {
+        const TEST_VALUES = [
+            Symbol("exactlyThisNewValue"), // eslint-disable-line mocha/no-setup-in-describe
+            "anString",
+            1234,
+            {
+                name: "a test object",
+                id: Symbol("idValue") // eslint-disable-line mocha/no-setup-in-describe
+            },
+            true,
+            false,
+            null
+        ];
+
+        beforeEach(function() {
+            // (re)load options in order to load the new (clean) ones
+            return AddonSettings.loadOptions();
+        });
+
+        it("saves value in sync storage passed as single value", async function () {
+            let i = 0;
+            for (const valueToSave of TEST_VALUES) {
+                i++;
+                const key = `exampleValue${i}`;
+
+                const objectItShouldSave = {
+                    [key]: valueToSave
+                };
+
+                // clear options & (re)load them in order to clear them
+                syncStorage.internalStorage = {};
+                await AddonSettings.loadOptions();
+
+                await AddonSettings.set(key, valueToSave).catch((error) => {
+                    chai.assert.fail(`reject: ${error}`, "succeed",
+                        `AddonSettings.set(key, valueToSave) has been rejected, but was expected to succeed while saving "${valueToString(valueToSave)}". Error: "${error}")`
+                    );
+                });
+
+                // verify results
+                chai.assert.deepEqual(
+                    syncStorage.internalStorage,
+                    objectItShouldSave,
+                    `Could not save value "${valueToString(valueToSave)}".`
+                );
+
+                // verify save API was correctly called
+                sinon.assert.callCount(storageStub.sync.set, i);
+                sinon.assert.calledWith(storageStub.sync.set, objectItShouldSave);
+            }
+        });
+
+        it("saves value in sync storage when passed as object", async function () {
+            let i = 0;
+            // test for all TEST_VALUES + undefined
+            for (const valueToSave of [...TEST_VALUES, undefined]) {
+                i++;
+                const key = `exampleValue${i}`;
+
+                const objectToSave = {
+                    [key]: valueToSave
+                };
+
+                // clear options & (re)load them in order to clear them
+                syncStorage.internalStorage = {};
+                await AddonSettings.loadOptions();
+
+                await AddonSettings.set(objectToSave).catch((error) => {
+                    chai.assert.fail(`reject: ${error}`, "succeed",
+                        `AddonSettings.set(objectToSave) has been rejected, but was expected to succeed while saving "${valueToString(valueToSave)}". Error: "${error}")`
+                    );
+                });
+
+                // verify results
+                chai.assert.deepEqual(
+                    syncStorage.internalStorage,
+                    objectToSave,
+                    `Could not save value "${valueToString(valueToSave)}".`
+                );
+
+                // verify save API was correctly called
+                sinon.assert.callCount(storageStub.sync.set, i);
+                sinon.assert.calledWith(storageStub.sync.set, objectToSave);
+            }
+        });
+
+        it("throws if it could not save value", async function () {
+            // remove sync API
+            storageStub.sync.set.rejects(new Error("expected test error: sync API not there"));
+
+            const key = "climbThatMountain";
+            const valueToSave = Symbol("ledgitValue");
+
+            await AddonSettings.set(key, valueToSave).then((value) => {
+                chai.assert.fail("succeed", "reject",
+                    `AddonSettings.set(key, valueToSave) has been succeed, but was expected to reject. Return value: "${value}")`);
+            }).catch((error) => {
+                if (error instanceof Error && error.message === "expected test error: sync API not there") {
+                    // expected to throw/reject this, so ignore error
+                    return;
+                }
+
+                throw error;
+            });
+
+            // verify results
+            chai.assert.isEmpty(syncStorage.internalStorage);
+        });
+
+        it("throws if incorrectly called .set(<string>) without second argument", async function () {
+            const key = "noSecondArgument";
+
+            await AddonSettings.set(key).then((value) => {
+                chai.assert.fail("succeed", "reject",
+                    `AddonSettings.set(key) has been succeed, but was expected to reject. Return value: "${value}")`);
+            }).catch((error) => {
+                if (error instanceof TypeError && error.message === "Second argument 'value' has not been passed.") {
+                    // expected to throw/reject this, so ignore error
+                    return;
+                }
+
+                throw error;
+            });
+
+            // verify results
+            chai.assert.isEmpty(syncStorage.internalStorage);
+        });
     });
 
     describe("get() – cache usage", function () {
