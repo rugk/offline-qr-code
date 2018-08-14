@@ -3,6 +3,20 @@ const TEST_AREA_ID = "testArea";
 const elTestArea = document.getElementById(TEST_AREA_ID);
 
 /**
+ * Strips all new lines from a test data.
+ *
+ * Based on {@link https://stackoverflow.com/a/10805198}.
+ *
+ * @function
+ * @private
+ * @param  {string} text
+ * @returns {string}
+ */
+export function stripAllNewlines(text) {
+    return text.replace(/(\r\n\t|\r\n|\n|\r\t)/gm, "");
+}
+
+/**
  * Downloads the test file and attach it to the test area.
  *
  * @function
@@ -23,12 +37,12 @@ export function setTestHtmlFile(filename) {
  * @returns {Promise}
  */
 export function getTestHtmlFile(filename) {
-    return fetch(`./${filename}`).then((response) => {
+    return fetch(`./${filename}`).then(async (response) => {
         if (!response.ok) {
             throw new Error(`Error in network response when fetching ${filename}.`);
         }
 
-        return response.text();
+        return stripAllNewlines(await response.text());
     });
 }
 
