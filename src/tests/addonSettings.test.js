@@ -68,7 +68,8 @@ describe("common module: AddonSettings", function () {
     });
 
     /**
-     * Disabels the managed store, so
+     * Disables the managed store, so it does not interfere when you test the
+     * other storeage or so.
      *
      * @function
      * @returns {void}

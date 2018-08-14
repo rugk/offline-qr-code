@@ -8,6 +8,7 @@ import "./colors.test.js";
 import "./iconHandler.test.js";
 import "./localiser.test.js";
 import "./addonSettings.test.js";
+import "./logger.test.js";
 
 mocha.checkLeaks();
 mocha.run();
