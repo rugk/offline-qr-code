@@ -9,7 +9,7 @@ const POPUP_ICON_OPTION = "popupIconColored";
  * @function
  * @private
  * @param {string} icon version or "null"/"undefined" to reset to default
- * @returns {void}
+ * @returns {Promise}
  */
 function setPopupIcon(icon) {
     // verify parameter
@@ -25,11 +25,10 @@ function setPopupIcon(icon) {
     }
 
     if (icon === null || icon === undefined) {
-        browser.browserAction.setIcon({path: null});
-        return;
+        return browser.browserAction.setIcon({path: null});
     }
 
-    browser.browserAction.setIcon({path: `/icons/icon-small-${icon}.svg`});
+    return browser.browserAction.setIcon({path: `/icons/icon-small-${icon}.svg`});
 }
 
 /**
@@ -37,14 +36,14 @@ function setPopupIcon(icon) {
  *
  * @function
  * @param {boolean} popupIconColored if popupIconColored is colored or not
- * @returns {void}
+ * @returns {Promise}
  */
 export function changeIconIfColored(popupIconColored) {
     if (popupIconColored === true) {
-        setPopupIcon("colored");
+        return setPopupIcon("colored");
     } else {
         // reset icon
-        setPopupIcon(null);
+        return setPopupIcon(null);
     }
 }
 
@@ -55,9 +54,7 @@ export function changeIconIfColored(popupIconColored) {
  * @returns {void}
  */
 export function init() {
-    AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => {
-        changeIconIfColored(popupIconColored);
-    });
+    return AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => changeIconIfColored(popupIconColored));
 }
 
 Logger.logInfo("IconHandler module loaded.");
