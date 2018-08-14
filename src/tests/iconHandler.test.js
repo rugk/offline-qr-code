@@ -2,8 +2,9 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
+import {stubSettings} from "./modules/StubHelper.js";
+
 import * as IconHandler from "/common/modules/IconHandler.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 describe("common module: IconHandler", function () {
     before(function () {
@@ -43,24 +44,6 @@ describe("common module: IconHandler", function () {
 
         // verify results
         mockBrowserAction.verify();
-    };
-
-    /**
-     * Stubs the settings given to it.
-     *
-     * Due to the way AddonSettings is constructed, you do not need to await the
-     * returned promise.
-     *
-     * @function
-     * @param {Object} settingsObject
-     * @returns {Promise}
-     */
-    function stubSettings(settingsObject) {
-        // as we cannot stub ES6 modules, we need to stub the underlying settings API
-        sinon.stub(browser.storage.sync, "get").resolves(settingsObject);
-
-        // purge cache
-        return AddonSettings.loadOptions();
     };
 
     /**
