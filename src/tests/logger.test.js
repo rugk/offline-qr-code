@@ -50,7 +50,7 @@ describe("common module: Logger", function () {
      */
     function testDebugModeEnabled() {
         return testDebugModeSetting((mockConsole, logMessage) =>
-            mockConsole.expects("log").once().withArgs(LOG_PREFIX.INFO, logMessage)
+            mockConsole.expects("log").once().withExactArgs(LOG_PREFIX.INFO, logMessage)
         );
     }
 
@@ -86,7 +86,7 @@ describe("common module: Logger", function () {
         const mockConsole = sinon.mock(console);
 
         mockConsole.expects(consoleMethod)
-            .once().withArgs(LOG_PREFIX[prefixName], logMessage)
+            .once().withExactArgs(LOG_PREFIX[prefixName], logMessage)
 
         testFunction(logMessage);
 
@@ -134,7 +134,7 @@ describe("common module: Logger", function () {
             const mockConsole = sinon.mock(console);
 
             mockConsole.expects("error")
-                .once().withArgs(LOG_PREFIX.ERROR, "log has been called without parameters")
+                .once().withExactArgs(LOG_PREFIX.ERROR, "log has been called without parameters")
 
             // test function
             Logger.log();
@@ -143,19 +143,56 @@ describe("common module: Logger", function () {
         });
 
         it("logs multiple objects", async function () {
-            // TODO
+            const param1 = Symbol("start log message");
+            const param2 = "a great string";
+            const param3 = {
+                and: "an object, because we like",
+                integers: 123
+            };
+
+            const mockConsole = sinon.mock(console);
+
+            mockConsole.expects("log")
+                .once().withExactArgs(LOG_PREFIX.INFO, param1, param2, param3)
+
+            // test function
+            Logger.log(MESSAGE_LEVEL.INFO, param1, param2, param3);
+
+            mockConsole.verify();
         });
 
-        it("correctly JSONifies objects", async function () {
-            // TODO
+        it("correctly freezes objects", async function () {
+            const logMessageExpected = {
+                and: "an object, because we like",
+                integers: 123
+            };
+
+            const spyLog = sinon.spy(console, "log");
+
+            // copy object (we do not test with nested objects here, so Object.assign doing a shallow copy is fine)
+            const logMessageModify = Object.assign({}, logMessageExpected);
+
+            Logger.log(MESSAGE_LEVEL.INFO, logMessageModify);
+
+            // modify object
+            logMessageModify.and = "modify object";
+            logMessageModify.integers = 234;
+
+            // now verify passed argument manually
+            chai.assert.deepEqual(
+                spyLog.args[0][1], // verify second argument of first call
+                logMessageExpected // it should ignore the modifications done to the object
+            , "did not ignore changed object properties/freeze object");
         });
 
         it("still logs info, if debug mode is not yet loaded", async function () {
-            // TODO
-            // This assures, that no message is lost or delayed.
+            Logger.setDebugMode(true);
+
+            // note it is not explicitly enabled, but internally set to "null"
+            return testDebugModeEnabled();
         });
 
-        it("uses correct prefix for warning", async function () {
+        it("uses correct prefix for different error levels", async function () {
             Logger.setDebugMode(true);
 
             for (const prefixName of Object.keys(LOG_PREFIX)) {
@@ -163,12 +200,6 @@ describe("common module: Logger", function () {
                     Logger.log(MESSAGE_LEVEL[prefixName], logMessage);
                 });
             }
-        });
-
-        it("correctly sets debug mode to disabled", async function () {
-            Logger.setDebugMode(false);
-
-            return testDebugModeDisabled();
         });
     });
 
