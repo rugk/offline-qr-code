@@ -44,7 +44,7 @@ function prepareObjectsForLogging(args) {
  * @returns {void}
  */
 export function log(...args) {
-    if (arguments.length < 0) {
+    if (arguments.length <= 0) {
         // recursive call, it's secure, because this won't fail
         log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
         return;

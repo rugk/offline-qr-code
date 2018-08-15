@@ -131,7 +131,15 @@ describe("common module: Logger", function () {
 
     describe("log()", function () {
         it("logs, if called without params", async function () {
-            // TODO
+            const mockConsole = sinon.mock(console);
+
+            mockConsole.expects("error")
+                .once().withArgs(LOG_PREFIX.ERROR, "log has been called without parameters")
+
+            // test function
+            Logger.log();
+
+            mockConsole.verify();
         });
 
         it("logs multiple objects", async function () {
