@@ -31,9 +31,9 @@ describe("common module: AddonSettings", function () {
         AddonSettingsStub.stubAllStorageApis();
     });
 
-    afterEach(function() {
+    afterEach(async function() {
+        await AddonSettingsStub.afterTest();
         sinon.restore();
-        AddonSettingsStub.afterTest();
     });
 
     describe("loadOptions()", function () {
@@ -107,9 +107,10 @@ describe("common module: AddonSettings", function () {
 
             lastStub.restore();
             // simpulate missing "sync" API
-            sinon.stub(browser.storage, "sync").value(undefined);
+            lastStub = sinon.stub(browser.storage, "sync").value(undefined);
             chai.assert.throws(AddonSettings.loadOptions, Error, undefined,
                 "does not throw correctly when browser.storage.sync === undefined.");
+            lastStub.restore();
         });
     });
 
@@ -910,7 +911,7 @@ describe("common module: AddonSettings", function () {
          * Tests, that the get() function waits for the storage API before (trying to return) any values.
          *
          * Note we cannot use sinon's fake timer here, as we need to use the real asyncronity of JS and need
-         * some delay to
+         * some delay to let the promises resolve.
          *
          * @function
          * @param {AddonSettingsStub.stubs.managed.get|AddonSettingsStub.stubs.sync.get} storageStubGet
@@ -951,12 +952,16 @@ describe("common module: AddonSettings", function () {
             chai.assert.notStrictEqual(loadedSingleValue, "#0c0c0d", "AddonSettings.get(testValue): Data for single value has been prematurely returned as default (incorrect) value.");
             chai.assert.notInclude(loadedOptions, { "qrColor": "#0c0c0d" }, "AddonSettings.get(): Data for all values has been prematurely returned as default (incorrect) value.");
 
+            // they just must be the defaults
+            chai.assert.strictEqual(loadedSingleValue, null, "AddonSettings.get(testValue): Data for single value has been prematurely returned as some (incorrect) value.");
+            chai.assert.deepEqual(loadedOptions, {}, "AddonSettings.get(): Data for all values has been prematurely returned as some (incorrect) value.");
+
             // let promise resolve, so give enough time to also let values to be set by .then() clauses
             await wait(15);
 
             // verify data has now been loaded
-            chai.assert.strictEqual(loadedSingleValue, singleValue, "AddonSettings.get(testValue): Data for single value is still not available after Promise is resolved.");
             chai.assert.include(loadedOptions, allOptions, "AddonSettings.get(): Data for all values is still not available after Promise is resolved.");
+            chai.assert.strictEqual(loadedSingleValue, singleValue, "AddonSettings.get(testValue): Data for single value is still not available after Promise is resolved.");
 
             return Promise.all(promiseArray);
         }
@@ -972,6 +977,7 @@ describe("common module: AddonSettings", function () {
         it("waits for sync storage with managed storage disabled", function () {
             AddonSettingsStub.disableManagedStore();
 
+            // TODO; test somehow fails, because ot re-uses the old values from the previous test
             return testWaitPromises(AddonSettingsStub.stubs.sync.get);
         });
 

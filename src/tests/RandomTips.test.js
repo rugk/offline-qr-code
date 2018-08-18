@@ -15,8 +15,8 @@ describe("common module: RandomTips", function () {
     });
 
     beforeEach(async function() {
-        await HtmlMock.setTestHtmlFile(HTML_BASE_FILE);
         AddonSettingsStub.stubAllStorageApis();
+        await HtmlMock.setTestHtmlFile(HTML_BASE_FILE);
     });
 
     afterEach(function() {
