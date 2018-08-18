@@ -5,6 +5,7 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
+import {wait} from "./modules/PromiseHelper.js";
 
 /**
  * Safely returns the string representation of the value.
@@ -899,22 +900,6 @@ describe("common module: AddonSettings", function () {
     });
 
     describe("get() – asyncronous actions", function () {
-        /**
-         * Wait for a defined amount of time (and optionally) do something afterwards,
-         *
-         * @function
-         * @param {int} timeInMs the time to wait
-         * @param {function} doAfterwards a function to execute afterwards
-         * @returns {void}
-         */
-        function wait(timeInMs, doAfterwards) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(doAfterwards);
-                }, timeInMs);
-            });
-        }
-
         before(function() {
             sinon.addBehavior("delayAndResolve", ((fake, delayTimeInMs, resolveValue) => {
                 fake.callsFake(() => wait(delayTimeInMs, resolveValue));

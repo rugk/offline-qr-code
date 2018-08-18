@@ -15,7 +15,7 @@
     "rules": {
         // arrows are not allowed
         "prefer-arrow-callback": 0,
-        "mocha/prefer-arrow-callback": 2,
+        // "mocha/prefer-arrow-callback": 2,
         "mocha/no-mocha-arrows": 2,
 
         // style

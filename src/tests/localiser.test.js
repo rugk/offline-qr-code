@@ -215,7 +215,7 @@ describe("common module: Localiser", function () {
         }
 
         // run tests for each twest case for each attribute
-        /* eslint-disable mocha/no-setup-in-describe, mocha/prefer-arrow-callback */
+        /* eslint-disable mocha/no-setup-in-describe */
         runReplaceTests(" in all attributes", function (localizedValue, expectedResult = undefined) {
             TEST_ATTRIBUTES.forEach((attribute) => {
                 testReplacesAttribute(attribute, localizedValue, expectedResult);
@@ -225,7 +225,7 @@ describe("common module: Localiser", function () {
                 testDoesNotReplaceAttribute(attribute, localizedValue, expectedResult);
             });
         });
-        /* eslint-enable mocha/no-setup-in-describe, mocha/prefer-arrow-callback */
+        /* eslint-enable mocha/no-setup-in-describe */
     });
 
     describe("init() – HTML replacement", function () {
@@ -550,7 +550,7 @@ describe("common module: Localiser", function () {
                 textareaPlaceholder: "Enter text for QR code here to generate it.",
                 optionLearnMore: "Learn more",
                 optionErrorCorrectionDescrLink: "https://en.wikipedia.org/wiki/QR_code#Error_correction"
-            }), function (stub, localizedValues) { // eslint-disable-line mocha/prefer-arrow-callback
+            }), function (stub, localizedValues) {
                 // 5 translations -> 5 times called
                 sinon.assert.callCount(stub, 5);
 

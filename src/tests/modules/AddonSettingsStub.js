@@ -35,13 +35,22 @@ export function before() {
  * Place into the "afterEach" hook, when test is done.
  *
  * ATTENTION: Do not forget sinon.restore() at the end of the test.
+ * However, do first run this here, and only restore the mocks with sinon.restore
+ * afterwards!
  *
  * @private
  * @function
- * @returns {void}
+ * @returns {Promise}
  */
 export function afterTest() {
     stubs = {};
+
+    // clean storages, so if test afterwards does not use mock, reset behaviour
+    managedStorage.internalStorage = {};
+    syncStorage.internalStorage = {};
+
+    // purge cache
+    return AddonSettings.loadOptions();
 }
 
 /**
@@ -101,7 +110,7 @@ export function stubSettings(settingsObject) {
     disableManagedStore();
 
     // as we cannot stub ES6 modules, we need to stub the underlying settings API
-    browser.storage.sync.get.resolves(settingsObject);
+    syncStorage.internalStorage = settingsObject;
 
     // purge cache
     return AddonSettings.loadOptions();

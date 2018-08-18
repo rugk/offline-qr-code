@@ -31,6 +31,12 @@
  * @property {Object} [actionButton] adds an action button to the message // TODO: document action button
  */
 
+/**
+ * An array of all tips.
+ *
+ * @const
+ * @type {Array.<TipObject>}
+ */
 const tipArray = [
     {
         id: "likeAddon",
@@ -91,11 +97,11 @@ const tipArray = [
     }
 ];
 
-// freze it all, this is strongly recommend
+// freeze it all, this is strongly recommend
 tipArray.forEach((object) => Object.freeze(object));
 
 /**
- * The list of all tips.
+ * The list of all tips. (now exported)
  *
  * @const
  * @type {Array.<TipObject>}

@@ -30,9 +30,7 @@ let context = null;
  * @private
  * @returns {void}
  */
-const saveConfig = debounce(() => {
-    AddonSettings.set(TIP_SETTING_STORAGE_ID, tipConfig);
-}, DEBOUNCE_SAVING);
+let saveConfig = null; // will be assigned in init()
 
 /**
  * Hook for the dismiss event.
@@ -255,11 +253,17 @@ export function showRandomTipIfWanted() {
  * Initialises the module.
  *
  * @function
- * @param {TipObject} tipsToShow the tips object to init
+ * @param {TipObject[]} tipsToShow the tips object to init
  * @returns {Promise.<void>}
  */
 export function init(tipsToShow) {
     tips = tipsToShow;
+
+    // load function
+    // We need to assign it here to make it testable.
+    saveConfig = debounce(() => {
+        AddonSettings.set(TIP_SETTING_STORAGE_ID, tipConfig);
+    }, DEBOUNCE_SAVING);
 
     // load HTMLElement
     elMessageBox = document.getElementById(TIP_MESSAGE_BOX_ID);
