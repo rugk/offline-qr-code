@@ -5,11 +5,12 @@ import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
+const TIP_MESSAGE_BOX_ID = "messageTips";
 const TIP_SETTING_STORAGE_ID = "randomTips";
 const GLOBAL_RANDOMIZE = 0.2; // (%)
 const DEBOUNCE_SAVING = 1000; // ms
 
-const elMessageBox = document.getElementById("messageTips");
+let elMessageBox;
 
 /** @see {@link config/tips.js} **/
 let tips;
@@ -119,7 +120,6 @@ function showTip(tipSpec) {
 function shouldBeShown(tipSpec) {
     // default settings
     tipSpec.requiredTriggers = tipSpec.requiredTriggers !== undefined ? tipSpec.requiredTriggers : 10;
-    tipSpec.maxShowCount = tipSpec.maxShowCount !== undefined ? tipSpec.maxShowCount : 0;
 
     // create option if needed
     if (tipConfig.tips[tipSpec.id] === undefined) {
@@ -170,7 +170,7 @@ function shouldBeShown(tipSpec) {
     if (Number.isFinite(tipSpec.requireDismiss)) {
         requiredDismissCount = tipSpec.requireDismiss;
     } else if (tipSpec.requireDismiss === true) { // bool
-        requiredDismissCount = tipSpec.maxShowCount;
+        requiredDismissCount = tipSpec.requireShowCount;
     } else {
         requiredDismissCount = 0;
     }
@@ -186,19 +186,19 @@ function shouldBeShown(tipSpec) {
         }
     }
 
-    return tipShowCount < tipSpec.maxShowCount // not already shown enough times already?
-        || tipDismissed < requiredDismissCount; // not dismissed enough times?
+    return (tipSpec.requireShowCount !== null && tipShowCount < tipSpec.requireShowCount) // not already shown enough times already?
+        || (requiredDismissCount !== null && tipDismissed < requiredDismissCount); // not dismissed enough times?
 }
 
 /**
  * Sets the context for the current session.
  *
  * @function
- * @param {string} string
+ * @param {string} newContext
  * @returns {void}
  */
-export function setContext(string) {
-    context = string;
+export function setContext(newContext) {
+    context = newContext;
 }
 
 /**
@@ -260,6 +260,9 @@ export function showRandomTipIfWanted() {
  */
 export function init(tipsToShow) {
     tips = tipsToShow;
+
+    // load HTMLElement
+    elMessageBox = document.getElementById(TIP_MESSAGE_BOX_ID);
 
     return AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
         tipConfig = randomTips;

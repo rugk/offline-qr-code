@@ -9,6 +9,7 @@ import "./iconHandler.test.js";
 import "./localiser.test.js";
 import "./addonSettings.test.js";
 import "./logger.test.js";
+import "./RandomTips.test.js";
 
 mocha.checkLeaks();
 mocha.run();

@@ -2,7 +2,7 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import {stubSettings} from "./modules/StubHelper.js";
+import {stubSettings} from "./modules/AddonSettingsStub.js";
 
 import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";

@@ -18,6 +18,22 @@ function disableManagedStore() {
 }
 
 /**
+ * Disables the changing ("destructive") actions of the sync store, so that unit
+ * tests do not affect the real settings.
+ *
+ * Note the APIs still pretend to be successful.
+ *
+ * @private
+ * @function
+ * @returns {void}
+ */
+export function disableModifyingSyncStore() {
+    sinon.stub(browser.storage.sync, "set").resolves();
+    sinon.stub(browser.storage.sync, "remove").resolves();
+    sinon.stub(browser.storage.sync, "clear").resolves();
+}
+
+/**
  * Stubs the settings given to it.
  *
  * Due to the way AddonSettings is constructed, you do not need to await the
@@ -35,4 +51,4 @@ export function stubSettings(settingsObject) {
 
     // purge cache
     return AddonSettings.loadOptions();
-};
+}

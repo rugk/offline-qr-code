@@ -128,7 +128,7 @@ export async function get(option = null) {
     // verify managed options are loaded (or are not available)
     await gettingManagedOption.catch(() => {
         // ignore errors, as fallback to other storages is allowed
-        // (altghough "no manifest" error is already handled)
+        // (although "no manifest" error is already handled)
     });
 
     // return all options
