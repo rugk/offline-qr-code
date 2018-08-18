@@ -11,104 +11,8 @@ const DEBOUNCE_SAVING = 1000; // ms
 
 const elMessageBox = document.getElementById("messageTips");
 
-/**
- * The list of all tips.
- *
- * Format:
- * {
- *     id {string} – just some ID
- *     maxShowCount {integer} – shows the message at most x times
- *     maximumDismiss {integer|null} – (optional) hides the message, if it
- *          has been dismissed x times.
- *     allowDismiss {bool} – optional, Set to false to disallow dismissing
- *          the message. This likely makes no sense for any tip, so the
- *          default is true.
- *     requireDismiss {bool|integer} – optional, require that message is
- *          dismissed to count as a maxShowCount. True enables this,
- *          with any integer you can specify a lower value to only require
- *          x dismisses.
- *     requiredTriggers {integer} – optional, require some displays
- *          ("triggers") of shows of tip ebfore showing tip. This is
- *          effectively just a minimum limit, so it is not shown too "early",
- *          default: 10
- *     showInContext {Object<id: bool>} – optional, a key-value object with
- *          context -> num to require the tip to be shown in a specific
- *          context for the given number of times.
- *     maximumInContest {{Object<id: bool>} – optional, a key-value object with
- *          context -> num to only show the tip in a specific context at
- *          most for the given number of times.
- *     randomizeDisplay {bool|integer} – optional, Randomizes the display
- *          with a chance of 50% by default (when "true" is set). You can
- *          override that percentage (as an integer, e.g. 0.2 instead of 20%).
- *          Note that the tip message display in general is already randomized
- *          with a chance of 20%, see {@link GLOBAL_RANDOMIZE}.
- *     text {string}: The text to actually show. It is passed to the
- *          {@link MessageHandler}, so you can (& should) use a translatable
- *          string here.
- *     actionButton {Object} – optional, adds an action button to the message
- * }
- *
- * @type {Object[]}
- */
-const tips = [
-    {
-        id: "likeAddon",
-        maxShowCount: 3,
-        requireDismiss: 1,
-        maximumDismiss: 2,
-        requiredTriggers: 10,
-        showInContext: {
-            "popup": 1
-        },
-        randomizeDisplay: false,
-        text: "tipYouLikeAddon",
-        actionButton: {
-            text: "tipYouLikeAddonButton",
-            action: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/"
-        }
-    },
-    {
-        id: "saveQr",
-        maxShowCount: 5,
-        requireDismiss: 1,
-        maximumDismiss: 2,
-        requiredTriggers: 5,
-        showInContext: {
-            "popup": 1
-        },
-        randomizeDisplay: false,
-        text: "tipSaveQrCode",
-        actionButton: {
-            text: "tipLearnMore",
-            action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
-        }
-    },
-    {
-        id: "donate",
-        // do not show on options page as Firefox already displays a donate button there
-        maxShowCount: 4,
-        requireDismiss: 1,
-        maximumDismiss: 2,
-        requiredTriggers: 50,
-        maximumInContest: {
-            "options": 1
-        },
-        randomizeDisplay: 0.4,
-        text: "tipDonate",
-        actionButton: {
-            text: "tipDonateButton",
-            action: "https://liberapay.com/rugk/"
-        }
-    },
-    {
-        id: "qrCodeHotkey",
-        maxShowCount: 3,
-        maximumDismiss: 1,
-        requiredTriggers: 2,
-        randomizeDisplay: false,
-        text: "tipQrCodeHotkey",
-    }
-];
+/** @see {@link config/tips.js} **/
+let tips;
 
 let tipConfig = {
     tips: {}
@@ -351,9 +255,12 @@ export function showRandomTipIfWanted() {
  * Initialises the module.
  *
  * @function
- * @returns {Promise}
+ * @param {TipObject} tipsToShow the tips object to init
+ * @returns {Promise.<void>}
  */
-export function init() {
+export function init(tipsToShow) {
+    tips = tipsToShow;
+
     return AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
         tipConfig = randomTips;
     });
