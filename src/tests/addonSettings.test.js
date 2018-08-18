@@ -4,9 +4,7 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
-import {FakeStorage} from "./modules/FakeStorage.js";
-
-const storageMethods = ["get", "set", "remove", "clear"]; // getBytesInUse not yet implemented in Firefox
+import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 
 /**
  * Safely returns the string representation of the value.
@@ -24,67 +22,23 @@ function valueToString(value) {
 }
 
 describe("common module: AddonSettings", function () {
-    let managedStorage;
-    let syncStorage;
-
-    let storageStub = {};
-
     before(function () {
-        // Mocked function needs to be accessed at least once to get initiated and not be just a getter/property.
-        // Otherwise "TypeError: Attempted to wrap undefined property getUILanguage as functioncheckWrappedMethod" is shown.
-        // See https://discourse.mozilla.org/t/webextension-apis-made-as-getter-setter-lazily-evaluating-to-functions-beware-of-mocking-for-unit-tests/30849
-
-        /* eslint-disable no-unused-expressions */
-        for (const call of storageMethods) {
-            browser.storage.managed[call];
-            browser.storage.sync[call];
-        }
-        /* eslint-enable no-unused-expressions */
+        AddonSettingsStub.before();
     });
 
     beforeEach(function() {
-        // Stubs the used storage APIs, so no actual data is saved/modified
-        // permanently.
-        managedStorage = new FakeStorage();
-        syncStorage = new FakeStorage();
-
-        storageStub.managed = {};
-        storageStub.sync = {};
-
-        for (const call of storageMethods) {
-            const managedStub = sinon.stub(browser.storage.managed, call);
-            storageStub.managed[call] = managedStub;
-            managedStub.callsFake(managedStorage[call].bind(managedStorage));
-
-            const syncStub = sinon.stub(browser.storage.sync, call);
-            storageStub.sync[call] = syncStub;
-            syncStub.callsFake(syncStorage[call].bind(syncStorage));
-        }
+        AddonSettingsStub.stubAllStorageApis();
     });
 
     afterEach(function() {
         sinon.restore();
-        storageStub = {};
+        AddonSettingsStub.afterTest();
     });
-
-    /**
-     * Disables the managed store, so it does not interfere when you test the
-     * other storeage or so.
-     *
-     * @function
-     * @returns {void}
-     */
-    function disableManagedStore() {
-        storageStub.managed.get.rejects(new Error("Managed storage manifest not found"));
-        storageStub.managed.set.rejects(new Error("storage.managed is read-only"));
-        storageStub.managed.remove.rejects(new Error("storage.managed is read-only"));
-        storageStub.managed.clear.rejects(new Error("storage.managed is read-only"));
-    }
 
     describe("loadOptions()", function () {
         it("loads managed options", function () {
             // unstub functions, we want to mock
-            storageStub.managed.get.restore();
+            AddonSettingsStub.stubs.managed.get.restore();
 
             const mockManaged = sinon.mock(browser.storage.managed);
 
@@ -94,7 +48,7 @@ describe("common module: AddonSettings", function () {
                     .resolves({});
 
             // ignore sync promise
-            storageStub.sync.get.rejects(new Error("browser.storage.sync is supposed to reject"));
+            AddonSettingsStub.stubs.sync.get.rejects(new Error("browser.storage.sync is supposed to reject"));
 
             const loadPromise = AddonSettings.loadOptions();
 
@@ -111,7 +65,7 @@ describe("common module: AddonSettings", function () {
 
         it("loads sync options", function () {
             // unstub functions, we want to mock
-            storageStub.sync.get.restore();
+            AddonSettingsStub.stubs.sync.get.restore();
 
             const mockSync = sinon.mock(browser.storage.sync);
 
@@ -121,7 +75,7 @@ describe("common module: AddonSettings", function () {
                     .resolves({});
 
             // ignore managed promise
-            storageStub.managed.get.rejects(new Error("browser.storage.managed is supposed to reject"));
+            AddonSettingsStub.stubs.managed.get.rejects(new Error("browser.storage.managed is supposed to reject"));
 
             const loadPromise = AddonSettings.loadOptions();
 
@@ -162,7 +116,7 @@ describe("common module: AddonSettings", function () {
         it("returns saved value in managed storage", async function () {
             // modify internal state of storage
             const savedValue = Symbol("exactlyThisValue in managed storage");
-            managedStorage.internalStorage = {
+            AddonSettingsStub.managedStorage.internalStorage = {
                 "exampleValue": savedValue
             };
 
@@ -177,7 +131,7 @@ describe("common module: AddonSettings", function () {
         it("returns saved value in sync storage", async function () {
             // modify internal state of storage
             const savedValue = Symbol("exactlyThisValue in sync storage");
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "exampleValue": savedValue
             };
 
@@ -190,11 +144,11 @@ describe("common module: AddonSettings", function () {
         });
 
         it("returns saved value in sync storage if managed storage is disabled", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             // modify internal state of storage
             const savedValue = Symbol("exactlyThisValue in sync storage");
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "exampleValue": savedValue
             };
 
@@ -216,7 +170,7 @@ describe("common module: AddonSettings", function () {
         });
 
         it("returns default value if managed storage is disabled", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             // need to load options
             await AddonSettings.loadOptions();
@@ -229,7 +183,7 @@ describe("common module: AddonSettings", function () {
         it("prefers value in managed storage over default value", async function () {
             // modify internal state of storages
             const savedManagedValue = "#00ff00";
-            managedStorage.internalStorage = {
+            AddonSettingsStub.managedStorage.internalStorage = {
                 "qrColor": savedManagedValue
             };
 
@@ -244,7 +198,7 @@ describe("common module: AddonSettings", function () {
         it("prefers value in managed sync over default value", async function () {
             // modify internal state of storages
             const savedSyncedValue = "#00ff00";
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "qrColor": savedSyncedValue
             };
 
@@ -259,12 +213,12 @@ describe("common module: AddonSettings", function () {
         it("prefers value in managed storage over value in sync storage", async function () {
             // modify internal state of storages
             const savedManagedValue = Symbol("exactlyThisValue in managed storage");
-            managedStorage.internalStorage = {
+            AddonSettingsStub.managedStorage.internalStorage = {
                 "examplePreferValue": savedManagedValue
             };
 
             const savedSyncValue = Symbol("exactlyThisValue in sync storage");
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "examplePreferValue": savedSyncValue
             };
 
@@ -288,7 +242,7 @@ describe("common module: AddonSettings", function () {
                     "okay": Symbol("ifYouLikeIt"),
                 },
             };
-            managedStorage.internalStorage = savedStorage;
+            AddonSettingsStub.managedStorage.internalStorage = savedStorage;
 
             // need to load options
             AddonSettings.loadOptions();
@@ -299,7 +253,7 @@ describe("common module: AddonSettings", function () {
         });
 
         it("returns all saved values in sync storage", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             // modify internal state of storage
             const savedStorage = {
@@ -310,7 +264,7 @@ describe("common module: AddonSettings", function () {
                     "okay": Symbol("ifYouLikeIt"),
                 },
             };
-            syncStorage.internalStorage = savedStorage;
+            AddonSettingsStub.syncStorage.internalStorage = savedStorage;
 
             // need to load options
             AddonSettings.loadOptions();
@@ -333,7 +287,7 @@ describe("common module: AddonSettings", function () {
         });
 
         it("returns default values when sync storage is used and empty", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             // need to load options
             AddonSettings.loadOptions();
@@ -351,7 +305,7 @@ describe("common module: AddonSettings", function () {
             const savedStorage = {
                 qrColor: "#0000ff",
             };
-            managedStorage.internalStorage = savedStorage;
+            AddonSettingsStub.managedStorage.internalStorage = savedStorage;
 
             // need to load options
             AddonSettings.loadOptions();
@@ -380,13 +334,13 @@ describe("common module: AddonSettings", function () {
         });
 
         it("combines synced storage and default values, preferring the first", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             // modify internal state of storage
             const savedStorage = {
                 qrColor: "#0000ff",
             };
-            syncStorage.internalStorage = savedStorage;
+            AddonSettingsStub.syncStorage.internalStorage = savedStorage;
 
             // need to load options
             AddonSettings.loadOptions();
@@ -424,7 +378,7 @@ describe("common module: AddonSettings", function () {
                     "okay": Symbol("ifYouLikeIt"),
                 },
             };
-            managedStorage.internalStorage = savedManagedValues;
+            AddonSettingsStub.managedStorage.internalStorage = savedManagedValues;
 
             const savedSyncedValues = {
                 "one": Symbol("syncOne"),
@@ -434,7 +388,7 @@ describe("common module: AddonSettings", function () {
                     "okay": Symbol("ifYouLikeIt"),
                 },
             };
-            syncStorage.internalStorage = savedSyncedValues;
+            AddonSettingsStub.syncStorage.internalStorage = savedSyncedValues;
 
             // need to load options
             await AddonSettings.loadOptions();
@@ -474,13 +428,13 @@ describe("common module: AddonSettings", function () {
                 "comparsion": Symbol("managedOne"),
                 "managedStoreIncluded": true,
             };
-            managedStorage.internalStorage = savedManagedValues;
+            AddonSettingsStub.managedStorage.internalStorage = savedManagedValues;
 
             const savedSyncedValues = {
                 "comparsion": Symbol("syncedOne"),
                 "syncedStoreIncluded": true,
             };
-            syncStorage.internalStorage = savedSyncedValues;
+            AddonSettingsStub.syncStorage.internalStorage = savedSyncedValues;
 
             // need to load options
             await AddonSettings.loadOptions();
@@ -524,7 +478,7 @@ describe("common module: AddonSettings", function () {
          */
         function testThrowsSyncNotAvailable() {
             // remove sync API
-            storageStub.sync.get.rejects(new Error("expected test error"));
+            AddonSettingsStub.stubs.sync.get.rejects(new Error("expected test error"));
 
             // need to load options
             AddonSettings.loadOptions();
@@ -563,7 +517,7 @@ describe("common module: AddonSettings", function () {
         });
 
         it("throws, if sync and managed storage are not available", function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             testThrowsSyncNotAvailable();
         });
@@ -616,7 +570,7 @@ describe("common module: AddonSettings", function () {
                 };
 
                 // clear options & (re)load them in order to clear them
-                syncStorage.internalStorage = {};
+                AddonSettingsStub.syncStorage.internalStorage = {};
                 await AddonSettings.loadOptions();
 
                 await AddonSettings.set(key, valueToSave).catch((error) => {
@@ -627,14 +581,14 @@ describe("common module: AddonSettings", function () {
 
                 // verify results
                 chai.assert.deepEqual(
-                    syncStorage.internalStorage,
+                    AddonSettingsStub.syncStorage.internalStorage,
                     objectItShouldSave,
                     `Could not save value "${valueToString(valueToSave)}".`
                 );
 
                 // verify save API was correctly called
-                sinon.assert.callCount(storageStub.sync.set, i);
-                sinon.assert.calledWith(storageStub.sync.set, objectItShouldSave);
+                sinon.assert.callCount(AddonSettingsStub.stubs.sync.set, i);
+                sinon.assert.calledWith(AddonSettingsStub.stubs.sync.set, objectItShouldSave);
             }
         });
 
@@ -650,7 +604,7 @@ describe("common module: AddonSettings", function () {
                 };
 
                 // clear options & (re)load them in order to clear them
-                syncStorage.internalStorage = {};
+                AddonSettingsStub.syncStorage.internalStorage = {};
                 await AddonSettings.loadOptions();
 
                 await AddonSettings.set(objectToSave).catch((error) => {
@@ -661,14 +615,14 @@ describe("common module: AddonSettings", function () {
 
                 // verify results
                 chai.assert.deepEqual(
-                    syncStorage.internalStorage,
+                    AddonSettingsStub.syncStorage.internalStorage,
                     objectToSave,
                     `Could not save value "${valueToString(valueToSave)}".`
                 );
 
                 // verify save API was correctly called
-                sinon.assert.callCount(storageStub.sync.set, i);
-                sinon.assert.calledWith(storageStub.sync.set, objectToSave);
+                sinon.assert.callCount(AddonSettingsStub.stubs.sync.set, i);
+                sinon.assert.calledWith(AddonSettingsStub.stubs.sync.set, objectToSave);
             }
         });
 
@@ -683,7 +637,7 @@ describe("common module: AddonSettings", function () {
                 };
 
                 // pre-set storage
-                syncStorage.internalStorage = {
+                AddonSettingsStub.syncStorage.internalStorage = {
                     [key]: Symbol("veryOldValue")
                 };
                 await AddonSettings.loadOptions();
@@ -696,14 +650,14 @@ describe("common module: AddonSettings", function () {
 
                 // verify results
                 chai.assert.deepEqual(
-                    syncStorage.internalStorage,
+                    AddonSettingsStub.syncStorage.internalStorage,
                     objectItShouldSave,
                     `Could not save value "${valueToString(valueToSave)}".`
                 );
 
                 // verify save API was correctly called
-                sinon.assert.callCount(storageStub.sync.set, i);
-                sinon.assert.calledWith(storageStub.sync.set, objectItShouldSave);
+                sinon.assert.callCount(AddonSettingsStub.stubs.sync.set, i);
+                sinon.assert.calledWith(AddonSettingsStub.stubs.sync.set, objectItShouldSave);
             }
         });
 
@@ -727,7 +681,7 @@ describe("common module: AddonSettings", function () {
 
                 // verify results
                 chai.assert.deepEqual(
-                    syncStorage.internalStorage,
+                    AddonSettingsStub.syncStorage.internalStorage,
                     testObject,
                     `Invalid internal storage state after saving "${valueToString(valueToSave)}".`
                 );
@@ -736,7 +690,7 @@ describe("common module: AddonSettings", function () {
 
         it("throws if it could not save value", async function () {
             // remove sync API
-            storageStub.sync.set.rejects(new Error("expected test error: sync API not there"));
+            AddonSettingsStub.stubs.sync.set.rejects(new Error("expected test error: sync API not there"));
 
             const key = "climbThatMountain";
             const valueToSave = Symbol("ledgitValue");
@@ -754,7 +708,7 @@ describe("common module: AddonSettings", function () {
             });
 
             // verify results
-            chai.assert.isEmpty(syncStorage.internalStorage);
+            chai.assert.isEmpty(AddonSettingsStub.syncStorage.internalStorage);
         });
 
         it("throws if incorrectly called .set(<string>) without second argument", async function () {
@@ -773,7 +727,7 @@ describe("common module: AddonSettings", function () {
             });
 
             // verify results
-            chai.assert.isEmpty(syncStorage.internalStorage);
+            chai.assert.isEmpty(AddonSettingsStub.syncStorage.internalStorage);
         });
     });
 
@@ -806,7 +760,7 @@ describe("common module: AddonSettings", function () {
         it("loads managed storage values only once into cache", async function () {
             const oldValue = Symbol("old");
 
-            managedStorage.internalStorage = {
+            AddonSettingsStub.managedStorage.internalStorage = {
                 "cachedData": oldValue
             };
 
@@ -814,7 +768,7 @@ describe("common module: AddonSettings", function () {
             await AddonSettings.loadOptions();
 
             // modify state of underlying storage
-            managedStorage.internalStorage = {
+            AddonSettingsStub.managedStorage.internalStorage = {
                 "cachedData": Symbol("newFakeOne"),
                 "hasFakeData": true,
             };
@@ -836,15 +790,15 @@ describe("common module: AddonSettings", function () {
             );
 
             // verify get was only called once, i.e. all values were only loaded once
-            sinon.assert.calledOnce(storageStub.managed.get);
+            sinon.assert.calledOnce(AddonSettingsStub.stubs.managed.get);
         });
 
         it("returns last cached value when preset before loading", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             const oldValue = Symbol("old");
 
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "cachedData": oldValue
             };
 
@@ -852,7 +806,7 @@ describe("common module: AddonSettings", function () {
             await AddonSettings.loadOptions();
 
             // modify state of underlying storage
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "cachedData": Symbol("newFakeOne"),
                 "hasFakeData": true,
             };
@@ -874,11 +828,11 @@ describe("common module: AddonSettings", function () {
             );
 
             // verify get was only called once, i.e. all values were only loaded once
-            sinon.assert.calledOnce(storageStub.sync.get);
+            sinon.assert.calledOnce(AddonSettingsStub.stubs.sync.get);
         });
 
         it("returns last cached value when manually set", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             const oldValue = Symbol("old");
 
@@ -887,7 +841,7 @@ describe("common module: AddonSettings", function () {
             });
 
             // modify state of underlying storage
-            syncStorage.internalStorage = {
+            AddonSettingsStub.syncStorage.internalStorage = {
                 "cachedData": Symbol("newFakeOne"),
                 "hasFakeData": true,
             };
@@ -909,11 +863,11 @@ describe("common module: AddonSettings", function () {
             );
 
             // verify get was not called in this test, i.e. data was not reloaded (called before once during loading)
-            sinon.assert.notCalled(storageStub.sync.get);
+            sinon.assert.notCalled(AddonSettingsStub.stubs.sync.get);
         });
 
         it("returns newly set value from cache", async function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
             const oldValue = Symbol("old cached value");
             const newValue = Symbol("new value");
@@ -974,7 +928,7 @@ describe("common module: AddonSettings", function () {
          * some delay to
          *
          * @function
-         * @param {storageStub.managed.get|storageStub.sync.get} storageStubGet
+         * @param {AddonSettingsStub.stubs.managed.get|AddonSettingsStub.stubs.sync.get} storageStubGet
          * @returns {Promise}
          */
         async function testWaitPromises(storageStubGet) {
@@ -1023,17 +977,17 @@ describe("common module: AddonSettings", function () {
         }
 
         it("waits for managed storage", function () {
-            return testWaitPromises(storageStub.managed.get);
+            return testWaitPromises(AddonSettingsStub.stubs.managed.get);
         });
 
         it("waits for sync storage", function () {
-            return testWaitPromises(storageStub.sync.get);
+            return testWaitPromises(AddonSettingsStub.stubs.sync.get);
         });
 
         it("waits for sync storage with managed storage disabled", function () {
-            disableManagedStore();
+            AddonSettingsStub.disableManagedStore();
 
-            return testWaitPromises(storageStub.sync.get);
+            return testWaitPromises(AddonSettingsStub.stubs.sync.get);
         });
 
         it("combines prematurely set values set when browser.sync.get() loads very late", async function () {
@@ -1042,7 +996,7 @@ describe("common module: AddonSettings", function () {
                 "testValue": oldValue
             };
 
-            storageStub.sync.get
+            AddonSettingsStub.stubs.sync.get
                 .withArgs().delayAndResolve(5, oldOptions)
                 .withArgs("testValue").delayAndResolve(5, oldValue);
 

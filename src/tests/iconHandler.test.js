@@ -2,7 +2,7 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import {stubSettings} from "./modules/AddonSettingsStub.js";
+import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 
 import * as IconHandler from "/common/modules/IconHandler.js";
 
@@ -44,7 +44,7 @@ describe("common module: IconHandler", function () {
 
         // verify results
         mockBrowserAction.verify();
-    };
+    }
 
     /**
      * Verifies the colored icon has been unset/removed.
@@ -64,7 +64,7 @@ describe("common module: IconHandler", function () {
 
         // verify results
         mockBrowserAction.verify();
-    };
+    }
 
     describe("changeIconIfColored()", function () {
         it("changes icon to colored one", function () {
@@ -77,16 +77,29 @@ describe("common module: IconHandler", function () {
     });
 
     describe("init()", function () {
-        it("loads settings and sets colored icon", async function () {
-            stubSettings({
+        before(function () {
+            AddonSettingsStub.before();
+        });
+
+        beforeEach(function() {
+            AddonSettingsStub.stubAllStorageApis();
+        });
+
+        afterEach(function() {
+            sinon.restore();
+            AddonSettingsStub.afterTest();
+        });
+
+        it("loads settings and sets colored icon", function () {
+            AddonSettingsStub.stubSettings({
                 "popupIconColored": true
             });
 
             return testIconIsColored(IconHandler.init);
         });
 
-        it("loads settings and sets not colored icon", async function () {
-            stubSettings({
+        it("loads settings and sets not colored icon", function () {
+            AddonSettingsStub.stubSettings({
                 "popupIconColored": false
             });
 

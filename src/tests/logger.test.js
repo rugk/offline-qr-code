@@ -2,7 +2,7 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import {stubSettings} from "./modules/AddonSettingsStub.js";
+import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 
 import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
@@ -90,8 +90,21 @@ describe("common module: Logger", function () {
     }
 
     describe("init()", function () {
+        before(function () {
+            AddonSettingsStub.before();
+        });
+
+        beforeEach(function() {
+            AddonSettingsStub.stubAllStorageApis();
+        });
+
+        afterEach(function() {
+            sinon.restore();
+            AddonSettingsStub.afterTest();
+        });
+
         it("loads debugMode setting if disabled", async function () {
-            stubSettings({
+            AddonSettingsStub.stubSettings({
                 "debugMode": false
             });
 
@@ -101,7 +114,7 @@ describe("common module: Logger", function () {
         });
 
         it("loads debugMode setting if enabled", async function () {
-            stubSettings({
+            AddonSettingsStub.stubSettings({
                 "debugMode": true
             });
 

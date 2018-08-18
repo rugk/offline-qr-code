@@ -4,19 +4,24 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as RandomTips from "/common/modules/RandomTips.js";
 
-import {disableModifyingSyncStore, stubSettings} from "./modules/AddonSettingsStub.js";
+import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
 
 const HTML_BASE_FILE = "./randomTips/baseCode.html";
 
 describe("common module: RandomTips", function () {
-    beforeEach(async function () {
+    before(function () {
+        AddonSettingsStub.before();
+    });
+
+    beforeEach(async function() {
         await HtmlMock.setTestHtmlFile(HTML_BASE_FILE);
-        disableModifyingSyncStore();
+        AddonSettingsStub.stubAllStorageApis();
     });
 
     afterEach(function() {
         sinon.restore();
+        AddonSettingsStub.afterTest();
         HtmlMock.cleanup();
     });
 
@@ -50,7 +55,7 @@ describe("common module: RandomTips", function () {
      * @returns {void}
      */
     function stubEmptySettings() {
-        stubSettings({
+        AddonSettingsStub.stubSettings({
             "randomTips": {
                 tips: {},
                 "triggeredOpen": 999 // prevent fails due to low trigger count
