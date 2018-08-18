@@ -1,9 +1,9 @@
 import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 
-import * as GlobalConsts from "/common/modules/GlobalConsts.js";
+import * as GlobalConsts from "/common/modules/data/GlobalConsts.js";
 
-describe("common module: GlobalConsts", function () {
+describe("common data: GlobalConsts", function () {
     describe("ADDON_NAME", function () {
         it("is there", function () {
             chai.assert.exists(GlobalConsts.ADDON_NAME);
