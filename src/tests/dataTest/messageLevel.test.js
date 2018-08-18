@@ -13,5 +13,9 @@ describe("common data: MessageLevel", function () {
         it("is object", function () {
             chai.assert.isObject(MessageLevel.MESSAGE_LEVEL);
         });
+
+        it("is frozen", function () {
+            chai.assert.isFrozen(MessageLevel.MESSAGE_LEVEL);
+        });
     });
 });
