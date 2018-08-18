@@ -63,7 +63,7 @@ describe("common module: Logger", function () {
     function testDebugModeDisabled() {
         return testDebugModeSetting((mockConsole) =>
             // should never call console.log()
-            mockConsole.expects("log").never()
+            mockConsole.expects("log").never();
         );
     }
 
@@ -86,7 +86,7 @@ describe("common module: Logger", function () {
         const mockConsole = sinon.mock(console);
 
         mockConsole.expects(consoleMethod)
-            .once().withExactArgs(LOG_PREFIX[prefixName], logMessage)
+            .once().withExactArgs(LOG_PREFIX[prefixName], logMessage);
 
         testFunction(logMessage);
 
@@ -116,13 +116,13 @@ describe("common module: Logger", function () {
     });
 
     describe("setDebugMode()", function () {
-        it("correctly sets debug mode to enabled", async function () {
+        it("correctly sets debug mode to enabled", function () {
             Logger.setDebugMode(true);
 
             return testDebugModeEnabled();
         });
 
-        it("correctly sets debug mode to disabled", async function () {
+        it("correctly sets debug mode to disabled", function () {
             Logger.setDebugMode(false);
 
             return testDebugModeDisabled();
@@ -130,7 +130,7 @@ describe("common module: Logger", function () {
     });
 
     describe("log()", function () {
-        it("logs, if called without params", async function () {
+        it("logs, if called without params", function () {
             const mockConsole = sinon.mock(console);
 
             mockConsole.expects("error")
@@ -142,7 +142,7 @@ describe("common module: Logger", function () {
             mockConsole.verify();
         });
 
-        it("logs multiple objects", async function () {
+        it("logs multiple objects", function () {
             const param1 = Symbol("start log message");
             const param2 = "a great string";
             const param3 = {
@@ -153,7 +153,7 @@ describe("common module: Logger", function () {
             const mockConsole = sinon.mock(console);
 
             mockConsole.expects("log")
-                .once().withExactArgs(LOG_PREFIX.INFO, param1, param2, param3)
+                .once().withExactArgs(LOG_PREFIX.INFO, param1, param2, param3);
 
             // test function
             Logger.log(MESSAGE_LEVEL.INFO, param1, param2, param3);
@@ -161,7 +161,7 @@ describe("common module: Logger", function () {
             mockConsole.verify();
         });
 
-        it("correctly freezes objects", async function () {
+        it("correctly freezes objects", function () {
             const logMessageExpected = {
                 and: "an object, because we like",
                 integers: 123
@@ -182,17 +182,17 @@ describe("common module: Logger", function () {
             chai.assert.deepEqual(
                 spyLog.args[0][1], // verify second argument of first call
                 logMessageExpected // it should ignore the modifications done to the object
-            , "did not ignore changed object properties/freeze object");
+                , "did not ignore changed object properties/freeze object");
         });
 
-        it("still logs info, if debug mode is not yet loaded", async function () {
+        it("still logs info, if debug mode is not yet loaded", function () {
             Logger.setDebugMode(true);
 
             // note it is not explicitly enabled, but internally set to "null"
             return testDebugModeEnabled();
         });
 
-        it("uses correct prefix for different error levels", async function () {
+        it("uses correct prefix for different error levels", function () {
             Logger.setDebugMode(true);
 
             for (const prefixName of Object.keys(LOG_PREFIX)) {
@@ -204,7 +204,7 @@ describe("common module: Logger", function () {
     });
 
     describe("logInfo()", function () {
-        it("calls .log(MESSAGE_LEVEL.INFO)", async function () {
+        it("calls .log(MESSAGE_LEVEL.INFO)", function () {
             Logger.setDebugMode(true);
 
             testLogIsCalled("INFO", (logMessage) => {
@@ -214,7 +214,7 @@ describe("common module: Logger", function () {
     });
 
     describe("logWarn()", function () {
-        it("calls .log(MESSAGE_LEVEL.WARN)", async function () {
+        it("calls .log(MESSAGE_LEVEL.WARN)", function () {
             testLogIsCalled("WARN", (logMessage) => {
                 Logger.logWarning(logMessage);
             });
@@ -222,7 +222,7 @@ describe("common module: Logger", function () {
     });
 
     describe("logError()", function () {
-        it("calls .log(MESSAGE_LEVEL.ERROR)", async function () {
+        it("calls .log(MESSAGE_LEVEL.ERROR)", function () {
             testLogIsCalled("ERROR", (logMessage) => {
                 Logger.logError(logMessage);
             });
