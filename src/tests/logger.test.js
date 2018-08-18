@@ -49,9 +49,7 @@ describe("common module: Logger", function () {
      * @returns {Promise}
      */
     function testDebugModeEnabled() {
-        return testDebugModeSetting((mockConsole, logMessage) =>
-            mockConsole.expects("log").once().withExactArgs(LOG_PREFIX.INFO, logMessage)
-        );
+        return testDebugModeSetting((mockConsole, logMessage) => mockConsole.expects("log").once().withExactArgs(LOG_PREFIX.INFO, logMessage));
     }
 
     /**
@@ -61,10 +59,8 @@ describe("common module: Logger", function () {
      * @returns {Promise}
      */
     function testDebugModeDisabled() {
-        return testDebugModeSetting((mockConsole) =>
-            // should never call console.log()
-            mockConsole.expects("log").never();
-        );
+        // should never call console.log()
+        return testDebugModeSetting((mockConsole) => mockConsole.expects("log").never());
     }
 
     /**
@@ -129,19 +125,20 @@ describe("common module: Logger", function () {
         });
     });
 
-    describe("log()", function () {
-        it("logs, if called without params", function () {
-            const mockConsole = sinon.mock(console);
-
-            mockConsole.expects("error")
-                .once().withExactArgs(LOG_PREFIX.ERROR, "log has been called without parameters")
-
-            // test function
-            Logger.log();
-
-            mockConsole.verify();
-        });
-
+    /**
+     * Tests that the passed log function behaves correctly cwhen logging options.
+     *
+     * The function is always called with the parameters to log, only. So when
+     * you test .log(), you need to .bind it.
+     *
+     * @private
+     * @function
+     * @param {string} logMethod the console.<??> method tzhat is expected to
+     *                           be called
+     * @param {function} logFunctionCall the log function to test
+     * @returns {Promise}
+     */
+    function testlogObject(logMethod, logFunctionCall) {
         it("logs multiple objects", function () {
             const param1 = Symbol("start log message");
             const param2 = "a great string";
@@ -152,11 +149,11 @@ describe("common module: Logger", function () {
 
             const mockConsole = sinon.mock(console);
 
-            mockConsole.expects("log")
-                .once().withExactArgs(LOG_PREFIX.INFO, param1, param2, param3);
+            mockConsole.expects(logMethod)
+                .once().withExactArgs(sinon.match.any, param1, param2, param3);
 
             // test function
-            Logger.log(MESSAGE_LEVEL.INFO, param1, param2, param3);
+            logFunctionCall(param1, param2, param3);
 
             mockConsole.verify();
         });
@@ -167,12 +164,12 @@ describe("common module: Logger", function () {
                 integers: 123
             };
 
-            const spyLog = sinon.spy(console, "log");
+            const spyLog = sinon.spy(console, logMethod);
 
             // copy object (we do not test with nested objects here, so Object.assign doing a shallow copy is fine)
             const logMessageModify = Object.assign({}, logMessageExpected);
 
-            Logger.log(MESSAGE_LEVEL.INFO, logMessageModify);
+            logFunctionCall(logMessageModify);
 
             // modify object
             logMessageModify.and = "modify object";
@@ -184,6 +181,22 @@ describe("common module: Logger", function () {
                 logMessageExpected // it should ignore the modifications done to the object
                 , "did not ignore changed object properties/freeze object");
         });
+    }
+
+    describe("log()", function () {
+        it("logs, if called without params", function () {
+            const mockConsole = sinon.mock(console);
+
+            mockConsole.expects("error")
+                .once().withExactArgs(LOG_PREFIX.ERROR, "log has been called without parameters");
+
+            // test function
+            Logger.log();
+
+            mockConsole.verify();
+        });
+
+        testlogObject("log", Logger.log.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
 
         it("still logs info, if debug mode is not yet loaded", function () {
             Logger.setDebugMode(true);
@@ -211,6 +224,8 @@ describe("common module: Logger", function () {
                 Logger.logInfo(logMessage);
             });
         });
+
+        testlogObject("log", Logger.logInfo); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("logWarn()", function () {
@@ -219,6 +234,8 @@ describe("common module: Logger", function () {
                 Logger.logWarning(logMessage);
             });
         });
+
+        testlogObject("warn", Logger.logWarning); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("logError()", function () {
@@ -227,5 +244,7 @@ describe("common module: Logger", function () {
                 Logger.logError(logMessage);
             });
         });
+
+        testlogObject("error", Logger.logError); // eslint-disable-line mocha/no-setup-in-describe
     });
 });
