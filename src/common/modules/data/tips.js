@@ -31,13 +31,7 @@
  * @property {Object} [actionButton] adds an action button to the message // TODO: document action button
  */
 
-/**
- * The list of all tips.
- *
- * @const
- * @type {Array.<TipObject>}
- */
-export const tips = Object.freeze([
+const tipArray = [
     {
         id: "likeAddon",
         requireShowCount: 3,
@@ -95,4 +89,15 @@ export const tips = Object.freeze([
         randomizeDisplay: false,
         text: "tipQrCodeHotkey",
     }
-].forEach((object) => Object.freeze(object)));
+];
+
+// freze it all, this is strongly recommend
+tipArray.forEach((object) => Object.freeze(object));
+
+/**
+ * The list of all tips.
+ *
+ * @const
+ * @type {Array.<TipObject>}
+ */
+export const tips = Object.freeze(tipArray);

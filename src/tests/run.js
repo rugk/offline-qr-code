@@ -1,8 +1,9 @@
 import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 
 /* tests */
-import "./globalConsts.test.js";
-import "./messageLevel.test.js";
+import "./dataTest/globalConsts.test.js";
+import "./dataTest/messageLevel.test.js";
+import "./dataTest/tips.test.js";
 import "./colors.test.js";
 import "./iconHandler.test.js";
 import "./localiser.test.js";
