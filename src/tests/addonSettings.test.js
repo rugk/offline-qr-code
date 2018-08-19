@@ -29,11 +29,14 @@ describe("common module: AddonSettings", function () {
 
     beforeEach(function() {
         AddonSettingsStub.stubAllStorageApis();
+        console.warn("TEST BEGIN ");
     });
 
     afterEach(async function() {
-        await AddonSettingsStub.afterTest();
+        console.warn("test soon ends");
         sinon.restore();
+        await AddonSettingsStub.afterTest();
+        console.warn("TEST END ");
     });
 
     describe("loadOptions()", function () {

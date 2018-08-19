@@ -97,14 +97,14 @@ async function getAllOptions() {
 /**
  * Clears the stored/cached values.
  *
- * This is private to not leave the module in an unexpected/uninitalized state.
- * Do call {@link loadOptions()} if you want to reload the options.
+ * Usually you should not call this, but just reload the data with
+ * {@link loadOptions()} in case you need this. Otherwise, this leaves the
+ * module in an uninitalized/unexpected state.
  *
- * @private
  * @function
  * @returns {void}
  */
-export function clear() {
+export function clearCache() {
     managedOptions = null;
     syncOptions = null;
 }
@@ -222,7 +222,7 @@ export function loadOptions() {
     }
 
     // clear storage first
-    clear();
+    clearCache();
 
     // just fetch everything
     gettingManagedOption = browser.storage.managed.get().then((options) => {

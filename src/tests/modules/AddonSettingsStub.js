@@ -35,12 +35,10 @@ export function before() {
  * Place into the "afterEach" hook, when test is done.
  *
  * ATTENTION: Do not forget sinon.restore() at the end of the test.
- * However, do first run this here, and only restore the mocks with sinon.restore
- * afterwards!
  *
  * @private
  * @function
- * @returns {Promise}
+ * @returns {void}
  */
 export function afterTest() {
     stubs = {};
@@ -50,7 +48,7 @@ export function afterTest() {
     syncStorage.internalStorage = {};
 
     // purge cache
-    return AddonSettings.loadOptions();
+    AddonSettings.clearCache();
 }
 
 /**
