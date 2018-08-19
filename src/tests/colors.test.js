@@ -14,7 +14,7 @@ const COLOR_ARRAY = Object.freeze({
 
     // contrast 3
     "#4F477D": [79, 71, 125],
-    "#757D47": [79, 71, 125]
+    "#757D47": [17, 125, 71]
 });
 
 describe("common module: Color", function () {
@@ -69,16 +69,14 @@ describe("common module: Color", function () {
             chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY.BLACK), "#ffffff");
         });
 
-        it("inverts #00feff correctly (and back)", function () {
-            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#00FEFF"]), "#ff0000");
-            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#FF0000"]), "#00feff");
-            // TODO: currently fails with #ff0100 (and #00feff) as a result…
+        it("inverts #00FEFF and #FF0000 correctly", function () {
+            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#00FEFF"]), "#ff0100");
+            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#FF0000"]), "#00ffff");
         });
 
-        it("inverts #4F477D correctly (and back)", function () {
-            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#4F477D"]), "#757d47");
-            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#757D47"]), "#4f477d");
-            // TODO: currently fails with #b0b882 (and ...) as a result…
+        it("inverts #4F477D and #757D47 correctly", function () {
+            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#4F477D"]), "#b0b882");
+            chai.assert.strictEqual(Colors.invertColor(COLOR_ARRAY["#757D47"]), "#ee82b8");
         });
     });
 

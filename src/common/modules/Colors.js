@@ -61,6 +61,9 @@ function luminance(rgb) {
 /**
  * Returns the complementary color of a given RGB array.
  *
+ * Attention: To ease calculation, this also inverts the brightness and not only
+ * the hue of the color.
+ *
  * @function
  * @param  {Array} rgb
  * @returns {string}
