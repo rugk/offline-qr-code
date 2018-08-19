@@ -14,9 +14,9 @@ describe("common module: RandomTips", function () {
         AddonSettingsStub.before();
     });
 
-    beforeEach(async function() {
+    beforeEach(function() {
         AddonSettingsStub.stubAllStorageApis();
-        await HtmlMock.setTestHtmlFile(HTML_BASE_FILE);
+        return HtmlMock.setTestHtmlFile(HTML_BASE_FILE);
     });
 
     afterEach(function() {
@@ -24,6 +24,30 @@ describe("common module: RandomTips", function () {
         HtmlMock.cleanup();
         sinon.restore();
     });
+
+    let savedTipHtml = null;
+
+    /**
+     * Saves the current state (HTML code) of the currently shown tip.
+     *
+     * @function
+     * @returns {Promise}
+     */
+    function saveHtmlTestCode() {
+        const elTip = document.querySelector("#messageTips");
+        savedTipHtml = elTip.innerHTML;
+    }
+
+    /**
+     * Resets the HTML code to the saved version.
+     *
+     * @function
+     * @returns {Promise}
+     */
+    function resetHtmlTestCode() {
+        const elTip = document.querySelector("#messageTips");
+        elTip.innerHTML = savedTipHtml;
+    }
 
     /**
      * Stubs the random function, so it always passes.
@@ -58,14 +82,13 @@ describe("common module: RandomTips", function () {
         return AddonSettingsStub.stubSettings({
             "randomTips": {
                 tips: {},
-                "triggeredOpen": 999 // prevent fails due to low trigger count
             }
         });
     }
 
     const alwaysShowsTip = {
         id: "alwaysShowsTip",
-        requireShowCount: 999,
+        requiredShowCount: null,
         requiredTriggers: 0,
         requireDismiss: false,
         maximumDismiss: null,
@@ -76,20 +99,31 @@ describe("common module: RandomTips", function () {
      * Asserts that no random tip has been shown.
      *
      * @function
+     * @param {string} message optional failure message
      * @returns {void}
      */
-    function assertNoRandomTipShown() {
-        chai.assert.exists(document.getElementById("noMessageShown"), "RandomTip was shown, although no RandomTip was expected.");
+    function assertNoRandomTipShown(message) {
+        let failureMessage = "RandomTip was shown, although no RandomTip was expected";
+        if (message) {
+            failureMessage += `, ${message}`;
+        }
+        chai.assert.exists(document.getElementById("noMessageShown"), failureMessage);
     }
 
     /**
      * Asserts that a random tip has been shown.
      *
      * @function
+     * @param {string} message optional failure message
      * @returns {void}
      */
-    function assertRandomTipShown() {
-        chai.assert.notExists(document.getElementById("noMessageShown"), "RandomTip was not shown, although RandomTip was expected.");
+    function assertRandomTipShown(message) {
+        let failureMessage = "RandomTip was not shown, although RandomTip was expected";
+        if (message) {
+            failureMessage += `, ${message}`;
+        }
+
+        chai.assert.notExists(document.getElementById("noMessageShown"), failureMessage);
     }
 
     /**
@@ -203,7 +237,13 @@ describe("common module: RandomTips", function () {
         });
 
         it("counts triggeredOpen setting up", async function () {
-            stubEmptySettings();
+            await AddonSettingsStub.stubSettings({
+                "randomTips": {
+                    tips: {},
+                    "triggeredOpen": 999
+                }
+            });
+
             forceFailRandomness();
 
             await RandomTips.init([alwaysShowsTip]);
@@ -264,6 +304,427 @@ describe("common module: RandomTips", function () {
 
             assertRandomTipShown();
         });
+
+        it("correctly sets (displayed) values of tip", async function () {
+            stubEmptySettings();
+
+            // get tip
+            const tip = Object.assign({}, alwaysShowsTip);
+            tip.id = "someRandomTipId";
+            tip.text = "A very unique tip for you! Unit test your stuff!";
+
+            await RandomTips.init([tip]);
+            RandomTips.showRandomTip();
+
+            const elTip = document.querySelector("#messageTips");
+
+            chai.assert.strictEqual(elTip.dataset.tipId, "someRandomTipId", "invalid tip ID");
+            chai.assert.strictEqual(getTextOfTip(), "A very unique tip for you! Unit test your stuff!", "invalid tip text");
+
+            // other stuff is done in MessageHandler, and tested there
+        });
+
+        describe("requiredShowCount", function () {
+            it("does display for null = infinity", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 99999
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = null; // actually already default in current tests
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("does display if it still needs to show", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("does not display if already shown enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 3
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("stops display at x (here: 3) times shown", async function () {
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+
+                await RandomTips.init([tip]);
+
+                // save state to restore it later
+                // This is needed as the HTML node, where RandtomTips inserts it's
+                // messages is saved once.
+                saveHtmlTestCode();
+
+                // one
+                RandomTips.showRandomTip();
+                assertRandomTipShown("failed on first display");
+                resetHtmlTestCode();
+
+                // two
+                RandomTips.showRandomTip();
+                assertRandomTipShown("failed on second display");
+                resetHtmlTestCode();
+
+                // three
+                RandomTips.showRandomTip();
+                assertRandomTipShown("failed on third display");
+                resetHtmlTestCode();
+
+                // 4th should not show anymore
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown("failed on fourth display");
+            });
+        });
+
+        describe("dismiss", function () {
+            it("allowDismiss: TODO", async function () {
+                // TODO
+            });
+
+            it("requireDismiss: default setting = false, hide anyway, if dismissedCount < shownCount", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 3,
+                                dismissedCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+                delete tip.requireDismiss;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("requireDismiss = false, hide anyway, if dismissedCount < shownCount", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 3,
+                                dismissedCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+                tip.requireDismiss = false;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("requireDismiss = true, show if not dismissed enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 3,
+                                dismissedCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+                tip.requireDismiss = true;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("requireDismiss = true: hide if dismissed enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 3,
+                                dismissedCount: 3
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+                tip.requireDismiss = true;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("requireDismiss = 3, show if not dismissed enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 100,
+                                dismissedCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 3;
+                tip.requireDismiss = true;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("requireDismiss = 3: hide if dismissed enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 0,
+                                dismissedCount: 3
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredShowCount = 0;
+                tip.requireDismiss = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("maximumDismiss: default = null: show message, even though dismissed many times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 0,
+                                dismissedCount: 999
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                delete tip.maximumDismiss;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("maximumDismiss = null: show message, even though dismissed many times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 0,
+                                dismissedCount: 999
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.maximumDismiss = null;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("maximumDismiss = 3: show message, if dismissed fewer times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 0,
+                                dismissedCount: 2
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.maximumDismiss = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("maximumDismiss = 3: hide message, if dismissed 3 times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {},
+                                shownCount: 0,
+                                dismissedCount: 3
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.maximumDismiss = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+        });
+
+        describe("requiredTriggers", function () {
+            it("does not show tip, if triggered less than 10 times for default value", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {},
+                        triggeredOpen: 9,
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                delete tip.requiredTriggers;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("does not show tip, if triggered less times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {},
+                        triggeredOpen: 2,
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredTriggers = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("shows tip, if triggered enough times", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {},
+                        triggeredOpen: 3,
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.requiredTriggers = 3;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+        });
+
+        // TODO: other properties
     });
 
     describe("showRandomTip() – multiple tips", function () {
@@ -303,7 +764,7 @@ describe("common module: RandomTips", function () {
 
             const tip1 = Object.assign({}, alwaysShowsTip);
             tip1.text = "tip1Text";
-            tip1.requireShowCount = 0; // should never show
+            tip1.requiredShowCount = 0; // should never show
             const tip2 = Object.assign({}, alwaysShowsTip);
             tip2.text = "tip2Text";
 
@@ -330,7 +791,7 @@ describe("common module: RandomTips", function () {
             });
             const tip1 = Object.assign({}, alwaysShowsTip);
             tip1.id = "alreadyShownTip1";
-            tip1.requireShowCount = 1; // already shown enough times
+            tip1.requiredShowCount = 1; // already shown enough times
             tip1.text = "tip1Text";
 
             const tip2 = Object.assign({}, alwaysShowsTip);

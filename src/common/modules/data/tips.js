@@ -3,13 +3,14 @@
  *
  * @typedef {Object} TipObject
  * @property {string} id just some ID
- * @property {integer|null} requireShowCount shows the message x times; set
+ * @property {integer|null} requiredShowCount shows the message x times; set
  * to "null" to show infinitively
  * @property {bool} [allowDismiss=true] set to false to disallow dismissing
  * the message. This likely makes no sense for any tip, so the default is true.
- * @property {bool|integer} [requireDismiss=true] require that message is
- * dismissed to count as a requireShowCount. True enables this, with any integer
- * you can specify a lower value to only require x dismisses.
+ * @property {bool|integer} [requireDismiss=false] show the message, if it is
+ * not, at least, dismissed for x times. Alternatively set to true to require
+ * that message is dismissed the exact same number as requiredShowCount states,
+ * i.e. only dismissed count as "tip shown".
  * @property {integer|null} [maximumDismiss=null] hides the message, if it
  * has been dismissed x times.
  * @property {integer} [requiredTriggers=10] require some displays ("triggers")
@@ -40,7 +41,7 @@
 const tipArray = [
     {
         id: "likeAddon",
-        requireShowCount: 3,
+        requiredShowCount: 3,
         requireDismiss: 1,
         maximumDismiss: 2,
         requiredTriggers: 10,
@@ -56,7 +57,7 @@ const tipArray = [
     },
     {
         id: "saveQr",
-        requireShowCount: 5,
+        requiredShowCount: 5,
         requireDismiss: 1,
         maximumDismiss: 2,
         requiredTriggers: 5,
@@ -73,7 +74,7 @@ const tipArray = [
     {
         id: "donate",
         // do not show on options page as Firefox already displays a donate button there
-        requireShowCount: 4,
+        requiredShowCount: 4,
         requireDismiss: 1,
         maximumDismiss: 2,
         requiredTriggers: 50,
@@ -89,7 +90,7 @@ const tipArray = [
     },
     {
         id: "qrCodeHotkey",
-        requireShowCount: 3,
+        requiredShowCount: 3,
         maximumDismiss: 1,
         requiredTriggers: 2,
         randomizeDisplay: false,

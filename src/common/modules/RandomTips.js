@@ -168,9 +168,10 @@ function shouldBeShown(tipSpec) {
     if (Number.isFinite(tipSpec.requireDismiss)) {
         requiredDismissCount = tipSpec.requireDismiss;
     } else if (tipSpec.requireDismiss === true) { // bool
-        requiredDismissCount = tipSpec.requireShowCount;
+        requiredDismissCount = tipSpec.requiredShowCount;
     } else {
-        requiredDismissCount = 0;
+        // ignore dismiss count
+        requiredDismissCount = null;
     }
 
     // check context check if needed
@@ -184,7 +185,7 @@ function shouldBeShown(tipSpec) {
         }
     }
 
-    return (tipSpec.requireShowCount !== null && tipShowCount < tipSpec.requireShowCount) // not already shown enough times already?
+    return (tipSpec.requiredShowCount === null || tipShowCount < tipSpec.requiredShowCount) // not already shown enough times already?
         || (requiredDismissCount !== null && tipDismissed < requiredDismissCount); // not dismissed enough times?
 }
 
