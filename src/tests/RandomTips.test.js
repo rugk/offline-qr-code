@@ -835,7 +835,7 @@ describe("common module: RandomTips", function () {
                 // const shownTip = assertOneOfRandomTipsShown(tipArrayTexts);
                 const shownTip = getTextOfTip();
 
-                // We can assume kit matches correctly, if not the test fails
+                // We can assume it matches correctly, if not the test fails
                 // with an exception.
 
                 // https://regex101.com/r/3zhjAe/1

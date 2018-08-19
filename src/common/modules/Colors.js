@@ -5,7 +5,7 @@ import * as Logger from "/common/modules/Logger.js";
  *
  * This includes definitions from WCAG and some custom ones.
  *
- * @type {number{}} with integers
+ * @type {number{}}
  * @const
  * @default
  */
