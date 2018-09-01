@@ -913,7 +913,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("shows tip when over minimum provided by showInContext, but hides at maximum", async function () {
+            it("shows tip exactly x times (with showInContext)", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
