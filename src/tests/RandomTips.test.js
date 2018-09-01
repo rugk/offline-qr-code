@@ -1039,6 +1039,68 @@ describe("common module: RandomTips", function () {
         });
     });
 
+    describe("message interaction", function () {
+        let clock;
+
+        beforeEach(function () {
+            clock = sinon.useFakeTimers();
+        });
+
+        afterEach(function () {
+            clock.restore();
+        });
+
+        it("sets and removes tipId when tip is shown and hidden", async function () {
+            disableRandomness();
+
+            await RandomTips.init([alwaysShowsTip]);
+            MessageHandler.init(); // (re)set/add event listeners
+
+            // need to wait as saving is debounced
+            RandomTips.showRandomTip();
+            clock.next();
+
+            // verify tip ID is there
+            const message = document.querySelector("#messageTips");
+            chai.assert.strictEqual(message.dataset.tipId, "alwaysShowsTip", "tip ID not set when tip is shown");
+
+            // dismiss message
+            const dismissButton = document.querySelector("#messageTips .icon-dismiss");
+            dismissButton.click();
+
+            // verify tip ID is reset/removed
+            chai.assert.notProperty(message.dataset, "tipId", "tip ID not removed after tip has been hidden");
+        });
+
+        it("saves dismissedCount when dismissed", async function () {
+            disableRandomness();
+
+            await RandomTips.init([alwaysShowsTip]);
+            MessageHandler.init(); // (re)set/add event listeners
+
+            // need to wait as saving is debounced
+            RandomTips.showRandomTip();
+            clock.next();
+
+            // dismiss message
+            const dismissButton = document.querySelector("#messageTips .icon-dismiss");
+            dismissButton.click();
+
+            // need to wait as saving is debounced
+            clock.next();
+
+            // verify the saved settings are expected
+            const data = AddonSettingsStub.syncStorage.internalStorage;
+
+            // verify it saved the settings correctly
+            chai.assert.nestedPropertyVal(
+                data,
+                "randomTips.tips.alwaysShowsTip.dismissedCount",
+                1
+            );
+        });
+    });
+
     describe("showRandomTip() – multiple tips", function () {
         it("does show multiple (2) tips", async function () {
             stubEmptySettings();
