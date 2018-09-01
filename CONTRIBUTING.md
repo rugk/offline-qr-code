@@ -70,7 +70,7 @@ Apart from that, there are some simple rules.
 
 #### JS
 * Use EcmaScript 2017. (so e.g. `await`/`async` are fine) Basically everything, which is supported by Firefox >= 57 can also be used.
-* We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines. If you use NodeJs, you can just run `npm install` to install it.
+* We use [ESLint](https://eslint.org/). Please do use it to lint your files. It specifies all coding guidelines. If you use NodeJS, you can install the packages `eslint` and (if you want to write unit tests) `eslint-plugin-mocha` (see [writing tests](#writing-tests)).
   When something is not specified just use common sense and look at how other code in the project is written.
 * Especially, as we use a [CSP](src/manifest.json), please do _not_:
    * use inline JavaScript
@@ -89,7 +89,6 @@ Apart from that, there are some simple rules.
 * Avoid naming variables by their variable type only, e.g. `element`. Instead try to use the same variable name for an element whenever you refer to it in the source code. E.g. name a message box `elMessage`, so one can search for it in the whole code base to find out, where it is touched.
 * You should start the variable names of HTML elements with `el` as they are not obvious to differentiate from other variable names. Otherwise, do not prepend the variable type to the variable name.
 * Avoid anonymous functions, which have no name (i.e. not really assigned ) unless they do really do simple things. In most cases bigger anonymous functions are a point one may refactor. Consider introducing some (private) function in the module instead, so the function is described, documented and maybe re-used.
-* In JSDOC use the [`@name`](http://usejsdoc.org/tags-name.html) tag, if you declare a function by assigning it to a variable, i.e. `const thisIsAFunc = …`. This is needed, so that JSDOC knows, what this is.
 
 ### CSS
 
@@ -106,9 +105,9 @@ Tests are defined in the [`src/tests/`](src/tests/) dir.
 
 Due to the fact that we use ES6 modules, [Mocha cannot yet run the tests on the command line](https://github.com/mochajs/mocha/issues/3006) though.
 
-#### Coding tests
+#### Writing tests
 
-As for the Mocha tests, we do have [another EsLint config](src/tests/.eslintrc). To be able to use them, you have to install the [EsLint mocha plugin](https://github.com/lo1tuma/eslint-plugin-mocha), but if you only adjust the
+As for the Mocha tests, we do have [another EsLint config](src/tests/.eslintrc). To be able to use them, you should install the [EsLint mocha plugin](https://github.com/lo1tuma/eslint-plugin-mocha).
 
 Here some simple rules:
 * Do not describe tests as "should". This is superfluous, as we know that tests may behave correct or not. Just use the third-person present tense (e.g. `.it("does something useful")`). Describe the working test, not the error, if it fails.
