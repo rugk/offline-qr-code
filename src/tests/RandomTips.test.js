@@ -53,22 +53,34 @@ describe("common module: RandomTips", function () {
      * Stubs the random function, so it always passes.
      *
      * @function
-     * @returns {void}
+     * @param {string} [callFunction] an intermediate limitation of sinon stubs
+     * @returns {Object} sinon stub
      */
-    function disableRandomness() {
+    function disableRandomness(callFunction) {
         // randomizePassed in RandomTips passes for low values
-        sinon.stub(Math, "random").returns(0);
+        let stub = sinon.stub(Math, "random");
+        if (callFunction) {
+            stub = stub[callFunction]();
+        }
+
+        return stub.returns(0);
     }
 
     /**
      * Stubs the random function, so it always fails.
      *
      * @function
-     * @returns {void}
+     * @param {string} [callFunction] an intermediate limitation of sinon stubs
+     * @returns {Object} sinon stub
      */
-    function forceFailRandomness() {
+    function forceFailRandomness(callFunction) {
         // randomizePassed in RandomTips fails for high values
-        sinon.stub(Math, "random").returns(1);
+        let stub = sinon.stub(Math, "random");
+        if (callFunction) {
+            stub = stub[callFunction]();
+        }
+
+        return stub.returns(1);
     }
 
     /**
@@ -953,6 +965,72 @@ describe("common module: RandomTips", function () {
                 // shownContext
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown("does not care for maximumInContest");
+            });
+        });
+
+        describe("randomizeDisplay", function () {
+            beforeEach(function () {
+                stubEmptySettings();
+            });
+
+            it("does not show tip, if custom tip randomize (=true) fails", async function () {
+                // need to skip first call, because that is the one selecting
+                // the test to be done
+                forceFailRandomness("onSecondCall").callThrough();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.randomizeDisplay = true;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("shows tip, if custom tip randomize (=true) works", async function () {
+                // need to skip first call, because that is the one selecting
+                // the test to be done
+                disableRandomness("onSecondCall").callThrough();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.randomizeDisplay = true;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("does not show tip, if custom tip randomize with number fails", async function () {
+                // need to skip first call, because that is the one selecting
+                // the test to be done
+                forceFailRandomness("onSecondCall").callThrough();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.randomizeDisplay = 0.2;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("shows tip, if custom tip randomize with number works", async function () {
+                // need to skip first call, because that is the one selecting
+                // the test to be done
+                disableRandomness("onSecondCall").callThrough();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.randomizeDisplay = 0.2;
+
+                await RandomTips.init([tip]);
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
             });
         });
 
