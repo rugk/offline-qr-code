@@ -453,12 +453,14 @@ describe("common module: RandomTips", function () {
             });
         });
 
-        describe("dismiss", function () {
-            it("allowDismiss: TODO", async function () {
+        describe("allowDismiss", function () {
+            it("TODO", async function () {
                 // TODO
             });
+        });
 
-            it("requireDismiss: default setting = false, hide anyway, if dismissedCount < shownCount", async function () {
+        describe("requireDismiss", function () {
+            it("default setting = false, hide anyway, even if dismissedCount < shownCount", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -482,7 +484,7 @@ describe("common module: RandomTips", function () {
                 assertNoRandomTipShown();
             });
 
-            it("requireDismiss = false, hide anyway, if dismissedCount < shownCount", async function () {
+            it("= false, hide anyway, if dismissedCount < shownCount", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -506,7 +508,7 @@ describe("common module: RandomTips", function () {
                 assertNoRandomTipShown();
             });
 
-            it("requireDismiss = true, show if not dismissed enough times", async function () {
+            it("= true, show if not dismissed enough times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -530,7 +532,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("requireDismiss = true: hide if dismissed enough times", async function () {
+            it("= true: hide if dismissed enough times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -554,7 +556,7 @@ describe("common module: RandomTips", function () {
                 assertNoRandomTipShown();
             });
 
-            it("requireDismiss = 3, show if not dismissed enough times", async function () {
+            it("= 3, show if not dismissed enough times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -578,7 +580,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("requireDismiss = 3: hide if dismissed enough times", async function () {
+            it("= 3: hide if dismissed enough times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -601,8 +603,10 @@ describe("common module: RandomTips", function () {
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
             });
+        });
 
-            it("maximumDismiss: default = null: show message, even though dismissed many times", async function () {
+        describe("maximumDismiss", function () {
+            it("default = null: show message, even though dismissed many times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -625,7 +629,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("maximumDismiss = null: show message, even though dismissed many times", async function () {
+            it("= null: show message, even though dismissed many times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -648,7 +652,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("maximumDismiss = 3: show message, if dismissed fewer times", async function () {
+            it("= 3: show message, if dismissed fewer times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -671,7 +675,7 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
 
-            it("maximumDismiss = 3: hide message, if dismissed 3 times", async function () {
+            it("= 3: hide message, if dismissed 3 times", async function () {
                 await AddonSettingsStub.stubSettings({
                     "randomTips": {
                         tips: {
@@ -1033,8 +1037,6 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
         });
-
-        // TODO: other properties
     });
 
     describe("showRandomTip() – multiple tips", function () {
