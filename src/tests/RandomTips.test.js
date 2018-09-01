@@ -455,14 +455,14 @@ describe("common module: RandomTips", function () {
         });
 
         describe("allowDismiss", function () {
-            it("TODO", async function () {
+            it("shows dismiss button by default (default setting = true)", async function () {
                 stubEmptySettings();
 
                 // get tip
                 const tip = Object.assign({}, alwaysShowsTip);
-                tip.allowDismiss = true;
 
                 await RandomTips.init([tip]);
+                RandomTips.showRandomTip();
 
                 // get dismiss button
                 const dismissButton = document.querySelector("#messageTips .icon-dismiss");
@@ -471,6 +471,46 @@ describe("common module: RandomTips", function () {
                 chai.assert.isFalse(
                     dismissButton.classList.contains("invisible"),
                     "dismiss button is not visible although it is expected to be visible"
+                );
+            });
+
+            it("shows dismiss button when allowDismiss = true", async function () {
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.allowDismiss = true;
+
+                await RandomTips.init([tip]);
+                RandomTips.showRandomTip();
+
+                // get dismiss button
+                const dismissButton = document.querySelector("#messageTips .icon-dismiss");
+
+                chai.assert.exists(dismissButton); // should be always true
+                chai.assert.isFalse(
+                    dismissButton.classList.contains("invisible"),
+                    "dismiss button is not visible although it is expected to be visible"
+                );
+            });
+
+            it("does not show dismiss button when allowDismiss = false", async function () {
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.allowDismiss = false;
+
+                await RandomTips.init([tip]);
+                RandomTips.showRandomTip();
+
+                // get dismiss button
+                const dismissButton = document.querySelector("#messageTips .icon-dismiss");
+
+                chai.assert.exists(dismissButton); // should be always true
+                chai.assert.isTrue(
+                    dismissButton.classList.contains("invisible"),
+                    "dismiss button is visible although it is expected to be invisible"
                 );
             });
         });
@@ -1053,6 +1093,68 @@ describe("common module: RandomTips", function () {
                 assertRandomTipShown();
             });
         });
+
+        describe("actionButton", function () {
+            it("displays no action button when not used", async function () {
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+
+                await RandomTips.init([tip]);
+                RandomTips.showRandomTip();
+                MessageHandler.init(); // (re)set/add event listeners
+
+                // get action button
+                const actionButton = document.querySelector("#messageTips button");
+
+                chai.assert.exists(actionButton); // should be always true
+                chai.assert.isTrue(
+                    actionButton.classList.contains("invisible"),
+                    "action button is visible although it is expected to be not visible"
+                );
+                chai.assert.notStrictEqual(
+                    actionButton.innerHTML,
+                    "thisIsAnActionButton",
+                    "action button has wrong text"
+                );
+            });
+
+            it("displays working action button when used", async function () {
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.actionButton = {
+                    text: "thisIsAnActionButton",
+                    action: sinon.spy()
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.showRandomTip();
+                MessageHandler.init(); // (re)set/add event listeners
+
+                // get action button
+                const actionButton = document.querySelector("#messageTips button");
+
+                chai.assert.exists(actionButton); // should be always true
+                chai.assert.isFalse(
+                    actionButton.classList.contains("invisible"),
+                    "action button is not visible although it is expected to be visible"
+                );
+                chai.assert.strictEqual(
+                    actionButton.innerHTML,
+                    "thisIsAnActionButton",
+                    "action button has wrong text"
+                );
+
+                // click button
+                actionButton.click();
+
+                // assert callback has been called
+                sinon.assert.calledOnce(tip.actionButton.action);
+            });
+        });
     });
 
     describe("message interaction", function () {
@@ -1067,6 +1169,7 @@ describe("common module: RandomTips", function () {
         });
 
         it("sets and removes tipId when tip is shown and hidden", async function () {
+            stubEmptySettings();
             disableRandomness();
 
             await RandomTips.init([alwaysShowsTip]);
@@ -1089,6 +1192,7 @@ describe("common module: RandomTips", function () {
         });
 
         it("saves dismissedCount when dismissed", async function () {
+            stubEmptySettings();
             disableRandomness();
 
             await RandomTips.init([alwaysShowsTip]);
