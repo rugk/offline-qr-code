@@ -19,7 +19,7 @@
  * @property {Object.<string: integer>} [showInContext] a key-value object with
  * context -> num to require the tip to be shown in a specific context for the
  * given number of times. See {@link RandomTips.setContext}.
- * @property {Object.<string: bool>} [maximumInContest] a key-value object with
+ * @property {Object.<string: integer>} [maximumInContest] a key-value object with
  * context -> num to only show the tip in a specific context at most for the
  * given number of times. See {@link RandomTips.setContext}.
  * @property {bool|integer} [randomizeDisplay] Randomizes the display with a

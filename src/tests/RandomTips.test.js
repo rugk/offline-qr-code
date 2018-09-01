@@ -860,6 +860,102 @@ describe("common module: RandomTips", function () {
             });
         });
 
+        describe("maximumInContest", function () {
+            it("does not show tip, if count for context has already been reached", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {
+                                    "testContext1": 5
+                                }
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.maximumInContest = {
+                    "testContext1": 5
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("shows tip, if count for context has not yet been reached", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "alwaysShowsTip": {
+                                shownContext: {
+                                    "testContext1": 4
+                                }
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.maximumInContest = {
+                    "testContext1": 5
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("shows tip when over minimum provided by showInContext, but hides at maximum", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "neverShowsTip": {
+                                shownContext: {
+                                    "testContext1": 3
+                                }
+                            }
+                        },
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, neverShowsTip);
+                tip.showInContext = {
+                    "testContext1": 4
+                };
+                tip.maximumInContest = {
+                    "testContext1": 4
+                };
+
+                // save state to restore it later
+                // This is needed as the HTML node, where RandtomTips inserts it's
+                // messages is saved once.
+                saveHtmlTestCode();
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                // show first time
+                RandomTips.showRandomTip();
+                assertRandomTipShown("does not care for showInContext");
+
+                // shownContext+1=5
+                resetHtmlTestCode();
+
+                // shownContext
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown("does not care for maximumInContest");
+            });
+        });
+
         // TODO: other properties
     });
 

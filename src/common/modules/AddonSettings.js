@@ -255,7 +255,7 @@ export function loadOptions() {
     });
 
     // if the settings have been received anywhere, they could be loaded
-    return gettingManagedOption.catch(() => gettingSyncOption);
+    return gettingManagedOption.catch(() => gettingSyncOption);// //
 }
 
 // automatically fetch options
