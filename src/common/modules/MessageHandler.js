@@ -358,6 +358,7 @@ export function showMessage(...args) {
         elMessage.getElementsByClassName("message-text")[0].textContent = localizedString;
     }
 
+    debugger;
     if (isDismissable === true && elDismissIcon) {
         // add an icon which dismisses the message if clicked
         elDismissIcon.classList.remove("invisible");

@@ -3,6 +3,7 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as RandomTips from "/common/modules/RandomTips.js";
+import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
@@ -21,7 +22,7 @@ describe("common module: RandomTips", function () {
 
     afterEach(function() {
         AddonSettingsStub.afterTest();
-        HtmlMock.cleanup();
+        // HtmlMock.cleanup();
         sinon.restore();
     });
 
@@ -239,7 +240,7 @@ describe("common module: RandomTips", function () {
             const data = AddonSettingsStub.syncStorage.internalStorage;
 
             // verify it saved some settings
-            // (may contain more data due to )
+            // (may contain more data)
             chai.assert.containsAllDeepKeys(
                 data,
                 {
@@ -455,7 +456,22 @@ describe("common module: RandomTips", function () {
 
         describe("allowDismiss", function () {
             it("TODO", async function () {
-                // TODO
+                stubEmptySettings();
+
+                // get tip
+                const tip = Object.assign({}, alwaysShowsTip);
+                tip.allowDismiss = true;
+
+                await RandomTips.init([tip]);
+
+                // get dismiss button
+                const dismissButton = document.querySelector("#messageTips .icon-dismiss");
+
+                chai.assert.exists(dismissButton); // should be always true
+                chai.assert.isFalse(
+                    dismissButton.classList.contains("invisible"),
+                    "dismiss button is not visible although it is expected to be visible"
+                );
             });
         });
 
