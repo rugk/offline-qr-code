@@ -94,6 +94,12 @@ describe("common module: RandomTips", function () {
         maximumDismiss: null,
         text: "A tip to always show."
     };
+    const neverShowsTip = {
+        id: "neverShowsTip",
+        requiredShowCount: 0,
+        requiredTriggers: 0,
+        text: "A tip that may not show."
+    };
 
     /**
      * Asserts that no random tip has been shown.
@@ -303,6 +309,15 @@ describe("common module: RandomTips", function () {
             RandomTips.showRandomTip();
 
             assertRandomTipShown();
+        });
+
+        it("does not show tip, if tip config does not expect it to be shown", async function () {
+            stubEmptySettings();
+
+            await RandomTips.init([neverShowsTip]);
+            RandomTips.showRandomTip();
+
+            assertNoRandomTipShown();
         });
 
         it("correctly sets (displayed) values of tip", async function () {
@@ -721,6 +736,127 @@ describe("common module: RandomTips", function () {
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
+            });
+        });
+
+        describe("showInContext", function () {
+            it("shows tip if not yet shown and saves contextual display", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {}, // no information saved for tip
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, neverShowsTip);
+                tip.showInContext = {
+                    "testContext1": 1
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+
+                chai.assert.deepNestedInclude(
+                    AddonSettingsStub.syncStorage.internalStorage,
+                    {"randomTips.tips.neverShowsTip.shownContext": {testContext1: 1}},
+                    "does not save context shown count"
+                );
+            });
+
+            it("shows tip, if not yet shown enough times in context", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "neverShowsTip": {
+                                shownContext: {
+                                    "testContext1": 0
+                                }
+                            }
+                        },
+                        triggeredOpen: 3,
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, neverShowsTip);
+                tip.showInContext = {
+                    "testContext1": 1
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                RandomTips.showRandomTip();
+                assertRandomTipShown();
+            });
+
+            it("do not show tip, if already shown enough times in context", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {
+                            "neverShowsTip": {
+                                shownContext: {
+                                    "testContext1": 1
+                                }
+                            }
+                        },
+                        triggeredOpen: 3,
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, neverShowsTip);
+                tip.showInContext = {
+                    "testContext1": 1
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("testContext1");
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("does not show tip, if context is different", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {},
+                    }
+                });
+
+                // get tip
+                const tip = Object.assign({}, neverShowsTip);
+                tip.showInContext = {
+                    "testContext1": 5
+                };
+
+                await RandomTips.init([tip]);
+                RandomTips.setContext("differentContext");
+
+                RandomTips.showRandomTip();
+                assertNoRandomTipShown();
+            });
+
+            it("saves context data, even if tip is shown, because of other reasons", async function () {
+                await AddonSettingsStub.stubSettings({
+                    "randomTips": {
+                        tips: {},
+                    }
+                });
+
+                await RandomTips.init([alwaysShowsTip]);
+                RandomTips.setContext("currentContext");
+
+                RandomTips.showRandomTip();
+
+                chai.assert.deepNestedInclude(
+                    AddonSettingsStub.syncStorage.internalStorage,
+                    {"randomTips.tips.alwaysShowsTip.shownContext": {currentContext: 1}},
+                    "does not save context shown count"
+                );
             });
         });
 

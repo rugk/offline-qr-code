@@ -16,7 +16,7 @@
  * @property {integer} [requiredTriggers=10] require some displays ("triggers")
  * of (any) add-on page before showing tip. This is effectively just a minimum
  * limit, so it is not shown too "early".
- * @property {Object.<string: bool>} [showInContext] a key-value object with
+ * @property {Object.<string: integer>} [showInContext] a key-value object with
  * context -> num to require the tip to be shown in a specific context for the
  * given number of times. See {@link RandomTips.setContext}.
  * @property {Object.<string: bool>} [maximumInContest] a key-value object with
