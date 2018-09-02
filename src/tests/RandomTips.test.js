@@ -22,7 +22,7 @@ describe("common module: RandomTips", function () {
 
     afterEach(function() {
         AddonSettingsStub.afterTest();
-        // HtmlMock.cleanup();
+        HtmlMock.cleanup();
         sinon.restore();
     });
 
