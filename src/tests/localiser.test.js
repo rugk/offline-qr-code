@@ -511,13 +511,13 @@ describe("common module: Localiser", function () {
          *
          * @function
          * @private
-         * @param {string} htmlFile the HTML to input
-         * @param {string} resultHtmlFile the expected HTML code
+         * @param {string} htmlFile the HTML file to use as input
+         * @param {string} resultHtmlFile the expected HTML file
          * @param {Object} [localizedValues={}] assignment of message strings to values
          * @param {function} [moreAssert=null] attach more assertion functions, the function gets passed the stub and localizedValues
          * @returns {Promise}
          */
-        async function testModifiesHtml(htmlFile, resultHtmlFile, localizedValues = {}, moreAssert = null) {
+        async function testModifiesHtmlFile(htmlFile, resultHtmlFile, localizedValues = {}, moreAssert = null) {
             HtmlMock.setTestHtmlFile(htmlFile);
             const resultHtml = await HtmlMock.getTestHtmlFile(resultHtmlFile);
 
@@ -544,7 +544,7 @@ describe("common module: Localiser", function () {
         }
 
         it("correctly localises QR code example", function () {
-            return testModifiesHtml("localizer/qrcode-in.html", "localizer/qrcode-out.html", Object.freeze({
+            return testModifiesHtmlFile("localizer/qrcode-in.html", "localizer/qrcode-out.html", Object.freeze({
                 dismissIconDescription: "Close this message",
                 qrCodePlaceholder: "QR code placeholder image",
                 textareaPlaceholder: "Enter text for QR code here to generate it.",
