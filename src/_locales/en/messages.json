@@ -144,10 +144,6 @@
     "message": "QR code from link",
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
-  "contextMenuItemOptions": {
-    "message": "Settings",
-    "description": "The context menu entry shown for opening the settings."
-  },
   "contextMenuSaveImage": {
     "message": "Save QR code…",
     "description": "The context menu entry shown for saving SVG images in the popup."
