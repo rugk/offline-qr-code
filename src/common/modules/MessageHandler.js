@@ -4,13 +4,7 @@ import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
 import * as Logger from "/common/modules/Logger.js";
 
-const ELEMENT_BY_TYPE = Object.freeze({
-    [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
-    [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
-    [MESSAGE_LEVEL.INFO]: document.getElementById("messageInfo"),
-    [MESSAGE_LEVEL.SUCCESS]: document.getElementById("messageSuccess"),
-    [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
-});
+let ELEMENT_BY_TYPE;
 
 // documents the classes for the different message styles
 const DESIGN_BY_TYPE = Object.freeze({
@@ -280,16 +274,16 @@ export function setMessageDesign(elMessage, newDesignType) {
  *
  * @function
  * @param {MESSAGE_LEVEL|HTMLElement} messagetype
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
  * @returns {void}
  */
 export function showMessage(...args) {
-    if (arguments.length < 0) {
+    if (arguments.length <= 0) {
         Logger.logError("MessageHandler.showMessage has been called without parameters");
         return;
     }
@@ -472,7 +466,7 @@ export function hideError() {
 }
 
 /**
- * Hide error message.
+ * Hide warning message.
  *
  * @function
  * @returns {void}
@@ -525,9 +519,9 @@ export function hideSuccess() {
  * once.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -544,9 +538,9 @@ export function showError(...args) {
  * Show an warning message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -563,9 +557,9 @@ export function showWarning(...args) {
  * Show an info message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string} actionButton.link URL to site to open on link
  * @param {...*} args optional parameters for translation
@@ -582,18 +576,18 @@ export function showInfo(...args) {
  * Shows a loading message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
  * @returns {void}
  */
 export function showLoading(...args) {
-    runHook(MESSAGE_LEVEL.LOADDING, "show", args);
+    runHook(MESSAGE_LEVEL.LOADING, "show", args);
 
-    args.unshift(MESSAGE_LEVEL.LOADDING);
+    args.unshift(MESSAGE_LEVEL.LOADING);
     showMessage(...args);
 }
 
@@ -601,9 +595,9 @@ export function showLoading(...args) {
  * Show a success message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -662,6 +656,15 @@ export function setDismissHooks(startHook, endHook) {
  * @returns {void}
  */
 export function init() {
+    // reload messages
+    ELEMENT_BY_TYPE = Object.freeze({
+        [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
+        [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
+        [MESSAGE_LEVEL.INFO]: document.getElementById("messageInfo"),
+        [MESSAGE_LEVEL.SUCCESS]: document.getElementById("messageSuccess"),
+        [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
+    });
+
     /* add event listeners */
     const dismissIcons = document.getElementsByClassName("icon-dismiss");
 

@@ -146,7 +146,7 @@ describe("common module: Logger", function () {
      *
      * @private
      * @function
-     * @param {string} logMethod the console.<??> method tzhat is expected to
+     * @param {string} logMethod the console.<??> method that is expected to
      *                           be called
      * @param {function} logFunctionCall the log function to test
      * @returns {Promise}
@@ -191,8 +191,8 @@ describe("common module: Logger", function () {
             // now verify passed argument manually
             chai.assert.deepEqual(
                 spyLog.args[0][1], // verify second argument of first call
-                logMessageExpected // it should ignore the modifications done to the object
-                , "did not ignore changed object properties/freeze object");
+                logMessageExpected, // it should ignore the modifications done to the object
+                "did not ignore changed object properties/freeze object");
         });
     }
 
