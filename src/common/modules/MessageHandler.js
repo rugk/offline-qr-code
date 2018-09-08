@@ -203,6 +203,10 @@ function getElementFromMessageType(messagetype) {
     } else if (messagetype in ELEMENT_BY_TYPE) {
         // verify string message types are valid
         elMessage = ELEMENT_BY_TYPE[messagetype];
+
+        if (elMessage === null) {
+            throw new Error(`message type ${messagetype} has no corresponding HTMLElement`);
+        }
     } else {
         throw new Error(`message type ${messagetype} is/belong to an unknown element`);
     }
@@ -399,16 +403,15 @@ export function hideMessage(messagetype) {
     // hide all messages if type is not specified
     if (messagetype === null || messagetype === undefined) {
         // hide all of them
-        MESSAGE_LEVEL.forEach((currentType) => {
+        for (const currentType of Object.values(MESSAGE_LEVEL)) {
             // recursive call myself to hide element
             hideMessage(currentType);
-        });
+        }
 
         return;
     }
 
     const [, elMessage] = getElementFromMessageType(messagetype);
-
     // hide single message
     const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
 

@@ -78,7 +78,7 @@ describe("common module: MessageHandler", function () {
      * @param {function} functionCall the function under test
      * @returns {Promise}
      */
-    function testMessageArgs(boxId, boxName, functionCall) {
+    function testMessageShow(boxId, boxName, functionCall) {
         it(`shows ${boxName} message`, function () {
             // test function
             MessageHandler.init();
@@ -101,7 +101,7 @@ describe("common module: MessageHandler", function () {
             // verify exitance
             chai.assert.isFalse(
                 messageBox.classList.contains("invisible"),
-                "The info message box was not shown, although it was expected to be shown."
+                `The ${boxName} message box was not shown, although it was expected to be shown.`
             );
 
             // verify content
@@ -125,29 +125,104 @@ describe("common module: MessageHandler", function () {
             assertNoMessageShown();
         });
 
-        testMessageArgs("messageInfo", "info", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageArgs("messageWarning", "warning", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageArgs("messageError", "error", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageInfo", "info", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageWarning", "warning", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageError", "error", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showError()", function () {
-        testMessageArgs("messageError", "error", MessageHandler.showError); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageError", "error", MessageHandler.showError); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showWarning()", function () {
-        testMessageArgs("messageWarning", "warning", MessageHandler.showWarning); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageWarning", "warning", MessageHandler.showWarning); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showInfo()", function () {
-        testMessageArgs("messageInfo", "info", MessageHandler.showInfo); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageInfo", "info", MessageHandler.showInfo); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showLoading()", function () {
-        testMessageArgs("messageLoading", "loading", MessageHandler.showLoading); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageLoading", "loading", MessageHandler.showLoading); // eslint-disable-line mocha/no-setup-in-describe
     });
 
-    describe("messageSuccess()", function () {
-        testMessageArgs("messageSuccess", "success", MessageHandler.showSuccess); // eslint-disable-line mocha/no-setup-in-describe
+    describe("showSuccess()", function () {
+        testMessageShow("messageSuccess", "success", MessageHandler.showSuccess); // eslint-disable-line mocha/no-setup-in-describe
     });
 
+    /**
+     * Tests that the message function correctly hioes the messages.
+     *
+     * @private
+     * @function
+     * @param {string} boxId the ID of tghe HtmlElement of the message box
+     * @param {string} boxName the name of the tested message box
+     * @param {function} functionCall the function under test
+     * @returns {Promise}
+     */
+    function testMessageHide(boxId, boxName, functionCall) {
+        it(`hides ${boxName} message`, function () {
+            const messageBox = document.getElementById(boxId);
+
+            // setup requirements
+            messageBox.classList.remove("invisible");
+
+            chai.assert.isFalse(
+                messageBox.classList.contains("invisible"),
+                `Requirements setups: The ${boxName} message box was not shown, although it was expected to be shown.`
+            );
+
+            // test function
+            MessageHandler.init();
+            functionCall();
+
+            // check result
+            chai.assert.isTrue(
+                messageBox.classList.contains("invisible"),
+                `The ${boxName} message box was shown, although it was expected to be hidden.`
+            );
+        });
+
+        // TODO: throw, if passed no valid message type
+    }
+
+    describe("hideMessage()", function () {
+        it("hides all messages, if called without params", function () {
+            // show all messages
+            document.querySelectorAll(".message-box").forEach((messageBox) => {
+                messageBox.classList.remove("invisible");
+            });
+
+            // test function
+            MessageHandler.init();
+            MessageHandler.hideMessage();
+
+            // and verify, no message is shown
+            assertNoMessageShown();
+        });
+
+        testMessageHide("messageInfo", "info", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageWarning", "warning", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageError", "error", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("hideError()", function () {
+        testMessageHide("messageError", "error", MessageHandler.hideError); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("hideWarning()", function () {
+        testMessageHide("messageWarning", "warning", MessageHandler.hideWarning); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("hideInfo()", function () {
+        testMessageHide("messageInfo", "info", MessageHandler.hideInfo); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("hideLoading()", function () {
+        testMessageHide("messageLoading", "loading", MessageHandler.hideLoading); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("hideSuccess()", function () {
+        testMessageHide("messageSuccess", "success", MessageHandler.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
+    });
 });
