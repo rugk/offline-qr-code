@@ -643,8 +643,8 @@ export function setHook(messagetype, hookShown, hookHidden) {
  * - {event} event – the original click even on the dismiss button
  *
  * @function
- * @param {function|null} startHook
- * @param {function|null} endHook
+ * @param {function|null} [startHook]
+ * @param {function|null} [endHook]
  * @returns {void}
  */
 export function setDismissHooks(startHook, endHook) {

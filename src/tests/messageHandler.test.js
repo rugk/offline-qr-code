@@ -7,6 +7,7 @@ import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
+import {wait} from "./modules/PromiseHelper.js";
 
 const HTML_BASE_FILE = "./messageHandler/baseCode.html";
 
@@ -313,7 +314,7 @@ describe("common module: MessageHandler", function () {
 
     describe("cloneMessage()", function () {
         /**
-         * Tests that the message function correctly hioes the messages.
+         * Tests that the clone function.
          *
          * @private
          * @function
@@ -322,8 +323,12 @@ describe("common module: MessageHandler", function () {
          * @param {MESSAGE_LEVEL} expectedClass the message level design to add
          * @returns {Promise}
          */
-        function testMessageDesign(boxId, passToFunction, expectedClass) {
+        function testMessageClone(boxId, passToFunction, expectedClass) {
             const newId = `veryUniqueStringMessageId${Math.random()}`;
+            const messageBox = document.getElementById(boxId);
+
+            // show message
+            messageBox.classList.remove("invisible");
 
             const newMessage = MessageHandler.cloneMessage(passToFunction, newId);
 
@@ -331,6 +336,12 @@ describe("common module: MessageHandler", function () {
             chai.assert.isTrue(
                 newMessage.classList.contains(expectedClass),
                 `Testing with box ${boxId}. Does not have class "${expectedClass}".`
+            );
+
+            // verify it is correctly hidden
+            chai.assert.isTrue(
+                newMessage.classList.contains("invisible"),
+                `The ${boxId} message box was shown, although it was expected to be hidden.`
             );
 
             // verify it has ID
@@ -344,16 +355,56 @@ describe("common module: MessageHandler", function () {
         it("clones existing message by type", function () {
             MessageHandler.init();
 
-            testMessageDesign("messageLoading", MESSAGE_LEVEL.LOADING, "info");
-            testMessageDesign("messageInfo", MESSAGE_LEVEL.INFO, "info");
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success");
-            testMessageDesign("messageWarning", MESSAGE_LEVEL.WARN, "warning");
-            testMessageDesign("messageError", MESSAGE_LEVEL.ERROR, "error");
+            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info");
+            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info");
+            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success");
+            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning");
+            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error");
         });
 
         it("clones HTMLElement", function () {
-            testMessageDesign("messageInfo", document.getElementById("messageInfo"), "info");
-            testMessageDesign("messageError", document.getElementById("messageError"), "error");
+            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info");
+            testMessageClone("messageError", document.getElementById("messageError"), "error");
+        });
+    });
+
+    describe("setDismissHooks()", function () {
+        it("calls function on dismiss start", function () {
+            MessageHandler.init();
+
+            const spyStart = sinon.spy();
+            MessageHandler.setDismissHooks(spyStart);
+
+            // show message (with isDismissable = true)
+            MessageHandler.showInfo("someRandomInfo", true);
+            // dismiss message
+            const dismissButton = document.querySelector("#messageInfo .icon-dismiss");
+            dismissButton.click();
+
+            // verify callbacks
+            sinon.assert.calledOnce(spyStart);
+        });
+
+        it("calls function on dismiss (transition) end", async function () {
+            MessageHandler.init();
+
+            const spyEnd = sinon.spy();
+            MessageHandler.setDismissHooks(null, spyEnd);
+
+            // show message (with isDismissable = true)
+            MessageHandler.showInfo("someRandomInfo", true);
+
+            // wait for in-transition (I guess?)
+            await wait(100);
+
+            // dismiss message
+            const dismissButton = document.querySelector("#messageInfo .icon-dismiss");
+            dismissButton.click();
+
+            await wait(100);
+
+            // verify callbacks
+            sinon.assert.calledOnce(spyEnd);
         });
     });
 });
