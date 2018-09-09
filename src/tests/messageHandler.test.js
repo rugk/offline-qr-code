@@ -310,4 +310,50 @@ describe("common module: MessageHandler", function () {
             setHtmlTestCode(testCode);
         });
     });
+
+    describe("cloneMessage()", function () {
+        /**
+         * Tests that the message function correctly hioes the messages.
+         *
+         * @private
+         * @function
+         * @param {string} boxId the ID of the HtmlElement of the message box
+         * @param {MESSAGE_LEVEL|HTMLElement} passToFunction the message level or element to pass to the function
+         * @param {MESSAGE_LEVEL} expectedClass the message level design to add
+         * @returns {Promise}
+         */
+        function testMessageDesign(boxId, passToFunction, expectedClass) {
+            const newId = `veryUniqueStringMessageId${Math.random()}`;
+
+            const newMessage = MessageHandler.cloneMessage(passToFunction, newId);
+
+            // verify classes are set
+            chai.assert.isTrue(
+                newMessage.classList.contains(expectedClass),
+                `Testing with box ${boxId}. Does not have class "${expectedClass}".`
+            );
+
+            // verify it has ID
+            chai.assert.strictEqual(
+                newMessage.id,
+                newId,
+                `Testing with box ${boxId}. Has wrong ID.`
+            );
+        }
+
+        it("clones existing message by type", function () {
+            MessageHandler.init();
+
+            testMessageDesign("messageLoading", MESSAGE_LEVEL.LOADING, "info");
+            testMessageDesign("messageInfo", MESSAGE_LEVEL.INFO, "info");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success");
+            testMessageDesign("messageWarning", MESSAGE_LEVEL.WARN, "warning");
+            testMessageDesign("messageError", MESSAGE_LEVEL.ERROR, "error");
+        });
+
+        it("clones HTMLElement", function () {
+            testMessageDesign("messageInfo", document.getElementById("messageInfo"), "info");
+            testMessageDesign("messageError", document.getElementById("messageError"), "error");
+        });
+    });
 });

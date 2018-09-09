@@ -432,7 +432,7 @@ export function hideMessage(messagetype) {
  * The message is hidden by default – regardless of the state of the origin
  * message (type).
  *
- * CURRENTLY UNUSED; UNTESTED!!
+ * CURRENTLY UNUSED.
  *
  * @function
  * @param  {MESSAGE_LEVEL|HTMLElement} messagetype
@@ -445,16 +445,16 @@ export function cloneMessage(messagetype, newId) {
     [messagetype, elMessage] = getElementFromMessageType(messagetype);
 
     // clone message
-    const closedElMessage = elMessage.cloneNode(elMessage);
-    closedElMessage.id = newId;
+    const clonedElMessage = elMessage.cloneNode(elMessage);
+    clonedElMessage.id = newId;
 
     // hide the message to reset it if needed
-    hideMessage(closedElMessage);
+    hideMessage(clonedElMessage);
 
     // attach to DOM
-    elMessage.insertAdjacentElement("afterend", closedElMessage);
+    elMessage.insertAdjacentElement("afterend", clonedElMessage);
 
-    return closedElMessage;
+    return clonedElMessage;
 }
 
 /**
