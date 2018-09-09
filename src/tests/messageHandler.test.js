@@ -33,7 +33,7 @@ describe("common module: MessageHandler", function () {
      * @returns {Promise}
      */
     function getHtmlTestCode() {
-        return document.querySelector(".message-container");
+        return document.querySelector(".message-container").innerHTML;
     }
 
     /**
@@ -125,7 +125,7 @@ describe("common module: MessageHandler", function () {
             assertNoMessageShown();
         });
 
-        it("throws, if called with in valid message type", function () {
+        it("throws, if called with invalid message type", function () {
             MessageHandler.init();
 
             // test function -> pass 777 as message type
@@ -138,6 +138,7 @@ describe("common module: MessageHandler", function () {
         testMessageShow("messageInfo", "info", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageShow("messageWarning", "warning", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageShow("messageError", "error", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageSuccess", "success", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showError()", function () {
@@ -165,7 +166,7 @@ describe("common module: MessageHandler", function () {
      *
      * @private
      * @function
-     * @param {string} boxId the ID of tghe HtmlElement of the message box
+     * @param {string} boxId the ID of the HtmlElement of the message box
      * @param {string} boxName the name of the tested message box
      * @param {function} functionCall the function under test
      * @returns {Promise}
@@ -209,7 +210,7 @@ describe("common module: MessageHandler", function () {
             assertNoMessageShown();
         });
 
-        it("throws, if called with in valid message type", function () {
+        it("throws, if called with invalid message type", function () {
             MessageHandler.init();
 
             // test function -> pass 777 as message type
@@ -222,6 +223,7 @@ describe("common module: MessageHandler", function () {
         testMessageHide("messageInfo", "info", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageHide("messageWarning", "warning", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageHide("messageError", "error", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageSuccess", "success", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideError()", function () {
@@ -242,5 +244,70 @@ describe("common module: MessageHandler", function () {
 
     describe("hideSuccess()", function () {
         testMessageHide("messageSuccess", "success", MessageHandler.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
+    });
+
+    describe("setMessageDesign()", function () {
+        /**
+         * Tests that the message function correctly hioes the messages.
+         *
+         * @private
+         * @function
+         * @param {string} boxId the ID of the HtmlElement of the message box
+         * @param {MESSAGE_LEVEL} messageLevel the message level design to add
+         * @param {string} oldClass the old class of the function
+         * @param {string} newClass the fnew class of the function
+         * @returns {Promise}
+         */
+        function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
+            const elMessage = document.getElementById(boxId);
+
+            MessageHandler.setMessageDesign(elMessage, messageLevel);
+
+            // verify classes are set
+            chai.assert.isFalse(
+                elMessage.classList.contains(oldClass),
+                `Testing with box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+            );
+            chai.assert.isTrue(
+                elMessage.classList.contains(newClass),
+                `Testing with box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+            );
+
+            // verify classes of action button
+            const elMessageActionButton = elMessage.querySelector(".message-action-button");
+
+            chai.assert.isFalse(
+                elMessageActionButton.classList.contains(oldClass),
+                `Testing with action button of box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+            );
+            chai.assert.isTrue(
+                elMessageActionButton.classList.contains(newClass),
+                `Testing with action button of box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+            );
+        }
+
+        it("changes design", function () {
+            const testCode = getHtmlTestCode();
+
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
+            // reset test code
+            setHtmlTestCode(testCode);
+        });
     });
 });
