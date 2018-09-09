@@ -125,6 +125,16 @@ describe("common module: MessageHandler", function () {
             assertNoMessageShown();
         });
 
+        it("throws, if called with in valid message type", function () {
+            MessageHandler.init();
+
+            // test function -> pass 777 as message type
+            chai.assert.throws(MessageHandler.showMessage.bind(null, 777), Error);
+
+            // and verify, no message is shown
+            assertNoMessageShown();
+        });
+
         testMessageShow("messageInfo", "info", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageShow("messageWarning", "warning", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
         testMessageShow("messageError", "error", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
@@ -182,8 +192,6 @@ describe("common module: MessageHandler", function () {
                 `The ${boxName} message box was shown, although it was expected to be hidden.`
             );
         });
-
-        // TODO: throw, if passed no valid message type
     }
 
     describe("hideMessage()", function () {
@@ -196,6 +204,16 @@ describe("common module: MessageHandler", function () {
             // test function
             MessageHandler.init();
             MessageHandler.hideMessage();
+
+            // and verify, no message is shown
+            assertNoMessageShown();
+        });
+
+        it("throws, if called with in valid message type", function () {
+            MessageHandler.init();
+
+            // test function -> pass 777 as message type
+            chai.assert.throws(MessageHandler.hideMessage.bind(null, 777), Error);
 
             // and verify, no message is shown
             assertNoMessageShown();
