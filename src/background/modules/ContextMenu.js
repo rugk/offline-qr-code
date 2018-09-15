@@ -70,11 +70,6 @@ function createItems() {
         contexts: ["link"]
     }, onCreated);
 
-    browser.menus.create({
-        id: OPEN_OPTIONS,
-        title: browser.i18n.getMessage("contextMenuItemOptions"),
-        contexts: ["browser_action"]
-    }, onCreated);
 }
 
 /**

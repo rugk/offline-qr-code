@@ -28,8 +28,6 @@ let saveAsRetries = 0;
  */
 function saveFileAs(request, sender, sendResponse) {
     Logger.logInfo("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
-    // TODO: Logger does not work here for some reason!
-    // console.log("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
 
     // if we should handle permission errors and apply re-try workaround
     // that's the actual workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
@@ -57,7 +55,7 @@ function saveFileAs(request, sender, sendResponse) {
                 }, SAVE_AS_RETRY_TIMEOUT);
             });
         } else {
-            // stop actually retrying after this execution
+            // stop actually retrying after actually triggering the download below
             saveFileAsRetry = false;
         }
     }
@@ -111,7 +109,7 @@ function handleMessages(request, sender, sendResponse) {
 
         return saveFileAs(request, sender, sendResponse);
     case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY:
-        saveFileAsRetry = true;
+        saveFileAsRetry = false;
     }
 
     return null;

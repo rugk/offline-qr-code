@@ -8,6 +8,7 @@ import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as Colors from "/common/modules/Colors.js";
+import * as IconHandler from "/common/modules/IconHandler.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 const REMEBER_SIZE_INTERVAL = 500; // sec
@@ -234,12 +235,7 @@ function applyOptionLive(option, optionValue) {
     }
 
     case "popupIconColored":
-        if (optionValue === true) {
-            browser.browserAction.setIcon({path: "icons/icon-small-colored.svg"});
-        } else {
-            // reset icon
-            browser.browserAction.setIcon({path: null});
-        }
+        IconHandler.changeIconIfColored(optionValue);
         break;
 
     case "debugMode":
@@ -365,7 +361,7 @@ function saveOption(event) {
 
     const [option, optionValue] = getIdAndOptionsFromElement(elOption);
 
-    Logger.logInfo("save option", elOption, option, JSON.parse(JSON.stringify(optionValue)));
+    Logger.logInfo("save option", elOption, option, optionValue);
 
     applyOptionLive(option, optionValue);
 
@@ -472,7 +468,7 @@ function setOption(option, optionGroup, elOption, ignoreDisabled) {
     }
 
     return gettingOption.then((res) => {
-        Logger.logInfo("sync config found", JSON.parse(JSON.stringify(res)), elOption);
+        Logger.logInfo("sync config found", res, elOption);
 
         // do not modify if managed
         if (ignoreDisabled !== true && elOption.hasAttribute("disabled")) {
