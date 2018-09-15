@@ -1,3 +1,11 @@
+/**
+ * Communicates between different browser parts.
+ *
+ * @module modules/BrowserCommunication
+ * @requires /common/modules/Logger
+ * @requires ./QrCreator
+ * @requires ./InitQrCode
+ */
 import * as Logger from "/common/modules/Logger.js";
 
 import * as QrCreator from "./QrCreator.js";

@@ -1,4 +1,10 @@
 /**
+ * Contauns some global constants of the add-on..
+ *
+ * @module /common/modules/GlobalConsts
+ */
+
+/**
  * Specifies the long name of this add-on.,
  *
  * @readonly

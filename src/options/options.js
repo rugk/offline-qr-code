@@ -1,3 +1,9 @@
+/**
+ * Starter module for addon settings site.
+ *
+ * @module qrcode
+ * @requires modules/OptionHandler
+ */
 "use strict";
 
 import * as Logger from "/common/modules/Logger.js";

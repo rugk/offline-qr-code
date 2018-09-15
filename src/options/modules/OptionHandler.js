@@ -1,3 +1,8 @@
+/**
+ * Load, save and apply options to HTML options page.
+ *
+ * @module OptionHandler
+ */
 import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 
 import * as Logger from "/common/modules/Logger.js";

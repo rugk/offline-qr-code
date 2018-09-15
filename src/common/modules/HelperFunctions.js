@@ -1,3 +1,10 @@
+/**
+ * Common functiom useful for all scripts.
+ *
+ * Basically lodash lite ;).
+ *
+ * @module /common/modules/HelperFunctions
+ */
 "use strict";
 
 /**
