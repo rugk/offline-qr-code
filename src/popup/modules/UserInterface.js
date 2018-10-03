@@ -4,7 +4,7 @@
  * @module modules/UserInterface
  * @requires /common/modules/lib/lodash/isObject
  * @requires /common/modules/lib/lodash/throttle
- * @requires /common/modules/MessageLevel
+ * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler

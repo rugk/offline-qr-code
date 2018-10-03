@@ -1,7 +1,7 @@
 /**
  * Contains a static object for messages.
  *
- * @module /common/modules/MessageLevel
+ * @module /common/modules/data/MessageLevel
  */
 
 /**

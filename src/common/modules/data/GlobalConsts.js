@@ -1,7 +1,7 @@
 /**
  * Contauns some global constants of the add-on..
  *
- * @module /common/modules/GlobalConsts
+ * @module /common/modules/data/GlobalConsts
  */
 
 /**

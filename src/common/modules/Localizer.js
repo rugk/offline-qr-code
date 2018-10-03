@@ -1,5 +1,5 @@
 /**
- * Translates WebExtension's HTML document by attruibutes.
+ * Translates WebExtension's HTML document by attributes.
  *
  * @module /common/modules/Localizer
  * @requires /common/modules/Logger

@@ -2,7 +2,7 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import * as Localiser from "/common/modules/Localiser.js";
+import * as Localizer from "/common/modules/Localizer.js";
 
 import * as HtmlMock from "./modules/HtmlMock.js";
 
@@ -13,14 +13,14 @@ const TEST_ATTRIBUTES = [
     "aria-label"
 ];
 
-describe("common module: Localiser", function () {
+describe("common module: Localizer", function () {
     before(function () {
         // Mocked function needs to be accessed at least once to get initiated and not be just a getter/property.
         // Otherwise "TypeError: Attempted to wrap undefined property getUILanguage as functioncheckWrappedMethod" is shown.
         // See https://discourse.mozilla.org/t/webextension-apis-made-as-getter-setter-lazily-evaluating-to-functions-beware-of-mocking-for-unit-tests/30849
 
         /* eslint-disable no-unused-expressions */
-        browser.i18n.getUILanguage; // not actually needed, as getUILanguage is automatically accessed before anyway in the Localiser module
+        browser.i18n.getUILanguage; // not actually needed, as getUILanguage is automatically accessed before anyway in the Localizer module
         browser.i18n.getMessage;
         /* eslint-enable no-unused-expressions */
     });
@@ -38,7 +38,7 @@ describe("common module: Localiser", function () {
             mockI18n.expects("getUILanguage")
                     .once().withArgs()
                     .returns("EXA-01");
-            Localiser.init();
+            Localizer.init();
 
             chai.assert.strictEqual(document.querySelector("html").getAttribute("lang"), "EXA-01", "did not set language code correctly");
 
@@ -113,7 +113,7 @@ describe("common module: Localiser", function () {
                     .returns("VALID REPLACEMENT VALUE");
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // verify results
             mockI18n.verify();
@@ -142,7 +142,7 @@ describe("common module: Localiser", function () {
                     .never();
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // verify results
             mockI18n.verify();
@@ -176,7 +176,7 @@ describe("common module: Localiser", function () {
                     .returns("VALID REPLACEMENT VALUE");
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // verify results
             mockI18n.verify();
@@ -205,7 +205,7 @@ describe("common module: Localiser", function () {
                     .never();
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // verify results
             mockI18n.verify();
@@ -244,7 +244,7 @@ describe("common module: Localiser", function () {
             const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // "unstub"
             stub.restore();
@@ -269,7 +269,7 @@ describe("common module: Localiser", function () {
             const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // "unstub"
             stub.restore();
@@ -316,7 +316,7 @@ describe("common module: Localiser", function () {
             const stub = sinon.stub(browser.i18n, "getMessage").returns(localizedValue);
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // assert that element itself was not modified
             const wholeHtml = document.getElementById(htmlId).outerHTML;
@@ -412,7 +412,7 @@ describe("common module: Localiser", function () {
                 mockI18n.expects("getMessage").withArgs("something").once().returns("TRANSLATED");
 
                 // run test
-                Localiser.init();
+                Localizer.init();
 
                 // assert that HTML code itself was not modified
                 const wholeHtml = document.getElementById("testElement").outerHTML;
@@ -438,7 +438,7 @@ describe("common module: Localiser", function () {
             mockI18n.expects("getMessage").withArgs("something").once().returns("TRANSLATED");
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // assert that HTML code itself was not modified
             const wholeHtml = document.getElementById("testElement").outerHTML;
@@ -463,7 +463,7 @@ describe("common module: Localiser", function () {
                 mockI18n.expects("getMessage").withArgs("something").once().returns("TRANSLATED");
 
                 // run test
-                Localiser.init();
+                Localizer.init();
 
                 // assert that HTML code itself was not modified
                 const wholeHtml = document.getElementById("testElement").outerHTML;
@@ -489,7 +489,7 @@ describe("common module: Localiser", function () {
             mockI18n.expects("getMessage").withArgs("something").once().returns("TRANSLATED");
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // assert that HTML code itself was not modified
             const wholeHtml = document.getElementById("testElement").outerHTML;
@@ -525,7 +525,7 @@ describe("common module: Localiser", function () {
                         .callsFake((messageName) => localizedValues[messageName]);
 
             // run test
-            Localiser.init();
+            Localizer.init();
 
             // assert that HTML code itself was not modified
             const wholeHtml = HtmlMock.getTestHtml();
