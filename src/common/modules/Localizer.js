@@ -1,7 +1,7 @@
 /**
  * Translates WebExtension's HTML document by attruibutes.
  *
- * @module /common/modules/Localiser
+ * @module /common/modules/Localizer
  * @requires /common/modules/Logger
  */
 import * as Logger from "/common/modules/Logger.js";
@@ -94,4 +94,4 @@ export function init() {
 // automatically init module
 init();
 
-Logger.logInfo("Localiser module loaded.");
+Logger.logInfo("Localizer module loaded.");
