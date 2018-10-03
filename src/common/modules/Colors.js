@@ -1,4 +1,8 @@
-import * as Logger from "/common/modules/Logger.js";
+/**
+ * Convert and calculate values of colors.
+ *
+ * @module /common/modules/Colors
+ */
 
 /**
  * Some breakpoints for specific color ratios.
@@ -109,5 +113,3 @@ export function hexToRgb(hex) {
     }
     return null;
 }
-
-Logger.logInfo("Colors module loaded.");

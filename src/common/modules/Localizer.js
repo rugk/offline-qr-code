@@ -1,3 +1,9 @@
+/**
+ * Translates WebExtension's HTML document by attruibutes.
+ *
+ * @module /common/modules/Localizer
+ * @requires /common/modules/Logger
+ */
 import * as Logger from "/common/modules/Logger.js";
 
 const I18N_ATTRIBUTE = "data-i18n";
@@ -99,4 +105,4 @@ export function init() {
 // automatically init module
 init();
 
-Logger.logInfo("Localiser module loaded.");
+Logger.logInfo("Localizer module loaded.");

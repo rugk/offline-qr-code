@@ -1,3 +1,9 @@
+/**
+ * Creates and modifies a QR code with the QR code library "kjua".
+ *
+ * @module QrLib/qrgen
+ * @requires /common/modules/Logger
+ */
 /* globals qrcodegen */
 
 import * as Logger from "/common/modules/Logger.js";

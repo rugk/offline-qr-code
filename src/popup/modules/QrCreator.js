@@ -1,3 +1,13 @@
+/**
+ * Creates QR codes with the choosen library.
+ *
+ * @module modules/QrCreator
+ * @requires /common/modules/Logger
+ * @requires /common/modules/AddonSettings
+ * @requires ./QrLib/qrgen
+ * @requires ./QrLib/kjua
+ * @requires ./UserInterface
+ */
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 

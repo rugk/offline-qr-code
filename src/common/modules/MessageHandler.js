@@ -1,7 +1,15 @@
+/**
+ * Shows and hides messages to the user.
+ *
+ * @module /common/modules/MessageHandler
+ * @requires /common/modules/lib/lodash/isFunction
+ * @requires /common/modules/MessageLevel
+ * @requires /common/modules/Logger
+ */
 // lodash
-import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
 import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
+import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
 
 let ELEMENT_BY_TYPE;

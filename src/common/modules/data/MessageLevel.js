@@ -1,4 +1,10 @@
 /**
+ * Contains a static object for messages.
+ *
+ * @module /common/modules/MessageLevel
+ */
+
+/**
  * Specifies the message level to use,
  *
  * @readonly

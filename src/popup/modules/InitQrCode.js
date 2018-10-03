@@ -1,3 +1,14 @@
+/**
+ * Initiates the QR code popup handling, grabs URL from tab.
+ *
+ * @module InitQrCode
+ * @requires /common/modules/Logger
+ * @requires /common/modules/AddonSettings
+ * @requires /common/modules/MessageHandler
+ * @requires ./QrCreator
+ * @requires ./BrowserCommunication
+ * @requires ./UserInterface
+ */
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";

@@ -1,3 +1,10 @@
+/**
+ * Caching wrapper for AddonSettings API that does save and load settings.
+ *
+ * @module /common/modules/AddonSettings
+ * @requires /common/modules/lib/lodash/isObject
+ * @requires /common/modules/Logger
+ */
 // lodash
 import isObject from "/common/modules/lib/lodash/isObject.js";
 

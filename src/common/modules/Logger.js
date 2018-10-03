@@ -1,5 +1,13 @@
-import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
-import {ADDON_NAME_SHORT} from "/common/modules/data/GlobalConsts.js";
+/**
+ * Wrapper around console functions for logging messages, erros etc.
+ *
+ * @module /common/modules/Logger
+ * @requires /common/modules/MessageLevel
+ * @requires /common/modules/GlobalConsts
+ * @requires /common/modules/AddonSettings
+ */
+import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
+import {ADDON_NAME_SHORT} from "/common/modules/GlobalConsts.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
