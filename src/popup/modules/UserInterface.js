@@ -4,7 +4,7 @@
  * @module modules/UserInterface
  * @requires /common/modules/lib/lodash/isObject
  * @requires /common/modules/lib/lodash/throttle
- * @requires /common/modules/MessageLevel
+ * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler
@@ -14,7 +14,7 @@
 import isObject from "/common/modules/lib/lodash/isObject.js";
 import throttle from "/common/modules/lib/lodash/throttle.js";
 
-import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
+import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";

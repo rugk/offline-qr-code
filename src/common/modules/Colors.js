@@ -9,7 +9,7 @@
  *
  * This includes definitions from WCAG and some custom ones.
  *
- * @type {object} with integers
+ * @type {number{}}
  * @const
  * @default
  */
@@ -65,6 +65,9 @@ function luminance(rgb) {
 /**
  * Returns the complementary color of a given RGB array.
  *
+ * Attention: To ease calculation, this also inverts the brightness and not only
+ * the hue of the color.
+ *
  * @function
  * @param  {Array} rgb
  * @returns {string}
@@ -84,11 +87,10 @@ export function invertColor(rgb) {
  * @function
  * @private
  * @param  {string} string
- * @param  {int} length
+ * @param  {int} [length=2]
  * @returns {string}
  */
-function padZero(string, length) {
-    length = length || 2;
+function padZero(string, length = 2) {
     const zeros = new Array(length).join("0");
     return (zeros + string).slice(-length);
 }

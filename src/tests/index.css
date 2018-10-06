@@ -1,0 +1,12 @@
+#testArea {
+  visibility: hidden;
+}
+
+/* fake transitions for messageHandler.test.js */
+.message-box {
+  /* requires at least 1ms for transitionend event to fire, otherwise it is no transition */
+  transition: opacity 1ms;
+}
+.message-box.fade-hide {
+  opacity: 0;
+}

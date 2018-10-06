@@ -41,6 +41,11 @@
         }],
         "no-var": 1,
         "prefer-arrow-callback": 1,
+        "implicit-arrow-linebreak": 1,
+        "arrow-body-style": 1,
+        "arrow-parens": 1,
+        "arrow-spacing": 1,
+        "no-confusing-arrow": 1,
         "prefer-rest-params": 2,
         "prefer-spread": 2,
         "prefer-template": 1,
@@ -49,12 +54,13 @@
         "object-shorthand": ["warn", "consistent-as-needed"],
         "prefer-promise-reject-errors": 2,
         /* "prefer-destructuring": 1, */ // https://github.com/eslint/eslint/issues/10250
+        "prefer-numeric-literals": 1,
 
         // additional rules
         "no-new-object": 2,
         "eqeqeq": ["error", "smart"],
         "curly": ["error", "all"],
-        "dot-location": 1,
+        "dot-location": ["error", "property"],
         "dot-notation": 2,
         "no-array-constructor": 2,
         "no-throw-literal": 2,

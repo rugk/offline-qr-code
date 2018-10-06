@@ -3,22 +3,16 @@
  *
  * @module /common/modules/MessageHandler
  * @requires /common/modules/lib/lodash/isFunction
- * @requires /common/modules/MessageLevel
+ * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/Logger
  */
 // lodash
 import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
-import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
+import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
 
-const ELEMENT_BY_TYPE = Object.freeze({
-    [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
-    [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
-    [MESSAGE_LEVEL.INFO]: document.getElementById("messageInfo"),
-    [MESSAGE_LEVEL.SUCCESS]: document.getElementById("messageSuccess"),
-    [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
-});
+let ELEMENT_BY_TYPE;
 
 // documents the classes for the different message styles
 const DESIGN_BY_TYPE = Object.freeze({
@@ -217,6 +211,10 @@ function getElementFromMessageType(messagetype) {
     } else if (messagetype in ELEMENT_BY_TYPE) {
         // verify string message types are valid
         elMessage = ELEMENT_BY_TYPE[messagetype];
+
+        if (elMessage === null) {
+            throw new Error(`message type ${messagetype} has no corresponding HTMLElement`);
+        }
     } else {
         throw new Error(`message type ${messagetype} is/belong to an unknown element`);
     }
@@ -288,16 +286,16 @@ export function setMessageDesign(elMessage, newDesignType) {
  *
  * @function
  * @param {MESSAGE_LEVEL|HTMLElement} messagetype
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object|null} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
  * @returns {void}
  */
 export function showMessage(...args) {
-    if (arguments.length < 0) {
+    if (arguments.length <= 0) {
         Logger.logError("MessageHandler.showMessage has been called without parameters");
         return;
     }
@@ -353,7 +351,7 @@ export function showMessage(...args) {
     if (typeof args[0] === "boolean") {
         isDismissable = args.shift();
     }
-    if (args[0] !== undefined && args[0].text !== undefined && args[0].action !== undefined) {
+    if (args[0] && args[0].text && args[0].action) {
         actionButton = args.shift();
     }
 
@@ -413,16 +411,15 @@ export function hideMessage(messagetype) {
     // hide all messages if type is not specified
     if (messagetype === null || messagetype === undefined) {
         // hide all of them
-        MESSAGE_LEVEL.forEach((currentType) => {
+        for (const currentType of Object.values(MESSAGE_LEVEL)) {
             // recursive call myself to hide element
             hideMessage(currentType);
-        });
+        }
 
         return;
     }
 
     const [, elMessage] = getElementFromMessageType(messagetype);
-
     // hide single message
     const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
 
@@ -443,7 +440,7 @@ export function hideMessage(messagetype) {
  * The message is hidden by default – regardless of the state of the origin
  * message (type).
  *
- * CURRENTLY UNUSED; UNTESTED!!
+ * CURRENTLY UNUSED.
  *
  * @function
  * @param  {MESSAGE_LEVEL|HTMLElement} messagetype
@@ -456,16 +453,16 @@ export function cloneMessage(messagetype, newId) {
     [messagetype, elMessage] = getElementFromMessageType(messagetype);
 
     // clone message
-    const closedElMessage = elMessage.cloneNode(elMessage);
-    closedElMessage.id = newId;
+    const clonedElMessage = elMessage.cloneNode(elMessage);
+    clonedElMessage.id = newId;
 
     // hide the message to reset it if needed
-    hideMessage(closedElMessage);
+    hideMessage(clonedElMessage);
 
     // attach to DOM
-    elMessage.insertAdjacentElement("afterend", closedElMessage);
+    elMessage.insertAdjacentElement("afterend", clonedElMessage);
 
-    return closedElMessage;
+    return clonedElMessage;
 }
 
 /**
@@ -480,7 +477,7 @@ export function hideError() {
 }
 
 /**
- * Hide error message.
+ * Hide warning message.
  *
  * @function
  * @returns {void}
@@ -533,9 +530,9 @@ export function hideSuccess() {
  * once.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -552,9 +549,9 @@ export function showError(...args) {
  * Show an warning message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -571,9 +568,9 @@ export function showWarning(...args) {
  * Show an info message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string} actionButton.link URL to site to open on link
  * @param {...*} args optional parameters for translation
@@ -590,18 +587,18 @@ export function showInfo(...args) {
  * Shows a loading message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
  * @returns {void}
  */
 export function showLoading(...args) {
-    runHook(MESSAGE_LEVEL.LOADDING, "show", args);
+    runHook(MESSAGE_LEVEL.LOADING, "show", args);
 
-    args.unshift(MESSAGE_LEVEL.LOADDING);
+    args.unshift(MESSAGE_LEVEL.LOADING);
     showMessage(...args);
 }
 
@@ -609,9 +606,9 @@ export function showLoading(...args) {
  * Show a success message.
  *
  * @function
- * @param {string} message optional, string to show or to translate if omitted no new text is shown
- * @param {boolean} isDismissable optional, set to true, if user should be able to dismiss the message
- * @param {Object} actionButton optional to show an action button
+ * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
+ * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
+ * @param {Object} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -654,8 +651,8 @@ export function setHook(messagetype, hookShown, hookHidden) {
  * - {event} event – the original click even on the dismiss button
  *
  * @function
- * @param {function|null} startHook
- * @param {function|null} endHook
+ * @param {function|null} [startHook]
+ * @param {function|null} [endHook]
  * @returns {void}
  */
 export function setDismissHooks(startHook, endHook) {
@@ -670,6 +667,15 @@ export function setDismissHooks(startHook, endHook) {
  * @returns {void}
  */
 export function init() {
+    // reload messages
+    ELEMENT_BY_TYPE = Object.freeze({
+        [MESSAGE_LEVEL.ERROR]: document.getElementById("messageError"),
+        [MESSAGE_LEVEL.WARN]: document.getElementById("messageWarning"),
+        [MESSAGE_LEVEL.INFO]: document.getElementById("messageInfo"),
+        [MESSAGE_LEVEL.SUCCESS]: document.getElementById("messageSuccess"),
+        [MESSAGE_LEVEL.LOADING]: document.getElementById("messageLoading")
+    });
+
     /* add event listeners */
     const dismissIcons = document.getElementsByClassName("icon-dismiss");
 

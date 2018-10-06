@@ -2,12 +2,12 @@
  * Wrapper around console functions for logging messages, erros etc.
  *
  * @module /common/modules/Logger
- * @requires /common/modules/MessageLevel
- * @requires /common/modules/GlobalConsts
+ * @requires /common/modules/data/MessageLevel
+ * @requires /common/modules/data/GlobalConsts
  * @requires /common/modules/AddonSettings
  */
-import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
-import {ADDON_NAME_SHORT} from "/common/modules/GlobalConsts.js";
+import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
+import {ADDON_NAME_SHORT} from "/common/modules/data/GlobalConsts.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
@@ -52,7 +52,7 @@ function prepareObjectsForLogging(args) {
  * @returns {void}
  */
 export function log(...args) {
-    if (arguments.length < 0) {
+    if (arguments.length <= 0) {
         // recursive call, it's secure, because this won't fail
         log(MESSAGE_LEVEL.ERROR, "log has been called without parameters");
         return;
