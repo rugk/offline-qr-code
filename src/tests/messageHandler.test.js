@@ -314,11 +314,11 @@ describe("common module: MessageHandler", function () {
 
     describe("cloneMessage()", function () {
         /**
-         * Tests that the clone function.
+         * Tests that the clone function works.
          *
          * @private
          * @function
-         * @param {string} boxId the ID of the HtmlElement of the message box
+         * @param {string} boxId the ID of the HTMLElement of the message box
          * @param {MESSAGE_LEVEL|HTMLElement} passToFunction the message level or element to pass to the function
          * @param {MESSAGE_LEVEL} expectedClass the message level design to add
          * @returns {Promise}
@@ -409,10 +409,36 @@ describe("common module: MessageHandler", function () {
     });
 
     describe("actionButton", function () {
+        it("displays no action button when not used", function () {
+            MessageHandler.init();
+
+            // show message
+            MessageHandler.showInfo("someRandomInfo", true, null);
+
+            // get action button
+            const actionButton = document.querySelector("#messageInfo .message-action-button");
+
+            // verify it is displayed
+            chai.assert.isTrue(actionButton.classList.contains("invisible"), "action button is displayed altghough it was expected to be hidden");
+        });
+
+        it("displays no action button when empty object is passed", function () {
+            MessageHandler.init();
+
+            // show message
+            MessageHandler.showInfo("someRandomInfo", true, {});
+
+            // get action button
+            const actionButton = document.querySelector("#messageInfo .message-action-button");
+
+            // verify it is displayed
+            chai.assert.isTrue(actionButton.classList.contains("invisible"), "action button is displayed altghough it was expected to be hidden");
+        });
+
         it("shows action button with text", function () {
             MessageHandler.init();
 
-            // show message (with isDismissable = true)
+            // show message
             MessageHandler.showInfo("someRandomInfo", true, {
                 text: "thisIsActionButtonWithUniqueText6899",
                 action: "https://fake-button-url.de"
@@ -434,7 +460,7 @@ describe("common module: MessageHandler", function () {
 
             const callback = sinon.spy();
 
-            // show message (with isDismissable = true)
+            // show message
             MessageHandler.showInfo("someRandomInfo", true, {
                 text: "thisIsActionButton",
                 action: callback

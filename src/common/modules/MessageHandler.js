@@ -288,7 +288,7 @@ export function setMessageDesign(elMessage, newDesignType) {
  * @param {MESSAGE_LEVEL|HTMLElement} messagetype
  * @param {string} [message] optional, string to show or to translate if omitted no new text is shown
  * @param {boolean} [isDismissable] optional, set to true, if user should be able to dismiss the message
- * @param {Object} [actionButton] optional to show an action button
+ * @param {Object|null} [actionButton] optional to show an action button
  * @param {string} actionButton.text
  * @param {string|function} actionButton.action URL to site to open on link OR function to execute
  * @param {...*} args optional parameters for translation
@@ -351,7 +351,7 @@ export function showMessage(...args) {
     if (typeof args[0] === "boolean") {
         isDismissable = args.shift();
     }
-    if (args[0] !== undefined && args[0].text !== undefined && args[0].action !== undefined) {
+    if (args[0] && args[0].text && args[0].action) {
         actionButton = args.shift();
     }
 
