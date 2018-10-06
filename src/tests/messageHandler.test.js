@@ -407,4 +407,65 @@ describe("common module: MessageHandler", function () {
             sinon.assert.calledOnce(spyEnd);
         });
     });
+
+    describe("actionButton", function () {
+        it("shows action button with text", function () {
+            MessageHandler.init();
+
+            // show message (with isDismissable = true)
+            MessageHandler.showInfo("someRandomInfo", true, {
+                text: "thisIsActionButtonWithUniqueText6899",
+                action: "https://fake-button-url.de"
+            });
+
+            // get action button
+            const actionButton = document.querySelector("#messageInfo .message-action-button");
+
+            // verify it is displayed
+            chai.assert.isFalse(actionButton.classList.contains("invisible"), "action button is not displayed");
+
+            // verify it's properties
+            chai.assert.strictEqual(actionButton.textContent, "thisIsActionButtonWithUniqueText6899", "action button text differed");
+            chai.assert.strictEqual(actionButton.parentNode.getAttribute("href"), "https://fake-button-url.de", "action button URL has not been correctly set");
+        });
+
+        it("calls callback button is when clicked", function () {
+            MessageHandler.init();
+
+            const callback = sinon.spy();
+
+            // show message (with isDismissable = true)
+            MessageHandler.showInfo("someRandomInfo", true, {
+                text: "thisIsActionButton",
+                action: callback
+            });
+
+            // click action button
+            const actionButton = document.querySelector("#messageInfo .message-action-button");
+            actionButton.click();
+
+            // verify callbacks
+            sinon.assert.calledOnce(callback);
+        });
+
+        it("calls callback button is when a href is clicked", function () {
+            MessageHandler.init();
+
+            const callback = sinon.spy();
+
+            // show message (with isDismissable = true)
+            MessageHandler.showInfo("someRandomInfo", true, {
+                text: "thisIsActionButton",
+                action: callback
+            });
+
+            // click action button
+            const actionButton = document.querySelector("#messageInfo .message-action-button");
+            actionButton.parentNode.click();
+
+            // verify callbacks
+            sinon.assert.calledOnce(callback);
+        });
+
+    });
 });
