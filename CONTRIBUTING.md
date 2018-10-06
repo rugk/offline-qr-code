@@ -115,7 +115,7 @@ Here some simple rules:
 * Use messages (often third parameter) in the assertions of chai, if useful. Here, describing the case if it fails (e.g. "failed to do XY") is the way to go, as these strings are only shown in case of an error.
 * As for chai, write them [in the assert syntax](http://www.chaijs.com/api/assert/).
 * Always use `.chai.assert.strictEqual` and not only `.equal` for comparison in tests, unless there is a specific reason not to do so. This way, you also do not need to check for the variable type, yet again. Similarly usually prefer `.calledWithExactly` instead of `.calledWith`.
-* If you need to attach/inject HTML code for your test into the HTML page, please use the `htmlMock.js` module provided in the test directory. Generally said, there are some modules from that dir that can be usefulö for testing particular features. :smile:
+* If you need to attach/inject HTML code for your test into the HTML page, please use the `htmlMock.js` module provided in the test directory. Generally said, there are some modules from that dir that can be useful for testing particular features. :smile:
 
 ### Various stuff
 
