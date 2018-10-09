@@ -5,7 +5,7 @@
  */
 
 import * as Logger from "/common/modules/Logger.js";
-import * as OptionHandler from "./OptionHandler.js";
+import * as AutomaticSettings from "./AutomaticSettings/AutomaticSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 
@@ -52,7 +52,7 @@ function applyQrCodeSize(optionValue) {
     if (optionValue.sizeType === "remember") {
         updateRemberedSizeInterval = setInterval((elQrCodeSize) => {
             // update element and ignore disabled status and that is of course wanted
-            OptionHandler.setOption("size", "qrCodeSize", elQrCodeSize, true);
+            AutomaticSettings.setSyncedOption("size", "qrCodeSize", elQrCodeSize, true);
         }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
     } else if (updateRemberedSizeInterval !== null) {
         clearInterval(updateRemberedSizeInterval);
@@ -183,15 +183,12 @@ function applyQrCodeColors(optionValue, option) {
  * @returns {void}
  */
 export function registerTrigger() {
-    OptionHandler.registerSaveTrigger("qrCodeSize", applyQrCodeSize);
-    OptionHandler.registerSaveTrigger("popupIconColored", applyPopupIconColor);
-    OptionHandler.registerSaveTrigger("debugMode", applyDebugMode);
-    OptionHandler.registerSaveTrigger("qrColor", applyQrCodeColors);
-    OptionHandler.registerSaveTrigger("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerSave("qrCodeSize", applyQrCodeSize);
+    AutomaticSettings.Trigger.registerSave("popupIconColored", applyPopupIconColor);
+    AutomaticSettings.Trigger.registerSave("debugMode", applyDebugMode);
+    AutomaticSettings.Trigger.registerSave("qrColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
 
-    OptionHandler.registerUpdateTrigger("qrColor", applyQrCodeColors);
-    OptionHandler.registerUpdateTrigger("qrBackgroundColor", applyQrCodeColors);
-
-    // OptionHandler.registerChangeTrigger("qrColor", applyQrCodeColors);
-    // OptionHandler.registerChangeTrigger("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
 }

@@ -11,11 +11,11 @@ import {tips} from "/common/modules/data/tips.js";
 import * as RandomTips from "/common/modules/RandomTips.js";
 
 import * as CustomOptionTriggers from "./modules/CustomOptionTriggers.js";
-import * as OptionHandler from "./modules/OptionHandler.js";
+import * as AutomaticSettings from "./modules/AutomaticSettings/AutomaticSettings.js";
 
 // init module
 CustomOptionTriggers.registerTrigger();
-OptionHandler.init();
+AutomaticSettings.init();
 RandomTips.init(tips).then(() => {
     RandomTips.setContext("options");
     RandomTips.showRandomTipIfWanted();
