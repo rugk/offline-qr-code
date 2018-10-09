@@ -127,7 +127,7 @@ function showTip(tipSpec) {
  */
 function shouldBeShown(tipSpec) {
     // default settings
-    tipSpec.requiredTriggers = tipSpec.requiredTriggers !== undefined ? tipSpec.requiredTriggers : 10;
+    const requiredTriggers = tipSpec.requiredTriggers !== undefined ? tipSpec.requiredTriggers : 10;
 
     // create option if needed
     if (tipConfig.tips[tipSpec.id] === undefined) {
@@ -137,7 +137,7 @@ function shouldBeShown(tipSpec) {
     }
 
     // require some global triggers, if needed
-    if (tipConfig.triggeredOpen < tipSpec.requiredTriggers) {
+    if (tipConfig.triggeredOpen < requiredTriggers) {
         return false;
     }
     // require some additional randomness if needed
