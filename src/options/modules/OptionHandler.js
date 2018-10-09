@@ -1,25 +1,22 @@
 /**
  * Load, save and apply options to HTML options page.
  *
- * @module OptionHandler
+ * @module modules/OptionHandler
  */
-import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
-
-import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as Colors from "/common/modules/Colors.js";
-import * as IconHandler from "/common/modules/IconHandler.js";
+import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
+import * as Logger from "/common/modules/Logger.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
-const REMEBER_SIZE_INTERVAL = 500; // sec
-
 let managedInfoIsShown = false;
-let remeberSizeInterval = null;
 
 let rememberedOptions;
 let lastOptionsBeforeReset;
-
-const elContrastMessage = document.getElementById("messageContrast");
+const triggers = {
+    onSave: [],
+    onChange: [],
+    onUpdate: []
+};
 
 /**
  * Applies option to element.
@@ -179,137 +176,30 @@ function getIdAndOptionsFromElement(elOption) {
  *
  * @function
  * @private
- * @param  {string|undefined} option
- * @param  {Object|undefined} optionValue
- * @returns {Promise|null} Promise only if called without parameters
+ * @param  {string} [option]
+ * @param  {Object} [optionValue] will be automatically retrieved, if not given
+ * @returns {Promise} Promise only if called without parameters
  */
-function applyOptionLive(option, optionValue) {
+async function applyOptionLive(option, optionValue) {
     if (option === undefined) {
         Logger.logInfo("applying all options live");
 
-        const gettingOption = AddonSettings.get();
-        return gettingOption.then((res) => {
-            // run for each option, which we know to handle
-            applyOptionLive("qrCodeSize", res.qrCodeSize);
-            applyOptionLive("popupIconColored", res.popupIconColored);
-            applyOptionLive("debugMode", res.qrColor);
-            applyOptionLive("qrColor", res.qrColor);
-            applyOptionLive("qrBackgroundColor", res.qrBackgroundColor);
+        triggers.onSave.forEach((trigger) => {
+            applyOptionLive(trigger.option);
         });
+    }
+
+    // get option value, if needed
+    if (optionValue === undefined) {
+        optionValue = await AddonSettings.get(option);
     }
 
     Logger.logInfo("applyOptionLive:", option, optionValue);
 
-    switch (option) {
-    case "qrCodeSize": {
-        const elQrCodeSize = document.getElementById("size");
-
-        if (optionValue.sizeType === "fixed") {
-            // round not so nice values to better values
-            let sizeValue = Number(optionValue.size);
-            // increase number if the difference to next heigher number (dividable by 5) is smaller
-            if (sizeValue % 5 >= 3 ) {
-                sizeValue += 5;
-            }
-            // "divide" by 5 to get only these values
-            optionValue.size = sizeValue - (sizeValue % 5);
-
-            elQrCodeSize.value = optionValue.size;
-            elQrCodeSize.removeAttribute("disabled");
-        } else {
-            // disable input of number when remember option is selected
-            elQrCodeSize.setAttribute("disabled", "");
-        }
-
-        // enable auto-update of size in input field (if changed while settings are open)
-        if (optionValue.sizeType === "remember") {
-            remeberSizeInterval = setInterval((element) => {
-                // update element and ignore disabled status and that is of course wanted
-                setOption("size", "qrCodeSize", element, true);
-            }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
-        } else if (remeberSizeInterval !== null) {
-            clearInterval(remeberSizeInterval);
-        }
-
-        break;
-    }
-
-    case "popupIconColored":
-        IconHandler.changeIconIfColored(optionValue);
-        break;
-
-    case "debugMode":
-        Logger.setDebugMode(optionValue);
-        break;
-
-    case "qrColor":
-    case "qrBackgroundColor": {
-        const elQrColor = document.getElementById("qrColor");
-        const elQrBackgroundColor = document.getElementById("qrBackgroundColor");
-
-        // find out which is the "other" element (the one that was not changed),
-        // which is used as a comparision to the current (changed) value
-        let optionCompare, elColor, elColorCompare;
-        if (option === "qrColor") {
-            optionCompare = "qrBackgroundColor";
-            elColor = elQrColor;
-            elColorCompare = elQrBackgroundColor;
-        } else { // option === "qrBackgroundColor"
-            optionCompare = "qrColor";
-            elColor = elQrBackgroundColor;
-            elColorCompare = elQrColor;
-        }
-
-        const color = Colors.hexToRgb(optionValue);
-        const colorCompare = Colors.hexToRgb(elColorCompare.value);
-
-        const colorContrast = Colors.contrastRatio(color, colorCompare);
-
-        const actionButton = {
-            text: "messageAutoSelectColorButton",
-            action: () => {
-                // replace comparison color with inverted color of QR code,
-                // because the one the user just changed is likely the one
-                // they want to keep
-                const invertedColor = Colors.invertColor(color);
-                browser.storage.sync.set({
-                    [optionCompare]: invertedColor
-                }).catch((error) => {
-                    Logger.logError("could not save option", optionCompare, ":", error);
-                    MessageHandler.showError("couldNotSaveOption", true);
-                }).finally(() => {
-                    // also display/"preview" other compared color,
-                    // (This is needed when users change the color of the preview only (via customOptionTrigger()) and click the action button.)
-                    elColor.value = optionValue;
-
-                    elColorCompare.value = invertedColor;
-                    // re-check color options again
-                    applyOptionLive(optionCompare, invertedColor);
-                });
-            }
-        };
-
-        // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
-        if (colorContrast <= Colors.CONTRAST_RATIO.WAY_TOO_LOW) {
-            // show an error when nearly no QR code scanner can read it
-            MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.ERROR);
-            MessageHandler.showMessage(elContrastMessage, "lowContrastRatioError", false, actionButton);
-        } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AA) {
-            // show a warning when approx. 50% of the QR code scanners can read it
-            MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.WARN);
-            MessageHandler.showMessage(elContrastMessage, "lowContrastRatioWarning", false, actionButton);
-        } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AAA) {
-            // show only an info when the contrast is low but most of the scanners can still read it
-            MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.INFO);
-            MessageHandler.showMessage(elContrastMessage, "lowContrastRatioInfo", false, actionButton);
-        } else if (elContrastMessage) {
-            // hide any message if the contrast is all right
-            MessageHandler.hideMessage(elContrastMessage);
-        }
-    }
-    }
-
-    return null;
+    // run all registered triggers for that option
+    triggers.onSave.filter((trigger) => trigger.option === option).forEach((trigger) => {
+        trigger.triggerFunc(optionValue, option);
+    });
 }
 
 /**
@@ -322,18 +212,94 @@ function applyOptionLive(option, optionValue) {
  * @private
  * @param  {Event} event
  * @returns {void}
+ * @throws {Error}
  */
 function customOptionTrigger(event) {
     const elOption = event.target;
 
     const [option, optionValue] = getIdAndOptionsFromElement(elOption);
 
-    switch (option) {
-    case "qrColor":
-    case "qrBackgroundColor":
-        // redirect calls to apply
-        applyOptionLive(option, optionValue);
+    // get trigger type by event type
+    let triggerType;
+    switch (event.type) {
+    case "input":
+        triggerType = "onUpdate";
+        break;
+    case "change":
+        triggerType = "onChange";
+        break;
+    default:
+        throw new Error("invalid event type attached");
     }
+
+    // run all registered triggers for that option
+    triggers[triggerType].filter((trigger) => trigger.option === option).forEach((trigger) => {
+        trigger.triggerFunc(optionValue, option, event);
+    });
+}
+
+/**
+ * Registers a trigger of any type.
+ *
+ * @function
+ * @private
+ * @param  {string} triggerType
+ * @param  {string} optionTrigger
+ * @param  {function} functionToTrigger
+ * @returns {void}
+ */
+export function registerTrigger(triggerType, optionTrigger, functionToTrigger) {
+    triggers[triggerType].push({
+        option: optionTrigger,
+        triggerFunc: functionToTrigger
+    });
+}
+
+/**
+ * Registers a save trigger.
+ * The trigger get the values (optionValue, option) passed as parameters.
+ *
+ * @public
+ * @function
+ * @param  {string} optionTrigger
+ * @param  {function} functionToTrigger
+ * @returns {void}
+ */
+export function registerSaveTrigger(optionTrigger, functionToTrigger) {
+    registerTrigger("onSave", optionTrigger, functionToTrigger);
+}
+
+/**
+ * Registers an update trigger.
+ *
+ * This trigger is executed, when the option value is updated by the user, and thus, usually
+ * saved. However, it does not get the new value yet.
+ * The trigger get the values (optionValue, option, event) passed as parameters.
+ *
+ * @public
+ * @function
+ * @param  {string} optionTrigger
+ * @param  {function} functionToTrigger
+ * @returns {void}
+ */
+export function registerUpdateTrigger(optionTrigger, functionToTrigger) {
+    registerTrigger("onUpdate", optionTrigger, functionToTrigger);
+}
+
+/**
+ * Registers an change trigger.
+ *
+ * This trigger is executed, when the option value is changed by the user, but not
+ * (necessarily) saved. Internally, it binds to the "input" event.
+ *
+ * @public
+ * @function
+ * @param  {string} optionTrigger
+ * @param  {function} functionToTrigger
+ * @returns {void}
+ */
+export function registerChangeTrigger(optionTrigger, functionToTrigger) {
+    registerTrigger("onChange", optionTrigger, functionToTrigger);
 }
 
 /**
@@ -440,8 +406,8 @@ function setManagedOption(option, optionGroup, elOption) {
  *
  * If the option is not saved already, it uses the default from common.js.
  *
+ * @public
  * @function
- * @private
  * @param  {string} option name of the option
  * @param  {string|null|undefined} optionGroup name of the option group,
  *                                             undefined will automatically
@@ -451,7 +417,7 @@ function setManagedOption(option, optionGroup, elOption) {
  * @param  {bool} ignoreDisabled set to true to ignore disabled check
  * @returns {Promise|void}
  */
-function setOption(option, optionGroup, elOption, ignoreDisabled) {
+export function setOption(option, optionGroup, elOption, ignoreDisabled) {
     if (!elOption) {
         elOption = document.getElementById(option);
     }
