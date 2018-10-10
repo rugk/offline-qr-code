@@ -2,11 +2,16 @@
  * Load, save and apply options to HTML options page.
  *
  * @module modules/OptionHandler
+ * @requires /common/modules/Logger
+ * @requires /common/modules/data/MessageLevel
+ * @requires /common/modules/MessageHandler
+ * @requires ./Trigger
+ * @requires ./HtmlModification
  */
 
 // common modules
-import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import * as Logger from "/common/modules/Logger.js";
+import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 // import internal modules
