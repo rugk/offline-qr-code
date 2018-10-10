@@ -99,11 +99,11 @@ describe("common module: Localizer", function () {
          * @function
          * @private
          * @param {string} messageName
-         * @param {string} [WholeMsgString=] (optional)
+         * @param {string} [wholeMsgString=] (optional)
          * @returns {void}
          */
-        function testReplacesText(messageName, WholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${WholeMsgString}">Hardcoded Fallback Value!</span>`);
+        function testReplacesText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
+            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
 
             const mockI18n = sinon.mock(browser.i18n);
 
@@ -129,11 +129,11 @@ describe("common module: Localizer", function () {
          * @function
          * @private
          * @param {string} messageName
-         * @param {string} [WholeMsgString=] (optional)
+         * @param {string} [wholeMsgString=] (optional)
          * @returns {void}
          */
-        function testDoesNotReplaceText(messageName, WholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${WholeMsgString}">Hardcoded Fallback Value!</span>`);
+        function testDoesNotReplaceText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
+            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
 
             const mockI18n = sinon.mock(browser.i18n);
 
@@ -162,11 +162,11 @@ describe("common module: Localizer", function () {
          * @private
          * @param {string} attribute
          * @param {string} messageName
-         * @param {string} [WholeMsgString=] (optional)
+         * @param {string} [wholeMsgString=] (optional)
          * @returns {void}
          */
-        function testReplacesAttribute(attribute, messageName, WholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Fallback value!" data-i18n-${attribute}="${WholeMsgString}"></span>`);
+        function testReplacesAttribute(attribute, messageName, wholeMsgString = `__MSG_${messageName}__`) {
+            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Fallback value!" data-i18n-${attribute}="${wholeMsgString}"></span>`);
 
             const mockI18n = sinon.mock(browser.i18n);
 
@@ -192,11 +192,11 @@ describe("common module: Localizer", function () {
          * @private
          * @param {string} attribute
          * @param {string} messageName
-         * @param {string} [WholeMsgString=] (optional)
+         * @param {string} [wholeMsgString=] (optional)
          * @returns {void}
          */
-        function testDoesNotReplaceAttribute(attribute, messageName, WholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Hardcoded Fallback Value!" data-i18n-${attribute}="${WholeMsgString}"></span>`);
+        function testDoesNotReplaceAttribute(attribute, messageName, wholeMsgString = `__MSG_${messageName}__`) {
+            HtmlMock.setTestHtml(`<span id="testElement" data-i18n ${attribute}="Hardcoded Fallback Value!" data-i18n-${attribute}="${wholeMsgString}"></span>`);
 
             const mockI18n = sinon.mock(browser.i18n);
 
@@ -403,8 +403,8 @@ describe("common module: Localizer", function () {
 
     describe("init() – fail-safety when one translation fails", function () {
         it("tries attribute localisation even when text localisation ID is incorrect", function () {
-            for (const WholeMsgString of ["_MSG_123_", "__MSG___"]) {
-                const html = `<span id="testElement" data-i18n="${WholeMsgString}" data-i18n-alt="__MSG_something__">fallback</span>`;
+            for (const wholeMsgString of ["_MSG_123_", "__MSG___"]) {
+                const html = `<span id="testElement" data-i18n="${wholeMsgString}" data-i18n-alt="__MSG_something__">fallback</span>`;
                 HtmlMock.setTestHtml(html);
 
                 const mockI18n = sinon.mock(browser.i18n);
@@ -419,8 +419,8 @@ describe("common module: Localizer", function () {
                 chai.assert.strictEqual(
                     wholeHtml,
                     // attribute is translated, but not content
-                    `<span id="testElement" data-i18n="${WholeMsgString}" data-i18n-alt="__MSG_something__" alt="TRANSLATED">fallback</span>`,
-                    `did not correctly translate attribute, while keeping innerHTML (content) for ${WholeMsgString}`
+                    `<span id="testElement" data-i18n="${wholeMsgString}" data-i18n-alt="__MSG_something__" alt="TRANSLATED">fallback</span>`,
+                    `did not correctly translate attribute, while keeping innerHTML (content) for ${wholeMsgString}`
                 );
 
                 // assert mock was correctly called
@@ -454,8 +454,8 @@ describe("common module: Localizer", function () {
         });
 
         it("tries text localisation even when attribute localisation ID is incorrect", function () {
-            for (const WholeMsgString of ["_MSG_123_", "__MSG___"]) {
-                const html = `<span id="testElement" data-i18n="__MSG_something__" data-i18n-alt="${WholeMsgString}">fallback</span>`;
+            for (const wholeMsgString of ["_MSG_123_", "__MSG___"]) {
+                const html = `<span id="testElement" data-i18n="__MSG_something__" data-i18n-alt="${wholeMsgString}">fallback</span>`;
                 HtmlMock.setTestHtml(html);
 
                 const mockI18n = sinon.mock(browser.i18n);
@@ -470,8 +470,8 @@ describe("common module: Localizer", function () {
                 chai.assert.strictEqual(
                     wholeHtml,
                     // attribute is translated, but not content
-                    `<span id="testElement" data-i18n="__MSG_something__" data-i18n-alt="${WholeMsgString}">TRANSLATED</span>`,
-                    `did not correctly translate innerHTML (content), while ignoring attribute for ${WholeMsgString}`
+                    `<span id="testElement" data-i18n="__MSG_something__" data-i18n-alt="${wholeMsgString}">TRANSLATED</span>`,
+                    `did not correctly translate innerHTML (content), while ignoring attribute for ${wholeMsgString}`
                 );
 
                 // assert mock was correctly called
