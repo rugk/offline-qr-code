@@ -100,10 +100,10 @@ function randomizePassed(percentage) {
  */
 function showTip(tipSpec) {
     // default settings
-    tipSpec.allowDismiss = tipSpec.allowDismiss !== undefined ? tipSpec.allowDismiss : true;
+    const allowDismiss = tipSpec.allowDismiss !== undefined ? tipSpec.allowDismiss : true;
 
     elMessageBox.dataset.tipId = tipSpec.id;
-    MessageHandler.showMessage(elMessageBox, tipSpec.text, tipSpec.allowDismiss, tipSpec.actionButton);
+    MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss, tipSpec.actionButton);
 
     // hook dismiss
     MessageHandler.setDismissHooks(messageDismissed);
@@ -143,10 +143,10 @@ function shouldBeShown(tipSpec) {
     // require some additional randomness if needed
     if (tipSpec.randomizeDisplay) {
         // default value for tip is 50%
-        tipSpec.randomizeDisplay = tipSpec.randomizeDisplay !== true ? tipSpec.randomizeDisplay : 0.5;
+        const randomizeDisplay = tipSpec.randomizeDisplay !== true ? tipSpec.randomizeDisplay : 0.5;
 
         // 1 : x -> if one number is not selected, do not display result
-        if (!randomizePassed(tipSpec.randomizeDisplay)) {
+        if (!randomizePassed(randomizeDisplay)) {
             return false;
         }
     }

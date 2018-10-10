@@ -99,20 +99,34 @@ describe("common module: RandomTips", function () {
         });
     }
 
-    const alwaysShowsTip = {
+    /**
+     * Freeze the tip, as it is done in real-world applications.
+     *
+     * The statically defined tips {@link alwaysShowsTip} and {@link neverShowsTip}
+     * are already prepared like this.
+     *
+     * @function
+     * @param {Object} tip
+     * @returns {Promise}
+     */
+    function prepareTip(tip) {
+        return Object.freeze(tip);
+    }
+
+    const alwaysShowsTip = Object.freeze({ // eslint-disable-line mocha/no-setup-in-describe
         id: "alwaysShowsTip",
         requiredShowCount: null,
         requiredTriggers: 0,
         requireDismiss: false,
         maximumDismiss: null,
         text: "A tip to always show."
-    };
-    const neverShowsTip = {
+    });
+    const neverShowsTip = Object.freeze({ // eslint-disable-line mocha/no-setup-in-describe
         id: "neverShowsTip",
         requiredShowCount: 0,
         requiredTriggers: 0,
         text: "A tip that may not show."
-    };
+    });
 
     /**
      * Asserts that no random tip has been shown.
@@ -341,7 +355,7 @@ describe("common module: RandomTips", function () {
             tip.id = "someRandomTipId";
             tip.text = "A very unique tip for you! Unit test your stuff!";
 
-            await RandomTips.init([tip]);
+            await RandomTips.init([prepareTip(tip)]);
             RandomTips.showRandomTip();
 
             const elTip = document.querySelector("#messageTips");
@@ -369,7 +383,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredShowCount = null; // actually already default in current tests
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -391,7 +405,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredShowCount = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -413,7 +427,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredShowCount = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -426,7 +440,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredShowCount = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 // save state to restore it later
                 // This is needed as the HTML node, where RandtomTips inserts it's
@@ -461,7 +475,7 @@ describe("common module: RandomTips", function () {
                 // get tip
                 const tip = Object.assign({}, alwaysShowsTip);
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
 
                 // get dismiss button
@@ -481,7 +495,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.allowDismiss = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
 
                 // get dismiss button
@@ -501,7 +515,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.allowDismiss = false;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
 
                 // get dismiss button
@@ -534,7 +548,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 3;
                 delete tip.requireDismiss;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -558,7 +572,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 3;
                 tip.requireDismiss = false;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -582,7 +596,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 3;
                 tip.requireDismiss = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -606,7 +620,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 3;
                 tip.requireDismiss = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -630,7 +644,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 3;
                 tip.requireDismiss = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -654,7 +668,7 @@ describe("common module: RandomTips", function () {
                 tip.requiredShowCount = 0;
                 tip.requireDismiss = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -679,7 +693,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 delete tip.maximumDismiss;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -702,7 +716,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.maximumDismiss = null;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -725,7 +739,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.maximumDismiss = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -748,7 +762,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.maximumDismiss = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -768,7 +782,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 delete tip.requiredTriggers;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -786,7 +800,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredTriggers = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -804,7 +818,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.requiredTriggers = 3;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -825,7 +839,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 1
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 RandomTips.showRandomTip();
@@ -858,7 +872,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 1
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 RandomTips.showRandomTip();
@@ -885,7 +899,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 1
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 RandomTips.showRandomTip();
@@ -905,7 +919,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 5
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("differentContext");
 
                 RandomTips.showRandomTip();
@@ -952,7 +966,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 5
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 RandomTips.showRandomTip();
@@ -978,7 +992,7 @@ describe("common module: RandomTips", function () {
                     "testContext1": 5
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 RandomTips.showRandomTip();
@@ -1012,7 +1026,7 @@ describe("common module: RandomTips", function () {
                 // messages is saved once.
                 saveHtmlTestCode();
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.setContext("testContext1");
 
                 // show first time
@@ -1042,7 +1056,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.randomizeDisplay = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -1057,7 +1071,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.randomizeDisplay = true;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -1072,7 +1086,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.randomizeDisplay = 0.2;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertNoRandomTipShown();
@@ -1087,7 +1101,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.randomizeDisplay = 0.2;
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
 
                 RandomTips.showRandomTip();
                 assertRandomTipShown();
@@ -1101,7 +1115,7 @@ describe("common module: RandomTips", function () {
                 // get tip
                 const tip = Object.assign({}, alwaysShowsTip);
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
                 MessageHandler.init(); // (re)set/add event listeners
 
@@ -1130,7 +1144,7 @@ describe("common module: RandomTips", function () {
                     action: sinon.spy()
                 };
 
-                await RandomTips.init([tip]);
+                await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
                 MessageHandler.init(); // (re)set/add event listeners
 
@@ -1233,7 +1247,7 @@ describe("common module: RandomTips", function () {
             let tip1InternalCount = 0;
             let tip2InternalCount = 0;
 
-            await RandomTips.init([tip1, tip2]);
+            await RandomTips.init([prepareTip(tip1), prepareTip(tip2)]);
 
             // show tips again and again until it finally has shown both tips at
             // least once
@@ -1262,7 +1276,7 @@ describe("common module: RandomTips", function () {
             const tip2 = Object.assign({}, alwaysShowsTip);
             tip2.text = "tip2Text";
 
-            await RandomTips.init([tip1, tip2]);
+            await RandomTips.init([prepareTip(tip1), prepareTip(tip2)]);
 
             // repeat 3 times, to be sure
             for (let i = 0; i < 3; i++) {
@@ -1291,7 +1305,7 @@ describe("common module: RandomTips", function () {
             const tip2 = Object.assign({}, alwaysShowsTip);
             tip2.text = "tip2Text";
 
-            await RandomTips.init([tip1, tip2]);
+            await RandomTips.init([prepareTip(tip1), prepareTip(tip2)]);
 
             // repeat 3 times, to be sure
             for (let i = 0; i < 3; i++) {
@@ -1312,7 +1326,7 @@ describe("common module: RandomTips", function () {
                 const tip = Object.assign({}, alwaysShowsTip);
                 tip.text = `tip${i}Text`;
 
-                tipArray.push(tip);
+                tipArray.push(prepareTip(tip));
                 // tipArrayTexts.push(tip.text);
                 tipCount[i] = 0;
             }
