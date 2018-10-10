@@ -10,7 +10,7 @@ import "./localiser.test.js";
 import "./addonSettings.test.js";
 import "./logger.test.js";
 import "./messageHandler.test.js";
-import "./RandomTips.test.js";
+import "./randomTips.test.js";
 
 mocha.checkLeaks();
 mocha.run();
