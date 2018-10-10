@@ -1,7 +1,7 @@
 /**
  * Load, save and apply options to HTML options page.
  *
- * @module modules/OptionHandler
+ * @module internal/LoadAndSave
  * @requires /common/modules/Logger
  * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/MessageHandler
@@ -182,9 +182,7 @@ function loadAllOptions() {
     HtmlMod.resetRememberedOptions();
     const allPromises = [];
 
-    // needs to reset some custom options, as they may prevent (correctly) loading settings later
-    const elQrCodeSize = document.getElementById("size");
-    elQrCodeSize.removeAttribute("disabled");
+    Trigger.runBeforeLoadTrigger();
 
     // set each option
     document.querySelectorAll(".setting").forEach((currentElem, index) => {
@@ -207,7 +205,8 @@ function loadAllOptions() {
     const allOptionsLoaded = Promise.all(allPromises);
 
     return allOptionsLoaded.then(() => {
-        Trigger.runSaveTrigger();
+        // to apply options live
+        Trigger.runAfterLoadTrigger();
     });
 }
 
@@ -285,11 +284,14 @@ export function init() {
     });
 
     document.querySelectorAll(".trigger-on-update").forEach((currentElem) => {
-        currentElem.addEventListener("input", Trigger.runCustomTrigger);
+        currentElem.addEventListener("input", Trigger.runHtmlEventTrigger);
     });
     document.querySelectorAll(".trigger-on-change").forEach((currentElem) => {
-        currentElem.addEventListener("change", Trigger.runCustomTrigger);
+        currentElem.addEventListener("change", Trigger.runHtmlEventTrigger);
     });
 
-    document.getElementById("resetButton").addEventListener("click", resetOptions);
+    const resetButton = document.getElementById("resetButton")
+    if (resetButton) {
+        resetButton.addEventListener("click", resetOptions);
+    }
 }

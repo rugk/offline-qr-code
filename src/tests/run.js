@@ -11,6 +11,7 @@ import "./addonSettings.test.js";
 import "./logger.test.js";
 import "./messageHandler.test.js";
 import "./randomTips.test.js";
+import "./automaticSettings.test.js";
 
 mocha.checkLeaks();
 mocha.run();

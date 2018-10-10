@@ -1,7 +1,7 @@
 /**
  * Load, save and apply options to HTML options page.
  *
- * @module modules/HtmlModification
+ * @module internal/HtmlModification
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  */

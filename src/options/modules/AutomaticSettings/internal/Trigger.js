@@ -1,7 +1,7 @@
 /**
  * Load, save and apply options to HTML options page.
  *
- * @module modules/Trigger
+ * @module internal/Trigger
  */
 
 // common modules
@@ -10,13 +10,20 @@ import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 import * as HtmlMod from "./HtmlModification.js";
 
-// export @public functions to be used as a public API as defaults
-export default {registerTrigger, registerSave, registerUpdate, registerChange};
+/**
+ * Denotes to run all the currently registered save trigger.
+ *
+ * @public
+ * @var {Symbol} RUN_ALL_SAFE_TRIGGER
+ */
+const RUN_ALL_SAVE_TRIGGER = Symbol("runAllSafeTrigger");
 
 const triggers = {
     onSave: [],
     onChange: [],
-    onUpdate: []
+    onUpdate: [],
+    onBeforeLoad: [],
+    onAfterLoad: []
 };
 
 /**
@@ -66,7 +73,7 @@ export async function runSaveTrigger(option, optionValue) {
  * @returns {void}
  * @throws {Error}
  */
-export function runCustomTrigger(event) {
+export function runHtmlEventTrigger(event) {
     const elOption = event.target;
 
     const [option, optionValue] = HtmlMod.getIdAndOptionsFromElement(elOption);
@@ -91,19 +98,51 @@ export function runCustomTrigger(event) {
 }
 
 /**
+ * Exeutes the trigger that runs before the settings options are (re)loaded.
+ *
+ * @protected
+ * @function
+ * @returns {void}
+ */
+export function runBeforeLoadTrigger() {
+    Logger.logInfo("runBeforeLoadTrigger");
+
+    // run all registered triggers for that option
+    triggers.onBeforeLoad.forEach((trigger) => {
+        trigger.triggerFunc();
+    });
+}
+
+/**
+ * Exeutes the trigger that runs after the settings options have been (re)loaded.
+ *
+ * @protected
+ * @function
+ * @returns {void}
+ */
+export function runAfterLoadTrigger() {
+    Logger.logInfo("runAfterLoadTrigger");
+
+    // run all registered triggers for that option
+    triggers.onAfterLoad.forEach((trigger) => {
+        trigger.triggerFunc();
+    });
+}
+
+/**
  * Registers a trigger of any type.
  *
  * @private
  * @function
  * @param  {string} triggerType
  * @param  {string} optionTrigger
- * @param  {function} functionToTrigger
+ * @param  {function} callback
  * @returns {void}
  */
-function registerTrigger(triggerType, optionTrigger, functionToTrigger) {
+function registerTrigger(triggerType, optionTrigger, callback) {
     triggers[triggerType].push({
         option: optionTrigger,
-        triggerFunc: functionToTrigger
+        triggerFunc: callback
     });
 }
 
@@ -114,11 +153,11 @@ function registerTrigger(triggerType, optionTrigger, functionToTrigger) {
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} functionToTrigger
+ * @param  {function} callback
  * @returns {void}
  */
-function registerSave(optionTrigger, functionToTrigger) {
-    registerTrigger("onSave", optionTrigger, functionToTrigger);
+function registerSave(optionTrigger, callback) {
+    registerTrigger("onSave", optionTrigger, callback);
 }
 
 /**
@@ -131,11 +170,11 @@ function registerSave(optionTrigger, functionToTrigger) {
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} functionToTrigger
+ * @param  {function} callback
  * @returns {void}
  */
-function registerUpdate(optionTrigger, functionToTrigger) {
-    registerTrigger("onUpdate", optionTrigger, functionToTrigger);
+function registerUpdate(optionTrigger, callback) {
+    registerTrigger("onUpdate", optionTrigger, callback);
 }
 
 /**
@@ -147,9 +186,56 @@ function registerUpdate(optionTrigger, functionToTrigger) {
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} functionToTrigger
+ * @param  {function} callback
  * @returns {void}
  */
-function registerChange(optionTrigger, functionToTrigger) {
-    registerTrigger("onChange", optionTrigger, functionToTrigger);
+function registerChange(optionTrigger, callback) {
+    registerTrigger("onChange", optionTrigger, callback);
 }
+
+/**
+ * Registers an beforeLoad trigger.
+ *
+ * This trigger is executed before the options are loaded. You can e.g. use it to
+ * reset some display styles that may have been changed by one of your other
+ * callbacks, as this is e.g. also called when the user manually resets the options.
+ * (i.e. they are reloaded then).
+ *
+ * @public
+ * @function
+ * @param  {function} callback
+ * @returns {void}
+ */
+function registerBeforeLoad(callback) {
+    triggers.onBeforeLoad.push({
+        triggerFunc: callback
+    });
+}
+
+/**
+ * Registers an afterLoad trigger.
+ *
+ * This trigger is executed after the options have been loaded.
+ * You can pass the special option {@link RUN_ALL_SAFE_TRIGGER} to this to register
+ * a trigger for all the triggers registered via {@link registerSave}.
+ * This is a common scenario when you modify your GUI in the save triggers and want
+ * it to be up-to-date/displayed correctly when the options page is first opened/the
+ * options are loaded.
+ *
+ * @public
+ * @function
+ * @param  {function|RUN_ALL_SAFE_TRIGGER} callback
+ * @returns {void}
+ */
+function registerAfterLoad(callback) {
+    if (callback === RUN_ALL_SAVE_TRIGGER) {
+        callback = runSaveTrigger;
+    }
+
+    triggers.onAfterLoad.push({
+        triggerFunc: callback
+    });
+}
+
+// export @public functions to be used as a public API as defaults
+export default {RUN_ALL_SAVE_TRIGGER, registerTrigger, registerSave, registerUpdate, registerChange, registerBeforeLoad, registerAfterLoad};

@@ -97,7 +97,7 @@ export function stubAllStorageApis() {
 /**
  * Stubs the settings given to it.
  *
- * Due to the way AddonSettings is constructed, you do not need to await the
+ * Due to the way the AddonSettings module is constructed, you do not need to await the
  * returned promise.
  *
  * @function

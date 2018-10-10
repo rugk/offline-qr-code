@@ -175,6 +175,21 @@ function applyQrCodeColors(optionValue, option) {
 }
 
 /**
+ * When settings are loaded, reset some custom options, as they may prevent (correctly)
+ * loading settings later.
+ *
+ * @function
+ * @private
+ * @returns {void}
+ */
+function resetOnBeforeLoad() {
+    // needs to enable the QR code size input, as a disabled input would prevent the setting from being loaded
+    //
+    const elQrCodeSize = document.getElementById("size");
+    elQrCodeSize.removeAttribute("disabled");
+}
+
+/**
  * Binds the triggers.
  *
  * This is basically the "init" method.
@@ -191,4 +206,8 @@ export function registerTrigger() {
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
+
+    // handle loading of options correctly
+    AutomaticSettings.Trigger.registerBeforeLoad(resetOnBeforeLoad);
+    AutomaticSettings.Trigger.registerAfterLoad(AutomaticSettings.Trigger.RUN_ALL_SAVE_TRIGGER);
 }
