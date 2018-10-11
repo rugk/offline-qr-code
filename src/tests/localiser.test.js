@@ -518,7 +518,7 @@ describe("common module: Localizer", function () {
          * @returns {Promise}
          */
         async function testModifiesHtmlFile(htmlFile, resultHtmlFile, localizedValues = {}, moreAssert = null) {
-            HtmlMock.setTestHtmlFile(htmlFile);
+            await HtmlMock.setTestHtmlFile(htmlFile);
             const resultHtml = await HtmlMock.getTestHtmlFile(resultHtmlFile);
 
             const stub = sinon.stub(browser.i18n, "getMessage")
@@ -527,7 +527,7 @@ describe("common module: Localizer", function () {
             // run test
             Localizer.init();
 
-            // assert that HTML code itself was not modified
+            // assert that HTML code itself was correctly modified
             const wholeHtml = HtmlMock.getTestHtml();
             chai.assert.strictEqual(
                 wholeHtml,
