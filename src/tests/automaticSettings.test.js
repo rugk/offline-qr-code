@@ -32,7 +32,7 @@ describe("options module: AutomaticSettings", function () {
 
             const originalHtml = HtmlMock.stripAllNewlines(`<p>nothing special</p>
             <li><label for="greatSettingsNum">greatSettingsNum</label>
-            <input class="leetCauseIwantIt" type="number" id="greatSettingsNum" name="greatSettingsNum">
+            <input class="leetCauseIwantIt" id="greatSettingsNum" name="greatSettingsNum" type="number">
             </li>`);
             HtmlMock.setTestHtml(originalHtml);
 
