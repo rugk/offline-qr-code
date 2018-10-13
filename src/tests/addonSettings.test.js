@@ -29,14 +29,11 @@ describe("common module: AddonSettings", function () {
 
     beforeEach(function() {
         AddonSettingsStub.stubAllStorageApis();
-        console.warn("TEST BEGIN ");
     });
 
     afterEach(async function() {
-        console.warn("test soon ends");
         sinon.restore();
         await AddonSettingsStub.afterTest();
-        console.warn("TEST END ");
     });
 
     describe("loadOptions()", function () {
@@ -535,7 +532,7 @@ describe("common module: AddonSettings", function () {
                 chai.assert.fail("succeed", "reject",
                     `AddonSettings.get(exampleValue) has been succeed, but was expected to reject. Return value: "${value}")`);
             }).catch((error) => {
-                if (error instanceof Error && error.message === "Could not get option \"exampleValue\". No default value defined.") {
+                if (error instanceof Error && error.message === "Default value for option \"exampleValue\" missing. No default value defined.") {
                     // expected to throw/reject this, so ignore error
                     return;
                 }

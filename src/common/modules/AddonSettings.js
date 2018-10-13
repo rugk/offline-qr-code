@@ -54,8 +54,8 @@ export function getDefaultValue(option) {
     if (defaultValues.hasOwnProperty(option)) {
         return defaultValues[option];
     } else {
-        Logger.logError(`Default value for "${option}" missing.`);
-        throw new Error(`Default value for "${option}" missing.`);
+        Logger.logError(`Default value for option "${option}" missing. No default value defined.`);
+        throw new Error(`Default value for option "${option}" missing. No default value defined.`);
     }
 }
 /**
