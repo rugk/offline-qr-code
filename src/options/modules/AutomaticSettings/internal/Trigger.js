@@ -33,7 +33,7 @@ const triggers = {
  * @callback saveTrigger
  * @param {any} optionValue the value of the changed option
  * @param {string} option the name of the option that has been changed
- * @return {Promise} optionally, to use await events
+ * @return {Promise} optionally, to use await
  */
 
 /**
@@ -90,7 +90,7 @@ export async function runSaveTrigger(option, optionValue) {
  * @param {any} optionValue the value of the changed option
  * @param {string} option the name of the option that has been changed
  * @param {Event} event the original event
- * @return {Promise} optionally, to use await events
+ * @return {Promise} optionally, to use await
  */
 
 /**
@@ -101,7 +101,7 @@ export async function runSaveTrigger(option, optionValue) {
  * @param {any} optionValue the value of the changed option
  * @param {string} option the name of the option that has been changed
  * @param {Event} event the original event
- * @return {Promise} optionally, to use await events
+ * @return {Promise} optionally, to use await
  */
 
 /**
@@ -151,16 +151,19 @@ export function runHtmlEventTrigger(event) {
  * callbacks, as this is e.g. also called when the user manually resets the options.
  * (i.e. they are reloaded then).
  *
+ * @async
  * @callback beforeLoadTrigger
+ * @return {Promise} optionally, to use await
  */
-
 
 /**
  * Trigger that runs after new options have been loaded.
  *
  * This trigger is executed after the options have been loaded.
  *
+ * @async
  * @callback afterLoadTrigger
+ * @return {Promise} optionally, to use await
  */
 
 /**
