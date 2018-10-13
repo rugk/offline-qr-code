@@ -485,6 +485,8 @@ describe("common module: AddonSettings", function () {
             // need to load options
             AddonSettings.loadOptions();
 
+            // we cannot use chai.assert.throws here, as it does not work with promises this way
+
             // verify case, where one values is requested
             const promiseGetValue = AddonSettings.get("exampleValue").then((value) => {
                 chai.assert.fail("succeed", "reject",
