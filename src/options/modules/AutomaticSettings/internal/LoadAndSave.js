@@ -31,7 +31,7 @@ let lastOptionsBeforeReset;
  * @param  {Object} event
  * @returns {void}
  */
-function saveOption(event) {
+async function saveOption(event) {
     /** @var {HTMLElement} */
     let elOption = event.target;
 
@@ -51,7 +51,7 @@ function saveOption(event) {
 
     Logger.logInfo("save option", elOption, option, optionValue);
 
-    Trigger.runSaveTrigger(option, optionValue);
+    await Trigger.runSaveTrigger(option, optionValue);
 
     browser.storage.sync.set({
         [option]: optionValue
@@ -177,12 +177,12 @@ function setSyncedOption(option, optionGroup, elOption, ignoreDisabled) {
  * @function
  * @returns {Promise}
  */
-function loadAllOptions() {
+async function loadAllOptions() {
     // reset remembered options to prevent arkward errors when reloading the options
     HtmlMod.resetRememberedOptions();
     const allPromises = [];
 
-    Trigger.runBeforeLoadTrigger();
+    await Trigger.runBeforeLoadTrigger();
 
     // set each option
     document.querySelectorAll(".setting").forEach((currentElem, index) => {
@@ -206,7 +206,7 @@ function loadAllOptions() {
 
     return allOptionsLoaded.then(() => {
         // to apply options live
-        Trigger.runAfterLoadTrigger();
+        return Trigger.runAfterLoadTrigger();
     });
 }
 
@@ -242,7 +242,7 @@ async function resetOptions(event) {
             action: () => {
                 browser.storage.sync.set(lastOptionsBeforeReset).then(() => {
                     // re-load the options again
-                    loadAllOptions();
+                    return loadAllOptions();
                 }).catch((error) => {
                     Logger.logError("Could not undo option resetting: ", error);
                     MessageHandler.showError("couldNotUndoAction");
@@ -276,6 +276,9 @@ export function init() {
     const loadPromise = loadAllOptions().catch((error) => {
         Logger.logError(error);
         MessageHandler.showError("couldNotLoadOptions", false);
+
+        // re-throw error
+        throw error;
     });
 
     // add event listeners for all options

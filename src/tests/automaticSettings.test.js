@@ -13,8 +13,9 @@ describe("options module: AutomaticSettings", function () {
     });
 
     beforeEach(function() {
-        // unset AutomaticSettings default option provider
+        // unset AutomaticSettings provided stuff
         AutomaticSettings.setDefaultOptionProvider(undefined);
+        AutomaticSettings.Trigger.unregisterAll();
 
         AddonSettingsStub.stubAllStorageApis();
     });
@@ -51,7 +52,7 @@ describe("options module: AutomaticSettings", function () {
 
             // assert that default options were called correctly
             sinon.assert.calledOnce(defaultOptionProvider);
-            defaultOptionProvider.firstCall.calledWithExactly("greatSettingsNum");
+            sinon.assert.calledWithExactly(defaultOptionProvider.firstCall, "greatSettingsNum");
 
             // assert that value of option has been set
             chai.assert.strictEqual(document.getElementById("greatSettingsNum").value, "777", "set value of option altghough it was expected not to set it");
@@ -242,5 +243,249 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.strictEqual(document.getElementById("sizeTwo").hasAttribute("checked"), true, "raadio button #sizeTwo is not checked");
             chai.assert.strictEqual(document.getElementById("sizeThree").hasAttribute("checked"), false, "raadio button #sizeOne is not unchecked");
         });
+    });
+
+    describe("Trigger", function () {
+        const EXAMPLE_OPTION_VALUE = "valueLoadedFromDefaults";
+
+        /**
+         * Sets up the option HTML code to test.
+         *
+         * @public
+         * @function
+         * @param {string} optionName
+         * @param {string} [addClass] set to class to add to input element
+         * @param {string} [optionId] element ID to set
+         * @returns {void}
+         */
+        function setExampleOption(optionName, addClass = "", optionId = optionName) {
+            const originalHtml = HtmlMock.stripAllNewlines(`
+            <li>
+                <input class="setting ${addClass}" id="${optionId}" type="text">
+                <label for="${optionId}">this is an example setting</label>
+            </li>`);
+            HtmlMock.setTestHtml(originalHtml);
+
+            // setup default option provider for providing settings (mocking AddonSettings would also be possible)
+            AutomaticSettings.setDefaultOptionProvider((option) => {
+                if (option !== optionName) {
+                    throw new Error(`setExampleOption default option provider was provided with invalid option ${option}.`);
+                }
+
+                // load this value
+                return EXAMPLE_OPTION_VALUE;
+            });
+        }
+
+        /**
+         * Change an option as a user would do it. This triggers the "input" event.
+         *
+         * @public
+         * @function
+         * @param {string} optionId element ID to change
+         * @param {string} valueToPass a string to change
+         * @returns {InputEvent}
+         */
+        function changeExampleOptionInput(optionId, valueToPass) {
+            const elOption = document.getElementById(optionId);
+            elOption.value = valueToPass;
+
+            // trigger new input event
+            const inputEvent = new InputEvent("input");
+            elOption.dispatchEvent(inputEvent);
+
+            return inputEvent;
+        }
+
+        /**
+         * Change an option as a user would do it. This triggers the "change" event.
+         *
+         * @public
+         * @function
+         * @param {string} optionId element ID to change
+         * @param {string} valueToPass a string to change
+         * @returns {InputEvent}
+         */
+        function changeExampleOptionChange(optionId, valueToPass) {
+            const elOption = document.getElementById(optionId);
+            elOption.value = valueToPass;
+
+            // trigger new input event
+            const inputEvent = new InputEvent("change");
+            elOption.dispatchEvent(inputEvent);
+
+            return inputEvent;
+        }
+
+        describe("Trigger – functional tests", function () {
+            it("save trigger on input works", async function() {
+                // set up triggers
+                const spy = sinon.spy();
+                AutomaticSettings.Trigger.registerSave("okayExOption", spy);
+
+                setExampleOption("okayExOption", "save-on-input");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                changeExampleOptionInput("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(spy);
+                sinon.assert.calledWithExactly(spy.firstCall, "testValue123", "okayExOption");
+            });
+
+            it("save trigger on change works", async function() {
+                // set up triggers
+                const spy = sinon.spy();
+                AutomaticSettings.Trigger.registerSave("okayExOption", spy);
+
+                setExampleOption("okayExOption", "save-on-change");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                changeExampleOptionChange("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(spy);
+                sinon.assert.calledWithExactly(spy.firstCall, "testValue123", "okayExOption");
+            });
+
+            it("save triggers on save does not trigger for wrong value", async function() {
+                // set up triggers
+                const saveTrigger = sinon.spy();
+                AutomaticSettings.Trigger.registerSave("okayExOptionWRONG", saveTrigger);
+
+                setExampleOption("okayExOption", "save-on-change");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                changeExampleOptionChange("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.notCalled(saveTrigger);
+            });
+
+            it("save triggers on input does not trigger for wrong value", async function() {
+                // set up triggers
+                const saveTrigger = sinon.spy();
+                AutomaticSettings.Trigger.registerSave("okayExOptionWRONG", saveTrigger);
+
+                setExampleOption("okayExOption", "save-on-input");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                changeExampleOptionInput("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.notCalled(saveTrigger);
+            });
+
+            it("manual trigger on update works", async function() {
+                // set up triggers
+                const spy = sinon.spy();
+                AutomaticSettings.Trigger.registerUpdate("okayExOption", spy);
+
+                setExampleOption("okayExOption", "trigger-on-update");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                const eventTrigger = changeExampleOptionInput("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(spy);
+                sinon.assert.calledWithExactly(spy.firstCall, "testValue123", "okayExOption", eventTrigger);
+            });
+
+            it("manual trigger on change works", async function() {
+                // set up triggers
+                const spy = sinon.spy();
+                AutomaticSettings.Trigger.registerChange("okayExOption", spy);
+
+                setExampleOption("okayExOption", "trigger-on-change");
+
+                await AutomaticSettings.init();
+
+                // change setting to trigger trigger
+                const eventTrigger = changeExampleOptionChange("okayExOption", "testValue123");
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(spy);
+                sinon.assert.calledWithExactly(spy.firstCall, "testValue123", "okayExOption", eventTrigger);
+            });
+
+            it("trigger before load works", async function() {
+                // set up triggers
+                const beforeLoad = sinon.stub().callsFake(() => {
+                    // check, the option for "okayExOption" really has not been changed
+                    const elOption = document.getElementById("okayExOption");
+                    chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
+                });
+                AutomaticSettings.Trigger.registerBeforeLoad(beforeLoad);
+
+                setExampleOption("okayExOption", "");
+
+                await AutomaticSettings.init();
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(beforeLoad);
+                sinon.assert.calledWithExactly(beforeLoad.firstCall); // i.e. no arguments
+            });
+
+            it("trigger after load works", async function() {
+                // set up triggers
+                const afterLoad = sinon.stub().callsFake(() => {
+                    // check, the option for "okayExOption" really has not been changed
+                    const elOption = document.getElementById("okayExOption");
+                    chai.assert.strictEqual(elOption.value, EXAMPLE_OPTION_VALUE, "option has not yet been loaded while it should have been");
+                });
+                AutomaticSettings.Trigger.registerAfterLoad(afterLoad);
+
+                setExampleOption("okayExOption", "");
+
+                await AutomaticSettings.init();
+
+                // assert that trigger was called correctly
+                sinon.assert.calledOnce(afterLoad);
+                sinon.assert.calledWithExactly(afterLoad.firstCall); // i.e. no arguments
+            });
+
+            it("trigger after load runs all save triggers", async function() {
+                // need to provide default options so processing does not fail
+                await AddonSettingsStub.stubSettings({
+                    bla: "yesBla",
+                    exam: "yesExam",
+                    good: "good"
+                });
+
+                const spyExam = sinon.spy();
+                const spyBla1 = sinon.spy();
+                const spyBla2 = sinon.spy();
+                const spyGood = sinon.spy();
+
+                AutomaticSettings.Trigger.registerSave("exam", spyExam);
+                AutomaticSettings.Trigger.registerSave("bla", spyBla1);
+                AutomaticSettings.Trigger.registerSave("bla", spyBla2);
+                AutomaticSettings.Trigger.registerSave("good", spyGood);
+
+                AutomaticSettings.Trigger.registerAfterLoad(AutomaticSettings.Trigger.RUN_ALL_SAVE_TRIGGER);
+
+                // not really needed as it loads options even if there are actually none to load
+                setExampleOption("okayExOption", "");
+
+                await AutomaticSettings.init();
+
+                // assert that triggers were called correctly
+                sinon.assert.calledOnce(spyExam);
+                sinon.assert.calledOnce(spyBla1);
+                sinon.assert.calledOnce(spyBla2);
+                sinon.assert.calledOnce(spyGood);
+            });
+        });
+
     });
 });

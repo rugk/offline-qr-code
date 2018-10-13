@@ -27,6 +27,16 @@ const triggers = {
 };
 
 /**
+ * Trigger to run when an option is saved.
+ *
+ * @async
+ * @callback saveTrigger
+ * @param {any} optionValue the value of the changed option
+ * @param {string} option the name of the option that has been changed
+ * @return {Promise} optionally, to use await events
+ */
+
+/**
  * Executes special handling for applying certain settings.
  *
  * E.g. when a setting is saved, it executes to apply some options live, so the
@@ -37,15 +47,21 @@ const triggers = {
  * @function
  * @param  {string} [option]
  * @param  {Object} [optionValue] will be automatically retrieved, if not given
- * @returns {Promise} Promise only if called without parameters
+ * @returns {Promise}
+ * @see {@link saveTrigger}
  */
 export async function runSaveTrigger(option, optionValue) {
     if (option === undefined) {
-        Logger.logInfo("applying all options live");
+        Logger.logInfo("run all save triggers");
 
-        triggers.onSave.forEach((trigger) => {
-            runSaveTrigger(trigger.option);
-        });
+        const promises = [];
+        for (const trigger of triggers.onSave) {
+            const option = trigger.option;
+            const optionValue = await AddonSettings.get(option);
+
+            promises.push(trigger.triggerFunc(optionValue, option));
+        }
+        return Promise.all(promises);
     }
 
     // get option value, if needed
@@ -56,16 +72,44 @@ export async function runSaveTrigger(option, optionValue) {
     Logger.logInfo("runSaveTrigger:", option, optionValue);
 
     // run all registered triggers for that option
-    triggers.onSave.filter((trigger) => trigger.option === option).forEach((trigger) => {
-        trigger.triggerFunc(optionValue, option);
-    });
+    const promises = [];
+    for (const trigger of triggers.onSave.filter((trigger) => trigger.option === option)) {
+        promises.push(trigger.triggerFunc(optionValue, option));
+    }
+    return Promise.all(promises);
 }
+
+/**
+ * Trigger to run when "trigger-on-update" is set.
+ *
+ * This triggers when the value has been changed in any way.
+ * Internally this binds to the "input" event.
+ *
+ * @async
+ * @callback onUpdateTrigger
+ * @param {any} optionValue the value of the changed option
+ * @param {string} option the name of the option that has been changed
+ * @param {Event} event the original event
+ * @return {Promise} optionally, to use await events
+ */
+
+/**
+ * Trigger to run when "trigger-on-change" is set.
+ *
+ * @async
+ * @callback onChangeTrigger
+ * @param {any} optionValue the value of the changed option
+ * @param {string} option the name of the option that has been changed
+ * @param {Event} event the original event
+ * @return {Promise} optionally, to use await events
+ */
 
 /**
  * Triggered by "trigger-on-…" classes.
  *
  * Can be used to do do some stuff per option, but do not save the option in
  * contrast to when {@link applyOptionLive()} is usually called.
+ * It either runs {@link onUpdateTrigger} or {@link onChangeTrigger}.
  *
  * @protected
  * @function
@@ -92,25 +136,50 @@ export function runHtmlEventTrigger(event) {
     }
 
     // run all registered triggers for that option
-    triggers[triggerType].filter((trigger) => trigger.option === option).forEach((trigger) => {
-        trigger.triggerFunc(optionValue, option, event);
-    });
+    const promises = [];
+    for (const trigger of triggers[triggerType].filter((trigger) => trigger.option === option)) {
+        promises.push(trigger.triggerFunc(optionValue, option, event));
+    }
+    return Promise.all(promises);
 }
+
+/**
+ * Trigger that runs before new options are loaded.
+ *
+ * This trigger is executed before the options are loaded. You can e.g. use it to
+ * reset some display styles that may have been changed by one of your other
+ * callbacks, as this is e.g. also called when the user manually resets the options.
+ * (i.e. they are reloaded then).
+ *
+ * @callback beforeLoadTrigger
+ */
+
+
+/**
+ * Trigger that runs after new options have been loaded.
+ *
+ * This trigger is executed after the options have been loaded.
+ *
+ * @callback afterLoadTrigger
+ */
 
 /**
  * Exeutes the trigger that runs before the settings options are (re)loaded.
  *
  * @protected
  * @function
- * @returns {void}
+ * @returns {Promise}
+ * @see {@link beforeLoadTrigger}
  */
 export function runBeforeLoadTrigger() {
     Logger.logInfo("runBeforeLoadTrigger");
 
     // run all registered triggers for that option
-    triggers.onBeforeLoad.forEach((trigger) => {
-        trigger.triggerFunc();
-    });
+    const promises = [];
+    for (const trigger of triggers.onBeforeLoad) {
+        promises.push(trigger.triggerFunc());
+    }
+    return Promise.all(promises);
 }
 
 /**
@@ -118,15 +187,18 @@ export function runBeforeLoadTrigger() {
  *
  * @protected
  * @function
- * @returns {void}
+ * @returns {Promise}
+ * @see {@link afterLoadTrigger}
  */
 export function runAfterLoadTrigger() {
     Logger.logInfo("runAfterLoadTrigger");
 
     // run all registered triggers for that option
-    triggers.onAfterLoad.forEach((trigger) => {
-        trigger.triggerFunc();
-    });
+    const promises = [];
+    for (const trigger of triggers.onAfterLoad) {
+        promises.push(trigger.triggerFunc());
+    }
+    return Promise.all(promises);
 }
 
 /**
@@ -149,11 +221,12 @@ function registerTrigger(triggerType, optionTrigger, callback) {
 /**
  * Registers a save trigger.
  * The trigger get the values (optionValue, option) passed as parameters.
+ * See {@link saveTrigger} for details.
  *
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} callback
+ * @param  {saveTrigger} callback
  * @returns {void}
  */
 function registerSave(optionTrigger, callback) {
@@ -170,7 +243,7 @@ function registerSave(optionTrigger, callback) {
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} callback
+ * @param  {onUpdateTrigger} callback
  * @returns {void}
  */
 function registerUpdate(optionTrigger, callback) {
@@ -186,7 +259,7 @@ function registerUpdate(optionTrigger, callback) {
  * @public
  * @function
  * @param  {string} optionTrigger
- * @param  {function} callback
+ * @param  {onChangeTrigger} callback
  * @returns {void}
  */
 function registerChange(optionTrigger, callback) {
@@ -203,7 +276,7 @@ function registerChange(optionTrigger, callback) {
  *
  * @public
  * @function
- * @param  {function} callback
+ * @param  {beforeLoadTrigger} callback
  * @returns {void}
  */
 function registerBeforeLoad(callback) {
@@ -224,7 +297,7 @@ function registerBeforeLoad(callback) {
  *
  * @public
  * @function
- * @param  {function|RUN_ALL_SAFE_TRIGGER} callback
+ * @param  {afterLoadTrigger|RUN_ALL_SAFE_TRIGGER} callback
  * @returns {void}
  */
 function registerAfterLoad(callback) {
@@ -237,5 +310,20 @@ function registerAfterLoad(callback) {
     });
 }
 
+/**
+ * Reset all registered triggers/callbacks.
+ *
+ * @public
+ * @function
+ * @returns {void}
+ */
+function unregisterAll() {
+    triggers.onSave = [];
+    triggers.onChange = [];
+    triggers.onUpdate = [];
+    triggers.onBeforeLoad = [];
+    triggers.onAfterLoad = [];
+}
+
 // export @public functions to be used as a public API as defaults
-export default {RUN_ALL_SAVE_TRIGGER, registerTrigger, registerSave, registerUpdate, registerChange, registerBeforeLoad, registerAfterLoad};
+export default {RUN_ALL_SAVE_TRIGGER, registerTrigger, registerSave, registerUpdate, registerChange, registerBeforeLoad, registerAfterLoad, unregisterAll};
