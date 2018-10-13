@@ -20,7 +20,7 @@ const storageMethods = ["get", "set", "remove", "clear"]; // getBytesInUse not y
  */
 export function before() {
     // Mocked function needs to be accessed at least once to get initiated and not be just a getter/property.
-    // Otherwise "TypeError: Attempted to wrap undefined property getUILanguage as functioncheckWrappedMethod" is shown.
+    // Otherwise "TypeError: Attempted to wrap undefined property … as functioncheckWrappedMethod" is shown.
     // See https://discourse.mozilla.org/t/webextension-apis-made-as-getter-setter-lazily-evaluating-to-functions-beware-of-mocking-for-unit-tests/30849
 
     /* eslint-disable no-unused-expressions */

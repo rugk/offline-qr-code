@@ -18,13 +18,13 @@ describe("options module: AutomaticSettings", function () {
 
     afterEach(function() {
         sinon.restore();
-        HtmlMock.cleanup();
+        // HtmlMock.cleanup();
         AddonSettingsStub.afterTest();
     });
 
     describe("init()", function () {
-        it("does nothing if no options HTML with .settings class is given", function () {
-            AddonSettingsStub.stubSettings({
+        it("does nothing if no options HTML with .settings class is given", async function () {
+            await AddonSettingsStub.stubSettings({
                 greatSettingsNum: 1234,
                 leetCauseIwantIt: 1337,
                 whatToDo: "retry"
@@ -37,7 +37,25 @@ describe("options module: AutomaticSettings", function () {
             HtmlMock.setTestHtml(originalHtml);
 
             // run test
-            AutomaticSettings.init();
+            await AutomaticSettings.init();
+
+            // assert that value has been replaced correctly
+            chai.assert.strictEqual(HtmlMock.getTestHtml(), originalHtml, "illegally modified the HTML text");
+        });
+
+        it("throws if option is not specified", async function () {
+            await AddonSettingsStub.stubSettings({
+                greatSettingsNum: 1234
+            });
+
+            const originalHtml = HtmlMock.stripAllNewlines(`
+            <li><label for="greatSettingsNum">greatSettingsNum</label>
+            <input class="setting" type="number" id="greatSettingsNum" name="great-setting-num">
+            </li>`);
+            HtmlMock.setTestHtml(originalHtml);
+
+            // run test
+            await AutomaticSettings.init();
 
             // assert that value has been replaced correctly
             chai.assert.strictEqual(HtmlMock.getTestHtml(), originalHtml, "illegally modified the HTML text");
