@@ -42,6 +42,7 @@ const defaultValues = Object.freeze({
  * @function
  * @param  {string|null} option name of the option
  * @returns {Object|undefined}
+ * @throws {Error} if option is not available
  */
 export function getDefaultValue(option) {
     // return all default values
@@ -54,7 +55,7 @@ export function getDefaultValue(option) {
         return defaultValues[option];
     } else {
         Logger.logError(`Default value for "${option}" missing.`);
-        return undefined;
+        throw new Error(`Default value for "${option}" missing.`);
     }
 }
 /**
@@ -160,10 +161,6 @@ export async function get(option = null) {
 
     // get default value as a last fallback
     result = getDefaultValue(option);
-
-    if (result === undefined) {
-        throw new Error(`Could not get option "${option}". No default value defined.`);
-    }
 
     // last fallback: default value
     Logger.logWarning(`Could not get option "${option}". Using default.`, result);

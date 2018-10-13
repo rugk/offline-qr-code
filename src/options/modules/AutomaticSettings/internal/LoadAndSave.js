@@ -13,7 +13,6 @@
 import * as Logger from "/common/modules/Logger.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 // import internal modules
 import * as Trigger from "./Trigger.js";
@@ -269,6 +268,11 @@ async function resetOptions(event) {
  * @returns {Promise}
  */
 export function init() {
+    // check requirements
+    if (!HtmlMod.isReady()) {
+        throw new Error("HtmlModification module is not ready yet.");
+    }
+
     const loadPromise = loadAllOptions().catch((error) => {
         Logger.logError(error);
         MessageHandler.showError("couldNotLoadOptions", false);
