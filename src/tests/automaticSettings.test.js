@@ -398,9 +398,9 @@ describe("options module: AutomaticSettings", function () {
 
             // set HTML code
             let html = SUCCESS_MESSAGE;
-            html += buildHtmlOption("firstText", "save-on-input");
+            html += buildHtmlOption("firstText");
             html += buildHtmlOption("secondTextOption");
-            html += buildHtmlOption("anotherOne");
+            html += buildHtmlOption("anotherOne", "save-on-input");
 
             // reset button
             html += '<button type="button" name="reset-button" id="resetButton">Reset</button>';
@@ -428,6 +428,7 @@ describe("options module: AutomaticSettings", function () {
             // change some data
             optionMapping.anotherOne = "changedAfterOptionsLoadedButBeforeReset";
             changeExampleOptionInput("anotherOne", optionMapping.anotherOne);
+            await wait(20);
 
             // trigger reset button
             document.getElementById("resetButton").click();
@@ -451,14 +452,12 @@ describe("options module: AutomaticSettings", function () {
                 chai.assert.strictEqual(
                     document.getElementById(key).value,
                     value,
-                    `option ${key} did not had correct value loading from settings before reset button is clicked`
+                    `option ${key} did not had correct value after undoing`
                 );
             });
         });
 
         it("before/after load triggers run on option reset", async function() {
-            this.timeout(50000);
-
             AutomaticSettings.Trigger.unregisterAll();
             AddonSettingsStub.stubSettings({
                 exampleOption: "optionLoaded"

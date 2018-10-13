@@ -108,7 +108,9 @@ export function stubSettings(settingsObject) {
     disableManagedStore();
 
     // as we cannot stub ES6 modules, we need to stub the underlying settings API
-    syncStorage.internalStorage = settingsObject;
+    // save copy as one later may change the settingsObject object and may not expect only
+    // a reference to be stored
+    syncStorage.internalStorage = JSON.parse(JSON.stringify(settingsObject));
 
     // purge cache
     return AddonSettings.loadOptions();

@@ -3,7 +3,6 @@
  *
  * @module internal/HtmlModification
  * @requires /common/modules/Logger
- * @requires /common/modules/AddonSettings
  */
 
 // common modules
