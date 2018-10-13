@@ -237,24 +237,22 @@ async function resetOptions(event) {
     });
 
     // finally reset options
-    browser.storage.sync.clear().then(() => {
-        return loadAllOptions().then(() => {
-            MessageHandler.showSuccess("resettingOptionsWorked", true, {
-                text: "messageUndoButton",
-                action: () => {
-                    browser.storage.sync.set(lastOptionsBeforeReset).then(() => {
-                        // re-load the options again
-                        loadAllOptions();
-                    }).catch((error) => {
-                        Logger.logError("Could not undo option resetting: ", error);
-                        MessageHandler.showError("couldNotUndoAction");
-                    }).finally(() => {
-                        MessageHandler.hideSuccess();
-                    });
-                }
-            });
-        });
-    }).catch((error) => {
+    browser.storage.sync.clear().then(() => loadAllOptions().then(
+        () => MessageHandler.showSuccess("resettingOptionsWorked", true, {
+            text: "messageUndoButton",
+            action: () => {
+                browser.storage.sync.set(lastOptionsBeforeReset).then(() => {
+                    // re-load the options again
+                    loadAllOptions();
+                }).catch((error) => {
+                    Logger.logError("Could not undo option resetting: ", error);
+                    MessageHandler.showError("couldNotUndoAction");
+                }).finally(() => {
+                    MessageHandler.hideSuccess();
+                });
+            }
+        })
+    )).catch((error) => {
         Logger.logError(error);
         MessageHandler.showError("resettingOptionsFailed", true);
     }).finally(() => {
