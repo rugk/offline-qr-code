@@ -158,12 +158,12 @@ export function applyOptionToElement(option, optionGroup, elOption, optionValues
 /**
  * Returns the option value from an element.
  *
- * @protected
+ * @private
  * @function
  * @param  {HTMLElement} elOption the element to read option from
  * @returns {Object} the option value
  */
-export function getOptionFromElement(elOption) {
+function getOptionFromElement(elOption) {
     let optionValue;
 
     // custom handling for special option types
@@ -190,6 +190,10 @@ export function getOptionFromElement(elOption) {
                 }
             }
         }
+        break;
+    case "number":
+        // as value is commonly read as string we need to convert it
+        optionValue = Number(elOption.value);
         break;
     default:
         optionValue = elOption.value;

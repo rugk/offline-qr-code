@@ -35,12 +35,14 @@ describe("options module: AutomaticSettings", function () {
      * @public
      * @function
      * @param {string} optionId element ID to change
-     * @param {string} valueToPass a string to change
+     * @param {string} [valueToPass] a string to change th value, if not passed it is omitted
      * @returns {InputEvent}
      */
     function changeExampleOptionInput(optionId, valueToPass) {
         const elOption = document.getElementById(optionId);
-        elOption.value = valueToPass;
+        if (valueToPass !== undefined) {
+            elOption.value = valueToPass;
+        }
 
         // trigger new input event
         const inputEvent = new InputEvent("input");
@@ -55,12 +57,14 @@ describe("options module: AutomaticSettings", function () {
      * @public
      * @function
      * @param {string} optionId element ID to change
-     * @param {string} valueToPass a string to change
+     * @param {string} [valueToPass] a string to change th value, if not passed it is omitted
      * @returns {InputEvent}
      */
     function changeExampleOptionChange(optionId, valueToPass) {
         const elOption = document.getElementById(optionId);
-        elOption.value = valueToPass;
+        if (valueToPass !== undefined) {
+            elOption.value = valueToPass;
+        }
 
         // trigger new input event
         const inputEvent = new InputEvent("change");
@@ -793,6 +797,157 @@ describe("options module: AutomaticSettings", function () {
                 // assert that trigger was called correctly
                 sinon.assert.notCalled(saveTrigger);
             });
+        });
+    });
+
+    describe("save settings", function () {
+        /**
+         * Sets up the option code to test.
+         *
+         * @public
+         * @function
+         * @param {string} htmlCode
+         * @param {string} optionName
+         * @param {string} optionId element ID to read value from
+         * @param {any} startValue  inital value to set
+         * @returns {Promise}
+         */
+        async function setupOptionToTest(htmlCode, optionName, optionId, startValue) {
+            await AddonSettingsStub.stubSettings({
+                [optionName]: startValue
+            });
+
+            const originalHtml = HtmlMock.stripAllNewlines(htmlCode);
+            HtmlMock.setTestHtml(originalHtml);
+
+            // setup default option provider
+            AutomaticSettings.setDefaultOptionProvider(sinon.stub().returns(777));
+
+            // run test
+            await AutomaticSettings.init();
+
+            return originalHtml;
+        }
+
+        it("saves input type=number correctly", async function () {
+            await setupOptionToTest(`
+            <li><label for="greatSettingsNum">greatSettingsNum</label>
+            <input class="setting save-on-input" id="greatSettingsNum" name="greatSettingsNum" type="number">
+            </li>`, "greatSettingsNum", "greatSettingsNum", "1234");
+
+            // change option
+            changeExampleOptionInput("greatSettingsNum", 771615);
+
+            await wait(20);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("greatSettingsNum");
+            chai.assert.propertyVal(newOption, "greatSettingsNum", 771615);
+
+            // also check for float and not integer
+            changeExampleOptionInput("greatSettingsNum", 12.345);
+
+            await wait(20);
+
+            // verify option is saved
+            const newOptionFloat = await browser.storage.sync.get("greatSettingsNum");
+            chai.assert.propertyVal(newOptionFloat, "greatSettingsNum", 12.345);
+        });
+
+        it("saves input type=text correctly", async function () {
+            await setupOptionToTest(`
+            <li><label for="greatSettings">test text type</label>
+            <input class="setting save-on-input" id="greatSettings" name="greatSettings" type="text">
+            </li>`, "greatSettings", "greatSettings", "blagood328!!!");
+
+            // change option
+            changeExampleOptionInput("greatSettings", "newString value !%&&");
+
+            await wait(20);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("greatSettings");
+            chai.assert.propertyVal(newOption, "greatSettings", "newString value !%&&");
+        });
+
+        it("saves input type=checkbox correctly", async function () {
+            await setupOptionToTest(`
+            <li>
+                <input class="setting save-on-input" id="enableExample" type="checkbox">
+                <label for="checkOkay">activate or disable a thing</label>
+            </li>`, "enableExample", "enableExample", false);
+
+            // change option
+            document.getElementById("enableExample").checked = true;
+            changeExampleOptionInput("enableExample"); // only to trigger event
+
+            await wait(20);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("enableExample");
+            chai.assert.propertyVal(newOption, "enableExample", true);
+        });
+
+        it("saves select value correctly", async function () {
+            await setupOptionToTest(`
+            <li>
+                <label for="selection">Select one thing: </label>
+                <select id="selection" class="setting save-on-input" name="select" size="0">
+                    <option value="L">Low (7%)</option>
+                    <option value="M">Medium (15%)</option>
+                    <option value="Q">Quartile (25%)</option>
+                    <option value="H">High (30%)</option>
+                </select>
+            </li>`, "selection", "selection", "Q");
+
+            // change option
+            const elOption = document.getElementById("selection");
+            elOption.querySelector('option[value="H"]').selected = true;
+            changeExampleOptionInput("selection"); // only to trigger event
+
+            await wait(20);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("selection");
+            chai.assert.propertyVal(newOption, "selection", "H");
+        });
+
+        it("saves fieldset (radiogroup) value correctly", async function () {
+            await setupOptionToTest(`<li>
+            <fieldset id="sizeType" data-type="radiogroup" class="setting save-on-input">
+                <legend >set mode</legend>
+                <ul>
+                    <li>
+                        <input id="sizeOne" type="radio" name="size" value="oneValue">
+                        <label for="sizeOne">Size one</label>
+
+                        <input class="notASetting" type="number" id="unrelatedOption" name="uugh">
+                        <span>px</span>
+                    </li>
+
+                    <li>
+                        <input id="sizeTwo" type="radio" name="size" value="twoValue">
+                        <label for="sizeTwo">Size two</label>
+                    </li>
+
+                    <li>
+                        <input id="sizeThree" type="radio" name="size" value="threeValue">
+                        <label for="sizeThree">Size three</label>
+                    </li>
+                </ul>
+            </fieldset>
+            </li>`, "sizeType", "selection", "twoValue");
+
+            // change option
+            document.getElementById("sizeTwo").removeAttribute("checked");
+            document.getElementById("sizeThree").setAttribute("checked", true);
+            changeExampleOptionInput("sizeType"); // only to trigger event
+
+            await wait(20);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("sizeType");
+            chai.assert.propertyVal(newOption, "sizeType", "threeValue");
         });
     });
 });

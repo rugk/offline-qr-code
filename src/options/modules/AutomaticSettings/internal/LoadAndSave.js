@@ -24,7 +24,7 @@ let managedInfoIsShown = false;
 let lastOptionsBeforeReset;
 
 /**
- * Saves all settings.
+ * Saves thespecific settings that triggered this.
  *
  * @private
  * @function
