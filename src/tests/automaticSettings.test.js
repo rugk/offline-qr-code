@@ -630,7 +630,7 @@ describe("options module: AutomaticSettings", function () {
                 sinon.assert.calledWithExactly(afterLoad2.firstCall); // i.e. no arguments
             });
 
-            it("runs all save triggers if RUN_ALL_SAVE_TRIGGER is set for registerSave", async function() {
+            it("runs all save triggers if RUN_ALL_SAVE_TRIGGER is set for registerAfterLoad", async function() {
                 // need to provide default options so processing does not fail
                 await AddonSettingsStub.stubSettings({
                     bla: "yesBla",
@@ -951,7 +951,7 @@ describe("options module: AutomaticSettings", function () {
         });
     });
 
-    describe("optiongroup", function () {
+    describe("option group", function () {
         /**
          * Sets up the option code to test.
          *
