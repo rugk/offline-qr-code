@@ -286,9 +286,9 @@ describe("options module: AutomaticSettings", function () {
             </li>`, "sizeType", "selection", "twoValue");
 
             // assert that HTML code has not been changed
-            chai.assert.strictEqual(document.getElementById("sizeOne").hasAttribute("checked"), false, "raadio button #sizeOne is not unchecked");
-            chai.assert.strictEqual(document.getElementById("sizeTwo").hasAttribute("checked"), true, "raadio button #sizeTwo is not checked");
-            chai.assert.strictEqual(document.getElementById("sizeThree").hasAttribute("checked"), false, "raadio button #sizeOne is not unchecked");
+            chai.assert.strictEqual(document.getElementById("sizeOne").hasAttribute("checked"), false, "radio button #sizeOne is not unchecked");
+            chai.assert.strictEqual(document.getElementById("sizeTwo").hasAttribute("checked"), true, "radio button #sizeTwo is not checked");
+            chai.assert.strictEqual(document.getElementById("sizeThree").hasAttribute("checked"), false, "radio button #sizeOne is not unchecked");
         });
     });
 
@@ -432,11 +432,11 @@ describe("options module: AutomaticSettings", function () {
             // change some data
             optionMapping.anotherOne = "changedAfterOptionsLoadedButBeforeReset";
             changeExampleOptionInput("anotherOne", optionMapping.anotherOne);
-            await wait(20);
+            await wait(5);
 
             // trigger reset button
             document.getElementById("resetButton").click();
-            await wait(20);
+            await wait(5);
 
             // assert that data was reset to defaults
             Object.entries(optionMappingDefault).forEach(([key, value]) => {
@@ -449,7 +449,7 @@ describe("options module: AutomaticSettings", function () {
 
             // trigger undo button of message
             document.querySelector("#messageSuccess .message-action-button").click();
-            await wait(20);
+            await wait(5);
 
             // verify that data is back to previous one
             Object.entries(optionMapping).forEach(([key, value]) => {
@@ -500,7 +500,7 @@ describe("options module: AutomaticSettings", function () {
             // trigger reset button
             document.getElementById("resetButton").click();
 
-            await wait(20);
+            await wait(5);
 
             // assert that trigger was called correctly
             sinon.assert.calledOnce(beforeLoad);
@@ -838,7 +838,7 @@ describe("options module: AutomaticSettings", function () {
             // change option
             changeExampleOptionInput("greatSettingsNum", 771615);
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOption = await browser.storage.sync.get("greatSettingsNum");
@@ -847,7 +847,7 @@ describe("options module: AutomaticSettings", function () {
             // also check for float and not integer
             changeExampleOptionInput("greatSettingsNum", 12.345);
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOptionFloat = await browser.storage.sync.get("greatSettingsNum");
@@ -863,7 +863,7 @@ describe("options module: AutomaticSettings", function () {
             // change option
             changeExampleOptionInput("greatSettings", "newString value !%&&");
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOption = await browser.storage.sync.get("greatSettings");
@@ -881,7 +881,7 @@ describe("options module: AutomaticSettings", function () {
             document.getElementById("enableExample").checked = true;
             changeExampleOptionInput("enableExample"); // only to trigger event
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOption = await browser.storage.sync.get("enableExample");
@@ -905,7 +905,7 @@ describe("options module: AutomaticSettings", function () {
             elOption.querySelector('option[value="H"]').selected = true;
             changeExampleOptionInput("selection"); // only to trigger event
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOption = await browser.storage.sync.get("selection");
@@ -943,11 +943,136 @@ describe("options module: AutomaticSettings", function () {
             document.getElementById("sizeThree").setAttribute("checked", true);
             changeExampleOptionInput("sizeType"); // only to trigger event
 
-            await wait(20);
+            await wait(5);
 
             // verify option is saved
             const newOption = await browser.storage.sync.get("sizeType");
             chai.assert.propertyVal(newOption, "sizeType", "threeValue");
+        });
+    });
+
+    describe("optiongroup", function () {
+        /**
+         * Sets up the option code to test.
+         *
+         * @public
+         * @function
+         * @param {string} htmlCode
+         * @param {string} optionName
+         * @param {string} optionId element ID to read value from
+         * @param {any} startValue  inital value to set
+         * @returns {Promise}
+         */
+        async function setupOptionToTest(htmlCode, optionName, optionId, startValue) {
+            await AddonSettingsStub.stubSettings({
+                [optionName]: startValue
+            });
+
+            const originalHtml = HtmlMock.stripAllNewlines(htmlCode);
+            HtmlMock.setTestHtml(originalHtml);
+
+            // setup default option provider
+            AutomaticSettings.setDefaultOptionProvider(sinon.stub().returns(777));
+
+            // run test
+            await AutomaticSettings.init();
+
+            return originalHtml;
+        }
+
+        /**
+         * Sets up the one example option group we have.
+         *
+         * @public
+         * @function
+         * @returns {Promise}
+         */
+        async function setExampleOptionGroup() {
+            await setupOptionToTest(`<li>
+            <fieldset id="sizeType" data-type="radiogroup" data-optiongroup="goodOptions" class="setting save-on-input">
+                <legend >set mode</legend>
+                <ul>
+                    <li>
+                        <input id="sizeOne" type="radio" name="size" value="oneValue">
+                        <label for="sizeOne">Size one</label>
+
+                        <input class="setting save-on-input" type="number" data-optiongroup="goodOptions" id="partialSetting" name="no-name">
+                        <span>px</span>
+                    </li>
+
+                    <li>
+                        <input id="sizeTwo" type="radio" name="size" value="twoValue">
+                        <label for="sizeTwo">Size two</label>
+                    </li>
+
+                    <li>
+                        <input id="sizeThree" type="radio" name="size" value="threeValue">
+                        <label for="sizeThree">Size three</label>
+                    </li>
+                </ul>
+            </fieldset>
+            </li>
+            <li>
+                <input class="setting save-on-input" data-optiongroup="goodOptions" type="text" id="anotherSetting" name="no-name">
+            </li>`, "goodOptions", "", {
+                sizeType: "oneValue",
+                partialSetting: 8421,
+                anotherSetting: "withSomeText"
+            });
+        }
+
+        it("sets option group values correctly", async function () {
+            await setExampleOptionGroup();
+
+            // check that they were loaded correctly
+            chai.assert.strictEqual(document.getElementById("sizeOne").hasAttribute("checked"), true, "radio button #sizeOne is not checked");
+            chai.assert.strictEqual(document.getElementById("sizeTwo").hasAttribute("checked"), false, "radio button #sizeTwo is not unchecked");
+            chai.assert.strictEqual(document.getElementById("sizeThree").hasAttribute("checked"), false, "radio button #sizeOne is not unchecked");
+
+            chai.assert.strictEqual(document.getElementById("anotherSetting").value, "withSomeText", "did not set text value of anotherSetting correctly");
+
+            chai.assert.strictEqual(document.getElementById("partialSetting").value, "8421", "did not set numeric value of partialSetting correctly");
+        });
+
+
+        it("saves option group values correctly", async function () {
+            await setExampleOptionGroup();
+
+            // change option
+            document.getElementById("sizeOne").removeAttribute("checked");
+            document.getElementById("sizeThree").setAttribute("checked", true);
+            changeExampleOptionInput("sizeType"); // only to trigger event
+
+            await wait(5);
+
+            // verify option is saved
+            const newOptionRadio = await browser.storage.sync.get("goodOptions");
+            chai.assert.deepNestedPropertyVal(newOptionRadio, "goodOptions.sizeType", "threeValue");
+
+            // change option
+            changeExampleOptionInput("anotherSetting", "newTextOption");
+
+            await wait(5);
+
+            // verify option is saved
+            const newOptionText = await browser.storage.sync.get("goodOptions");
+            chai.assert.deepNestedPropertyVal(newOptionText, "goodOptions.anotherSetting", "newTextOption");
+
+            // change option
+            changeExampleOptionInput("partialSetting", 99.99);
+
+            await wait(5);
+
+            // verify option is saved
+            const newOptionNumber = await browser.storage.sync.get("goodOptions");
+            chai.assert.deepNestedPropertyVal(newOptionNumber, "goodOptions.partialSetting", 99.99);
+
+            // finally compare whole object
+            chai.assert.deepEqual(newOptionNumber.goodOptions, {
+                sizeType: "threeValue",
+                partialSetting: 99.99,
+                anotherSetting: "newTextOption"
+            });
         });
     });
 });
