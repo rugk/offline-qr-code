@@ -110,7 +110,7 @@ describe("options module: AutomaticSettings", function () {
 
             const originalHtml = HtmlMock.stripAllNewlines(`<p>nothing special</p>
             <li><label for="greatSettingsNum">greatSettingsNum</label>
-            <input class="setting" id="greatSettingsNum" name="greatSettingsNum" type="number" value="123">
+            <input class="setting" id="greatSettingsNum" name="greatSettingsNum" value="123" type="number">
             </li>`);
             HtmlMock.setTestHtml(originalHtml);
 
