@@ -34,12 +34,12 @@ describe("options module: AutomaticSettings", function () {
      *
      * @public
      * @function
-     * @param {string} optionId element ID to change
+     * @param {string} elementId element ID to change
      * @param {string} [valueToPass] a string to change th value, if not passed it is omitted
      * @returns {InputEvent}
      */
-    function changeExampleOptionInput(optionId, valueToPass) {
-        const elOption = document.getElementById(optionId);
+    function changeExampleOptionInput(elementId, valueToPass) {
+        const elOption = document.getElementById(elementId);
         if (valueToPass !== undefined) {
             elOption.value = valueToPass;
         }
@@ -195,8 +195,8 @@ describe("options module: AutomaticSettings", function () {
             });
 
             const originalHtml = HtmlMock.stripAllNewlines(`<p>nothing special</p>
-            <li><label for="greatSettingsNum">greatSettingsNum</label>
-            <input class="leetCauseIwantIt" id="greatSettingsNum" name="greatSettingsNum" type="number">
+            <li><label for="testSetting">greatSettingsNum</label>
+            <input class="leetCauseIwantIt" id="testSetting" name="greatSettingsNum" type="number">
             </li>`);
             HtmlMock.setTestHtml(originalHtml);
 
@@ -214,14 +214,14 @@ describe("options module: AutomaticSettings", function () {
             sinon.assert.notCalled(defaultOptionProvider);
 
             // assert that value of option has NOT been set
-            chai.assert.strictEqual(document.getElementById("greatSettingsNum").value, "", "set value of option altghough it was expected not to set it");
+            chai.assert.strictEqual(document.getElementById("testSetting").value, "", "set value of option altghough it was expected not to set it");
         });
 
         it("sets input type=number correctly", function () {
             return testOptionType(`
-            <li><label for="greatSettingsNum">greatSettingsNum</label>
-            <input class="setting" id="greatSettingsNum" name="greatSettingsNum" type="number">
-            </li>`, "greatSettingsNum", "greatSettingsNum", "1234");
+            <li><label for="testSetting">greatSettingsNum</label>
+            <input class="setting" id="testSetting" name="greatSettingsNum" type="number">
+            </li>`, "greatSettingsNum", "testSetting", "1234");
         });
 
         it("sets input type=text correctly", function () {
@@ -234,9 +234,9 @@ describe("options module: AutomaticSettings", function () {
         it("sets input type=checkbox correctly", function () {
             return testOptionType(`
             <li>
-                <input class="setting" id="enableExample" type="checkbox">
+                <input class="setting" id="checkOkay" name="enableExample" type="checkbox">
                 <label for="checkOkay">activate or disable a thing</label>
-            </li>`, "enableExample", "enableExample", true, (elOption) => {
+            </li>`, "enableExample", "checkOkay", true, (elOption) => {
                 chai.assert.strictEqual(elOption.checked, true, "did not set value of checkbox correctly");
             });
         });
@@ -251,7 +251,7 @@ describe("options module: AutomaticSettings", function () {
                     <option value="Q">Quartile (25%)</option>
                     <option value="H">High (30%)</option>
                 </select>
-            </li>`, "selection", "selection", "Q", (elOption) => {
+            </li>`, "select", "selection", "Q", (elOption) => {
                 chai.assert.strictEqual(elOption.querySelector('option[value="L"]').selected, false, "did not set value of select option[value=L] correctly");
                 chai.assert.strictEqual(elOption.querySelector('option[value="M"]').selected, false, "did not set value of select option[value=M] correctly");
                 chai.assert.strictEqual(elOption.querySelector('option[value="Q"]').selected, true, "did not set value of select option[value=Q] correctly");
@@ -259,13 +259,14 @@ describe("options module: AutomaticSettings", function () {
             });
         });
 
-        it("sets fieldset (radiogroup) value correctly", async function () {
+        it("sets radiogroup (fieldset) value correctly", async function () {
+            // a data-name in fieldset could simplify the process, but we use the hard way, here
             await setOptionTest(`<li>
-            <fieldset id="sizeType" data-type="radiogroup" class="setting">
+            <fieldset id="sizeRadioOptions" data-type="radiogroup" class="setting">
                 <legend >set mode</legend>
                 <ul>
                     <li>
-                        <input id="sizeOne" type="radio" name="size" value="oneValue">
+                        <input id="sizeOne" type="radio" name="sizeType" value="oneValue">
                         <label for="sizeOne">Size one</label>
 
                         <input class="notASetting" type="number" id="unrelatedOption" name="uugh">
@@ -273,17 +274,17 @@ describe("options module: AutomaticSettings", function () {
                     </li>
 
                     <li>
-                        <input id="sizeTwo" type="radio" name="size" value="twoValue">
+                        <input id="sizeTwo" type="radio" name="sizeType" value="twoValue">
                         <label for="sizeTwo">Size two</label>
                     </li>
 
                     <li>
-                        <input id="sizeThree" type="radio" name="size" value="threeValue">
+                        <input id="sizeThree" type="radio" name="sizeType" value="threeValue">
                         <label for="sizeThree">Size three</label>
                     </li>
                 </ul>
             </fieldset>
-            </li>`, "sizeType", "selection", "twoValue");
+            </li>`, "sizeType", "sizeRadioOptions", "twoValue");
 
             // assert that HTML code has not been changed
             chai.assert.strictEqual(document.getElementById("sizeOne").hasAttribute("checked"), false, "radio button #sizeOne is not unchecked");
@@ -301,7 +302,7 @@ describe("options module: AutomaticSettings", function () {
          * @function
          * @param {string} optionId
          * @param {string} [addClass] set to class to add to input element
-         * @param {string} [optionName] element ID to set
+         * @param {string} [optionName] element option to use for saving
          * @returns {string} the HTML
          */
         function buildHtmlOption(optionId, addClass = "", optionName = optionId) {
@@ -366,7 +367,7 @@ describe("options module: AutomaticSettings", function () {
             await AutomaticSettings.init();
             Object.entries(optionMapping).forEach(([key, value]) => {
                 chai.assert.strictEqual(
-                    document.getElementById(key).value,
+                    document.querySelector(`[name=${key}]`).value,
                     value,
                     `option ${key} did not had correct value loading from settings before reset button is clicked`
                 );
@@ -379,7 +380,7 @@ describe("options module: AutomaticSettings", function () {
             await AutomaticSettings.init();
             Object.entries(optionMappingDefault).forEach(([key, value]) => {
                 chai.assert.strictEqual(
-                    document.getElementById(key).value,
+                    document.querySelector(`[name=${key}]`).value,
                     value,
                     `option ${key} did not had correct value after reset button has been clicked`
                 );
@@ -404,7 +405,7 @@ describe("options module: AutomaticSettings", function () {
             let html = SUCCESS_MESSAGE;
             html += buildHtmlOption("firstText");
             html += buildHtmlOption("secondTextOption");
-            html += buildHtmlOption("anotherOne", "save-on-input");
+            html += buildHtmlOption("anotherOneId", "save-on-input", "anotherOne");
 
             // reset button
             html += '<button type="button" name="reset-button" id="resetButton">Reset</button>';
@@ -431,7 +432,7 @@ describe("options module: AutomaticSettings", function () {
 
             // change some data
             optionMapping.anotherOne = "changedAfterOptionsLoadedButBeforeReset";
-            changeExampleOptionInput("anotherOne", optionMapping.anotherOne);
+            changeExampleOptionInput("anotherOneId", optionMapping.anotherOne);
             await wait(5);
 
             // trigger reset button
@@ -441,7 +442,7 @@ describe("options module: AutomaticSettings", function () {
             // assert that data was reset to defaults
             Object.entries(optionMappingDefault).forEach(([key, value]) => {
                 chai.assert.strictEqual(
-                    document.getElementById(key).value,
+                    document.querySelector(`[name=${key}]`).value,
                     value,
                     `option ${key} did not had correct value after reset button has been clicked`
                 );
@@ -454,7 +455,7 @@ describe("options module: AutomaticSettings", function () {
             // verify that data is back to previous one
             Object.entries(optionMapping).forEach(([key, value]) => {
                 chai.assert.strictEqual(
-                    document.getElementById(key).value,
+                    document.querySelector(`[name=${key}]`).value,
                     value,
                     `option ${key} did not had correct value after undoing`
                 );
@@ -524,10 +525,10 @@ describe("options module: AutomaticSettings", function () {
          * @param {string} [optionId] element ID to set
          * @returns {void}
          */
-        function setExampleOption(optionName, addClass = "", optionId = optionName) {
+        function setExampleOption(optionName, addClass = "", optionId = `${optionName}Id`) {
             const originalHtml = HtmlMock.stripAllNewlines(`
             <li>
-                <input class="setting ${addClass}" id="${optionId}" type="text">
+                <input class="setting ${addClass}" id="${optionId}" name="${optionName}" type="text">
                 <label for="${optionId}">this is an example setting</label>
             </li>`);
             HtmlMock.setTestHtml(originalHtml);
@@ -547,13 +548,14 @@ describe("options module: AutomaticSettings", function () {
             it("trigger before load works", async function() {
                 // set up triggers
                 const beforeLoad = sinon.stub().callsFake(() => {
+                    debugger;
                     // check, the option for "okayExOption" really has not been changed
-                    const elOption = document.getElementById("okayExOption");
+                    const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
                 });
                 AutomaticSettings.Trigger.registerBeforeLoad(beforeLoad);
 
-                setExampleOption("okayExOption", "");
+                setExampleOption("okayExOption", "", "okayId");
 
                 await AutomaticSettings.init();
 
@@ -565,7 +567,7 @@ describe("options module: AutomaticSettings", function () {
             it("triggers multiple triggers", async function() {
                 const triggerCheck = () => {
                     // check, the option for "okayExOption" really has not been changed
-                    const elOption = document.getElementById("okayExOption");
+                    const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
                 }
 
@@ -575,7 +577,7 @@ describe("options module: AutomaticSettings", function () {
                 AutomaticSettings.Trigger.registerBeforeLoad(beforeLoad1);
                 AutomaticSettings.Trigger.registerBeforeLoad(beforeLoad2);
 
-                setExampleOption("okayExOption", "");
+                setExampleOption("okayExOption", "", "okayId");
 
                 await AutomaticSettings.init();
 
@@ -592,12 +594,12 @@ describe("options module: AutomaticSettings", function () {
                 // set up triggers
                 const afterLoad = sinon.stub().callsFake(() => {
                     // check, the option for "okayExOption" really has not been changed
-                    const elOption = document.getElementById("okayExOption");
+                    const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, EXAMPLE_OPTION_VALUE, "option has not yet been loaded while it should have been");
                 });
                 AutomaticSettings.Trigger.registerAfterLoad(afterLoad);
 
-                setExampleOption("okayExOption", "");
+                setExampleOption("okayExOption", "", "okayId");
 
                 await AutomaticSettings.init();
 
@@ -609,7 +611,7 @@ describe("options module: AutomaticSettings", function () {
             it("triggers multiple triggers", async function() {
                 const triggerCheck = () => {
                     // check, the option for "okayExOption" really has not been changed
-                    const elOption = document.getElementById("okayExOption");
+                    const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, EXAMPLE_OPTION_VALUE, "option has not yet been loaded while it should have been");
                 };
 
@@ -619,7 +621,7 @@ describe("options module: AutomaticSettings", function () {
                 AutomaticSettings.Trigger.registerAfterLoad(afterLoad1);
                 AutomaticSettings.Trigger.registerAfterLoad(afterLoad2);
 
-                setExampleOption("okayExOption", "");
+                setExampleOption("okayExOption", "", "okayId");
 
                 await AutomaticSettings.init();
 
@@ -669,12 +671,12 @@ describe("options module: AutomaticSettings", function () {
                 const spy = sinon.spy();
                 AutomaticSettings.Trigger.registerUpdate("okayExOption", spy);
 
-                setExampleOption("okayExOption", "trigger-on-update");
+                setExampleOption("okayExOption", "trigger-on-update", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                const eventTrigger = changeExampleOptionInput("okayExOption", "testValue123");
+                const eventTrigger = changeExampleOptionInput("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.calledOnce(spy);
@@ -686,12 +688,12 @@ describe("options module: AutomaticSettings", function () {
                 const spy = sinon.spy();
                 AutomaticSettings.Trigger.registerChange("okayExOption", spy);
 
-                setExampleOption("okayExOption", "trigger-on-change");
+                setExampleOption("okayExOption", "trigger-on-change", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                const eventTrigger = changeExampleOptionChange("okayExOption", "testValue123");
+                const eventTrigger = changeExampleOptionChange("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.calledOnce(spy);
@@ -710,13 +712,13 @@ describe("options module: AutomaticSettings", function () {
                 AutomaticSettings.Trigger.registerUpdate("okayExOption", update1);
                 AutomaticSettings.Trigger.registerUpdate("okayExOption", update2);
 
-                setExampleOption("okayExOption", "trigger-on-change trigger-on-update");
+                setExampleOption("okayExOption", "trigger-on-change trigger-on-update", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger triggers
-                const eventTriggerChange = changeExampleOptionChange("okayExOption", "newValueOnChange");
-                const eventTriggerUpdate = changeExampleOptionInput("okayExOption", "newValueOnInput/Update");
+                const eventTriggerChange = changeExampleOptionChange("okayId", "newValueOnChange");
+                const eventTriggerUpdate = changeExampleOptionInput("okayId", "newValueOnInput/Update");
 
                 // assert that trigger was called correctly
                 sinon.assert.calledOnce(change1);
@@ -737,12 +739,12 @@ describe("options module: AutomaticSettings", function () {
                 const spy = sinon.spy();
                 AutomaticSettings.Trigger.registerSave("okayExOption", spy);
 
-                setExampleOption("okayExOption", "save-on-input");
+                setExampleOption("okayExOption", "save-on-input", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                changeExampleOptionInput("okayExOption", "testValue123");
+                changeExampleOptionInput("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.calledOnce(spy);
@@ -754,12 +756,12 @@ describe("options module: AutomaticSettings", function () {
                 const spy = sinon.spy();
                 AutomaticSettings.Trigger.registerSave("okayExOption", spy);
 
-                setExampleOption("okayExOption", "save-on-change");
+                setExampleOption("okayExOption", "save-on-change", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                changeExampleOptionChange("okayExOption", "testValue123");
+                changeExampleOptionChange("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.calledOnce(spy);
@@ -771,12 +773,12 @@ describe("options module: AutomaticSettings", function () {
                 const saveTrigger = sinon.spy();
                 AutomaticSettings.Trigger.registerSave("okayExOptionWRONG", saveTrigger);
 
-                setExampleOption("okayExOption", "save-on-change");
+                setExampleOption("okayExOption", "save-on-change", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                changeExampleOptionChange("okayExOption", "testValue123");
+                changeExampleOptionChange("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.notCalled(saveTrigger);
@@ -787,12 +789,12 @@ describe("options module: AutomaticSettings", function () {
                 const saveTrigger = sinon.spy();
                 AutomaticSettings.Trigger.registerSave("okayExOptionWRONG", saveTrigger);
 
-                setExampleOption("okayExOption", "save-on-input");
+                setExampleOption("okayExOption", "save-on-input", "okayId");
 
                 await AutomaticSettings.init();
 
                 // change setting to trigger trigger
-                changeExampleOptionInput("okayExOption", "testValue123");
+                changeExampleOptionInput("okayId", "testValue123");
 
                 // assert that trigger was called correctly
                 sinon.assert.notCalled(saveTrigger);
@@ -832,11 +834,11 @@ describe("options module: AutomaticSettings", function () {
         it("saves input type=number correctly", async function () {
             await setupOptionToTest(`
             <li><label for="greatSettingsNum">greatSettingsNum</label>
-            <input class="setting save-on-input" id="greatSettingsNum" name="greatSettingsNum" type="number">
+            <input class="setting save-on-input" id="greatId" name="greatSettingsNum" type="number">
             </li>`, "greatSettingsNum", "greatSettingsNum", "1234");
 
             // change option
-            changeExampleOptionInput("greatSettingsNum", 771615);
+            changeExampleOptionInput("greatId", 771615);
 
             await wait(5);
 
@@ -845,7 +847,7 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.propertyVal(newOption, "greatSettingsNum", 771615);
 
             // also check for float and not integer
-            changeExampleOptionInput("greatSettingsNum", 12.345);
+            changeExampleOptionInput("greatId", 12.345);
 
             await wait(5);
 
@@ -857,11 +859,11 @@ describe("options module: AutomaticSettings", function () {
         it("saves input type=text correctly", async function () {
             await setupOptionToTest(`
             <li><label for="greatSettings">test text type</label>
-            <input class="setting save-on-input" id="greatSettings" name="greatSettings" type="text">
+            <input class="setting save-on-input" id="greatId" name="greatSettings" type="text">
             </li>`, "greatSettings", "greatSettings", "blagood328!!!");
 
             // change option
-            changeExampleOptionInput("greatSettings", "newString value !%&&");
+            changeExampleOptionInput("greatId", "newString value !%&&");
 
             await wait(5);
 
@@ -873,13 +875,13 @@ describe("options module: AutomaticSettings", function () {
         it("saves input type=checkbox correctly", async function () {
             await setupOptionToTest(`
             <li>
-                <input class="setting save-on-input" id="enableExample" type="checkbox">
+                <input class="setting save-on-input" id="greatId" name="enableExample" type="checkbox">
                 <label for="checkOkay">activate or disable a thing</label>
-            </li>`, "enableExample", "enableExample", false);
+            </li>`, "enableExample", "greatId", false);
 
             // change option
-            document.getElementById("enableExample").checked = true;
-            changeExampleOptionInput("enableExample"); // only to trigger event
+            document.getElementById("greatId").checked = true;
+            changeExampleOptionInput("greatId"); // only to trigger event
 
             await wait(5);
 
@@ -898,7 +900,7 @@ describe("options module: AutomaticSettings", function () {
                     <option value="Q">Quartile (25%)</option>
                     <option value="H">High (30%)</option>
                 </select>
-            </li>`, "selection", "selection", "Q");
+            </li>`, "select", "selection", "Q");
 
             // change option
             const elOption = document.getElementById("selection");
@@ -908,17 +910,17 @@ describe("options module: AutomaticSettings", function () {
             await wait(5);
 
             // verify option is saved
-            const newOption = await browser.storage.sync.get("selection");
-            chai.assert.propertyVal(newOption, "selection", "H");
+            const newOption = await browser.storage.sync.get("select");
+            chai.assert.propertyVal(newOption, "select", "H");
         });
 
         it("saves fieldset (radiogroup) value correctly", async function () {
             await setupOptionToTest(`<li>
-            <fieldset id="sizeType" data-type="radiogroup" class="setting save-on-input">
-                <legend >set mode</legend>
+            <fieldset id="sizeGroup" data-type="radiogroup" class="setting save-on-input">
+                <legend>set mode</legend>
                 <ul>
                     <li>
-                        <input id="sizeOne" type="radio" name="size" value="oneValue">
+                        <input id="sizeOne" type="radio" name="sizeType" value="oneValue">
                         <label for="sizeOne">Size one</label>
 
                         <input class="notASetting" type="number" id="unrelatedOption" name="uugh">
@@ -926,22 +928,22 @@ describe("options module: AutomaticSettings", function () {
                     </li>
 
                     <li>
-                        <input id="sizeTwo" type="radio" name="size" value="twoValue">
+                        <input id="sizeTwo" type="radio" name="sizeType" value="twoValue">
                         <label for="sizeTwo">Size two</label>
                     </li>
 
                     <li>
-                        <input id="sizeThree" type="radio" name="size" value="threeValue">
+                        <input id="sizeThree" type="radio" name="sizeType" value="threeValue">
                         <label for="sizeThree">Size three</label>
                     </li>
                 </ul>
             </fieldset>
-            </li>`, "sizeType", "selection", "twoValue");
+            </li>`, "sizeType", "sizeGroup", "twoValue");
 
             // change option
             document.getElementById("sizeTwo").removeAttribute("checked");
             document.getElementById("sizeThree").setAttribute("checked", true);
-            changeExampleOptionInput("sizeType"); // only to trigger event
+            changeExampleOptionInput("sizeGroup"); // only to trigger event
 
             await wait(5);
 
@@ -993,27 +995,27 @@ describe("options module: AutomaticSettings", function () {
                 <legend >set mode</legend>
                 <ul>
                     <li>
-                        <input id="sizeOne" type="radio" name="size" value="oneValue">
+                        <input id="sizeOne" type="radio" name="sizeType" value="oneValue">
                         <label for="sizeOne">Size one</label>
 
-                        <input class="setting save-on-input" type="number" data-optiongroup="goodOptions" id="partialSetting" name="no-name">
+                        <input class="setting save-on-input" type="number" data-optiongroup="goodOptions" name="partialSetting" id="partialSettingId">
                         <span>px</span>
                     </li>
 
                     <li>
-                        <input id="sizeTwo" type="radio" name="size" value="twoValue">
+                        <input id="sizeTwo" type="radio" name="sizeType" value="twoValue">
                         <label for="sizeTwo">Size two</label>
                     </li>
 
                     <li>
-                        <input id="sizeThree" type="radio" name="size" value="threeValue">
+                        <input id="sizeThree" type="radio" name="sizeType" value="threeValue">
                         <label for="sizeThree">Size three</label>
                     </li>
                 </ul>
             </fieldset>
             </li>
             <li>
-                <input class="setting save-on-input" data-optiongroup="goodOptions" type="text" id="anotherSetting" name="no-name">
+                <input class="setting save-on-input" data-optiongroup="goodOptions" type="text" name="anotherSetting" id="anotherOption">
             </li>`, "goodOptions", "", {
                 sizeType: "oneValue",
                 partialSetting: 8421,
@@ -1029,9 +1031,9 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.strictEqual(document.getElementById("sizeTwo").hasAttribute("checked"), false, "radio button #sizeTwo is not unchecked");
             chai.assert.strictEqual(document.getElementById("sizeThree").hasAttribute("checked"), false, "radio button #sizeOne is not unchecked");
 
-            chai.assert.strictEqual(document.getElementById("anotherSetting").value, "withSomeText", "did not set text value of anotherSetting correctly");
+            chai.assert.strictEqual(document.getElementById("anotherOption").value, "withSomeText", "did not set text value of anotherSetting correctly");
 
-            chai.assert.strictEqual(document.getElementById("partialSetting").value, "8421", "did not set numeric value of partialSetting correctly");
+            chai.assert.strictEqual(document.getElementById("partialSettingId").value, "8421", "did not set numeric value of partialSetting correctly");
         });
 
 
@@ -1050,7 +1052,7 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.deepNestedPropertyVal(newOptionRadio, "goodOptions.sizeType", "threeValue");
 
             // change option
-            changeExampleOptionInput("anotherSetting", "newTextOption");
+            changeExampleOptionInput("anotherOption", "newTextOption");
 
             await wait(5);
 
@@ -1059,7 +1061,7 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.deepNestedPropertyVal(newOptionText, "goodOptions.anotherSetting", "newTextOption");
 
             // change option
-            changeExampleOptionInput("partialSetting", 99.99);
+            changeExampleOptionInput("partialSettingId", 99.99);
 
             await wait(5);
 

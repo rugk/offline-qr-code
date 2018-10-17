@@ -58,7 +58,7 @@
 		<form>
 			<ul>
 				<li class="mobile-incompatible">
-					<input class="setting save-on-change" type="checkbox" id="popupIconColored" name="icon-colored">
+					<input class="setting save-on-change" type="checkbox" id="popupIconColored" name="popupIconColored">
 					<label data-i18n="__MSG_optionPopupIconColored__" for="popupIconColored">Colored icon</label>
 					<span data-i18n="__MSG_optionPopupIconColoredDescr__" class="helper-text">Shows a colored icon instead of the black/white icon in the toolbar.</span>
 				</li>
@@ -68,13 +68,13 @@
 
 						<ul>
 							<li class="condensed-list">
-								<input id="qrCodeTypeSvg" type="radio" name="qrcode-type" value="svg" class="save-on-input">
+								<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="save-on-input">
 								<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
 								<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
 							</li>
 
 							<li class="condensed-list">
-								<input id="qrCodeTypeCanvas" type="radio" name="qrcode-type" value="canvas" class="save-on-input">
+								<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="save-on-input">
 								<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
 								<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
 							</li>
@@ -82,26 +82,26 @@
 					</fieldset>
 				</li>
 				<li>
-					<fieldset id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
+					<fieldset id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" data-name="sizeType" class="setting">
 						<legend data-i18n="__MSG_optionQrCodeSize__">QR code size</legend>
 
 						<ul>
 							<li class="condensed-list">
-								<input id="qrCodeSizeFixed" type="radio" name="qrcode-size" value="fixed" class="save-on-input">
+								<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
 								<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
 
-								<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="size" min="160" step="5" size="5" name="qr-size">
-								<span>px</span>
+								<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
+								<label for="qrCodeSizeFixedValue">px</label>
 							</li>
 
 							<li class="condensed-list">
-								<input id="qrCodeSizeAuto" type="radio" name="qrcode-size" value="auto" class="save-on-input">
+								<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="save-on-input">
 								<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust size</label>
 								<span data-i18n="__MSG_optionQrCodeSizeAutoHelper__" class="helper-text">Mostly useful on mobile devices, where the QR code opens in a new tab.</span>
 							</li>
 
 							<li class="condensed-list">
-								<input id="qrCodeSizeRemember" type="radio" name="qrcode-size" value="remember" class="save-on-input">
+								<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="save-on-input">
 								<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
 							</li>
 						</ul>
@@ -109,15 +109,15 @@
 				</li>
 				<li>
 					<label data-i18n="__MSG_optionQrCodeColor__" for="qrColor">QR code color: </label>
-					<input class="setting save-on-change trigger-on-update" type="color" id="qrColor" name="qr-color">
+					<input class="setting save-on-change trigger-on-update" type="color" id="qrColor" name="qrColor">
 				</li>
 				<li>
 					<label data-i18n="__MSG_optionQrCodeBackgroundColor__" for="qrBackgroundColor">QR code background color: </label>
-					<input class="setting save-on-change trigger-on-update" type="color" id="qrBackgroundColor" name="qr-background-color">
+					<input class="setting save-on-change trigger-on-update" type="color" id="qrBackgroundColor" name="qrBackgroundColor">
 				</li>
 				<li>
 					<label data-i18n="__MSG_optionErrorCorrection__" for="qrErrorCorrection">Error correction level: </label>
-					<select id="qrErrorCorrection" class="setting save-on-change" name="error-correction" size="0">
+					<select id="qrErrorCorrection" class="setting save-on-change" name="qrErrorCorrection" size="0">
 						<option data-i18n="__MSG_optionEcLow__" value="L">Low (7%)</option>
 						<option data-i18n="__MSG_optionEcMedium__" value="M">Medium (15%)</option>
 						<option data-i18n="__MSG_optionEcQuartile__" value="Q">Quartile (25%)</option>
@@ -132,20 +132,20 @@
 					</span>
 				</li>
 				<li>
-					<input class="setting save-on-change" type="checkbox" id="autoGetSelectedText" name="auto-get-selected-text">
+					<input class="setting save-on-change" type="checkbox" id="autoGetSelectedText" name="autoGetSelectedText">
 					<label data-i18n="__MSG_optionAutoGetSelectedText__" for="autoGetSelectedText">Automatically use text selected on website</label>
 				</li>
 				<li>
-					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospace-font">
+					<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospaceFont">
 					<label data-i18n="__MSG_optionUseMonospaceFont__" for="monospaceFont">Use monospace font</label>
 				</li>
 				<li>
-					<input class="setting save-on-change" type="checkbox" id="debugMode" name="debug-mode">
+					<input class="setting save-on-change" type="checkbox" id="debugMode" name="debugMode">
 					<label data-i18n="__MSG_optionDebugMode__" for="debugMode">Enable debug mode</label>
 					<span data-i18n="__MSG_optionDebugModeDescr__" class="helper-text">This is only useful to get more detailed logging output in the console for reporting bugs, etc.</span>
 				</li>
 				<li>
-					<button data-i18n="__MSG_optionsResetButton__" type="button" name="reset-button" id="resetButton">Reset all settings to defaults</button>
+					<button data-i18n="__MSG_optionsResetButton__" type="button" id="resetButton">Reset all settings to defaults</button>
 				</li>
 			</ul>
 		</form>

@@ -38,7 +38,7 @@ async function saveOption(event) {
     // radio options need special handling, use (closest) parent
     if (elOption.getAttribute("type") === "radio") {
         elOption = elOption.closest("[data-type=radiogroup]");
-        elOption.selected = event.target;
+        elOption.selectedElement = event.target;
     }
 
     // do not save if managed
@@ -96,7 +96,7 @@ function showManagedInfo() {
  */
 function setManagedOption(option, optionGroup, elOption) {
     if (!elOption) {
-        elOption = document.getElementById(option);
+        elOption = document.querySelector(`[name=${option}]`);
     }
 
     if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
@@ -127,7 +127,7 @@ function setManagedOption(option, optionGroup, elOption) {
  * Display option in option page.
  *
  * If the option is not saved already, it uses the default provided by the
- * {@link AddonSettings} module.
+ * function provided with {@link ./HtmlModification#setDefaultOptionProvider}.
  *
  * @private
  * @public
@@ -143,7 +143,7 @@ function setManagedOption(option, optionGroup, elOption) {
  */
 function setSyncedOption(option, optionGroup, elOption, ignoreDisabled) {
     if (!elOption) {
-        elOption = document.getElementById(option);
+        elOption = document.querySelector(`[name=${option}]`);
     }
 
     if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
@@ -186,10 +186,15 @@ async function loadAllOptions() {
 
     // set each option
     document.querySelectorAll(".setting").forEach((currentElem, index) => {
-        const elementId = currentElem.id;
+        let elementId = currentElem.getAttribute("name") || currentElem.dataset.name;
         let optionGroup = null;
-        if (currentElem.hasAttribute("data-optiongroup")) {
-            optionGroup = currentElem.getAttribute("data-optiongroup");
+        if ("optiongroup" in currentElem.dataset) {
+            optionGroup = currentElem.dataset.optiongroup;
+        }
+
+        // try to get option ID from input element if needed
+        if (!elementId && currentElem.dataset.type === "radiogroup") {
+            elementId = currentElem.querySelector("input[type=radio]").getAttribute("name");
         }
 
         allPromises[index] = setManagedOption(elementId, optionGroup, currentElem).catch((error) => {
@@ -275,7 +280,7 @@ export function init() {
 
     const loadPromise = loadAllOptions().catch((error) => {
         Logger.logError(error);
-        MessageHandler.showError("couldNotLoadOptions", false);
+        // MessageHandler.showError("couldNotLoadOptions", false);
 
         // re-throw error
         throw error;

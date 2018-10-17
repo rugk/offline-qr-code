@@ -29,7 +29,8 @@ let updateRemberedSizeInterval = null;
  * @returns {void}
  */
 function applyQrCodeSize(optionValue) {
-    const elQrCodeSize = document.getElementById("size");
+    const elQrCodeSize = document.getElementById("qrCodeSizeFixedValue");
+    debugger;
 
     if (optionValue.sizeType === "fixed") {
         // round not so nice values to better values
@@ -185,7 +186,7 @@ function applyQrCodeColors(optionValue, option) {
 function resetOnBeforeLoad() {
     // needs to enable the QR code size input, as a disabled input would prevent the setting from being loaded
     //
-    const elQrCodeSize = document.getElementById("size");
+    const elQrCodeSize = document.getElementById("qrCodeSizeFixedValue");
     elQrCodeSize.removeAttribute("disabled");
 }
 
