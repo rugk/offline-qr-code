@@ -8,5 +8,5 @@
 
 // import and expose module parts
 export { default as Trigger } from "./internal/Trigger.js";
-export { init } from "./internal/LoadAndSave.js";
+export * from "./internal/LoadAndSave.js";
 export { setDefaultOptionProvider } from "./internal/HtmlModification.js";

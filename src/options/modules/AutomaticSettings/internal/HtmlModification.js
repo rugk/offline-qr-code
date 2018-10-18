@@ -187,13 +187,13 @@ function getSelectedFromRadioGroup(elOption) {
 /**
  * Returns the option ID from the element.
  *
- * @private
+ * @package
  * @function
  * @param  {HTMLElement} elOption the element to read option from
  * @returns {string} the option ID
  */
-function getOptionIdFromElement(elOption) {
-    return elOption.getAttribute("name");
+export function getOptionIdFromElement(elOption) {
+    return elOption.getAttribute("name") || elOption.dataset.name;
 }
 
 /**

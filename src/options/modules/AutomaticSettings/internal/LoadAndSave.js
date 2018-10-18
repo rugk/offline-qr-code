@@ -62,7 +62,7 @@ async function saveOption(event) {
 }
 
 /**
- * Saves all settings.
+ * Show info that some settings are managed.
  *
  * @private
  * @function
@@ -80,6 +80,18 @@ function showManagedInfo() {
 }
 
 /**
+ * Get the name of the option from an element..
+ *
+ * @private
+ * @function
+ * @param {string} option
+ * @returns {HTMLElement}
+ */
+function getElementFromOptionId(option) {
+    return document.querySelector(`[name=${option}]`);
+}
+
+/**
  * Restores the managed options by administrators.
  *
  * They override users selection, so the user control is disabled.
@@ -94,11 +106,7 @@ function showManagedInfo() {
  *                                     be autodetected otherwise
  * @returns {Promise}
  */
-function setManagedOption(option, optionGroup, elOption) {
-    if (!elOption) {
-        elOption = document.querySelector(`[name=${option}]`);
-    }
-
+function setManagedOption(option, optionGroup, elOption = getElementFromOptionId(option)) {
     if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
         optionGroup = elOption.getAttribute("data-optiongroup");
     }
@@ -130,7 +138,6 @@ function setManagedOption(option, optionGroup, elOption) {
  * function provided with {@link ./HtmlModification#setDefaultOptionProvider}.
  *
  * @private
- * @public
  * @function
  * @param  {string} option name of the option
  * @param  {string|null|undefined} optionGroup name of the option group,
@@ -138,14 +145,9 @@ function setManagedOption(option, optionGroup, elOption) {
  *                                             detect the element
  * @param  {HTMLElement|null} elOption optional element of the option, will
  *                                     be autodetected otherwise
- * @param  {bool} ignoreDisabled set to true to ignore disabled check
- * @returns {Promise|void}
+ * @returns {Promise}
  */
-function setSyncedOption(option, optionGroup, elOption, ignoreDisabled) {
-    if (!elOption) {
-        elOption = document.querySelector(`[name=${option}]`);
-    }
-
+function setSyncedOption(option, optionGroup, elOption = getElementFromOptionId(option)) {
     if (optionGroup === undefined && elOption.hasAttribute("data-optiongroup")) {
         optionGroup = elOption.getAttribute("data-optiongroup");
     }
@@ -160,14 +162,54 @@ function setSyncedOption(option, optionGroup, elOption, ignoreDisabled) {
     return gettingOption.then((res) => {
         Logger.logInfo("sync config found", res, elOption);
 
-        // do not modify if managed
-        if (ignoreDisabled !== true && elOption.hasAttribute("disabled")) {
-            Logger.logInfo(option, "is disabled, ignore sync setting");
-            return;
-        }
-
         HtmlMod.applyOptionToElement(option, optionGroup, elOption, res);
     });
+}
+
+/**
+ * Load option and set it to the given element.
+ *
+ * Optionally, you can already give it the option name.
+ *
+ * @public
+ * @function
+ * @param  {HTMLElement} elOption element of the option
+ * @param  {string} [option] name of the option
+ * @returns {Promise}
+ */
+export function loadOption(elOption, option) {
+    option = option ? option : HtmlMod.getOptionIdFromElement(elOption);
+
+    let optionGroup = null;
+    if ("optiongroup" in elOption.dataset) {
+        optionGroup = elOption.dataset.optiongroup;
+    }
+
+    // try to get option ID from input element if needed
+    if (!option && elOption.dataset.type === "radiogroup") {
+        option = elOption.querySelector("input[type=radio]").getAttribute("name");
+    }
+
+    return setManagedOption(option, optionGroup, elOption).catch((error) => {
+        /* only log warning as that is expected when no manifest file is found */
+        Logger.logWarning("could not get managed options", error);
+
+        // now set "real"/"usual" option
+        return setSyncedOption(option, optionGroup, elOption);
+    });
+}
+/**
+ * Load option and set to element if you give it an option name.
+ *
+ * @public
+ * @function
+ * @param  {string} option name of the option
+ * @param  {HTMLElement} [elOption] optional element of the option, will
+ *                                be autodetected otherwise
+ * @returns {Promise}
+ */
+export function loadOptionByName(option, elOption = getElementFromOptionId(option)) {
+    return loadOption(elOption, option);
 }
 
 /**
@@ -186,24 +228,7 @@ async function loadAllOptions() {
 
     // set each option
     document.querySelectorAll(".setting").forEach((currentElem, index) => {
-        let elementId = currentElem.getAttribute("name") || currentElem.dataset.name;
-        let optionGroup = null;
-        if ("optiongroup" in currentElem.dataset) {
-            optionGroup = currentElem.dataset.optiongroup;
-        }
-
-        // try to get option ID from input element if needed
-        if (!elementId && currentElem.dataset.type === "radiogroup") {
-            elementId = currentElem.querySelector("input[type=radio]").getAttribute("name");
-        }
-
-        allPromises[index] = setManagedOption(elementId, optionGroup, currentElem).catch((error) => {
-            /* only log warning as that is expected when no manifest file is found */
-            Logger.logWarning("could not get managed options", error);
-
-            // now set "real"/"usual" option
-            return setSyncedOption(elementId, optionGroup, currentElem);
-        });
+        allPromises[index] = loadOption(currentElem);
     });
 
     // when everything is finished, apply live elements for values if needed

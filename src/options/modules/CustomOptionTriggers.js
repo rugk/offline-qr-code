@@ -30,7 +30,6 @@ let updateRemberedSizeInterval = null;
  */
 function applyQrCodeSize(optionValue) {
     const elQrCodeSize = document.getElementById("qrCodeSizeFixedValue");
-    debugger;
 
     if (optionValue.sizeType === "fixed") {
         // round not so nice values to better values
@@ -52,8 +51,8 @@ function applyQrCodeSize(optionValue) {
     // enable auto-update of size in input field (if changed while settings are open)
     if (optionValue.sizeType === "remember") {
         updateRemberedSizeInterval = setInterval((elQrCodeSize) => {
-            // update element and ignore disabled status and that is of course wanted
-            AutomaticSettings.setSyncedOption("size", "qrCodeSize", elQrCodeSize, true);
+            // update element
+            AutomaticSettings.loadOption(elQrCodeSize, "size");
         }, REMEBER_SIZE_INTERVAL, elQrCodeSize);
     } else if (updateRemberedSizeInterval !== null) {
         clearInterval(updateRemberedSizeInterval);

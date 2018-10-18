@@ -42,7 +42,6 @@
         "no-var": 1,
         "prefer-arrow-callback": 1,
         "implicit-arrow-linebreak": 1,
-        "arrow-body-style": 1,
         "arrow-parens": 1,
         "arrow-spacing": 1,
         "no-confusing-arrow": 1,
