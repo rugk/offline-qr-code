@@ -548,7 +548,6 @@ describe("options module: AutomaticSettings", function () {
             it("trigger before load works", async function() {
                 // set up triggers
                 const beforeLoad = sinon.stub().callsFake(() => {
-                    debugger;
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
@@ -569,7 +568,7 @@ describe("options module: AutomaticSettings", function () {
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
-                }
+                };
 
                 // set up triggers
                 const beforeLoad1 = sinon.stub().callsFake(triggerCheck);
