@@ -10,7 +10,7 @@ import * as Logger from "/common/modules/Logger.js";
 
 const QRC = qrcodegen.QrCode;
 
-const qrBorder = 0;
+let qrQuietZone;
 let qrText;
 let qrColor;
 let qrErrorCorrection;
@@ -60,6 +60,9 @@ export function set(tag, value) {
     case "text":
         qrText = value;
         break;
+    case "qrQuietZone":
+        qrQuietZone = Number(value);
+        break;
     case "qrColor":
         qrColor = value;
         break;
@@ -99,7 +102,7 @@ export function getQr() {
     Logger.logInfo("generated new QrGen qr code");
 
     const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
-    const svgString = qrElem.toSvgString(qrBorder);
+    const svgString = qrElem.toSvgString(qrQuietZone);
 
     return getSvgElement(svgString);
 }

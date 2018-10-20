@@ -25,6 +25,7 @@ const defaultValues = Object.freeze({
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
     monospaceFont: false,
+    qrQuietZone: 0,
     qrCodeSize: {
         sizeType: "fixed",
         size: 200

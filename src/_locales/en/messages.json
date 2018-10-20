@@ -218,6 +218,19 @@
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
 
+  "optionQrQuietZone": {
+    "message": "QR quiet zone:",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "This spacing is important for the scanning program in order to distinguish the QR Code from its surroundings.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Standards",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
+  },
+
   "optionQrCodeColor": {
     "message": "QR code color:",
     "description": "This is an option shown in the add-on settings."

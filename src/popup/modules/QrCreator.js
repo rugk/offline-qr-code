@@ -169,6 +169,7 @@ export function init() {
             throw new Error("invalid QR code type setting");
         }
 
+        qrCodeLib.set("qrQuietZone", settings.qrQuietZone);
         qrCodeLib.set("qrColor", settings.qrColor);
         qrCodeLib.set("qrBackgroundColor", settings.qrBackgroundColor);
         qrCodeLib.set("qrErrorCorrection", settings.qrErrorCorrection);

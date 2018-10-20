@@ -108,6 +108,16 @@
 					</fieldset>
 				</li>
 				<li>
+					<label data-i18n="__MSG_optionQrQuietZone__" for="qrQuietZone">QR quiet zone: </label>
+					<input class="setting save-on-change trigger-on-update" type="range" value="0" min="0" max="10" step="1" id="qrQuietZone" name="qrQuietZone">
+					<span class="helper-text">
+						<span data-i18n="__MSG_optionQrQuietZoneDescr__">
+							This spacing is important for the scanning program in order to distinguish the QR Code from its surroundings.
+						</span>
+						<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionQrQuietZoneDescrLink__" href="https://en.wikipedia.org/wiki/QR_code#Standards">Learn more</a>
+					</span>
+				</li>
+				<li>
 					<label data-i18n="__MSG_optionQrCodeColor__" for="qrColor">QR code color: </label>
 					<input class="setting save-on-change trigger-on-update" type="color" id="qrColor" name="qrColor">
 				</li>
