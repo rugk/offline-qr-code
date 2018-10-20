@@ -1,20 +1,18 @@
 body {
   /* the style the other options in the settings pane use */
-  font-size: 1.25rem;
+  font-size: 1.11em;
   color: #333;
 }
 
 /* on (small) mobile displays */
-@media (max-width: 700px) {
-  body {
-    /* smaller size -> default on Firefox for Android is 14px */
-    font-size: 14px;
-  }
+body.mobile {
+  /* smaller size -> default on Firefox for Android is 14px */
+  font-size: 14px;
+}
 
-  /* e.g. the icon is not even displayed there :) */
-  .mobile-incompatible {
-    display: none;
-  }
+/* disable all options incomaptible with mobile devices */
+body.mobile .mobile-incompatible {
+  display: none;
 }
 
 /* https://design.firefox.com/photon/patterns/inactive.html */
