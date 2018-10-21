@@ -440,6 +440,9 @@ export function hideMessage(messagetype) {
  * The message is hidden by default – regardless of the state of the origin
  * message (type).
  *
+ * Usually it is very important/intended to call {@link setMessageDesign()}
+ * afterwards if you want to change the message type.
+ *
  * CURRENTLY UNUSED.
  *
  * @function
