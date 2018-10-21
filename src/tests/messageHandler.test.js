@@ -249,14 +249,14 @@ describe("common module: MessageHandler", function () {
 
     describe("setMessageDesign()", function () {
         /**
-         * Tests that the message function correctly hioes the messages.
+         * Tests that the message design function correctly changes the type of the message.
          *
          * @private
          * @function
          * @param {string} boxId the ID of the HtmlElement of the message box
          * @param {MESSAGE_LEVEL} messageLevel the message level design to add
-         * @param {string} oldClass the old class of the function
-         * @param {string} newClass the fnew class of the function
+         * @param {string} oldClass the old class of the message
+         * @param {string} newClass the fnew class of the message
          * @returns {Promise}
          */
         function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
@@ -267,11 +267,11 @@ describe("common module: MessageHandler", function () {
             // verify classes are set
             chai.assert.isFalse(
                 elMessage.classList.contains(oldClass),
-                `Testing with box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+                `Testing with box ${boxId}. Message type has not been removed. ${oldClass} class is still there.`
             );
             chai.assert.isTrue(
                 elMessage.classList.contains(newClass),
-                `Testing with box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+                `Testing with box ${boxId}. Message type has not been added. It was expected to be set to ${newClass}.`
             );
 
             // verify classes of action button
@@ -279,11 +279,41 @@ describe("common module: MessageHandler", function () {
 
             chai.assert.isFalse(
                 elMessageActionButton.classList.contains(oldClass),
-                `Testing with action button of box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+                `Testing with action button of box ${boxId}. Message type has not been removed. ${oldClass} class is still there.`
             );
             chai.assert.isTrue(
                 elMessageActionButton.classList.contains(newClass),
-                `Testing with action button of box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+                `Testing with action button of box ${boxId}. Message type has not been added. It was expected to be set to ${newClass}.`
+            );
+        }
+
+        /**
+         * Tests that the message design function correctly changes the aria-label.
+         *
+         * @private
+         * @function
+         * @param {string} boxId the ID of the HtmlElement of the message box
+         * @param {MESSAGE_LEVEL} messageLevel the message level design to add
+         * @param {string} oldAria the old aria-type of the message
+         * @param {string} newAria the new aria-type of the message
+         * @returns {Promise}
+         */
+        function testMessageDesignAira(boxId, messageLevel, oldAria, newAria) {
+            const elMessage = document.getElementById(boxId);
+            const ARIA_ATTRIBUTE = "aria-label";
+
+            MessageHandler.setMessageDesign(elMessage, messageLevel);
+
+            // verify aria-label is set
+            chai.assert.notStrictEqual(
+                elMessage.getAttribute(ARIA_ATTRIBUTE),
+                oldAria,
+                `Testing with box ${boxId}. Aria-label has not been removed.`
+            );
+            chai.assert.strictEqual(
+                elMessage.getAttribute(ARIA_ATTRIBUTE),
+                newAria,
+                `Testing with box ${boxId}. Aria-label has not been added.`
             );
         }
 
@@ -307,6 +337,30 @@ describe("common module: MessageHandler", function () {
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
+            // reset test code
+            setHtmlTestCode(testCode);
+        });
+
+        it("changes aria-type", function () {
+            const testCode = getHtmlTestCode();
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
+            // reset test code
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
             // reset test code
             setHtmlTestCode(testCode);
         });

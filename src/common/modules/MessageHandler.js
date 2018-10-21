@@ -246,7 +246,7 @@ function actionButtonClicked(event) {
 }
 
 /**
- * Returns the design this message resembles.
+ * Changes the design this of this HTMLElement (message type).
  *
  * Please DO NOT use this with the built-in message elements.
  *
