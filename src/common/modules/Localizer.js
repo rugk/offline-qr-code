@@ -8,13 +8,7 @@ import * as Logger from "/common/modules/Logger.js";
 
 const I18N_ATTRIBUTE = "data-i18n";
 const I18N_DATASET = "i18n";
-
-const LOCALIZED_ATTRIBUTES = [
-    "placeholder",
-    "alt",
-    "href",
-    "aria-label"
-];
+const I18N_DATASET_INT = I18N_DATASET.length;
 
 /**
  * Splits the _MSG__*__ format and returns the actual tag.
@@ -28,7 +22,7 @@ const LOCALIZED_ATTRIBUTES = [
  * @throws {Error} if pattern does not match
  */
 function getMessageTag(tag) {
-    /** {@link https://regex101.com/r/LAC5Ib/1} **/
+    /** {@link https://regex101.com/r/LAC5Ib/2} **/
     const splitMessage = tag.split(/^__MSG_([\w@]+)__$/);
 
     // throw custom exception if input is invalid
@@ -37,6 +31,32 @@ function getMessageTag(tag) {
     }
 
     return splitMessage[1];
+}
+
+/**
+ * Converts a dataset value back to a real attribute.
+ *
+ * This is intended for substrings of datasets too, i.e. it does not add the "data" prefix
+ * in front of the attribute.
+ *
+ * @function
+ * @private
+ * @param  {string} dataSetValue
+ * @returns {string}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#Name_conversion}
+ */
+function convertDatasetToAttribute(dataSetValue) {
+    // if beginning of string is capital letter, only lowercase that
+    /** {@link https://regex101.com/r/GaVoVi/1} **/
+    dataSetValue = dataSetValue.replace(/^[A-Z]/, (char) => char.toLowerCase());
+
+    // replace all other capital letters with dash in front of them
+    /** {@link https://regex101.com/r/GaVoVi/3} **/
+    dataSetValue = dataSetValue.replace(/[A-Z]/, (char) => {
+        return `-${char.toLowerCase()}`;
+    });
+
+    return dataSetValue;
 }
 
 /**
@@ -52,6 +72,7 @@ function getMessageTag(tag) {
  */
 function getTranslatedMessage(messageName, substitutions) {
     const translatedMessage = browser.i18n.getMessage(messageName, substitutions);
+
     if (!translatedMessage) {
         throw new Error(`no translation string for "${messageName}" could be found`);
     }
@@ -123,27 +144,29 @@ function replaceI18n(elem, tag) {
             replaceWith(elem, null, translatedMessage);
         } catch (error) {
             // log error but continue translating as it was likely just one problem in one translation
-            Logger.logError(error);
+            Logger.logError(error.message, "for element", elem);
         }
     }
 
     // replace attributes
-    LOCALIZED_ATTRIBUTES.forEach((currentAttribute) => {
-        const currentLocaleAttribute = `${I18N_ATTRIBUTE}-${currentAttribute}`;
-
-        if (!elem.hasAttribute(currentLocaleAttribute)) {
-            return;
+    for (const [dataAttribute, dataValue] of Object.entries(elem.dataset)) {
+        if (
+            !dataAttribute.startsWith(I18N_DATASET) || // ignore other data attributes
+            dataAttribute.length === I18N_DATASET_INT // ignore non-attribute replacements
+        ) {
+            continue;
         }
+
+        const replaceAttribute = convertDatasetToAttribute(dataAttribute.slice(I18N_DATASET_INT));
 
         try {
-            const attributeTag = elem.getAttribute(currentLocaleAttribute);
-            const translatedMessage = getTranslatedMessage(getMessageTag(attributeTag));
-            replaceWith(elem, currentAttribute, translatedMessage);
+            const translatedMessage = getTranslatedMessage(getMessageTag(dataValue));
+            replaceWith(elem, replaceAttribute, translatedMessage);
         } catch (error) {
             // log error but continue translating as it was likely just one problem in one translation
-            Logger.logError(error);
+            Logger.logError(error.message, "for element", elem, "while replacing attribute", replaceAttribute);
         }
-    });
+    }
 }
 
 /**

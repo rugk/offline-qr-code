@@ -30,24 +30,65 @@ describe("common module: Localizer", function () {
         HtmlMock.cleanup();
     });
 
-    describe("init() – basic", function () {
-        it("sets html lang attribute", function () {
-            const mockI18n = sinon.mock(browser.i18n);
+    /**
+     * Verify the text is not replaced in the HTML.
+     *
+     * @function
+     * @private
+     * @param {string} messageName
+     * @param {string} [wholeMsgString=] (optional)
+     * @returns {void}
+     */
+    function testDoesNotReplaceText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
+        HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
 
-            /* eslint-disable indent */
-            mockI18n.expects("getUILanguage")
-                    .once().withArgs()
-                    .returns("EXA-01");
-            Localizer.init();
+        const mockI18n = sinon.mock(browser.i18n);
 
-            chai.assert.strictEqual(document.querySelector("html").getAttribute("lang"), "EXA-01", "did not set language code correctly");
+        /* eslint-disable indent */
+        mockI18n.expects("getMessage")
+                .never();
 
-            // verify results
-            mockI18n.verify();
-        });
-    });
+        // run test
+        Localizer.init();
+
+        // verify results
+        mockI18n.verify();
+
+        const replacedString = document.getElementById("testElement").innerHTML;
+        chai.assert.strictEqual(replacedString, "Hardcoded Fallback Value!", `incorrectly replaced span for message ID "${messageName}"`);
+    }
 
     /**
+     * Verify the text is replaced in the HTML.
+     *
+     * @function
+     * @private
+     * @param {string} messageName
+     * @param {string} [wholeMsgString=] (optional)
+     * @returns {void}
+     */
+    function testReplacesText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
+        HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
+
+        const mockI18n = sinon.mock(browser.i18n);
+
+        /* eslint-disable indent */
+        mockI18n.expects("getMessage")
+                .once().withArgs(messageName)
+                .returns("VALID REPLACEMENT VALUE");
+
+        // run test
+        Localizer.init();
+
+        // verify results
+        mockI18n.verify();
+
+        // assert that value has been replaced correctly
+        const replacedString = document.getElementById("testElement").innerHTML;
+        chai.assert.strictEqual(replacedString, "VALID REPLACEMENT VALUE", `did not replace span with correct content for message ID "${messageName}"`);
+    }
+
+        /**
      * Runs tests with test strings to check whether it replaces them.
      *
      * @function
@@ -89,68 +130,28 @@ describe("common module: Localizer", function () {
             // others
             testDoesNotReplaceText("ledgitName", "__MSGledgitName__");
             testDoesNotReplaceText("ledgitName", "__msg_ledgitName__");
+            testDoesNotReplaceText("ledgitName", ""); // completly missing ID
         });
     }
 
+    describe("init() – basic", function () {
+        it("sets html lang attribute", function () {
+            const mockI18n = sinon.mock(browser.i18n);
+
+            /* eslint-disable indent */
+            mockI18n.expects("getUILanguage")
+                    .once().withArgs()
+                    .returns("EXA-01");
+            Localizer.init();
+
+            chai.assert.strictEqual(document.querySelector("html").getAttribute("lang"), "EXA-01", "did not set language code correctly");
+
+            // verify results
+            mockI18n.verify();
+        });
+    });
+
     describe("init() – text replacement", function () {
-        /**
-         * Verify the text is replaced in the HTML.
-         *
-         * @function
-         * @private
-         * @param {string} messageName
-         * @param {string} [wholeMsgString=] (optional)
-         * @returns {void}
-         */
-        function testReplacesText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
-
-            const mockI18n = sinon.mock(browser.i18n);
-
-            /* eslint-disable indent */
-            mockI18n.expects("getMessage")
-                    .once().withArgs(messageName)
-                    .returns("VALID REPLACEMENT VALUE");
-
-            // run test
-            Localizer.init();
-
-            // verify results
-            mockI18n.verify();
-
-            // assert that value has been replaced correctly
-            const replacedString = document.getElementById("testElement").innerHTML;
-            chai.assert.strictEqual(replacedString, "VALID REPLACEMENT VALUE", `did not replace span with correct content for message ID "${messageName}"`);
-        }
-
-        /**
-         * Verify the text is not replaced in the HTML.
-         *
-         * @function
-         * @private
-         * @param {string} messageName
-         * @param {string} [wholeMsgString=] (optional)
-         * @returns {void}
-         */
-        function testDoesNotReplaceText(messageName, wholeMsgString = `__MSG_${messageName}__`) {
-            HtmlMock.setTestHtml(`<span id="testElement" data-i18n="${wholeMsgString}">Hardcoded Fallback Value!</span>`);
-
-            const mockI18n = sinon.mock(browser.i18n);
-
-            /* eslint-disable indent */
-            mockI18n.expects("getMessage")
-                    .never();
-
-            // run test
-            Localizer.init();
-
-            // verify results
-            mockI18n.verify();
-
-            const replacedString = document.getElementById("testElement").innerHTML;
-            chai.assert.strictEqual(replacedString, "Hardcoded Fallback Value!", `incorrectly replaced span for message ID "${messageName}"`);
-        }
-
         runReplaceTests(" in data-i18n", testReplacesText, testDoesNotReplaceText); // eslint-disable-line mocha/no-setup-in-describe
     });
 
@@ -214,7 +215,7 @@ describe("common module: Localizer", function () {
             chai.assert.strictEqual(replacedString, "Hardcoded Fallback Value!", `incorrectly replaced "${attribute}" for message ID "${messageName}"`);
         }
 
-        // run tests for each twest case for each attribute
+        // run tests for each test case for each attribute
         /* eslint-disable mocha/no-setup-in-describe */
         runReplaceTests(" in all attributes", function (localizedValue, expectedResult = undefined) {
             TEST_ATTRIBUTES.forEach((attribute) => {
