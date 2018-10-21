@@ -3,8 +3,10 @@
  *
  * @module /common/modules/Localizer
  * @requires /common/modules/Logger
+ * @requires ./replaceInnerContent
  */
 import * as Logger from "/common/modules/Logger.js";
+import { replaceInnerContent } from "./replaceInnerContent.js";
 
 const I18N_ATTRIBUTE = "data-i18n";
 const I18N_DATASET = "i18n";
@@ -78,27 +80,6 @@ function getTranslatedMessage(messageName, substitutions) {
     }
 
     return translatedMessage;
-}
-
-/**
- * Replaces inner content of HTML element.
- *
- * This function determinates whether HTML is being replaced as HTML or not allowed
- * (in order to avoid a dependency on innerHTML).
- *
- * @function
- * @private
- * @param  {HTMLElement} elem
- * @param  {string} translatedMessage
- * @param  {boolean} isHTML determinates whether the string is an HTML string
- * @returns {void}
- */
-function replaceInnerContent(elem, translatedMessage, isHTML) {
-    if (isHTML) {
-        elem.innerHTML = translatedMessage;
-    } else {
-        elem.textContent = translatedMessage;
-    }
 }
 
 /**

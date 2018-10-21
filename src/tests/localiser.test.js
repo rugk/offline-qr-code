@@ -2,7 +2,7 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import * as Localizer from "/common/modules/Localizer.js";
+import * as Localizer from "/common/modules/Localizer/Localizer.js";
 
 import * as HtmlMock from "./modules/HtmlMock.js";
 
@@ -285,9 +285,17 @@ describe("common module: Localizer", function () {
             testReplaceValue("<div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
         });
 
-        it("does evaluate HTML if specified in data-i18n", function () {
-            testReplaceValue("!HTML! <b>bold text</b>", "<b>bold text</b>");
-            testReplaceValue("!HTML! <div>ok</div>", "<div>ok</div>");
+        // this test is to be used when the replaceInnerContent.js.WithHtml.example is used!
+        // it("does evaluate HTML if specified in data-i18n", function () {
+        //     testReplaceValue("!HTML! <b>bold text</b>", "<b>bold text</b>");
+        //     testReplaceValue("!HTML! <div>ok</div>", "<div>ok</div>");
+        // });
+
+        // this test is to be used when the replaceInnerContent.js.SecurePlainTextOnly.example is used!
+        it("does never(!) evaluate HTML even if specified in data-i18n", function () {
+            // WARNING: Security-relevant test!
+            testReplaceValue("!HTML! <b>bold text</b>", "&lt;b&gt;bold text&lt;/b&gt;");
+            testReplaceValue("!HTML! <div>ok</div>", "&lt;div&gt;ok&lt;/div&gt;");
         });
 
         it("does strip/ignore \"!HTML!\" marker in attributes", function () {

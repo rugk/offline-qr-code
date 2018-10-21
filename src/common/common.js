@@ -7,4 +7,4 @@
 "use strict";
 
 // by default translate whole site
-import "/common/modules/Localizer.js";
+import "/common/modules/Localizer/Localizer.js";
