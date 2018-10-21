@@ -14,7 +14,7 @@ import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 import * as QrCreator from "./QrCreator.js";
-import * as BrowserCommunication from "./BrowserCommunication.js";
+import * as ReceiveBackgroundMessages from "./ReceiveBackgroundMessages.js";
 import * as UserInterface from "./UserInterface.js";
 
 /* globals */
@@ -23,7 +23,6 @@ export let initCompleted = false;
 // init modules
 const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
-BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
     Logger.logInfo("QrCreator module loaded.");
 });
@@ -60,7 +59,7 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
     // do not generate tabs if text is already overwritten
-    if (BrowserCommunication.isTextOverwritten()) {
+    if (ReceiveBackgroundMessages.isTextOverwritten()) {
         Logger.logInfo("Text is already overwritten by some message.");
         // generate QR code
         QrCreator.generate();
