@@ -7,6 +7,7 @@
 import * as Logger from "/common/modules/Logger.js";
 
 const I18N_ATTRIBUTE = "data-i18n";
+const I18N_DATASET = "i18n";
 
 const LOCALIZED_ATTRIBUTES = [
     "placeholder",
@@ -23,14 +24,86 @@ const LOCALIZED_ATTRIBUTES = [
  * @function
  * @private
  * @param  {string} tag
- * @returns {string|undefined} undefined if the string format was not valid
+ * @returns {string}
+ * @throws {Error} if pattern does not match
  */
 function getMessageTag(tag) {
     /** {@link https://regex101.com/r/LAC5Ib/1} **/
     const splitMessage = tag.split(/^__MSG_([\w@]+)__$/);
 
-    // this may throw exceptions, but then the input is just invalid
+    // throw custom exception if input is invalid
+    if (splitMessage.length < 2) {
+        throw new Error(`invalid message tag pattern "${tag}"`);
+    }
+
     return splitMessage[1];
+}
+
+/**
+ * Returns the translated message when a key is given.
+ *
+ * @function
+ * @private
+ * @param  {string} messageName
+ * @param  {string[]} [substitutions]
+ * @returns {string} translated string
+ * @throws {Error} if no translation could be found
+ * @see {@link https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/i18n/getMessage}
+ */
+function getTranslatedMessage(messageName, substitutions) {
+    const translatedMessage = browser.i18n.getMessage(messageName, substitutions);
+    if (!translatedMessage) {
+        throw new Error(`no translation string for "${messageName}" could be found`);
+    }
+
+    return translatedMessage;
+}
+
+/**
+ * Replaces inner content of HTML element.
+ *
+ * This function determinates whether HTML is being replaced as HTML or not allowed
+ * (in order to avoid a dependency on innerHTML).
+ *
+ * @function
+ * @private
+ * @param  {HTMLElement} elem
+ * @param  {string} translatedMessage
+ * @param  {boolean} isHTML determinates whether the string is an HTML string
+ * @returns {void}
+ */
+function replaceInnerContent(elem, translatedMessage, isHTML) {
+    if (isHTML) {
+        elem.innerHTML = translatedMessage;
+    } else {
+        elem.textContent = translatedMessage;
+    }
+}
+
+/**
+ * Replaces attribute or inner text of element with string.
+ *
+ * @function
+ * @private
+ * @param  {HTMLElement} elem
+ * @param  {string} attribute attribute to replace, set to "null" to replace inner content
+ * @param  {string} translatedMessage
+ * @returns {void}
+ */
+function replaceWith(elem, attribute, translatedMessage) {
+    const isHTML = translatedMessage.startsWith("!HTML!");
+    if (isHTML) {
+        translatedMessage = translatedMessage.replace("!HTML!", "").trimLeft();
+    }
+
+    switch (attribute) {
+    case null:
+        replaceInnerContent(elem, translatedMessage, isHTML);
+        break;
+    default:
+        // attributes are never allowed to contain unbescaped HTML
+        elem.setAttribute(attribute, translatedMessage);
+    }
 }
 
 /**
@@ -39,26 +112,18 @@ function getMessageTag(tag) {
  * @function
  * @private
  * @param  {HTMLElement} elem
- * @param  {string} tag
+ * @param  {string} tag the translation tag
  * @returns {void}
  */
 function replaceI18n(elem, tag) {
     // localize main content
     if (tag !== "") {
-        const messageName = getMessageTag(tag);
-        // ignore invalid strings
-        if (messageName) {
-            const translatedMessage = browser.i18n.getMessage(messageName);
-            const isHTML = translatedMessage.startsWith("!HTML!");
-            // only set message if it could be retrieved, i.e. do not override HTML fallback
-            if (translatedMessage !== "") {
-                if (isHTML) {
-                    const normalizedMessage = translatedMessage.replace("!HTML!", "").trimLeft();
-                    elem.innerHTML = normalizedMessage;
-                } else {
-                    elem.textContent = translatedMessage;
-                }
-            }
+        try {
+            const translatedMessage = getTranslatedMessage(getMessageTag(tag));
+            replaceWith(elem, null, translatedMessage);
+        } catch (error) {
+            // log error but continue translating as it was likely just one problem in one translation
+            Logger.logError(error);
         }
     }
 
@@ -66,20 +131,17 @@ function replaceI18n(elem, tag) {
     LOCALIZED_ATTRIBUTES.forEach((currentAttribute) => {
         const currentLocaleAttribute = `${I18N_ATTRIBUTE}-${currentAttribute}`;
 
-        if (elem.hasAttribute(currentLocaleAttribute)) {
-            const attributeTag = elem.getAttribute(currentLocaleAttribute);
-            const messageName = getMessageTag(attributeTag);
-            // ignore invalid strings
-            if (!messageName) {
-                return;
-            }
+        if (!elem.hasAttribute(currentLocaleAttribute)) {
+            return;
+        }
 
-            const translatedMessage = browser.i18n.getMessage(messageName);
-            const isHTML = translatedMessage.startsWith("!HTML!");
-            // only set message if it could be retrieved, i.e. do not override HTML fallback
-            if (translatedMessage !== "") {
-                elem.setAttribute(currentAttribute, isHTML ? translatedMessage.replace("!HTML!", "").trimLeft() : translatedMessage);
-            }
+        try {
+            const attributeTag = elem.getAttribute(currentLocaleAttribute);
+            const translatedMessage = getTranslatedMessage(getMessageTag(attributeTag));
+            replaceWith(elem, currentAttribute, translatedMessage);
+        } catch (error) {
+            // log error but continue translating as it was likely just one problem in one translation
+            Logger.logError(error);
         }
     });
 }
@@ -94,7 +156,7 @@ export function init() {
     document.querySelectorAll(`[${I18N_ATTRIBUTE}]`).forEach((currentElem) => {
         Logger.logInfo("init translate", currentElem);
 
-        const contentString = currentElem.getAttribute(I18N_ATTRIBUTE);
+        const contentString = currentElem.dataset[I18N_DATASET];
         replaceI18n(currentElem, contentString);
     });
 

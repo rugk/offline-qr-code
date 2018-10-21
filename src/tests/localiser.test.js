@@ -555,7 +555,7 @@ describe("common module: Localizer", function () {
                 sinon.assert.callCount(stub, 5);
 
                 for (const messageName of Object.keys(localizedValues)) {
-                    sinon.assert.calledWithExactly(stub, messageName);
+                    sinon.assert.calledWith(stub, messageName);
                 }
             });
         });
