@@ -360,7 +360,7 @@ describe("common module: MessageHandler", function () {
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "loading");
             // reset test code
             setHtmlTestCode(testCode);
         });
@@ -375,9 +375,10 @@ describe("common module: MessageHandler", function () {
          * @param {string} boxId the ID of the HTMLElement of the message box
          * @param {MESSAGE_LEVEL|HTMLElement} passToFunction the message level or element to pass to the function
          * @param {MESSAGE_LEVEL} expectedClass the message level design to add
+         * @param {string} expectedAria the expected aria-label it should have
          * @returns {Promise}
          */
-        function testMessageClone(boxId, passToFunction, expectedClass) {
+        function testMessageClone(boxId, passToFunction, expectedClass, expectedAria) {
             const newId = `veryUniqueStringMessageId${Math.random()}`;
             const messageBox = document.getElementById(boxId);
 
@@ -404,21 +405,28 @@ describe("common module: MessageHandler", function () {
                 newId,
                 `Testing with box ${boxId}. Has wrong ID.`
             );
+
+            // verify it has the correct aria-label
+            chai.assert.strictEqual(
+                newMessage.getAttribute("aria-label"),
+                expectedAria,
+                `Testing with box ${boxId}. Has wrong aria-label.`
+            );
         }
 
         it("clones existing message by type", function () {
             MessageHandler.init();
 
-            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info");
-            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info");
-            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success");
-            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning");
-            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error");
+            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info", "loading");
+            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info", "info");
+            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success", "success");
+            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning", "warning");
+            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error", "error");
         });
 
         it("clones HTMLElement", function () {
-            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info");
-            testMessageClone("messageError", document.getElementById("messageError"), "error");
+            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info", "info");
+            testMessageClone("messageError", document.getElementById("messageError"), "error", "error");
         });
     });
 
