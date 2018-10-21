@@ -10,8 +10,9 @@
  */
 
 import * as Logger from "/common/modules/Logger.js";
-import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import * as BrowserCommunication from "/common/modules/BrowserCommunication.js";
+
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 const SAVE_AS_RETRY_TIMEOUT = 500; // ms
 // MAX_SAVE_AS_RETRIES * 0,SAVE_AS_RETRY_TIMEOUT s = 30s retries
