@@ -17,6 +17,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
         sizeType: "fixed",
         size: 200
     },
+    qrQuietZone: 0,
     randomTips: {
         tips: {}
     }
