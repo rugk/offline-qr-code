@@ -122,6 +122,11 @@ function dismissMessage(event) {
     } else if (event.type === "transitionend") {
         const elMessage = event.target;
 
+        // ignore event, if it is not the correct one from the message box
+        if (!elMessage.classList.contains("message-box")) {
+            return;
+        }
+
         // hide message (and icon)
         hideMessage(elMessage);
 

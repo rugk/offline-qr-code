@@ -95,7 +95,6 @@ function applyDebugMode(optionValue) {
  * @returns {void}
  */
 function applyQrCodeColors(optionValue, option) {
-    debugger;
     const elQrColor = document.getElementById("qrColor");
     const elQrBackgroundColor = document.getElementById("qrBackgroundColor");
 
