@@ -71,23 +71,23 @@ const tipArray = [
             action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
         }
     },
-    {
-        id: "donate",
-        // do not show on options page as Firefox already displays a donate button there
-        requiredShowCount: 4,
-        requireDismiss: 1,
-        maximumDismiss: 2,
-        requiredTriggers: 50,
-        maximumInContest: {
-            "options": 1
-        },
-        randomizeDisplay: 0.4,
-        text: "tipDonate",
-        actionButton: {
-            text: "tipDonateButton",
-            action: "https://liberapay.com/rugk/"
-        }
-    },
+    // {
+    //     id: "donate",
+    //     // do not show on options page as Firefox already displays a donate button there
+    //     requiredShowCount: 4,
+    //     requireDismiss: 1,
+    //     maximumDismiss: 2,
+    //     requiredTriggers: 50,
+    //     maximumInContest: {
+    //         "options": 1
+    //     },
+    //     randomizeDisplay: 0.4,
+    //     text: "tipDonate",
+    //     actionButton: {
+    //         text: "tipDonateButton",
+    //         action: "https://liberapay.com/rugk/"
+    //     }
+    // },
     {
         id: "qrCodeHotkey",
         requiredShowCount: 3,
