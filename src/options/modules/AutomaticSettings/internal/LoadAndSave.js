@@ -17,6 +17,7 @@ import * as MessageHandler from "/common/modules/MessageHandler.js";
 // import internal modules
 import * as Trigger from "./Trigger.js";
 import * as HtmlMod from "./HtmlModification.js";
+import * as OptionsModel from "./OptionsModel.js";
 
 // vars
 let managedInfoIsShown = false;
@@ -24,7 +25,7 @@ let managedInfoIsShown = false;
 let lastOptionsBeforeReset;
 
 /**
- * Saves thespecific settings that triggered this.
+ * Saves the specific settings that triggered this.
  *
  * @private
  * @function
@@ -251,7 +252,7 @@ async function loadAllOptions() {
 async function resetOptions(event) {
     Logger.logInfo("reset options");
 
-    // disable reset button (which triggered this) until process is running
+    // disable reset button (which triggered this) until process is finished
     event.target.setAttribute("disabled", "");
 
     // temporarily save old options
@@ -299,13 +300,11 @@ async function resetOptions(event) {
  */
 export function init() {
     // check requirements
-    if (!HtmlMod.isReady()) {
-        throw new Error("HtmlModification module is not ready yet.");
-    }
+    OptionsModel.verifyItIsReady();
 
     const loadPromise = loadAllOptions().catch((error) => {
         Logger.logError(error);
-        // MessageHandler.showError("couldNotLoadOptions", false);
+        MessageHandler.showError("couldNotLoadOptions", false);
 
         // re-throw error
         throw error;

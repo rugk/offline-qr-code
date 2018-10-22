@@ -8,19 +8,7 @@
 // common modules
 import * as Logger from "/common/modules/Logger.js";
 
-/**
- * This callback is called to retrieve the default value if it is not saved already.
- *
- * The callback is called with the option name in the same way
- * browser.storage.sync.get is called.
- * However, in contrast to browsers built-in functions, it will
- * never be called with an object or so, but only with a string.
- * This means only one option is retrieved at a time.
- *
- * @callback defaultOptionGetterCallback
- * @param {string} option
- */
-let defaultOptionGetter;
+import * as OptionsModel from "./OptionsModel.js";
 
 /**
  * Remembers options groups with each option to be able to aggreegate them, later.
@@ -44,44 +32,6 @@ export function resetRememberedOptions() {
 }
 
 /**
- * Sets the callback for getting the default options.
- *
- * See {@link defaultOptionGetterCallback} for how the callback needs to
- * behave.
- * You need to call this function before the main init function of
- * AutomaticSettings. However, if you do not want to specify defaults
- * in JS, but just in HTML, you can pass "null" to this and it will not
- * try to request defaults.
- * Pass "undefined" to it to unset it.
- *
- * @public
- * @function
- * @param {defaultOptionGetterCallback|null} defaultOptionCallback
- * @returns {void}
- */
-export function setDefaultOptionProvider(defaultOptionCallback) {
-    defaultOptionGetter = defaultOptionCallback;
-}
-
-/**
- * Returns whether the module is ready yet.
- *
- * Usually throws if a bad error is found.
- *
- * @public
- * @function
- * @returns {boolean}
- * @throws {Error}
- */
-export function isReady() {
-    if (defaultOptionGetter === undefined) {
-        throw new Error("Default option provider is not set. You need to call setDefaultOptionProvider() before .init() to set it.");
-    }
-
-    return true;
-}
-
-/**
  * Applies option to element.
  *
  * If the option is not saved already, it uses the default provided by the
@@ -99,13 +49,10 @@ export function applyOptionToElement(option, optionGroup, elOption, optionValues
     let optionValue;
     // get default value if value is not passed
     if (!optionValues.hasOwnProperty(option) && !optionValues.hasOwnProperty(optionGroup)) {
-        if (defaultOptionGetter !== null) {
-            if (optionGroup === null) {
-                optionValue = defaultOptionGetter(option);
-            } else {
-                optionValue = defaultOptionGetter(optionGroup)[option];
-            }
-
+        if (optionGroup === null) {
+            optionValue = OptionsModel.getDefaultOption(option);
+        } else {
+            optionValue = OptionsModel.getDefaultOption(optionGroup)[option];
         }
 
         Logger.logInfo("got default value for applying option", option, ":", optionValue);

@@ -42,6 +42,7 @@ export function getDefaultValue(option) {
         throw new Error(`Default value for option "${option}" missing. No default value defined.`);
     }
 }
+
 /**
  * Makes sure, that the synced o0ptions are available.
  *
