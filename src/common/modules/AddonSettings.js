@@ -8,6 +8,8 @@
 // lodash
 import isObject from "/common/modules/lib/lodash/isObject.js";
 
+import { DEFAULT_SETTINGS } from "./data/DefaultSettings.js";
+
 import * as Logger from "/common/modules/Logger.js";
 
 let gettingManagedOption;
@@ -16,26 +18,8 @@ let gettingSyncOption;
 let managedOptions = null;
 let syncOptions = null;
 
-const defaultValues = Object.freeze({
-    debugMode: false,
-    popupIconColored: false,
-    qrCodeType: "svg",
-    qrColor: "#0c0c0d",
-    qrBackgroundColor: "#ffffff",
-    qrErrorCorrection: "Q",
-    autoGetSelectedText: false,
-    monospaceFont: false,
-    qrCodeSize: {
-        sizeType: "fixed",
-        size: 200
-    },
-    randomTips: {
-        tips: {}
-    }
-});
-
 /**
- * Get the default value.
+ * Get the default value for a seting.
  *
  * Returns undefined, if option cannot be found.
  *
@@ -47,12 +31,12 @@ const defaultValues = Object.freeze({
 export function getDefaultValue(option) {
     // return all default values
     if (!option) {
-        return defaultValues;
+        return DEFAULT_SETTINGS;
     }
 
     // if undefined
-    if (defaultValues.hasOwnProperty(option)) {
-        return defaultValues[option];
+    if (DEFAULT_SETTINGS.hasOwnProperty(option)) {
+        return DEFAULT_SETTINGS[option];
     } else {
         Logger.logError(`Default value for option "${option}" missing. No default value defined.`);
         throw new Error(`Default value for option "${option}" missing. No default value defined.`);

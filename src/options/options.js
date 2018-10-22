@@ -7,7 +7,7 @@
 "use strict";
 
 import * as Logger from "/common/modules/Logger.js";
-import {tips} from "/common/modules/data/tips.js";
+import { tips } from "/common/modules/data/Tips.js";
 import * as RandomTips from "/common/modules/RandomTips.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 
