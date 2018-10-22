@@ -48,8 +48,3 @@ See:
 ## Notes
 
 ”QR Code” is a registered trademark of DENSO WAVE.
-
-## Support development
-
-You can support the development of this add-on on Liberapay:  
-[![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/rugk/donate)
