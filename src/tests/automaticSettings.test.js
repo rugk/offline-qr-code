@@ -555,7 +555,6 @@ describe("options module: AutomaticSettings", function () {
             it("trigger before load works", async function() {
                 // set up triggers
                 const beforeLoad = sinon.stub().callsFake(() => {
-                    debugger;
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
@@ -576,7 +575,7 @@ describe("options module: AutomaticSettings", function () {
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
-                }
+                };
 
                 // set up triggers
                 const beforeLoad1 = sinon.stub().callsFake(triggerCheck);
@@ -842,7 +841,7 @@ describe("options module: AutomaticSettings", function () {
             await setupOptionToTest(`
             <li><label for="greatSettingsNum">greatSettingsNum</label>
             <input class="setting save-on-input" id="greatId" name="greatSettingsNum" type="number">
-            </li>`, "greatSettingsNum", "greatSettingsNum", "1234");
+            </li>`, "greatSettingsNum", "greatId", "1234");
 
             // change option
             changeExampleOptionInput("greatId", 771615);
@@ -892,7 +891,7 @@ describe("options module: AutomaticSettings", function () {
             await setupOptionToTest(`
             <li><label for="greatSettings">test text type</label>
             <input class="setting save-on-input" id="greatId" name="greatSettings" type="text">
-            </li>`, "greatSettings", "greatSettings", "blagood328!!!");
+            </li>`, "greatSettings", "greatId", "blagood328!!!");
 
             // change option
             changeExampleOptionInput("greatId", "newString value !%&&");

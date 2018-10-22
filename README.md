@@ -1,7 +1,7 @@
 # Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
 
-[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)  
-[![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/)
+[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?src=external-github-shield-downloads)  
+[![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?src=external-github-shield-downloads)
 [![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/statistics/)
 [![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/)
 
@@ -17,7 +17,7 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 
 ## Download
 
-**[![Get it for Firefox!](assets/amobutton.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/)**
+**[![Get it for Firefox!](assets/amobutton.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?src=external-github-download)**
 
 ## In action…
 
@@ -48,8 +48,3 @@ See:
 ## Notes
 
 ”QR Code” is a registered trademark of DENSO WAVE.
-
-## Support development
-
-You can support the development of this add-on on Liberapay:  
-[![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/rugk/donate)

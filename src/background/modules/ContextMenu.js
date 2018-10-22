@@ -1,12 +1,9 @@
 import * as Logger from "/common/modules/Logger.js";
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
-// TODO: This constant should be usable for all scripts.
-const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
-    "SET_QR_TEXT": "setQrText",
-});
 
 const MESSAGE_RESENT_TIMEOUT = 200; // ms
 

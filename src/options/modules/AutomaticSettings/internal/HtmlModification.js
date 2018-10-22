@@ -180,7 +180,7 @@ function getSelectedFromRadioGroup(elOption) {
         }
     }
 
-    // TODO: anderes Fehlerhandling?
+    // TODO: change error handling?
     throw new Error("no radio element is selected");
 }
 
