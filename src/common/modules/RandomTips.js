@@ -268,7 +268,9 @@ export function showRandomTipIfWanted() {
  * @returns {Promise.<void>}
  */
 export function init(tipsToShow) {
-    tips = tipsToShow;
+    // use local shallow copy, so we can modify it
+    // inner objects won't be modified, so we do not need to deep-clone it.
+    tips = tipsToShow.slice();
 
     // load function
     // We need to assign it here to make it testable.
