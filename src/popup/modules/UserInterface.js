@@ -558,9 +558,9 @@ export function init() {
         }
 
         // create save menu if needed
-        browser.menus.create({
+        browser.runtime.getBrowserInfo().then(({version}) => browser.menus.create({
             id: CONTEXT_MENU_SAVE_IMAGE,
-            title: browser.i18n.getMessage("contextMenuSaveImage"),
+            title: browser.i18n.getMessage(`contextMenuSaveImage${(parseInt(version, 10) >= 63) ? "AccessKey" : ""}`),
             contexts: ["page"],
             documentUrlPatterns: [
                 document.URL // only apply to own URL = popup
@@ -573,7 +573,7 @@ export function init() {
             } else {
                 Logger.logInfo("menu item created successfully");
             }
-        });
+        }));
 
         browser.menus.onClicked.addListener(menuClicked);
     });

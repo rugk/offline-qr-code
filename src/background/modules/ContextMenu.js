@@ -52,18 +52,20 @@ function sendQrCodeText(qrText) {
  * Creates the items in the context menu.
  *
  * @function
+ * @param {string} firefoxVersion
  * @returns {void}
  */
-function createItems() {
+function createItems(firefoxVersion) {
+    const accessKey = (parseInt(firefoxVersion, 10) >= 63) ? "AccessKey" : "";
     browser.menus.create({
         id: CONVERT_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertSelection"),
+        title: browser.i18n.getMessage(`contextMenuItemConvertSelection${accessKey}`),
         contexts: ["selection"]
     }, onCreated);
 
     browser.menus.create({
         id: CONVERT_LINK_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertLinkSelection"),
+        title: browser.i18n.getMessage(`contextMenuItemConvertLinkSelection${accessKey}`),
         contexts: ["link"]
     }, onCreated);
 
@@ -106,7 +108,7 @@ function menuClicked(event) {
  * @returns {void}
  */
 export function init() {
-    createItems();
+    browser.runtime.getBrowserInfo().then(({version}) => createItems(version));
     browser.menus.onClicked.addListener(menuClicked);
 }
 
