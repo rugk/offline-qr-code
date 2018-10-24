@@ -76,6 +76,24 @@ export function setSize(size) {
 }
 
 /**
+ * Pre-processes the text before making the QR code. Changes about:reader URLs to regular URLs.
+ * 
+ * @function
+ * @param {string} text 
+ * @returns {string}
+ */
+function preprocess(text) {
+    // check for an about:reader URL
+    const head = text.substring(0, 17);
+    const readerUrl = "about:reader?url=";
+    if (head === readerUrl) {
+        return decodeURIComponent(text.substring(17));
+    }
+    
+    return text;
+}
+
+/**
  * Sets the text for the QR code.
  *
  * Note that this also triggers all user interface actions to display the
@@ -88,8 +106,8 @@ export function setSize(size) {
  * @returns {void}
  */
 export function setText(text) {
-    setTextInternal(text);
-    UserInterface.setQrInputFieldText(text);
+    setTextInternal(preprocess(text));
+    UserInterface.setQrInputFieldText(preprocess(text));
 }
 
 /**
