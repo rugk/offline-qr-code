@@ -12,7 +12,7 @@
 // common modules
 import * as Logger from "/common/modules/Logger.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
 
 // import internal modules
 import * as Trigger from "./Trigger.js";

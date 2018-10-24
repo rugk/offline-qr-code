@@ -3,7 +3,8 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
@@ -22,8 +23,9 @@ describe("common module: MessageHandler", function () {
     });
 
     afterEach(function() {
+        CustomMessages.reset();
         AddonSettingsStub.afterTest();
-        // HtmlMock.cleanup();
+        HtmlMock.cleanup();
         sinon.restore();
     });
 
@@ -115,7 +117,7 @@ describe("common module: MessageHandler", function () {
             const mockConsole = sinon.mock(console);
 
             mockConsole.expects("error")
-                .once().withExactArgs(sinon.match.string, "MessageHandler.showMessage has been called without parameters");
+                .once().withExactArgs(sinon.match.string, "showMessage has been called without parameters");
 
             // test function
             MessageHandler.showMessage();
@@ -247,7 +249,7 @@ describe("common module: MessageHandler", function () {
         testMessageHide("messageSuccess", "success", MessageHandler.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
     });
 
-    describe("setMessageDesign()", function () {
+    describe("CustomMessages.setMessageDesign()", function () {
         /**
          * Tests that the message function correctly hioes the messages.
          *
@@ -262,7 +264,7 @@ describe("common module: MessageHandler", function () {
         function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
             const elMessage = document.getElementById(boxId);
 
-            MessageHandler.setMessageDesign(elMessage, messageLevel);
+            CustomMessages.setMessageDesign(elMessage, messageLevel);
 
             // verify classes are set
             chai.assert.isFalse(
@@ -312,7 +314,7 @@ describe("common module: MessageHandler", function () {
         });
     });
 
-    describe("cloneMessage()", function () {
+    describe("CustomMessages.cloneMessage()", function () {
         /**
          * Tests that the clone function works.
          *
@@ -330,7 +332,7 @@ describe("common module: MessageHandler", function () {
             // show message
             messageBox.classList.remove("invisible");
 
-            const newMessage = MessageHandler.cloneMessage(passToFunction, newId);
+            const newMessage = CustomMessages.cloneMessage(passToFunction, newId);
 
             // verify classes are set
             chai.assert.isTrue(
