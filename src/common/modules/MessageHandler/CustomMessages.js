@@ -91,6 +91,7 @@ function dismissMessage(event) {
     if (event.type === "click") {
         const elDismissIcon = event.target;
         const elMessage = elDismissIcon.parentElement;
+        const messageType = getMessageTypeFromElement(elMessage);
 
         // ignore event, if it is not the correct one from the message box
         if (!elMessage.classList.contains("message-box")) {
@@ -103,14 +104,16 @@ function dismissMessage(event) {
         // add handler to hide message completly after transition
         elMessage.addEventListener("transitionend", dismissMessage);
 
-        runGlobalHook("dismissStart", {
+        runHook(messageType, "dismissStart", {
             elMessage,
+            messageType,
             event
         });
 
         Logger.logInfo("message is dismissed", event);
     } else if (event.type === "transitionend") {
         const elMessage = event.target;
+        const messageType = getMessageTypeFromElement(elMessage);
 
         // ignore event, if it is not the correct one from the message box
         if (!elMessage.classList.contains("message-box")) {
@@ -120,33 +123,15 @@ function dismissMessage(event) {
         // hide message (and icon)
         hideMessage(elMessage);
 
-        runGlobalHook("dismissEnd", {
+        runHook(messageType, "dismissEnd", {
             elMessage,
+            messageType,
             event
         });
 
         // remove set handler
         elMessage.removeEventListener("transitionend", dismissMessage);
     }
-}
-
-/**
- * Returns the message type (ID) of a custom message.
- *
- * @function
- * @private
- * @param  {HTMLElement} elMessage
- * @returns {string}
- * @throws {Error}
- */
-function getCustommessageType(elMessage) {
-    // verify it is a real message box
-    if (!elMessage.classList.contains("message-box")) {
-        throw new Error(`message element ${elMessage} is no real message box`);
-    }
-
-    // use ID of element as message type
-    return elMessage.id;
 }
 
 /**
@@ -159,7 +144,7 @@ function getCustommessageType(elMessage) {
  * @throws {Error}
  */
 function getMessageTypeFromElement(elMessage) {
-    let messageType = Object.keys(htmlElements).find((messageType) => {
+    return Object.keys(htmlElements).find((messageType) => {
         // skip, if element does not exist
         if (!htmlElements[messageType]) {
             return false;
@@ -167,13 +152,6 @@ function getMessageTypeFromElement(elMessage) {
 
         return htmlElements[messageType].isEqualNode(elMessage);
     });
-
-    if (messageType === undefined) {
-        // this throws if it is no real (custom) message
-        messageType = getCustommessageType(elMessage);
-    }
-
-    return messageType;
 }
 
 /**
@@ -186,6 +164,7 @@ function getMessageTypeFromElement(elMessage) {
  * when the element is a custom message.
  * Note that it does not verify whether the DOM element actualyl exists.
  *
+ * @deprecated //TODO: remove
  * @function
  * @private
  * @param {MESSAGE_LEVEL|HTMLElement} messageType
@@ -258,7 +237,7 @@ export function setMessageDesign(elMessage, newDesignType) {
 
     // unset old design
     Object.values(designClasses).forEach((oldDesign) => {
-        /// do not remove newly set design
+        // do not remove newly set design
         if (oldDesign === newDesign) {
             return;
         }
@@ -289,7 +268,7 @@ export function setMessageDesign(elMessage, newDesignType) {
  * @returns {void}
  */
 export function showMessage(...args) {
-    if (args.length == 0) {
+    if (args.length === 0) {
         Logger.logError("showMessage has been called without parameters");
         return;
     }
@@ -456,7 +435,7 @@ export function cloneMessage(messageType, newId) {
  * @param  {string} messageType
  * @returns {boolean}
  */
-function ismessageTypeRegistered(messageType) {
+function isMessageTypeRegistered(messageType) {
     return messageType in htmlElements;
 }
 
@@ -468,10 +447,10 @@ function ismessageTypeRegistered(messageType) {
  * @private
  * @param  {string} messageType
  * @returns {void}
- * @throws
+ * @throws {Error}
  */
 function verifyMessageType(messageType) {
-    if (!ismessageTypeRegistered(messageType)) {
+    if (!isMessageTypeRegistered(messageType)) {
         throw new Error(`Unregistered message type ${messageType} passed.`);
     }
 }
@@ -487,7 +466,7 @@ function verifyMessageType(messageType) {
  * @throws {Error}
  */
 export function registerMessageType(messageType, elMessage, designClass) {
-    if (ismessageTypeRegistered(messageType)) {
+    if (isMessageTypeRegistered(messageType)) {
         throw new Error(`Message type ${messageType} is already registered. Cannot register again.`);
     }
 
@@ -523,6 +502,20 @@ export function registerMessageType(messageType, elMessage, designClass) {
     }
 
     hooks[messageType] = newHook;
+}
+
+
+/**
+ * Returns the message element by the given message type.
+ *
+ * @public
+ * @param  {int|string} messageType
+ * @returns {HTMLElement}
+ */
+export function getHtmlElement(messageType) {
+    verifyMessageType(messageType);
+
+    return htmlElements[messageType];
 }
 
 /**

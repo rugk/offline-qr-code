@@ -3,7 +3,7 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as RandomTips from "/common/modules/RandomTips.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
@@ -21,6 +21,7 @@ describe("common module: RandomTips", function () {
     });
 
     afterEach(function() {
+        CustomMessages.reset();
         AddonSettingsStub.afterTest();
         HtmlMock.cleanup();
         sinon.restore();
@@ -1117,7 +1118,6 @@ describe("common module: RandomTips", function () {
 
                 await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
-                MessageHandler.init(); // (re)set/add event listeners
 
                 // get action button
                 const actionButton = document.querySelector("#messageTips button");
@@ -1146,7 +1146,6 @@ describe("common module: RandomTips", function () {
 
                 await RandomTips.init([prepareTip(tip)]);
                 RandomTips.showRandomTip();
-                MessageHandler.init(); // (re)set/add event listeners
 
                 // get action button
                 const actionButton = document.querySelector("#messageTips button");
@@ -1187,7 +1186,6 @@ describe("common module: RandomTips", function () {
             disableRandomness();
 
             await RandomTips.init([alwaysShowsTip]);
-            MessageHandler.init(); // (re)set/add event listeners
 
             // need to wait as saving is debounced
             RandomTips.showRandomTip();
@@ -1210,7 +1208,6 @@ describe("common module: RandomTips", function () {
             disableRandomness();
 
             await RandomTips.init([alwaysShowsTip]);
-            MessageHandler.init(); // (re)set/add event listeners
 
             // need to wait as saving is debounced
             RandomTips.showRandomTip();
