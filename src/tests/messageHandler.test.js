@@ -320,23 +320,23 @@ describe("common module: MessageHandler", function () {
         it("changes design", function () {
             const testCode = getHtmlTestCode();
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
+            testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
+            testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info message");
             // reset test code
             setHtmlTestCode(testCode);
         });
@@ -344,23 +344,23 @@ describe("common module: MessageHandler", function () {
         it("changes aria-type", function () {
             const testCode = getHtmlTestCode();
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success message");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "loading");
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "loading message");
             // reset test code
             setHtmlTestCode(testCode);
         });
@@ -417,11 +417,11 @@ describe("common module: MessageHandler", function () {
         it("clones existing message by type", function () {
             MessageHandler.init();
 
-            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info", "loading");
-            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info", "info");
-            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success", "success");
-            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning", "warning");
-            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error", "error");
+            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info", "loading message");
+            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info", "info message");
+            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success", "success message");
+            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning", "warning message");
+            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error", "error message");
         });
 
         it("clones HTMLElement", function () {
