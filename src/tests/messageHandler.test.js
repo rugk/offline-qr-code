@@ -322,27 +322,22 @@ describe("common module: MessageHandler", function () {
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
         });
 
@@ -351,27 +346,22 @@ describe("common module: MessageHandler", function () {
 
             testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
 
             testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "loading");
             // reset test code
-            testCode = 0;
             setHtmlTestCode(testCode);
         });
     });
