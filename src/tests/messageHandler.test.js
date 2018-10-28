@@ -264,6 +264,7 @@ describe("common module: MessageHandler", function () {
         function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
             const elMessage = document.getElementById(boxId);
 
+            MessageHandler.init();
             CustomMessages.setMessageDesign(elMessage, messageLevel);
 
             // verify classes are set
@@ -294,22 +295,27 @@ describe("common module: MessageHandler", function () {
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
         });
     });
@@ -365,6 +371,8 @@ describe("common module: MessageHandler", function () {
         });
 
         it("clones HTMLElement", function () {
+            MessageHandler.init();
+
             testMessageClone("messageInfo", document.getElementById("messageInfo"), "info");
             testMessageClone("messageError", document.getElementById("messageError"), "error");
         });

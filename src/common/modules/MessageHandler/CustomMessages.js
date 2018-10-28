@@ -121,7 +121,7 @@ function dismissMessage(event) {
         }
 
         // hide message (and icon)
-        hideMessage(elMessage);
+        hideMessage(messageType);
 
         runHook(messageType, "dismissEnd", {
             elMessage,
@@ -144,7 +144,7 @@ function dismissMessage(event) {
  * @throws {Error}
  */
 function getMessageTypeFromElement(elMessage) {
-    return Object.keys(htmlElements).find((messageType) => {
+    const messageType = Object.keys(htmlElements).find((messageType) => {
         // skip, if element does not exist
         if (!htmlElements[messageType]) {
             return false;
@@ -152,46 +152,12 @@ function getMessageTypeFromElement(elMessage) {
 
         return htmlElements[messageType].isEqualNode(elMessage);
     });
-}
 
-/**
- * Returns the HTMLElement based on the passed message type.
- *
- * It supports custom elements, i.e. when the element itself is already passed.
- * Because of that, it returns both the message type back as a string and the
- * HTMLElement.
- * As an addition it returns a boolean as the last variable, which is true
- * when the element is a custom message.
- * Note that it does not verify whether the DOM element actualyl exists.
- *
- * @deprecated //TODO: remove
- * @function
- * @private
- * @param {MESSAGE_LEVEL|HTMLElement} messageType
- * @returns {Array.<string, HTMLElement>}
- * @throws {Error}
- */
-function getElementFromMessageType(messageType) {
-    let elMessage;
-
-    if (messageType instanceof HTMLElement) {
-        // handle custom messages first
-        elMessage = messageType;
-
-        messageType = getCustommessageType(elMessage);
-    } else if (messageType in htmlElements) {
-        // verify string message types are valid
-        elMessage = htmlElements[messageType];
-
-        if (elMessage === null) {
-            throw new Error(`message type ${messageType} has no corresponding HTMLElement`);
-        }
-    } else {
-        // TODO: use new verify
-        throw new Error(`message type ${messageType} is/belong to an unknown element`);
+    if (messageType === undefined) {
+        throw new Error(`${elMessage} is no registered element of a message type.`);
     }
 
-    return [messageType, elMessage];
+    return messageType;
 }
 
 /**
@@ -281,7 +247,8 @@ export function showMessage(...args) {
     }
 
     // get first element
-    const [messageType, elMessage] = getElementFromMessageType(args.shift());
+    const messageType = args.shift();
+    const elMessage = getHtmlElement(messageType);
 
     // and stuff inside we need later
     const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
@@ -364,8 +331,8 @@ export function showMessage(...args) {
  * Attention: This is a "low-level function" and does thus not run the hide hook!
  *
  * @function
- * @param  {MESSAGE_LEVEL|null|HTMLElement} [messageType]
- * @returns {void}
+ * @param  {string|int} messageType
+ * @returns {HTMLElement|HTMLElement[]} the element(s) hidden
  */
 export function hideMessage(messageType = null) {
     // hide all messages if type is not specified
@@ -376,10 +343,10 @@ export function hideMessage(messageType = null) {
             hideMessage(currentType);
         }
 
-        return;
+        return Object.keys(htmlElements);
     }
 
-    const [, elMessage] = getElementFromMessageType(messageType);
+    const elMessage = getHtmlElement(messageType);
     // hide single message
     const elDismissIcon = elMessage.getElementsByClassName("icon-dismiss")[0];
 
@@ -393,7 +360,7 @@ export function hideMessage(messageType = null) {
     // run hook
     runHook(messageType, "hide");
 
-    return;
+    return elMessage;
 }
 
 /**
@@ -406,21 +373,21 @@ export function hideMessage(messageType = null) {
  * CURRENTLY UNUSED.
  *
  * @function
- * @param  {MESSAGE_LEVEL|HTMLElement} messageType
+ * @param  {MESSAGE_LEVEL|HTMLElement} messageBoxOrType
  * @param  {string} newId New ID to use for that element
  * @returns {HTMLElement}
  */
-export function cloneMessage(messageType, newId) {
+export function cloneMessage(messageBoxOrType, newId) {
     let elMessage = null;
 
-    [messageType, elMessage] = getElementFromMessageType(messageType);
-
-    // clone message
-    const clonedElMessage = elMessage.cloneNode(elMessage);
-    clonedElMessage.id = newId;
+    elMessage = getHtmlElementFromOptionalType(messageBoxOrType);
 
     // hide the message to reset it if needed
-    hideMessage(clonedElMessage);
+    hideMessage(getMessageTypeFromElement(elMessage));
+
+    // clone message
+    const clonedElMessage = elMessage.cloneNode(true);
+    clonedElMessage.id = newId;
 
     // attach to DOM
     elMessage.insertAdjacentElement("afterend", clonedElMessage);
@@ -472,6 +439,8 @@ export function registerMessageType(messageType, elMessage, designClass) {
 
     // TODO: verify it's not already regsitered
 
+    verifyIsValidMessageHtml(elMessage);
+
     // save HTMLElement
     htmlElements[messageType] = elMessage;
 
@@ -504,6 +473,36 @@ export function registerMessageType(messageType, elMessage, designClass) {
     hooks[messageType] = newHook;
 }
 
+/**
+ * Verifies the HTMLElement is a valid one for a message.
+ *
+ * @private
+ * @param  {HTMLElement} elMessage
+ * @returns {void}
+ * @throws {Error}
+ */
+function verifyIsValidMessageHtml(elMessage) {
+    if (!elMessage.classList.contains("message-box")) {
+        throw new Error(`${elMessage} is no valid message type HTML.`);
+    }
+}
+
+/**
+ * Returns the HTML element of a message type or, if it is already an HTML
+ * element for a message, the element itself.
+ *
+ * @private
+ * @param  {MESSAGE_LEVEL|HTMLElement} messageBoxOrType
+ * @returns {HTMLElement}
+ */
+function getHtmlElementFromOptionalType(messageBoxOrType) {
+    if (messageBoxOrType instanceof HTMLElement) {
+        verifyIsValidMessageHtml(messageBoxOrType);
+        return messageBoxOrType;
+    }
+
+    return getHtmlElement(messageBoxOrType);
+}
 
 /**
  * Returns the message element by the given message type.
@@ -581,7 +580,6 @@ export function reset() {
     htmlElements = {};
     designClasses = {};
 }
-
 
 /**
  * Add a global hook that is triggered for all messages.
