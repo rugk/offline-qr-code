@@ -141,7 +141,7 @@
     "description": "The context menu entry shown for generating QR codes from a selection."
   },
   "contextMenuItemConvertSelectionAccessKey": {
-    "message": "QR code from selection (&_)",
+    "message": "&QR code from selection",
     "description": "the context menu entry shown for generating QR codes from a selection with an access key."
   },
   "contextMenuItemConvertLinkSelection": {
@@ -149,7 +149,7 @@
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
   "contextMenuItemConvertLinkSelectionAccessKey": {
-    "message": "QR code from link (&_)",
+    "message": "&QR code from link",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
   "contextMenuSaveImage": {
@@ -157,7 +157,7 @@
     "description": "The context menu entry shown for saving SVG images in the popup."
   },
   "contextMenuSaveImageAccessKey": {
-    "message": "Save QR code… (&_)",
+    "message": "Save &QR code…",
     "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 
