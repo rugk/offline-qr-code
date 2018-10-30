@@ -84,9 +84,9 @@ export function setSize(size) {
  */
 function preprocess(text) {
     // check for an about:reader URL
-    const head = text.substring(0, 17);
     const readerUrl = "about:reader?url=";
-    if (head === readerUrl) {
+    const startOfText = text.substring(0, readerUrl.length);
+    if (startOfText === readerUrl) {
         return decodeURIComponent(text.substring(17));
     }
     
