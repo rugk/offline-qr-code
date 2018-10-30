@@ -261,14 +261,6 @@
     "message": "Automatically use the text selected on the website",
     "description": "This is an option shown in the add-on settings."
   },
-  "optionPreprocessText": {
-    "message": "Pre-process text",
-    "description": "This is an option shown in the add-on settings"
-  },
-  "optionPreprocessTextDescr": {
-    "message": "Changes about:reader URLs to regular URLs.",
-    "description": "The description of the preprocessing option."
-  },
   "optionUseMonospaceFont": {
     "message": "Use monospace font",
     "description": "This is an option shown in the add-on settings."
