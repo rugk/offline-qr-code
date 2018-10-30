@@ -106,8 +106,9 @@ function preprocess(text) {
  * @returns {void}
  */
 export function setText(text) {
-    setTextInternal(preprocess(text));
-    UserInterface.setQrInputFieldText(preprocess(text));
+    text = preprocess(text);
+    setTextInternal(text);
+    UserInterface.setQrInputFieldText(text);
 }
 
 /**
