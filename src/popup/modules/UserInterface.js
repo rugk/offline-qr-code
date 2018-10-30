@@ -555,7 +555,7 @@ export function init() {
             // remove menu item if it has been added before
             browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
 
-            return undefined;
+            return Promise.resolve();
         }
 
         // create save menu if needed
