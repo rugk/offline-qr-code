@@ -20,8 +20,6 @@ export let qrCreatorInit;
 let initFinished = false;
 let qrCodeLib = null;
 
-let preprocessText = true;
-
 // by default everything has "been changed" (i.e. nothing has been generated yet)
 const changedValues = new Set("text", "color", "size");
 
@@ -86,9 +84,6 @@ export function setSize(size) {
  */
 function preprocess(text) {
     // check for an about:reader URL
-    if (!preprocessText) {
-        return text;
-    }
     const head = text.substring(0, 17);
     const readerUrl = "about:reader?url=";
     if (head === readerUrl) {
@@ -195,8 +190,6 @@ export function init() {
         qrCodeLib.set("qrColor", settings.qrColor);
         qrCodeLib.set("qrBackgroundColor", settings.qrBackgroundColor);
         qrCodeLib.set("qrErrorCorrection", settings.qrErrorCorrection);
-
-        preprocessText = settings.preprocessText;
 
         initFinished = true;
     });

@@ -7,7 +7,6 @@
 export const DEFAULT_SETTINGS = Object.freeze({
     debugMode: false,
     popupIconColored: false,
-    preprocessText: true,
     qrCodeType: "svg",
     qrColor: "#0c0c0d",
     qrBackgroundColor: "#ffffff",
