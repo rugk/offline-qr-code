@@ -5,7 +5,7 @@ const browserInfo = browser.runtime.getBrowserInfo();
 /**
  * Creates a context menu item
  * 
- * @function
+ * @public
  * @param {string} title 
  * @param {Object} properties 
  * @param {function} onCreated 
