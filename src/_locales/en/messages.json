@@ -218,6 +218,23 @@
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
 
+  "optionQrQuietZone": {
+    "message": "QR quiet zone:",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionQrQuietZoneStatus": {
+    "message": "module(s)",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "The border in the background color around the QR code.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
+  },
+
   "optionQrCodeColor": {
     "message": "QR code color:",
     "description": "This is an option shown in the add-on settings."

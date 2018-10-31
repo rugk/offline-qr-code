@@ -86,6 +86,21 @@ function applyDebugMode(optionValue) {
 }
 
 /**
+ * Adjust UI of QR code quiet zone status (the "N modules" text). Triggers once
+ * after the options have been loaded and when the option value is updated by the user.
+ *
+ * @function
+ * @private
+ * @param {string} optionValue
+ * @returns {void}
+ */
+function updateQrQuietZoneStatus(optionValue) {
+    const elQrQuietZoneStatus = document.getElementById("qrQuietZoneStatus");
+
+    elQrQuietZoneStatus.textContent = optionValue;
+}
+
+/**
  * Apply the colors of the QR code.
  *
  * @function
@@ -203,9 +218,11 @@ export function registerTrigger() {
     AutomaticSettings.Trigger.registerSave("debugMode", applyDebugMode);
     AutomaticSettings.Trigger.registerSave("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerSave("qrQuietZone", updateQrQuietZoneStatus);
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerUpdate("qrQuietZone", updateQrQuietZoneStatus);
 
     // handle loading of options correctly
     AutomaticSettings.Trigger.registerBeforeLoad(resetOnBeforeLoad);
