@@ -1,5 +1,6 @@
 import * as Logger from "/common/modules/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
+import {createMenu} from "/common/modules/ContextMenu.js";
 
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
@@ -52,21 +53,19 @@ function sendQrCodeText(qrText) {
  * Creates the items in the context menu.
  *
  * @function
- * @returns {void}
+ * @returns {Promise}
  */
 function createItems() {
-    browser.menus.create({
+    const selectionMenu = createMenu("contextMenuItemConvertSelection", {
         id: CONVERT_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertSelection"),
         contexts: ["selection"]
     }, onCreated);
 
-    browser.menus.create({
+    const linkMenu = createMenu("contextMenuItemConvertLinkSelection", {
         id: CONVERT_LINK_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertLinkSelection"),
         contexts: ["link"]
     }, onCreated);
-
+    return Promise.all([selectionMenu, linkMenu]);
 }
 
 /**
@@ -103,11 +102,10 @@ function menuClicked(event) {
  * Adds menu elements.
  *
  * @function
- * @returns {void}
+ * @returns {Promise}
  */
 export function init() {
-    createItems();
-    browser.menus.onClicked.addListener(menuClicked);
+    return createItems().then(() => browser.menus.onClicked.addListener(menuClicked));
 }
 
 Logger.logInfo("ContextMenu module loaded.");
