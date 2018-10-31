@@ -320,23 +320,23 @@ describe("common module: MessageHandler", function () {
         it("changes design", function () {
             const testCode = getHtmlTestCode();
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info message");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning message");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error message");
+            testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success message");
+            testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
             // reset test code
             setHtmlTestCode(testCode);
 
-            testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info message");
+            testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
             // reset test code
             setHtmlTestCode(testCode);
         });
