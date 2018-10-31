@@ -222,6 +222,7 @@ export function registerTrigger() {
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerUpdate("qrQuietZone", updateQrQuietZoneStatus);
 
     // handle loading of options correctly
     AutomaticSettings.Trigger.registerBeforeLoad(resetOnBeforeLoad);
