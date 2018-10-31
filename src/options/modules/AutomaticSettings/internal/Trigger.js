@@ -6,9 +6,9 @@
 
 // common modules
 import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
 
 import * as HtmlMod from "./HtmlModification.js";
+import * as OptionsModel from "./OptionsModel.js";
 
 /**
  * Denotes to run all the currently registered save trigger.
@@ -57,7 +57,7 @@ export async function runSaveTrigger(option, optionValue) {
         const promises = [];
         for (const trigger of triggers.onSave) {
             const option = trigger.option;
-            const optionValue = await AddonSettings.get(option);
+            const optionValue = await OptionsModel.getOption(option);
 
             promises.push(trigger.triggerFunc(optionValue, option));
         }
@@ -66,7 +66,7 @@ export async function runSaveTrigger(option, optionValue) {
 
     // get option value, if needed
     if (optionValue === undefined) {
-        optionValue = await AddonSettings.get(option);
+        optionValue = await OptionsModel.getOption(option);
     }
 
     Logger.logInfo("runSaveTrigger:", option, optionValue);

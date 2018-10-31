@@ -14,13 +14,15 @@
 import isObject from "/common/modules/lib/lodash/isObject.js";
 import throttle from "/common/modules/lib/lodash/throttle.js";
 
-import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
+import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
 import * as MessageHandler from "/common/modules/MessageHandler.js";
 
 import * as QrCreator from "./QrCreator.js";
+import {createMenu} from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
 const SELECT_TEXT_TIMEOUT = 100; // ms
@@ -372,8 +374,6 @@ export function replaceQr(elNewQr) {
  * @returns {void}
  */
 function menuClicked(event) {
-    const SAVE_FILE_AS = "saveFileAs";
-    const SAVE_FILE_AS_STOP_RETRY = "saveFileAsStopRetry";
     const DOWNLOAD_PERMISSIONS = {
         permissions: ["downloads"]
     };
@@ -415,7 +415,7 @@ function menuClicked(event) {
             }
 
             browser.runtime.sendMessage({
-                type: SAVE_FILE_AS,
+                type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
                 usePermissionWorkaround: usePermissionWorkaround,
                 file: file,
                 filename: "qrcode.svg",
@@ -447,7 +447,7 @@ function menuClicked(event) {
                 // and stop retrying to download in background script
                 if (usePermissionWorkaround) {
                     browser.runtime.sendMessage({
-                        type: SAVE_FILE_AS_STOP_RETRY
+                        type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY
                     });
                 }
 
@@ -555,13 +555,12 @@ export function init() {
             // remove menu item if it has been added before
             browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
 
-            return;
+            return Promise.resolve();
         }
 
         // create save menu if needed
-        browser.menus.create({
+        return createMenu("contextMenuSaveImage", {
             id: CONTEXT_MENU_SAVE_IMAGE,
-            title: browser.i18n.getMessage("contextMenuSaveImage"),
             contexts: ["page"],
             documentUrlPatterns: [
                 document.URL // only apply to own URL = popup
@@ -574,9 +573,7 @@ export function init() {
             } else {
                 Logger.logInfo("menu item created successfully");
             }
-        });
-
-        browser.menus.onClicked.addListener(menuClicked);
+        }).then(() => browser.menus.onClicked.addListener(menuClicked));
     });
 
     // return Promise chain

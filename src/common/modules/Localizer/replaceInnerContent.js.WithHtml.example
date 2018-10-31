@@ -1,0 +1,30 @@
+/**
+ * Contains the function that does replacements of the data in the HTML element.
+ *
+ * This version of this file allows HTML code to be injected!
+ * Attention: If you use this, make surer to check your translations (that begin
+ * with !HTML!). Translators could propably inject malicious code in these!
+ *
+ * @module ./replaceInnerContent
+ */
+
+/**
+ * Replaces inner content of the HTML element.
+ *
+ * This function determinates whether HTML is being replaced as HTML or not allowed
+ * (in order to avoid a dependency on innerHTML).
+ *
+ * @function
+ * @private
+ * @param  {HTMLElement} elem
+ * @param  {string} translatedMessage
+ * @param  {boolean} isHTML determinates whether the string is an HTML string
+ * @returns {void}
+ */
+export function replaceInnerContent(elem, translatedMessage, isHTML) {
+    if (isHTML) {
+        elem.innerHTML = translatedMessage;
+    } else {
+        elem.textContent = translatedMessage;
+    }
+}

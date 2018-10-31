@@ -1,10 +1,19 @@
-// TODO: combine with module in qrcode.js as a new module?
+/**
+ * Receives the messages sent by the popup.
+ *
+ * Currently it is used to save files even if the popup is closed.
+ *
+ * @module modules/ReceivePopupMessages
+ * @requires /common/modules/Logger
+ * @requires /common/modules/BrowserCommunication
+ * @requires /common/modules/data/BrowserCommunicationTypes
+ */
 
 import * as Logger from "/common/modules/Logger.js";
+import * as BrowserCommunication from "/common/modules/BrowserCommunication.js";
 
-const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
-    SAVE_FILE_AS: "saveFileAs",
-});
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
+
 const SAVE_AS_RETRY_TIMEOUT = 500; // ms
 // MAX_SAVE_AS_RETRIES * 0,SAVE_AS_RETRY_TIMEOUT s = 30s retries
 // 60x * 0,5s = 30s retries = retry for one minute
@@ -82,49 +91,22 @@ function saveFileAs(request, sender, sendResponse) {
     });
 }
 
-/**
- * Handles messages received by other parts.
- *
- * @function
- * @private
- * @param {Object} request
- * @param {Object} sender
- * @param {function} sendResponse
- * @returns {Promise|null}
- */
-function handleMessages(request, sender, sendResponse) {
-    Logger.logInfo("Got message", request, "from", sender);
-
-    switch (request.type) {
-    case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS:
-        // if retrying is already triggered just reset timer, but do not call again
-        // (calling again would result in the file being saved multiple times)
-        if (request.usePermissionWorkaround && saveFileAsRetry) {
-            saveAsRetries = 0;
-            return null; // cannot return a Promise here, as chain is already running
-        }
-
-        saveFileAsRetry = request.usePermissionWorkaround;
+// add listener
+BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS, (request, sender, sendResponse) => {
+    // if retrying is already triggered just reset timer, but do not call again
+    // (calling again would result in the file being saved multiple times)
+    if (request.usePermissionWorkaround && saveFileAsRetry) {
         saveAsRetries = 0;
-
-        return saveFileAs(request, sender, sendResponse);
-    case COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY:
-        saveFileAsRetry = false;
+        return null; // cannot return a Promise here, as chain is already running
     }
 
-    return null;
-}
+    saveFileAsRetry = request.usePermissionWorkaround;
+    saveAsRetries = 0;
 
-/**
- * Init context menu module.
- *
- * Adds menu elements.
- *
- * @function
- * @returns {void}
- */
-export function init() {
-    browser.runtime.onMessage.addListener(handleMessages);
-}
+    return saveFileAs(request, sender, sendResponse);
+});
 
-Logger.logInfo("BrowserCommunication module loaded.");
+BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY, () => {
+    saveFileAsRetry = false;
+});
+

@@ -224,6 +224,13 @@ describe("options module: AutomaticSettings", function () {
             </li>`, "greatSettingsNum", "testSetting", "1234");
         });
 
+        it("sets input type=range correctly", function () {
+            return testOptionType(`
+            <li><label for="testSetting">greatSettingsNum</label>
+            <input class="setting" value="0" min="0" max="2000" step="1" id="testSetting" name="greatSettingsNum" type="range">
+            </li>`, "greatSettingsNum", "testSetting", "1234");
+        });
+
         it("sets input type=text correctly", function () {
             return testOptionType(`
             <li><label for="greatSettings">test text type</label>
@@ -548,7 +555,6 @@ describe("options module: AutomaticSettings", function () {
             it("trigger before load works", async function() {
                 // set up triggers
                 const beforeLoad = sinon.stub().callsFake(() => {
-                    debugger;
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
@@ -569,7 +575,7 @@ describe("options module: AutomaticSettings", function () {
                     // check, the option for "okayExOption" really has not been changed
                     const elOption = document.getElementById("okayId");
                     chai.assert.strictEqual(elOption.value, "", "option has already been changed/loaded while it should not");
-                }
+                };
 
                 // set up triggers
                 const beforeLoad1 = sinon.stub().callsFake(triggerCheck);
@@ -835,7 +841,7 @@ describe("options module: AutomaticSettings", function () {
             await setupOptionToTest(`
             <li><label for="greatSettingsNum">greatSettingsNum</label>
             <input class="setting save-on-input" id="greatId" name="greatSettingsNum" type="number">
-            </li>`, "greatSettingsNum", "greatSettingsNum", "1234");
+            </li>`, "greatSettingsNum", "greatId", "1234");
 
             // change option
             changeExampleOptionInput("greatId", 771615);
@@ -856,11 +862,36 @@ describe("options module: AutomaticSettings", function () {
             chai.assert.propertyVal(newOptionFloat, "greatSettingsNum", 12.345);
         });
 
+        it("saves input type=range correctly", async function () {
+            await setupOptionToTest(`
+            <li><label for="exampleId">exampleId</label>
+            <input class="setting save-on-input" type="range" value="0" min="0" max="10" step="1" id="exampleId" name="exampleOption">
+            </li>`, "exampleOption", "exampleId", 4);
+
+            // change option
+            changeExampleOptionInput("exampleId", 8);
+
+            await wait(5);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("exampleOption");
+            chai.assert.propertyVal(newOption, "exampleOption", 8);
+
+            // should round integer properly (input range does this out of the box)
+            changeExampleOptionInput("exampleId", 3.25);
+
+            await wait(5);
+
+            // verify option is saved
+            const newOptionFloat = await browser.storage.sync.get("exampleOption");
+            chai.assert.propertyVal(newOptionFloat, "exampleOption", 3);
+        });
+
         it("saves input type=text correctly", async function () {
             await setupOptionToTest(`
             <li><label for="greatSettings">test text type</label>
             <input class="setting save-on-input" id="greatId" name="greatSettings" type="text">
-            </li>`, "greatSettings", "greatSettings", "blagood328!!!");
+            </li>`, "greatSettings", "greatId", "blagood328!!!");
 
             // change option
             changeExampleOptionInput("greatId", "newString value !%&&");
