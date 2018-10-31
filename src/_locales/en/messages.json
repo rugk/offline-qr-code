@@ -222,12 +222,16 @@
     "message": "QR quiet zone:",
     "description": "This is an option shown in the add-on settings."
   },
+  "optionQrQuietZoneStatus": {
+    "message": "modules",
+    "description": "This is an option shown in the add-on settings."
+  },
   "optionQrQuietZoneDescr": {
-    "message": "This spacing is important for the scanning program in order to distinguish the QR Code from its surroundings.",
+    "message": "The white border around the QR code.",
     "description": "The description of the quiet zone option."
   },
   "optionQrQuietZoneDescrLink": {
-    "message": "https://en.wikipedia.org/wiki/QR_code#Standards",
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
     "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 

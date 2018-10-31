@@ -80,6 +80,8 @@ html, body {
   height: 100%;
   max-height: 80%;
 
+  padding: 20px;
+
   /* 2:1 compare to #qrcodetext to keep size */
   flex-grow: 2;
   /* center QR code itself */

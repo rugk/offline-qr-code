@@ -226,6 +226,10 @@ function getIdAndOptionFromElement(elOption) {
         // as value is commonly read as string we need to convert it
         optionValue = Number(elOption.value);
         break;
+    case "range":
+        // as value is commonly read as string we need to convert it
+        optionValue = Number(elOption.value);
+        break;
     default:
         optionValue = elOption.value;
     }

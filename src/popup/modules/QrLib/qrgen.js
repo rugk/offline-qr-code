@@ -61,7 +61,7 @@ export function set(tag, value) {
         qrText = value;
         break;
     case "qrQuietZone":
-        qrQuietZone = Number(value);
+        qrQuietZone = value;
         break;
     case "qrColor":
         qrColor = value;
