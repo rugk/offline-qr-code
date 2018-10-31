@@ -83,7 +83,7 @@ input[type=radio] ~ .helper-text {
   position: relative;
   top: 5px;
   cursor: pointer;
-  -webkit-appearance: none;
+  /* -webkit-appearance: none; */
 }
 
 /* @TODO: improve ID! size can be anything! Just needed, because of current JS behaviour */
