@@ -865,7 +865,7 @@ describe("options module: AutomaticSettings", function () {
         it("saves input type=range correctly", async function () {
             await setupOptionToTest(`
             <li><label for="exampleId">exampleId</label>
-            <input class="setting save-on-change" type="range" value="0" min="0" max="10" step="1" id="exampleId" name="exampleOption">
+            <input class="setting save-on-input" type="range" value="0" min="0" max="10" step="1" id="exampleId" name="exampleOption">
             </li>`, "exampleOption", "exampleId", 4);
 
             // change option
