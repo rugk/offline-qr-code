@@ -91,13 +91,13 @@ function applyDebugMode(optionValue) {
  *
  * @function
  * @private
+ * @param {string} optionValue
  * @returns {void}
  */
-function updateQrQuietZoneStatus() {
-    const elQrQuietZoneSlider = document.getElementById("qrQuietZone");
+function updateQrQuietZoneStatus(optionValue) {
     const elQrQuietZoneStatus = document.getElementById("qrQuietZoneStatus");
 
-    elQrQuietZoneStatus.textContent = elQrQuietZoneSlider.value;
+    elQrQuietZoneStatus.textContent = optionValue;
 }
 
 /**
@@ -218,13 +218,12 @@ export function registerTrigger() {
     AutomaticSettings.Trigger.registerSave("debugMode", applyDebugMode);
     AutomaticSettings.Trigger.registerSave("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
+    AutomaticSettings.Trigger.registerSave("qrQuietZone", updateQrQuietZoneStatus);
 
-    AutomaticSettings.Trigger.registerUpdate("qrQuietZone", updateQrQuietZoneStatus);
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
 
     // handle loading of options correctly
     AutomaticSettings.Trigger.registerBeforeLoad(resetOnBeforeLoad);
-    AutomaticSettings.Trigger.registerAfterLoad(updateQrQuietZoneStatus);
     AutomaticSettings.Trigger.registerAfterLoad(AutomaticSettings.Trigger.RUN_ALL_SAVE_TRIGGER);
 }
