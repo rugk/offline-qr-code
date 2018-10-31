@@ -259,13 +259,15 @@ describe("common module: MessageHandler", function () {
          * @param {MESSAGE_LEVEL} messageLevel the message level design to add
          * @param {string} oldClass the old class of the message
          * @param {string} newClass the fnew class of the message
+         * @param {MESSAGE_LEVEL|HTMLElement} [passToTest] the "messageBoxOrType"
+         * to pass to the test function, defaults to message box (elMessage)
          * @returns {Promise}
          */
-        function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
+        function testMessageDesign(boxId, messageLevel, oldClass, newClass, passToTest) {
             const elMessage = document.getElementById(boxId);
 
             MessageHandler.init();
-            CustomMessages.setMessageDesign(elMessage, messageLevel);
+            CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
 
             // verify classes are set
             chai.assert.isFalse(
@@ -299,14 +301,16 @@ describe("common module: MessageHandler", function () {
          * @param {MESSAGE_LEVEL} messageLevel the message level design to add
          * @param {string} oldAria the old aria-type of the message
          * @param {string} newAria the new aria-type of the message
+         * @param {MESSAGE_LEVEL|HTMLElement} [passToTest] the "messageBoxOrType"
+         * to pass to the test function, defaults to message box (elMessage)
          * @returns {Promise}
          */
-        function testMessageDesignAira(boxId, messageLevel, oldAria, newAria) {
+        function testMessageDesignAira(boxId, messageLevel, oldAria, newAria, passToTest) {
             const elMessage = document.getElementById(boxId);
             const ARIA_ATTRIBUTE = "aria-label";
 
             MessageHandler.init();
-            CustomMessages.setMessageDesign(elMessage, messageLevel);
+            CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
 
             // verify aria-label is set
             chai.assert.notStrictEqual(
@@ -353,27 +357,41 @@ describe("common module: MessageHandler", function () {
         it("changes aria-type", function () {
             const testCode = getHtmlTestCode();
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info message");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success message", "info message");
             // reset test code
             CustomMessages.reset();
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning message");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success message", "warning message");
             // reset test code
             CustomMessages.reset();
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error message");
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success message", "error message");
             // reset test code
             CustomMessages.reset();
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success message");
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error message", "success message");
             // reset test code
             CustomMessages.reset();
             setHtmlTestCode(testCode);
 
-            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error", "loading message");
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error message", "loading message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+        });
+
+        it("changes design and aria-type with message level given", function () {
+            const testCode = getHtmlTestCode();
+
+            testMessageDesign("messageInfo", MESSAGE_LEVEL.ERROR, "info", "error", MESSAGE_LEVEL.INFO);
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success message", "info message", MESSAGE_LEVEL.SUCCESS);
             // reset test code
             CustomMessages.reset();
             setHtmlTestCode(testCode);

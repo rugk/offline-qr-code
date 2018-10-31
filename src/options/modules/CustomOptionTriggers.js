@@ -6,7 +6,8 @@
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AutomaticSettings from "./AutomaticSettings/AutomaticSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 
 // used to apply options
@@ -14,8 +15,7 @@ import * as Colors from "/common/modules/Colors.js";
 import * as IconHandler from "/common/modules/IconHandler.js";
 
 const REMEBER_SIZE_INTERVAL = 500; // sec
-
-const elContrastMessage = document.getElementById("messageContrast");
+const CONTRAST_MESSAGE_ID = "contrast";
 
 let updateRemberedSizeInterval = null;
 
@@ -156,7 +156,7 @@ function applyQrCodeColors(optionValue, option) {
                 [optionCompare]: invertedColor
             }).catch((error) => {
                 Logger.logError("could not save option", optionCompare, ":", error);
-                MessageHandler.showError("couldNotSaveOption", true);
+                CommonMessages.showError("couldNotSaveOption", true);
             }).finally(() => {
                 // also display/"preview" other compared color,
                 // (This is needed when users change the color of the preview only (via customOptionTrigger()) and click the action button.)
@@ -173,19 +173,19 @@ function applyQrCodeColors(optionValue, option) {
     // breakpoints: https://github.com/rugk/offline-qr-code/pull/86#issuecomment-390426286
     if (colorContrast <= Colors.CONTRAST_RATIO.WAY_TOO_LOW) {
         // show an error when nearly no QR code scanner can read it
-        MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.ERROR);
-        MessageHandler.showMessage(elContrastMessage, "lowContrastRatioError", false, actionButton);
+        CustomMessages.setMessageDesign(CONTRAST_MESSAGE_ID, MESSAGE_LEVEL.ERROR);
+        CustomMessages.showMessage(CONTRAST_MESSAGE_ID, "lowContrastRatioError", false, actionButton);
     } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AA) {
         // show a warning when approx. 50% of the QR code scanners can read it
-        MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.WARN);
-        MessageHandler.showMessage(elContrastMessage, "lowContrastRatioWarning", false, actionButton);
+        CustomMessages.setMessageDesign(CONTRAST_MESSAGE_ID, MESSAGE_LEVEL.WARN);
+        CustomMessages.showMessage(CONTRAST_MESSAGE_ID, "lowContrastRatioWarning", false, actionButton);
     } else if (colorContrast <= Colors.CONTRAST_RATIO.LARGE_AAA) {
         // show only an info when the contrast is low but most of the scanners can still read it
-        MessageHandler.setMessageDesign(elContrastMessage, MESSAGE_LEVEL.INFO);
-        MessageHandler.showMessage(elContrastMessage, "lowContrastRatioInfo", false, actionButton);
-    } else if (elContrastMessage) {
+        CustomMessages.setMessageDesign(CONTRAST_MESSAGE_ID, MESSAGE_LEVEL.INFO);
+        CustomMessages.showMessage(CONTRAST_MESSAGE_ID, "lowContrastRatioInfo", false, actionButton);
+    } else if (CONTRAST_MESSAGE_ID) {
         // hide any message if the contrast is all right
-        MessageHandler.hideMessage(elContrastMessage);
+        CustomMessages.hideMessage(CONTRAST_MESSAGE_ID);
     }
 }
 
@@ -213,6 +213,10 @@ function resetOnBeforeLoad() {
  * @returns {void}
  */
 export function registerTrigger() {
+    // register custom message
+    CustomMessages.registerMessageType(CONTRAST_MESSAGE_ID, document.getElementById("messageContrast"));
+
+    // register triggers
     AutomaticSettings.Trigger.registerSave("qrCodeSize", applyQrCodeSize);
     AutomaticSettings.Trigger.registerSave("popupIconColored", applyPopupIconColor);
     AutomaticSettings.Trigger.registerSave("debugMode", applyDebugMode);

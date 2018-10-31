@@ -190,17 +190,20 @@ function actionButtonClicked(event) {
  * Please DO NOT use this with the built-in message elements.
  *
  * @function
- * @param  {HTMLElement} elMessage
+ * @param  {MESSAGE_LEVEL|HTMLElement} messageBoxOrType
  * @param  {MESSAGE_LEVEL} newDesignType
  * @returns {void}
  */
-export function setMessageDesign(elMessage, newDesignType) {
+export function setMessageDesign(messageBoxOrType, newDesignType) {
+    const elMessage = getHtmlElementFromOptionalType(messageBoxOrType);
     const newDesign = designClasses[newDesignType];
     const elActionButton = elMessage.getElementsByClassName("message-action-button")[0];
 
     // set new design
     elMessage.classList.add(newDesign);
-    elActionButton.classList.add(newDesign);
+    if (elActionButton) {
+        elActionButton.classList.add(newDesign);
+    }
 
     // set aria label
     elMessage.setAttribute("aria-label", ariaLabelTypes[newDesignType]);
@@ -213,7 +216,9 @@ export function setMessageDesign(elMessage, newDesignType) {
         }
 
         elMessage.classList.remove(oldDesign);
-        elActionButton.classList.remove(oldDesign);
+        if (elActionButton) {
+            elActionButton.classList.remove(oldDesign);
+        }
     });
 }
 
@@ -456,8 +461,6 @@ export function registerMessageType(messageType, elMessage, designClass, ariaLab
     if (designClass) {
         designClasses[messageType] = designClass;
     }
-
-    debugger;
 
     if (ariaLabelType) {
         ariaLabelTypes[messageType] = ariaLabelType;
