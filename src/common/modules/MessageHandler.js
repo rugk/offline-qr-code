@@ -23,6 +23,14 @@ const DESIGN_BY_TYPE = Object.freeze({
     [MESSAGE_LEVEL.LOADING]: "info"
 });
 
+const ARIA_BY_TYPE = Object.freeze({
+    [MESSAGE_LEVEL.ERROR]: "error message",
+    [MESSAGE_LEVEL.WARN]: "warning message",
+    [MESSAGE_LEVEL.INFO]: "info message",
+    [MESSAGE_LEVEL.SUCCESS]: "success message",
+    [MESSAGE_LEVEL.LOADING]: "loading message"
+});
+
 const hooks = {
     "global": {
         "show": null,
@@ -267,6 +275,9 @@ export function setMessageDesign(elMessage, newDesignType) {
     // set new design
     elMessage.classList.add(newDesign);
     elActionButton.classList.add(newDesign);
+
+    // seta aria label
+    elMessage.setAttribute("aria-label", ARIA_BY_TYPE[newDesignType]);
 
     // unset old design
     Object.values(DESIGN_BY_TYPE).forEach((oldDesign) => {

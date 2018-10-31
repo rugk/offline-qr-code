@@ -425,8 +425,8 @@ describe("common module: MessageHandler", function () {
         });
 
         it("clones HTMLElement", function () {
-            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info", "info");
-            testMessageClone("messageError", document.getElementById("messageError"), "error", "error");
+            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info", "info message");
+            testMessageClone("messageError", document.getElementById("messageError"), "error", "error message");
         });
     });
 
