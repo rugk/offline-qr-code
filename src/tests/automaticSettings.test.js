@@ -224,6 +224,13 @@ describe("options module: AutomaticSettings", function () {
             </li>`, "greatSettingsNum", "testSetting", "1234");
         });
 
+        it("sets input type=range correctly", function () {
+            return testOptionType(`
+            <li><label for="testSetting">greatSettingsNum</label>
+            <input class="setting" value="0" min="0" max="2000" step="1" id="testSetting" name="greatSettingsNum" type="range">
+            </li>`, "greatSettingsNum", "testSetting", "1234");
+        });
+
         it("sets input type=text correctly", function () {
             return testOptionType(`
             <li><label for="greatSettings">test text type</label>
@@ -853,6 +860,31 @@ describe("options module: AutomaticSettings", function () {
             // verify option is saved
             const newOptionFloat = await browser.storage.sync.get("greatSettingsNum");
             chai.assert.propertyVal(newOptionFloat, "greatSettingsNum", 12.345);
+        });
+
+        it("saves input type=range correctly", async function () {
+            await setupOptionToTest(`
+            <li><label for="exampleId">exampleId</label>
+            <input class="setting save-on-input" type="range" value="0" min="0" max="10" step="1" id="exampleId" name="exampleOption">
+            </li>`, "exampleOption", "exampleId", 4);
+
+            // change option
+            changeExampleOptionInput("exampleId", 8);
+
+            await wait(5);
+
+            // verify option is saved
+            const newOption = await browser.storage.sync.get("exampleOption");
+            chai.assert.propertyVal(newOption, "exampleOption", 8);
+
+            // should round integer properly (input range does this out of the box)
+            changeExampleOptionInput("exampleId", 3.25);
+
+            await wait(5);
+
+            // verify option is saved
+            const newOptionFloat = await browser.storage.sync.get("exampleOption");
+            chai.assert.propertyVal(newOptionFloat, "exampleOption", 3);
         });
 
         it("saves input type=text correctly", async function () {

@@ -32,6 +32,7 @@ let kjuaOptions;
  * @private
  */
 const OPTIONS_MAP = Object.freeze({
+    "qrQuietZone": "quiet",
     "qrColor": "fill",
     "qrBackgroundColor": "back",
     "qrErrorCorrection": "ecLevel"
