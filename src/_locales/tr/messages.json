@@ -1,0 +1,288 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Çevrimdışı QR Kod Üreticisi",
+    "description": "Name of the extension."
+  },
+  "extensionNameShort": {
+    "message": "Çevrimdışı QR-Kod",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Tarayıcında açık olan herhangi bir sayfa veya sekme için QR kod oluşturmanı sağlar.",
+    "description": "Description of the extension."
+  },
+  "browserActionButtonTitle": {
+    "message": "Çevrimdışı QR Kod",
+    "description": "The title for the button, which opens the popup."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "bilinmeyen hata",
+    "description": ""
+  },
+  "loading": {
+    "message": "Yükleniyor…",
+    "description": "A general loading message."
+  },
+  "messageUndoButton": {
+    "message": "Geri al",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "QR Kod oluşturulamadı.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Aktif sekmeye ulaşılamadı.",
+    "description": ""
+  },
+  "errorShowingMessage": {
+    "message": "Mesaj görüntülenemedi.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "errorDownloadingFile": {
+    "message": "Dosya indirilemedi.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Gerekli yetkiler olmadığı için işlem tamamlanamadı.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Yetkilendirma hatası.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  },
+  "couldNotSaveOption": {
+    "message": "Ayarlar kaydedilemedi.",
+    "description": "When a setting could not be saved."
+  },
+  "couldNotLoadOptions": {
+    "message": "Ayarlar yüklenemedi.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotUndoAction": {
+    "message": "Geri alma işlemi başarısız.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Bütün ayarlar varsayılan değerlere döndürüldü!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Seçenekleri sıfırlama başarısız oldu!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+  "requestDownloadPermissionForQr": {
+    "message": "QR kodu kaydedebilmek için dosya indirma izni gerekiyor.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+  },
+  "lowContrastRatioInfo": {
+    "message": "Düşük kontrast sebebiyle QR kodunuz bazı tarayıcılar tarafından zor okunabilir.",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioWarning": {
+    "message": "QR kodun kontrast oranı çok düşük olduğu için tüm QR okuyucular tarafından doğru okunamayabilir.",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "QR kodun rengi ile arka plan rengi birbirine çok yakın.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Zıt renkler kullan",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "Eklentiyi beğendin mi?",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Eklentiyi puanla",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+    "message": "QR kodları kaydedebileceğini biliyor muydun?",
+    "description": "A tip shown to get the user to find the save option."
+  },
+  "tipQrCodeHotkey": {
+    "message": "Bu eklenti için kısayol Ctrl+Shift+F10.",
+    "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipDonate": {
+    "message": "Bu eklentiyi ücretsiz olarak kullanmaktan memnun musun?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Bağış yaparak destek olabilirsin.",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
+  "tipLearnMore": {
+    "message": "Daha fazla bilgi",
+    "description": "The common button for tips, where you can get more information on click."
+  },
+
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "QR kod için ayrılmış alan",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "QR kod için bir metin gir.",
+    "description": "Placeholder for the textarea, when it is empty."
+  },
+
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "Seçili kısımdan QR kod üret",
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "Linkten QR kod üret",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
+  },
+  "contextMenuSaveImage": {
+    "message": "QR kod kaydet…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+
+  // options
+  "someSettingsAreManaged": {
+    "message": "Bazı ayarlar sistem yöneticin tarafından düzenlendiği için değiştirilemez.",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "Bu özellik sistem yöneticin tarafından ayarlandığı için devredışı.",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+  },
+  "optionLearnMore": {
+    "message": "Daha fazla bilgi",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+
+  "optionPopupIconColored": {
+    "message": "Renkli ikon",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColoredDescr": {
+    "message": "Araç çubuğunda siyah beyaz ikon yerine renkli ikon gösterir.",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+
+  "optionQrCodeType": {
+    "message": "QR kod türü",
+    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
+  },
+  "optionQrCodeTypeSvg": {
+    "message": "SVG",
+    "description": "Option to select a scalable vector graphic image (SVG)."
+  },
+  "optionQrCodeTypeSvgHelper": {
+    "message": "QR kod, daha düzgün yeniden boyutlandırma sağlayan vektör grafikler ile oluşturulur.",
+    "description": "Helper text for SVG QR code type option."
+  },
+  "optionQrCodeTypeCanvas": {
+    "message": "Canvas resmi",
+    "description": "Option to select a canvas (pixel) image."
+  },
+  "optionQrCodeTypeCanvasHelper": {
+    "message": "QR kod, imaj (\"canvas\") olarak oluşturulur.",
+    "description": "Helper text for canvas QR code type option."
+  },
+
+  "optionQrCodeSize": {
+    "message": "QR kod boyutu",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "Sabit:",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "Boyutu otomatik ayarla",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "QR kodunun yeni bir sekme açtığı mobil cihazlarda kullanışlıdır.",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "Son kullanılan boyutu hatırla",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "optionQrCodeColor": {
+    "message": "QR kodu rengi:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionQrCodeBackgroundColor": {
+    "message": "QR kodu arkaplan rengi:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionErrorCorrection": {
+    "message": "Hata düzeltme oranı:",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcLow": {
+    "message": "Düşük (7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcMedium": {
+    "message": "Orta (15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcQuartile": {
+    "message": "Çeyrek (%25)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcHigh": {
+    "message": "Yüksek (%30)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "Bu değer kodun ne kadarı eksik olsa bile yine de okunabileceğini gösterir.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option."
+  },
+
+  "optionAutoGetSelectedText": {
+    "message": "Seçili metni QR kodu oluşturmak için kullan",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionUseMonospaceFont": {
+    "message": "Eşaralıklı (monospace) yazıtipi kullan",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionDebugMode": {
+    "message": "Hata ayıklama modunu etkinleştir",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "Hata tespiti için konsolda daha detaylı çıktı görmeye yarar.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
+  },
+
+  "optionsResetButton": {
+    "message": "Bütün ayarları varsayılanlara sıfırla",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "Bu mesajı kapat",
+    "description": "The label for the close button of the message box"
+  }
+}
