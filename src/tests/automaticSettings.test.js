@@ -227,7 +227,7 @@ describe("options module: AutomaticSettings", function () {
         it("sets input type=range correctly", function () {
             return testOptionType(`
             <li><label for="testSetting">greatSettingsNum</label>
-            <input class="setting" type="range" value="0" min="0" max="2000" step="1" id="testSetting" name="greatSettingsNum">
+            <input class="setting" value="0" min="0" max="2000" step="1" id="testSetting" name="greatSettingsNum" type="range">
             </li>`, "greatSettingsNum", "testSetting", "1234");
         });
 
