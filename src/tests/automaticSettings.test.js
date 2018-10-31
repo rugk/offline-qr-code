@@ -2,7 +2,9 @@ import "https://unpkg.com/mocha@5.2.0/mocha.js"; /* globals mocha */
 import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+// only for reset button tests
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AutomaticSettings from "/options/modules/AutomaticSettings/AutomaticSettings.js";
 
@@ -301,6 +303,9 @@ describe("options module: AutomaticSettings", function () {
     });
 
     describe("reset button", function() {
+        afterEach(function() {
+            CustomMessages.reset();
+        });
 
         /**
          * Sets up the option HTML code to test.
@@ -347,14 +352,17 @@ describe("options module: AutomaticSettings", function () {
             };
 
             // set HTML code
-            let html = buildHtmlOption("firstText");
+            let html = SUCCESS_MESSAGE;
+            html += buildHtmlOption("firstText");
             html += buildHtmlOption("secondTextOption");
             html += buildHtmlOption("anotherOne");
 
             // reset button
             html += '<button type="button" name="reset-button" id="resetButton">Reset</button>';
 
+            // startup
             HtmlMock.setTestHtml(html);
+            MessageHandler.init();
 
             // set default values (this time only defaults)
             AutomaticSettings.setDefaultOptionProvider((option) => {

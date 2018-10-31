@@ -11,7 +11,7 @@
  */
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
 
 import * as QrCreator from "./QrCreator.js";
 import * as ReceiveBackgroundMessages from "./ReceiveBackgroundMessages.js";

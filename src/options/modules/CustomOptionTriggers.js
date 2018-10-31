@@ -6,7 +6,7 @@
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AutomaticSettings from "./AutomaticSettings/AutomaticSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 
 // used to apply options
