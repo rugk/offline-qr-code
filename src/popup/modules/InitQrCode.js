@@ -11,7 +11,7 @@
  */
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 import * as QrCreator from "./QrCreator.js";
 import * as ReceiveBackgroundMessages from "./ReceiveBackgroundMessages.js";
@@ -77,7 +77,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         // …or fallback to tab URL
         return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
             Logger.logError(error);
-            MessageHandler.showError("couldNotReceiveActiveTab", false);
+            CommonMessages.showError("couldNotReceiveActiveTab", false);
 
             // re-throw error
             throw error;
@@ -88,7 +88,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     UserInterface.lateInit();
 
     // hide loading message shown by default
-    MessageHandler.hideLoading();
+    CommonMessages.hideLoading();
 
     // init is done, set variable to syncronously get values
     initCompleted = true;

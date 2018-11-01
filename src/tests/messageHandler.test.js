@@ -3,7 +3,7 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
@@ -84,7 +84,7 @@ describe("common module: MessageHandler", function () {
     function testMessageShow(boxId, boxName, functionCall) {
         it(`shows ${boxName} message`, function () {
             // test function
-            MessageHandler.init();
+            CommonMessages.init();
             functionCall();
 
             const messageBox = document.getElementById(boxId);
@@ -97,7 +97,7 @@ describe("common module: MessageHandler", function () {
         it(`shows ${boxName} message with correct text`, function () {
             // test function
             const messageText = "An unique message text 4234523!!";
-            MessageHandler.init();
+            CommonMessages.init();
             functionCall(messageText);
 
             const messageBox = document.getElementById(boxId);
@@ -120,7 +120,7 @@ describe("common module: MessageHandler", function () {
                 .once().withExactArgs(sinon.match.string, "showMessage has been called without parameters");
 
             // test function
-            MessageHandler.showMessage();
+            CommonMessages.showMessage();
 
             mockConsole.verify();
 
@@ -129,39 +129,39 @@ describe("common module: MessageHandler", function () {
         });
 
         it("throws, if called with invalid message type", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             // test function -> pass 777 as message type
-            chai.assert.throws(MessageHandler.showMessage.bind(null, 777), Error);
+            chai.assert.throws(CommonMessages.showMessage.bind(null, 777), Error);
 
             // and verify, no message is shown
             assertNoMessageShown();
         });
 
-        testMessageShow("messageInfo", "info", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageShow("messageWarning", "warning", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageShow("messageError", "error", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageShow("messageSuccess", "success", MessageHandler.showMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageInfo", "info", CommonMessages.showMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageWarning", "warning", CommonMessages.showMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageError", "error", CommonMessages.showMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageSuccess", "success", CommonMessages.showMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showError()", function () {
-        testMessageShow("messageError", "error", MessageHandler.showError); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageError", "error", CommonMessages.showError); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showWarning()", function () {
-        testMessageShow("messageWarning", "warning", MessageHandler.showWarning); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageWarning", "warning", CommonMessages.showWarning); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showInfo()", function () {
-        testMessageShow("messageInfo", "info", MessageHandler.showInfo); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageInfo", "info", CommonMessages.showInfo); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showLoading()", function () {
-        testMessageShow("messageLoading", "loading", MessageHandler.showLoading); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageLoading", "loading", CommonMessages.showLoading); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("showSuccess()", function () {
-        testMessageShow("messageSuccess", "success", MessageHandler.showSuccess); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageShow("messageSuccess", "success", CommonMessages.showSuccess); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     /**
@@ -187,7 +187,7 @@ describe("common module: MessageHandler", function () {
             );
 
             // test function
-            MessageHandler.init();
+            CommonMessages.init();
             functionCall();
 
             // check result
@@ -206,47 +206,47 @@ describe("common module: MessageHandler", function () {
             });
 
             // test function
-            MessageHandler.init();
-            MessageHandler.hideMessage();
+            CommonMessages.init();
+            CommonMessages.hideMessage();
 
             // and verify, no message is shown
             assertNoMessageShown();
         });
 
         it("throws, if called with invalid message type", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             // test function -> pass 777 as message type
-            chai.assert.throws(MessageHandler.hideMessage.bind(null, 777), Error);
+            chai.assert.throws(CommonMessages.hideMessage.bind(null, 777), Error);
 
             // and verify, no message is shown
             assertNoMessageShown();
         });
 
-        testMessageHide("messageInfo", "info", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageHide("messageWarning", "warning", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageHide("messageError", "error", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
-        testMessageHide("messageSuccess", "success", MessageHandler.hideMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageInfo", "info", CommonMessages.hideMessage.bind(null, MESSAGE_LEVEL.INFO)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageWarning", "warning", CommonMessages.hideMessage.bind(null, MESSAGE_LEVEL.WARN)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageError", "error", CommonMessages.hideMessage.bind(null, MESSAGE_LEVEL.ERROR)); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageSuccess", "success", CommonMessages.hideMessage.bind(null, MESSAGE_LEVEL.SUCCESS)); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideError()", function () {
-        testMessageHide("messageError", "error", MessageHandler.hideError); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageError", "error", CommonMessages.hideError); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideWarning()", function () {
-        testMessageHide("messageWarning", "warning", MessageHandler.hideWarning); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageWarning", "warning", CommonMessages.hideWarning); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideInfo()", function () {
-        testMessageHide("messageInfo", "info", MessageHandler.hideInfo); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageInfo", "info", CommonMessages.hideInfo); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideLoading()", function () {
-        testMessageHide("messageLoading", "loading", MessageHandler.hideLoading); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageLoading", "loading", CommonMessages.hideLoading); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("hideSuccess()", function () {
-        testMessageHide("messageSuccess", "success", MessageHandler.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
+        testMessageHide("messageSuccess", "success", CommonMessages.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
     });
 
     describe("CustomMessages.setMessageDesign()", function () {
@@ -266,7 +266,7 @@ describe("common module: MessageHandler", function () {
         function testMessageDesign(boxId, messageLevel, oldClass, newClass, passToTest) {
             const elMessage = document.getElementById(boxId);
 
-            MessageHandler.init();
+            CommonMessages.init();
             CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
 
             // verify classes are set
@@ -309,7 +309,7 @@ describe("common module: MessageHandler", function () {
             const elMessage = document.getElementById(boxId);
             const ARIA_ATTRIBUTE = "aria-label";
 
-            MessageHandler.init();
+            CommonMessages.init();
             CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
 
             // verify aria-label is set
@@ -447,7 +447,7 @@ describe("common module: MessageHandler", function () {
         }
 
         it("clones existing message by type", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info", "loading message");
             testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info", "info message");
@@ -457,7 +457,7 @@ describe("common module: MessageHandler", function () {
         });
 
         it("clones HTMLElement", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             testMessageClone("messageInfo", document.getElementById("messageInfo"), "info", "info message");
             testMessageClone("messageError", document.getElementById("messageError"), "error", "error message");
@@ -466,13 +466,13 @@ describe("common module: MessageHandler", function () {
 
     describe("setDismissHooks()", function () {
         it("calls function on dismiss start", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             const spyStart = sinon.spy();
-            MessageHandler.setDismissHooks(spyStart);
+            CommonMessages.setDismissHooks(spyStart);
 
             // show message (with isDismissable = true)
-            MessageHandler.showInfo("someRandomInfo", true);
+            CommonMessages.showInfo("someRandomInfo", true);
             // dismiss message
             const dismissButton = document.querySelector("#messageInfo .icon-dismiss");
             dismissButton.click();
@@ -482,13 +482,13 @@ describe("common module: MessageHandler", function () {
         });
 
         it("calls function on dismiss (transition) end", async function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             const spyEnd = sinon.spy();
-            MessageHandler.setDismissHooks(null, spyEnd);
+            CommonMessages.setDismissHooks(null, spyEnd);
 
             // show message (with isDismissable = true)
-            MessageHandler.showInfo("someRandomInfo", true);
+            CommonMessages.showInfo("someRandomInfo", true);
 
             // wait for in-transition (I guess?)
             await wait(100);
@@ -506,10 +506,10 @@ describe("common module: MessageHandler", function () {
 
     describe("actionButton", function () {
         it("displays no action button when not used", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             // show message
-            MessageHandler.showInfo("someRandomInfo", true, null);
+            CommonMessages.showInfo("someRandomInfo", true, null);
 
             // get action button
             const actionButton = document.querySelector("#messageInfo .message-action-button");
@@ -519,10 +519,10 @@ describe("common module: MessageHandler", function () {
         });
 
         it("displays no action button when empty object is passed", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             // show message
-            MessageHandler.showInfo("someRandomInfo", true, {});
+            CommonMessages.showInfo("someRandomInfo", true, {});
 
             // get action button
             const actionButton = document.querySelector("#messageInfo .message-action-button");
@@ -532,10 +532,10 @@ describe("common module: MessageHandler", function () {
         });
 
         it("shows action button with text", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             // show message
-            MessageHandler.showInfo("someRandomInfo", true, {
+            CommonMessages.showInfo("someRandomInfo", true, {
                 text: "thisIsActionButtonWithUniqueText6899",
                 action: "https://fake-button-url.de"
             });
@@ -552,12 +552,12 @@ describe("common module: MessageHandler", function () {
         });
 
         it("calls callback button is when clicked", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             const callback = sinon.spy();
 
             // show message
-            MessageHandler.showInfo("someRandomInfo", true, {
+            CommonMessages.showInfo("someRandomInfo", true, {
                 text: "thisIsActionButton",
                 action: callback
             });
@@ -571,12 +571,12 @@ describe("common module: MessageHandler", function () {
         });
 
         it("calls callback button is when a href is clicked", function () {
-            MessageHandler.init();
+            CommonMessages.init();
 
             const callback = sinon.spy();
 
             // show message (with isDismissable = true)
-            MessageHandler.showInfo("someRandomInfo", true, {
+            CommonMessages.showInfo("someRandomInfo", true, {
                 text: "thisIsActionButton",
                 action: callback
             });

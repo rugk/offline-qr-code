@@ -19,7 +19,7 @@ import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunic
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
@@ -107,7 +107,7 @@ const refreshQrCode = throttle(() => {
         return;
     } else if (placeholderShown) {
         hidePlaceholder();
-        MessageHandler.hideError();
+        CommonMessages.hideError();
     }
 
     QrCreator.setTextInternal(text);
@@ -387,7 +387,7 @@ function menuClicked(event) {
 
     // do not trigger when placeholder is shown
     if (placeholderShown === true) {
-        MessageHandler.showError("Cannot save QR code if it is not displayed.", true);
+        CommonMessages.showError("Cannot save QR code if it is not displayed.", true);
         return;
     }
 
@@ -411,7 +411,7 @@ function menuClicked(event) {
             // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
             if (!isAlreadyGranted) {
                 usePermissionWorkaround = true;
-                MessageHandler.showInfo("requestDownloadPermissionForQr");
+                CommonMessages.showInfo("requestDownloadPermissionForQr");
             }
 
             browser.runtime.sendMessage({
@@ -429,14 +429,14 @@ function menuClicked(event) {
                     return;
                 }
 
-                MessageHandler.showError("errorDownloadingFile", error);
+                CommonMessages.showError("errorDownloadingFile", error);
             });
 
             // show error when promise is rejected
             requestDownloadPermissions.then((permissionGranted) => {
                 if (usePermissionWorkaround) {
                     // if permission result is there, hide info message
-                    MessageHandler.hideInfo();
+                    CommonMessages.hideInfo();
                 }
 
                 // in case of success there is nothing else to do
@@ -453,10 +453,10 @@ function menuClicked(event) {
 
                 // if permission is declined, make user aware that this permission was required
                 Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
-                MessageHandler.showError("errorPermissionRequired", true);
+                CommonMessages.showError("errorPermissionRequired", true);
             }).catch((error) => {
                 Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
-                MessageHandler.showError("errorPermissionRequestFailed", true);
+                CommonMessages.showError("errorPermissionRequestFailed", true);
             });
         });
     });
@@ -490,8 +490,8 @@ export function lateInit() {
  */
 export function init() {
     // set error hooks
-    MessageHandler.setHook(MESSAGE_LEVEL.LOADING, showPlaceholder, hidePlaceholder);
-    MessageHandler.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
+    CommonMessages.setHook(MESSAGE_LEVEL.LOADING, showPlaceholder, hidePlaceholder);
+    CommonMessages.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);

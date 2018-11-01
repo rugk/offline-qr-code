@@ -1,4 +1,4 @@
-/**
+CommonMessages /**
  * Load, save and apply options to HTML options page.
  *
  * @module internal/LoadAndSave
@@ -12,7 +12,7 @@
 // common modules
 import * as Logger from "/common/modules/Logger.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 // import internal modules
 import * as Trigger from "./Trigger.js";
@@ -58,7 +58,7 @@ async function saveOption(event) {
         [option]: optionValue
     }).catch((error) => {
         Logger.logError("could not save option", option, ": ", error);
-        MessageHandler.showError("couldNotSaveOption", true);
+        CommonMessages.showError("couldNotSaveOption", true);
     });
 }
 
@@ -76,7 +76,7 @@ function showManagedInfo() {
         return;
     }
 
-    MessageHandler.showInfo("someSettingsAreManaged", false);
+    CommonMessages.showInfo("someSettingsAreManaged", false);
     managedInfoIsShown = true;
 }
 
@@ -261,14 +261,14 @@ async function resetOptions(event) {
     });
 
     // cleanup resetted cached option after message is hidden
-    MessageHandler.setHook(MESSAGE_LEVEL.SUCCESS, null, () => {
+    CommonMessages.setHook(MESSAGE_LEVEL.SUCCESS, null, () => {
         lastOptionsBeforeReset = null;
         Logger.logInfo("reset options message hidden, undo vars cleaned");
     });
 
     // finally reset options
     browser.storage.sync.clear().then(() => loadAllOptions().then(
-        () => MessageHandler.showSuccess("resettingOptionsWorked", true, {
+        () => CommonMessages.showSuccess("resettingOptionsWorked", true, {
             text: "messageUndoButton",
             action: () => {
                 browser.storage.sync.set(lastOptionsBeforeReset).then(() => {
@@ -276,15 +276,15 @@ async function resetOptions(event) {
                     return loadAllOptions();
                 }).catch((error) => {
                     Logger.logError("Could not undo option resetting: ", error);
-                    MessageHandler.showError("couldNotUndoAction");
+                    CommonMessages.showError("couldNotUndoAction");
                 }).finally(() => {
-                    MessageHandler.hideSuccess();
+                    CommonMessages.hideSuccess();
                 });
             }
         })
     )).catch((error) => {
         Logger.logError(error);
-        MessageHandler.showError("resettingOptionsFailed", true);
+        CommonMessages.showError("resettingOptionsFailed", true);
     }).finally(() => {
         // re-enable button
         event.target.removeAttribute("disabled");
@@ -304,7 +304,7 @@ export function init() {
 
     const loadPromise = loadAllOptions().catch((error) => {
         Logger.logError(error);
-        MessageHandler.showError("couldNotLoadOptions", false);
+        CommonMessages.showError("couldNotLoadOptions", false);
 
         // re-throw error
         throw error;

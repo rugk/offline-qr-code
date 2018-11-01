@@ -3,7 +3,7 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 // only for reset button tests
-import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AutomaticSettings from "/options/modules/AutomaticSettings/AutomaticSettings.js";
@@ -362,7 +362,7 @@ describe("options module: AutomaticSettings", function () {
 
             // startup
             HtmlMock.setTestHtml(html);
-            MessageHandler.init();
+            CommonMessages.init();
 
             // set default values (this time only defaults)
             AutomaticSettings.setDefaultOptionProvider((option) => {
@@ -442,7 +442,7 @@ describe("options module: AutomaticSettings", function () {
             });
 
             // startup
-            MessageHandler.init();
+            CommonMessages.init();
             await AutomaticSettings.init();
 
             // change some data
@@ -491,7 +491,7 @@ describe("options module: AutomaticSettings", function () {
             HtmlMock.setTestHtml(html);
 
             // startup
-            MessageHandler.init();
+            CommonMessages.init();
             AutomaticSettings.setDefaultOptionProvider(() => "resetOptionToDefault");
             await AutomaticSettings.init();
 
