@@ -17,7 +17,7 @@ export async function createMenu(title, properties, onCreated) {
         properties.title = browser.i18n.getMessage(`${title}AccessKey`);
     }
 
-    if (!("title" in properties)) {
+    if (!("title" in properties) || !properties.title) {
         properties.title = browser.i18n.getMessage(title);
     }
 
