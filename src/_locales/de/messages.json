@@ -22,13 +22,13 @@
     "message": "unbekannter Fehler",
     "description": ""
   },
-  "messageUndoButton": {
-    "message": "Rückgängig machen",
-    "description": "The text of a button that undoes the last action."
-  },
   "loading": {
     "message": "Laden…",
     "description": "A general loading message."
+  },
+  "messageUndoButton": {
+    "message": "Rückgängig machen",
+    "description": "The text of a button that undoes the last action."
   },
   "couldNotGenerateQrCode": {
     "message": "Konnte QR-Code nicht generieren.",
@@ -228,6 +228,23 @@
   "optionQrCodeSizeRemember": {
     "message": "An letzte Größe erinnern",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "optionQrQuietZone": {
+    "message": "QR-Randzone („quiet zone“):",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatus": {
+    "message": "Quadrat(e)",
+    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code."
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "Die Anzahl der in der Hintergrundfarbe gefärbten Randmodule um den QR-Code.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 
   "optionQrCodeColor": {

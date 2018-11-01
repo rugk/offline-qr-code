@@ -232,14 +232,14 @@
 
   "optionQrQuietZone": {
     "message": "QR quiet zone:",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
   },
   "optionQrQuietZoneStatus": {
-    "message": "module(s)",
-    "description": "This is an option shown in the add-on settings."
+    "message": "square(s)",
+    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code."
   },
   "optionQrQuietZoneDescr": {
-    "message": "The border in the background color around the QR code.",
+    "message": "The number of border modules around the QR code colored in the background color.",
     "description": "The description of the quiet zone option."
   },
   "optionQrQuietZoneDescrLink": {
