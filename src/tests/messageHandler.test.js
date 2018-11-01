@@ -3,7 +3,8 @@ import "https://unpkg.com/chai@4.1.2/chai.js"; /* globals chai */
 import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as MessageHandler from "/common/modules/MessageHandler/CommonMessages.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
 import * as HtmlMock from "./modules/HtmlMock.js";
@@ -22,8 +23,9 @@ describe("common module: MessageHandler", function () {
     });
 
     afterEach(function() {
+        CustomMessages.reset();
         AddonSettingsStub.afterTest();
-        // HtmlMock.cleanup();
+        HtmlMock.cleanup();
         sinon.restore();
     });
 
@@ -115,7 +117,7 @@ describe("common module: MessageHandler", function () {
             const mockConsole = sinon.mock(console);
 
             mockConsole.expects("error")
-                .once().withExactArgs(sinon.match.string, "MessageHandler.showMessage has been called without parameters");
+                .once().withExactArgs(sinon.match.string, "showMessage has been called without parameters");
 
             // test function
             MessageHandler.showMessage();
@@ -247,31 +249,34 @@ describe("common module: MessageHandler", function () {
         testMessageHide("messageSuccess", "success", MessageHandler.hideSuccess); // eslint-disable-line mocha/no-setup-in-describe
     });
 
-    describe("setMessageDesign()", function () {
+    describe("CustomMessages.setMessageDesign()", function () {
         /**
-         * Tests that the message function correctly hioes the messages.
+         * Tests that the message design function correctly changes the type of the message.
          *
          * @private
          * @function
          * @param {string} boxId the ID of the HtmlElement of the message box
          * @param {MESSAGE_LEVEL} messageLevel the message level design to add
-         * @param {string} oldClass the old class of the function
-         * @param {string} newClass the fnew class of the function
+         * @param {string} oldClass the old class of the message
+         * @param {string} newClass the fnew class of the message
+         * @param {MESSAGE_LEVEL|HTMLElement} [passToTest] the "messageBoxOrType"
+         * to pass to the test function, defaults to message box (elMessage)
          * @returns {Promise}
          */
-        function testMessageDesign(boxId, messageLevel, oldClass, newClass) {
+        function testMessageDesign(boxId, messageLevel, oldClass, newClass, passToTest) {
             const elMessage = document.getElementById(boxId);
 
-            MessageHandler.setMessageDesign(elMessage, messageLevel);
+            MessageHandler.init();
+            CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
 
             // verify classes are set
             chai.assert.isFalse(
                 elMessage.classList.contains(oldClass),
-                `Testing with box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+                `Testing with box ${boxId}. Message type has not been removed. ${oldClass} class is still there.`
             );
             chai.assert.isTrue(
                 elMessage.classList.contains(newClass),
-                `Testing with box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+                `Testing with box ${boxId}. Message type has not been added. It was expected to be set to ${newClass}.`
             );
 
             // verify classes of action button
@@ -279,11 +284,44 @@ describe("common module: MessageHandler", function () {
 
             chai.assert.isFalse(
                 elMessageActionButton.classList.contains(oldClass),
-                `Testing with action button of box ${boxId}. Message type was not removed. ${oldClass} class is still there.`
+                `Testing with action button of box ${boxId}. Message type has not been removed. ${oldClass} class is still there.`
             );
             chai.assert.isTrue(
                 elMessageActionButton.classList.contains(newClass),
-                `Testing with action button of box ${boxId}. Message type was not added. It was expected to be set to ${newClass}.`
+                `Testing with action button of box ${boxId}. Message type has not been added. It was expected to be set to ${newClass}.`
+            );
+        }
+
+        /**
+         * Tests that the message design function correctly changes the aria-label.
+         *
+         * @private
+         * @function
+         * @param {string} boxId the ID of the HtmlElement of the message box
+         * @param {MESSAGE_LEVEL} messageLevel the message level design to add
+         * @param {string} oldAria the old aria-type of the message
+         * @param {string} newAria the new aria-type of the message
+         * @param {MESSAGE_LEVEL|HTMLElement} [passToTest] the "messageBoxOrType"
+         * to pass to the test function, defaults to message box (elMessage)
+         * @returns {Promise}
+         */
+        function testMessageDesignAira(boxId, messageLevel, oldAria, newAria, passToTest) {
+            const elMessage = document.getElementById(boxId);
+            const ARIA_ATTRIBUTE = "aria-label";
+
+            MessageHandler.init();
+            CustomMessages.setMessageDesign((passToTest ? passToTest : elMessage), messageLevel);
+
+            // verify aria-label is set
+            chai.assert.notStrictEqual(
+                elMessage.getAttribute(ARIA_ATTRIBUTE),
+                oldAria,
+                `Testing with box ${boxId}. Aria-label has not been removed.`
+            );
+            chai.assert.strictEqual(
+                elMessage.getAttribute(ARIA_ATTRIBUTE),
+                newAria,
+                `Testing with box ${boxId}. Aria-label has not been added.`
             );
         }
 
@@ -292,27 +330,75 @@ describe("common module: MessageHandler", function () {
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.INFO, "success", "info");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.WARN, "success", "warning");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageSuccess", MESSAGE_LEVEL.ERROR, "success", "error");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.SUCCESS, "error", "success");
             // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
 
             testMessageDesign("messageError", MESSAGE_LEVEL.LOADING, "error", "info");
             // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+        });
+
+        it("changes aria-type", function () {
+            const testCode = getHtmlTestCode();
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success message", "info message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.WARN, "success message", "warning message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.ERROR, "success message", "error message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.SUCCESS, "error message", "success message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageError", MESSAGE_LEVEL.LOADING, "error message", "loading message");
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+        });
+
+        it("changes design and aria-type with message level given", function () {
+            const testCode = getHtmlTestCode();
+
+            testMessageDesign("messageInfo", MESSAGE_LEVEL.ERROR, "info", "error", MESSAGE_LEVEL.INFO);
+            // reset test code
+            CustomMessages.reset();
+            setHtmlTestCode(testCode);
+
+            testMessageDesignAira("messageSuccess", MESSAGE_LEVEL.INFO, "success message", "info message", MESSAGE_LEVEL.SUCCESS);
+            // reset test code
+            CustomMessages.reset();
             setHtmlTestCode(testCode);
         });
     });
 
-    describe("cloneMessage()", function () {
+    describe("CustomMessages.cloneMessage()", function () {
         /**
          * Tests that the clone function works.
          *
@@ -321,16 +407,17 @@ describe("common module: MessageHandler", function () {
          * @param {string} boxId the ID of the HTMLElement of the message box
          * @param {MESSAGE_LEVEL|HTMLElement} passToFunction the message level or element to pass to the function
          * @param {MESSAGE_LEVEL} expectedClass the message level design to add
+         * @param {string} expectedAria the expected aria-label it should have
          * @returns {Promise}
          */
-        function testMessageClone(boxId, passToFunction, expectedClass) {
+        function testMessageClone(boxId, passToFunction, expectedClass, expectedAria) {
             const newId = `veryUniqueStringMessageId${Math.random()}`;
             const messageBox = document.getElementById(boxId);
 
             // show message
             messageBox.classList.remove("invisible");
 
-            const newMessage = MessageHandler.cloneMessage(passToFunction, newId);
+            const newMessage = CustomMessages.cloneMessage(passToFunction, newId);
 
             // verify classes are set
             chai.assert.isTrue(
@@ -350,21 +437,30 @@ describe("common module: MessageHandler", function () {
                 newId,
                 `Testing with box ${boxId}. Has wrong ID.`
             );
+
+            // verify it has the correct aria-label
+            chai.assert.strictEqual(
+                newMessage.getAttribute("aria-label"),
+                expectedAria,
+                `Testing with box ${boxId}. Has wrong aria-label.`
+            );
         }
 
         it("clones existing message by type", function () {
             MessageHandler.init();
 
-            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info");
-            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info");
-            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success");
-            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning");
-            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error");
+            testMessageClone("messageLoading", MESSAGE_LEVEL.LOADING, "info", "loading message");
+            testMessageClone("messageInfo", MESSAGE_LEVEL.INFO, "info", "info message");
+            testMessageClone("messageSuccess", MESSAGE_LEVEL.SUCCESS, "success", "success message");
+            testMessageClone("messageWarning", MESSAGE_LEVEL.WARN, "warning", "warning message");
+            testMessageClone("messageError", MESSAGE_LEVEL.ERROR, "error", "error message");
         });
 
         it("clones HTMLElement", function () {
-            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info");
-            testMessageClone("messageError", document.getElementById("messageError"), "error");
+            MessageHandler.init();
+
+            testMessageClone("messageInfo", document.getElementById("messageInfo"), "info", "info message");
+            testMessageClone("messageError", document.getElementById("messageError"), "error", "error message");
         });
     });
 

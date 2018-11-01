@@ -5,7 +5,7 @@
  * @requires /common/modules/lib/lodash/debounce
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
- * @requires /common/modules/MessageHandler
+ * @requires /common/modules/MessageHandler/CustomMessages
  */
 
 // lodash
@@ -13,14 +13,13 @@ import debounce from "/common/modules/lib/lodash/debounce.js";
 
 import * as Logger from "/common/modules/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 const TIP_MESSAGE_BOX_ID = "messageTips";
 const TIP_SETTING_STORAGE_ID = "randomTips";
 const GLOBAL_RANDOMIZE = 0.2; // (%)
 const DEBOUNCE_SAVING = 1000; // ms
-
-let elMessageBox;
+const MESSAGE_TIP_ID = "messageTip";
 
 /** @see {@link config/tips.js} **/
 let tips;
@@ -53,12 +52,7 @@ let saveConfig = null; // will be assigned in init()
 function messageDismissed(param) {
     const elMessage = param.elMessage;
 
-    // ignore other dismissed messages
-    if (elMessage !== elMessageBox) {
-        return;
-    }
-
-    const id = elMessageBox.dataset.tipId;
+    const id = elMessage.dataset.tipId;
     if (tipShown.id !== id) {
         throw new Error("cached tip and dismissed tip differ");
     }
@@ -67,12 +61,9 @@ function messageDismissed(param) {
     tipConfig.tips[id].dismissedCount = (tipConfig.tips[id].dismissedCount || 0) + 1;
     saveConfig();
 
-    // remove dismiss hook
-    MessageHandler.setDismissHooks(null);
-
     // cleanup values
     tipShown = null;
-    delete elMessageBox.dataset.tipId;
+    delete elMessage.dataset.tipId;
 
     Logger.logInfo(`Tip ${id} has been dismissed.`);
 }
@@ -102,11 +93,9 @@ function showTip(tipSpec) {
     // default settings
     const allowDismiss = tipSpec.allowDismiss !== undefined ? tipSpec.allowDismiss : true;
 
-    elMessageBox.dataset.tipId = tipSpec.id;
-    MessageHandler.showMessage(elMessageBox, tipSpec.text, allowDismiss, tipSpec.actionButton);
-
-    // hook dismiss
-    MessageHandler.setDismissHooks(messageDismissed);
+    const elMessage = CustomMessages.getHtmlElement(MESSAGE_TIP_ID);
+    elMessage.dataset.tipId = tipSpec.id;
+    CustomMessages.showMessage(MESSAGE_TIP_ID, tipSpec.text, allowDismiss, tipSpec.actionButton);
 
     // update config
     tipConfig.tips[tipSpec.id].shownCount = (tipConfig.tips[tipSpec.id].shownCount || 0) + 1;
@@ -278,8 +267,9 @@ export function init(tipsToShow) {
         AddonSettings.set(TIP_SETTING_STORAGE_ID, tipConfig);
     }, DEBOUNCE_SAVING);
 
-    // load HTMLElement
-    elMessageBox = document.getElementById(TIP_MESSAGE_BOX_ID);
+    // register HTMLElement
+    CustomMessages.registerMessageType(MESSAGE_TIP_ID, document.getElementById(TIP_MESSAGE_BOX_ID));
+    CustomMessages.setHook(MESSAGE_TIP_ID, "dismissStart", messageDismissed);
 
     return AddonSettings.get(TIP_SETTING_STORAGE_ID).then((randomTips) => {
         tipConfig = randomTips;
