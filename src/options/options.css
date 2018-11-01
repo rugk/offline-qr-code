@@ -26,7 +26,7 @@ ul {
 }
 li {
   list-style-type: none;
-  margin-top: 8px;
+  margin-top: 10px;
   padding: 0px;
 }
 /* in a fieldset e.g. we use a condensed version */
@@ -86,8 +86,7 @@ input[type=radio] ~ .helper-text {
   /* -webkit-appearance: none; */
 }
 
-/* @TODO: improve ID! size can be anything! Just needed, because of current JS behaviour */
-#size {
+#qrCodeSizeFixedValue {
   width: 4.5em;
 }
 
