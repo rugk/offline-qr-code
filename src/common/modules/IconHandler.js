@@ -6,7 +6,6 @@ const POPUP_ICON_OPTION = "popupIconColored";
 /**
  * Sets a popup icon variant.
  *
- * @function
  * @private
  * @param {string} icon version or "null"/"undefined" to reset to default
  * @returns {Promise}
@@ -34,7 +33,7 @@ function setPopupIcon(icon) {
 /**
  * Set icon depending on whether it should be colored, or not.
  *
- * @function
+ * @public
  * @param {boolean} popupIconColored if popupIconColored is colored or not
  * @returns {Promise}
  */
@@ -50,7 +49,7 @@ export function changeIconIfColored(popupIconColored) {
 /**
  * Init icon module.
  *
- * @function
+ * @public
  * @returns {void}
  */
 export function init() {

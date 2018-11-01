@@ -17,7 +17,6 @@ const I18N_DATASET_INT = I18N_DATASET.length;
  *
  * The format is defined in {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/i18n/Locale-Specific_Message_reference#name}.
  *
- * @function
  * @private
  * @param  {string} tag
  * @returns {string}
@@ -41,7 +40,6 @@ function getMessageTag(tag) {
  * This is intended for substrings of datasets too, i.e. it does not add the "data" prefix
  * in front of the attribute.
  *
- * @function
  * @private
  * @param  {string} dataSetValue
  * @returns {string}
@@ -64,7 +62,6 @@ function convertDatasetToAttribute(dataSetValue) {
 /**
  * Returns the translated message when a key is given.
  *
- * @function
  * @private
  * @param  {string} messageName
  * @param  {string[]} [substitutions]
@@ -85,7 +82,6 @@ function getTranslatedMessage(messageName, substitutions) {
 /**
  * Replaces attribute or inner text of element with string.
  *
- * @function
  * @private
  * @param  {HTMLElement} elem
  * @param  {string} attribute attribute to replace, set to "null" to replace inner content
@@ -111,7 +107,6 @@ function replaceWith(elem, attribute, translatedMessage) {
 /**
  * Localises the strings to localize in the HTMLElement.
  *
- * @function
  * @private
  * @param  {HTMLElement} elem
  * @param  {string} tag the translation tag
@@ -153,7 +148,7 @@ function replaceI18n(elem, tag) {
 /**
  * Localizes static strings in the HTML file.
  *
- * @function
+ * @public
  * @returns {void}
  */
 export function init() {

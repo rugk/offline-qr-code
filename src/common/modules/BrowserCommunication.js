@@ -61,7 +61,6 @@ function checkMessageTypeVadility(messageType) {
 /**
  * Handles messages received by other parts.
  *
- * @function
  * @private
  * @param {Object} request JSON-ifiable object of the message
  * @param {Object} sender the runtime.MessageSender, see {@link https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender}

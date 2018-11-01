@@ -14,8 +14,7 @@
  * This function determinates whether HTML is being replaced as HTML or not allowed
  * (in order to avoid a dependency on innerHTML).
  *
- * @function
- * @private
+ * @protected
  * @param  {HTMLElement} elem
  * @param  {string} translatedMessage
  * @returns {void}

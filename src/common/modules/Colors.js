@@ -28,7 +28,7 @@ export const CONTRAST_RATIO = Object.freeze({
 /**
  * Calculates the contrast between two colors
  *
- * @function
+ * @public
  * @param  {Array} rgb1
  * @param  {Array} rgb2
  * @returns {int}
@@ -43,7 +43,6 @@ export function contrastRatio(rgb1, rgb2) {
 /**
  * Calculates the luminance of a given RGB color.
  *
- * @function
  * @private
  * @param  {Array} rgb
  * @returns {Array|null}
@@ -68,7 +67,7 @@ function luminance(rgb) {
  * Attention: To ease calculation, this also inverts the brightness and not only
  * the hue of the color.
  *
- * @function
+ * @public
  * @param  {Array} rgb
  * @returns {string}
  */
@@ -84,7 +83,6 @@ export function invertColor(rgb) {
 /**
  * Adds missing zeros in front of a string.
  *
- * @function
  * @private
  * @param  {string} string
  * @param  {int} [length=2]
@@ -98,7 +96,7 @@ function padZero(string, length = 2) {
 /**
  * Converts a hex color string to RGB.
  *
- * @function
+ * @public
  * @param  {string} hex
  * @returns {Array|null}
  */

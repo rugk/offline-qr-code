@@ -28,7 +28,6 @@ let saveAsRetries = 0;
  *
  * This is basically a workaround for {@link https://bugzilla.mozilla.org/show_bug.cgi?id=1461134}.
  *
- * @function
  * @private
  * @param {Object} request
  * @param {Object} sender
@@ -109,4 +108,3 @@ BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS, (reque
 BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY, () => {
     saveFileAsRetry = false;
 });
-

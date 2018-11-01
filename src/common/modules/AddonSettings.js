@@ -23,7 +23,7 @@ let syncOptions = null;
  *
  * Returns undefined, if option cannot be found.
  *
- * @function
+ * @public
  * @param  {string|null} option name of the option
  * @returns {Object|undefined}
  * @throws {Error} if option is not available
@@ -47,7 +47,6 @@ export function getDefaultValue(option) {
  * Makes sure, that the synced o0ptions are available.
  *
  * @private
- * @function
  * @returns {Promise}
  * @throws {Error}
  */
@@ -64,7 +63,6 @@ function requireSyncedOptions() {
  * It assumes gettingManagedOption is not pending anymore.
  *
  * @private
- * @function
  * @returns {Object}
  */
 async function getAllOptions() {
@@ -94,7 +92,7 @@ async function getAllOptions() {
  * {@link loadOptions()} in case you need this. Otherwise, this leaves the
  * module in an uninitalized/unexpected state.
  *
- * @function
+ * @public
  * @returns {void}
  */
 export function clearCache() {
@@ -110,7 +108,7 @@ export function clearCache() {
  * Otherwise, you can pass no parmeter or "null" and it will return all
  * saved config values.
  *
- * @function
+ * @public
  * @param  {string|null} [option=null] name of the option
  * @returns {Promise} resulting in single value or object of values or undefined
  * @throws {Error} if option is not available or other (internal) error happened
@@ -159,7 +157,7 @@ export async function get(option = null) {
  * Note you can pass an key -> value object to set here.
  *
  * @see {@link https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/StorageArea/set}
- * @function
+ * @public
  * @param  {Object|string} option keys/values to set or single value
  * @param  {Object} [value=] if only a single value is to be set
  * @returns {Promise}
@@ -202,7 +200,7 @@ export function set(option, value) {
  * built in a way, so that the actual getting of the options is waiting for
  * the promise.
  *
- * @function
+ * @public
  * @returns {Promise}
  */
 export function loadOptions() {
