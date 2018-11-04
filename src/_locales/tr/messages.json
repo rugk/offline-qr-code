@@ -140,12 +140,24 @@
     "message": "Seçili kısımdan QR kod üret",
     "description": "The context menu entry shown for generating QR codes from a selection."
   },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "Seçili kısımdan &QR kod üret",
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
   "contextMenuItemConvertLinkSelection": {
     "message": "Linkten QR kod üret",
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "Linkten &QR kod üret",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
+  },
   "contextMenuSaveImage": {
     "message": "QR kod kaydet…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageAccessKey": {
+    "message": "&QR kod kaydet…",
     "description": "The context menu entry shown for saving SVG images in the popup."
   },
 
@@ -216,6 +228,23 @@
   "optionQrCodeSizeRemember": {
     "message": "Son kullanılan boyutu hatırla",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "optionQrQuietZone": {
+    "message": "QR çerçevesi (quiet zone):",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatus": {
+    "message": "kare",
+    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code."
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "QR kod çevresinde renkli arkaplandan ayırmak için kullanılacak çerçevenin boyutu.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 
   "optionQrCodeColor": {
