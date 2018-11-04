@@ -108,6 +108,10 @@
     "message": "Schon gewusst? Du kannst QR-Codes als Bild abspeichern.",
     "description": "A tip shown to get the add-on to find the save option."
   },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(deutsch)#wie-speichere-ich-den-qr-code",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
   "tipQrCodeHotkey": {
     "message": "Die Tastenkombination für dieses Add-on ist Strg+Umschalt+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
@@ -243,7 +247,7 @@
     "description": "The description of the quiet zone option."
   },
   "optionQrQuietZoneDescrLink": {
-    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(deutsch)#was-ist-die-quiet-zone",
     "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 

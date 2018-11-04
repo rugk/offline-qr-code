@@ -312,7 +312,8 @@ export function showMessage(...args) {
             // potentiall remove previous set thing
             elActionButtonLink.removeAttribute("href");
         } else {
-            elActionButtonLink.setAttribute("href", actionButton.action);
+            const url = browser.i18n.getMessage(actionButton.action) || actionButton.action;
+            elActionButtonLink.setAttribute("href", url);
 
             // unset potential previously set handler
             hooks[messageType].actionButton = null;

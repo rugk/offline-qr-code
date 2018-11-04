@@ -68,7 +68,7 @@ const tipArray = [
         text: "tipSaveQrCode",
         actionButton: {
             text: "tipLearnMore",
-            action: "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk"
+            action: "tipSaveQrCodeLink"
         }
     },
     // {
