@@ -108,6 +108,10 @@
     "message": "Did you know you can save QR codes?",
     "description": "A tip shown to get the user to find the save option."
   },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
   "tipQrCodeHotkey": {
     "message": "Remember the hot key for this add-on is Ctrl+Shift+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
