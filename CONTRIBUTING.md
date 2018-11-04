@@ -23,6 +23,8 @@ Please have look at [the "Writing for users" guide](https://design.firefox.com/p
 
 ### Using HTML in translations
 
+**Using HTML in translations is disabled due to security reasons.**
+
 If you need to use HTML in a translation, please prepend `!HTML!` in front of the text. It will only be parsed as HTML if you do this. Otherwise it will be displayed as text. A sentence could look like this:
 ```json
 "boldSentence": {
@@ -30,11 +32,21 @@ If you need to use HTML in a translation, please prepend `!HTML!` in front of th
 }
 ```
 
-### Translations of add-on description
+### Translation of add-on listings
 
 All texts shown on AMO (addons.mozilla.org) are maintained in [`assets/texts`](assets/texts). Again, you can use the English template there.
 The files have different formats, but all of them are easily translatable with any text editor.
 Note that the `amoScreenshots.csv` file refers to the screenshot descriptions you can see when you click on the screenshots of AMO. The first column there is the file name, which you can see in [`assets/screenshots`](assets/screenshots), and _must not_ be translated.
+
+### Translation of wiki
+
+This project has a [wiki](/wiki) on GitHub. To translate it, just create the appropriate wiki pages in your local language.
+As GitHub does not allow multiple pages to have the same name, you have to adjust it. If the title is different in your language, you can just rename it. If it collides with another existing file, e.g. if the title is the same as in English, append the title with ` (<local language>)`, where `<local language>` is a placeholder for a proper identifier for your language that makes sense to your users. This identifier should be readable by humans and not be an abbreviation as it is displayed as a title on GitHub (i.e. _not_ `de_DE`) and it should also be translated (i.e. _not_ `German`, but `deutsch`). Capitalization and similar things should thus follow your local language. Also the appendix/bracket style (i.e. `(…)`) should follow your local Langauge. As such, if you e.g. always prefix such additional notes, then do it here, too.
+Generally said, the whole title must just be translated, but does have to be unique.
+
+If you are done with that, do not forget to edit the [`_Sidebar` file](/wiki/_Sidebar/_edit) and add your language. Keep the English version at the top. The languages afterwards should be kept in alphabetical order. Do use the English name of your language as a heading and link to your newly created pages using their local name.
+
+Do not forget that files in the project's main repository itself often refer to the wiki, so remember to also replace the links in here.
 
 ### Internationalisation of HTML files
 
