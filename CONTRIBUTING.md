@@ -2,7 +2,7 @@ Nice to see you want to contribute! :+1:
 
 ## Translations
 
-It would be great, if you can contribute your translations! You can either translate the JSON files directly or use [this online translator service](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code).
+It would be great if you can contribute your translations! You can either translate the JSON files directly or use [this online translator service](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code).
 
 **Manually:** To translate it manually, go to [`src/_locales/en`](src/_locales/en) and copy the English (or German) [`messages.json`](src/_locales/en/messages.json) file. (You could also use another source language if you want, but usually English is the best.) Create a new dir at [`src/_locales`](src/_locales) with the abbreviation of the language you want to translate.  
 **Web-ext-translator:** Go to [this page](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code) and translate it online. Download the result by clicking on "Export to ZIP" at the bottom.
@@ -17,7 +17,7 @@ For more details, [see the official docs](https://developer.mozilla.org/Add-ons/
 The English "you" should be translated in a personal way, if the target language differentiates between "you" for "anybody"/"they" and "you" for "the user of this extension". In German, that e.g. means you can translate it with "du [kannst etwas machen]" instead of "man [kann etwas machen]". As you can see, please use the informal "you" ("du") instead of a formal language style, if your language differentiates between that.
 
 Please pay attention to the context and UI area the message is used for. Better translate it to a good native statement than a literal translation.
-For example messages like "Learn more" may need special (and different) handling and could also be translated with "More information" or so. Generally in the tips you should be a concise as possible. All other texts – like helper texts in the options page – should also be concise, but on point and factually correct. You may use easy terms to explain a thing and link to more resources instead, however. (See also the "Writing for users" guide linked below, where this is explained in more detail.)
+For example messages like "Learn more" may need special (and different) handling and could also be translated with "More information" or so. Generally in the tips you should be as concise as possible. All other texts – like helper texts in the options page – should also be concise, but on point and factually correct. You may use easy terms to explain a thing and link to more resources instead, however. (See also the "Writing for users" guide linked below, where this is explained in more detail.)
 
 Please have look at [the "Writing for users" guide](https://design.firefox.com/photon/copy/writing-for-users.html) of the Firefox Photon Design for other rules you should adhere to. The [Mozilla localization style guide](https://mozilla-l10n.github.io/styleguides/) can also help.
 
