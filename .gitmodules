@@ -4,3 +4,6 @@
 [submodule "src/tests/helper"]
 	path = src/tests/helper
 	url = ../../TinyWebEx/TestHelper
+[submodule "src/common/modules/AddonSettings"]
+	path = src/common/modules/AddonSettings
+	url = ../../TinyWebEx/AddonSettings

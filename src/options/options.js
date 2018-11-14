@@ -9,7 +9,7 @@
 import * as Logger from "/common/modules/Logger.js";
 import { tips } from "/common/modules/data/Tips.js";
 import * as RandomTips from "/common/modules/RandomTips.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 import * as CustomOptionTriggers from "./modules/CustomOptionTriggers.js";
 import * as AutomaticSettings from "./modules/AutomaticSettings/AutomaticSettings.js";

@@ -9,7 +9,7 @@
  * @requires ./UserInterface
  */
 import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 import * as QrLibQrGen from "./QrLib/qrgen.js";
 import * as QrLibKjua from "./QrLib/kjua.js";

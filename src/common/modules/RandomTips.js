@@ -12,7 +12,7 @@
 import debounce from "/common/modules/lib/lodash/debounce.js";
 
 import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
 const TIP_MESSAGE_BOX_ID = "messageTips";

@@ -9,7 +9,7 @@
 import {MESSAGE_LEVEL} from "/common/modules/data/MessageLevel.js";
 import {ADDON_NAME_SHORT} from "/common/modules/data/GlobalConsts.js";
 
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 import isPlainObject from "/common/modules/lib/lodash/isPlainObject.js";
 

@@ -18,7 +18,7 @@ import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 import * as QrCreator from "./QrCreator.js";
