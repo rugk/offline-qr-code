@@ -8,9 +8,9 @@ import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.j
 
 import * as AutomaticSettings from "/options/modules/AutomaticSettings/AutomaticSettings.js";
 
-import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
-import * as HtmlMock from "./modules/HtmlMock.js";
-import {wait} from "./modules/PromiseHelper.js";
+import * as AddonSettingsStub from "./helper/AddonSettingsStub.js";
+import * as HtmlMock from "./helper/HtmlMock.js";
+import {wait} from "./helper/PromiseHelper.js";
 
 describe("options module: AutomaticSettings", function () {
     before(function () {

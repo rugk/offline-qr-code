@@ -5,8 +5,8 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 import * as RandomTips from "/common/modules/RandomTips.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 
-import * as AddonSettingsStub from "./modules/AddonSettingsStub.js";
-import * as HtmlMock from "./modules/HtmlMock.js";
+import * as AddonSettingsStub from "./helper/AddonSettingsStub.js";
+import * as HtmlMock from "./helper/HtmlMock.js";
 
 const HTML_BASE_FILE = "./randomTips/baseCode.html";
 

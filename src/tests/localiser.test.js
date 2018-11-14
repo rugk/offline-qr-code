@@ -4,7 +4,7 @@ import "https://unpkg.com/sinon@6.1.5/pkg/sinon.js"; /* globals sinon */
 
 import * as Localizer from "/common/modules/Localizer/Localizer.js";
 
-import * as HtmlMock from "./modules/HtmlMock.js";
+import * as HtmlMock from "./helper/HtmlMock.js";
 
 const TEST_ATTRIBUTES = [
     "placeholder",

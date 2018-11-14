@@ -1,3 +1,6 @@
 [submodule "src/common/modules/Localizer"]
 	path = src/common/modules/Localizer
 	url = ../../TinyWebEx/Localizer/
+[submodule "src/tests/helper"]
+	path = src/tests/helper
+	url = ../../TinyWebEx/TestHelper
