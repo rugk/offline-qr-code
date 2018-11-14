@@ -1,0 +1,3 @@
+[submodule "src/common/modules/Localizer"]
+	path = src/common/modules/Localizer
+	url = ../../TinyWebEx/Localizer/
