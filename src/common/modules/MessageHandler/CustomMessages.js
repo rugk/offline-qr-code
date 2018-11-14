@@ -10,7 +10,7 @@
 // lodash
 import isFunction from "/common/modules/lib/lodash/isFunction.js";
 
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 
 const HOOK_TEMPLATE = {
     show: null,

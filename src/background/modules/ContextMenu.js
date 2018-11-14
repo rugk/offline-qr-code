@@ -1,4 +1,4 @@
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 

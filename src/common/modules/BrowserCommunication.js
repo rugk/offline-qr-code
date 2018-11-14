@@ -5,7 +5,7 @@
  * @requires /common/modules/Logger
  * @requires ../data/BrowserCommunicationTypes
  */
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "./data/BrowserCommunicationTypes.js";
 
 const callbacks = {};

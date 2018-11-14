@@ -10,7 +10,7 @@ CommonMessages /**
  */
 
 // common modules
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 

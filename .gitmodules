@@ -7,3 +7,6 @@
 [submodule "src/common/modules/AddonSettings"]
 	path = src/common/modules/AddonSettings
 	url = ../../TinyWebEx/AddonSettings
+[submodule "src/common/modules/Logger"]
+	path = src/common/modules/Logger
+	url = https://github.com/TinyWebEx/Logger

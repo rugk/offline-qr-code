@@ -4,7 +4,7 @@
  * @module modules/CustomOptionTriggers
  */
 
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AutomaticSettings from "./AutomaticSettings/AutomaticSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";

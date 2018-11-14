@@ -1,4 +1,4 @@
-import * as Logger from "/common/modules/Logger.js";
+import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 const POPUP_ICON_OPTION = "popupIconColored";
