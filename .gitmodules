@@ -1,12 +1,12 @@
 [submodule "src/common/modules/Localizer"]
 	path = src/common/modules/Localizer
-	url = ../../TinyWebEx/Localizer/
+	url = https://github.com/TinyWebEx/Localizer/
 [submodule "src/tests/helper"]
 	path = src/tests/helper
-	url = ../../TinyWebEx/TestHelper
+	url = https://github.com/TinyWebEx/TestHelper
 [submodule "src/common/modules/AddonSettings"]
 	path = src/common/modules/AddonSettings
-	url = ../../TinyWebEx/AddonSettings
+	url = https://github.com/TinyWebEx/AddonSettings
 [submodule "src/common/modules/Logger"]
 	path = src/common/modules/Logger
 	url = https://github.com/TinyWebEx/Logger
