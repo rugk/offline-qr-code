@@ -10,3 +10,6 @@
 [submodule "src/common/modules/Logger"]
 	path = src/common/modules/Logger
 	url = https://github.com/TinyWebEx/Logger
+[submodule "src/common/modules/MessageHandler"]
+	path = src/common/modules/MessageHandler
+	url = https://github.com/TinyWebEx/MessageHandler
