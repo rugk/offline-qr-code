@@ -16,3 +16,6 @@
 [submodule "src/common/modules/BrowserCommunication"]
 	path = src/common/modules/BrowserCommunication
 	url = https://github.com/TinyWebEx/BrowserCommunication
+[submodule "src/common/modules/RandomTips"]
+	path = src/common/modules/RandomTips
+	url = https://github.com/TinyWebEx/RandomTips

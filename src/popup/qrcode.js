@@ -8,7 +8,7 @@
 "use strict";
 
 import { tips } from "/common/modules/data/Tips.js";
-import * as RandomTips from "/common/modules/RandomTips.js";
+import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
 
 import "./modules/InitQrCode.js";
 
