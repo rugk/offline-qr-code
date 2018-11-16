@@ -5,7 +5,6 @@
  * @requires /common/modules/Logger
  * @requires ../data/BrowserCommunicationTypes
  */
-import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "./data/BrowserCommunicationTypes.js";
 
 const callbacks = {};
@@ -69,13 +68,13 @@ function checkMessageTypeVadility(messageType) {
  * @see {@link https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage#Parameters}
  */
 function handleMessages(request, sender, sendResponse) {
-    Logger.logInfo("Got message", request, "from", sender);
+    console.info("Got message", request, "from", sender);
 
     const messageType = request.type;
     checkMessageTypeVadility(messageType);
 
     if (!(messageType in callbacks) || callbacks[messageType].length === 0) {
-        Logger.logWarning(`No callbacks for message type "${messageType}" registered.`);
+        console.warn(`No callbacks for message type "${messageType}" registered.`);
         return Promise.resolve();
     }
 
@@ -98,11 +97,11 @@ function handleMessages(request, sender, sendResponse) {
     if (gotTrueAsReturn) {
         if (callbacks[messageType].length !== 1) {
             // if it was not the only callback, then show a real error
-            Logger.logError(`At least one callback for message type "${messageType}" returned the legacy value "true".
+            console.error(`At least one callback for message type "${messageType}" returned the legacy value "true".
             As you have registered ${callbacks[messageType].length} listeners this may lead to errors.`);
         } else {
             // show warning as this behaviour is discouraged
-            Logger.logWarning(`At least one callback for message type "${messageType}" returned the legacy value "true". Please return a Promise instead.`);
+            console.warn(`At least one callback for message type "${messageType}" returned the legacy value "true". Please return a Promise instead.`);
         }
 
         return true;
