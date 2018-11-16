@@ -9,11 +9,11 @@
  */
 
 // lodash
-import debounce from "/common/modules/lib/lodash/debounce.js";
+import debounce from "../lodash/debounce.js";
 
-import * as Logger from "/common/modules/Logger/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
-import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
+import * as Logger from "../Logger/Logger.js";
+import * as AddonSettings from "../AddonSettings/AddonSettings.js";
+import * as CustomMessages from "../MessageHandler/CustomMessages.js";
 
 const TIP_MESSAGE_BOX_ID = "messageTips";
 const TIP_SETTING_STORAGE_ID = "randomTips";
@@ -275,5 +275,3 @@ export function init(tipsToShow) {
         tipConfig = randomTips;
     });
 }
-
-Logger.logInfo("RandomTips module loaded.");
