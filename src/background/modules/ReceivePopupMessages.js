@@ -10,7 +10,7 @@
  */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as BrowserCommunication from "/common/modules/BrowserCommunication.js";
+import * as BrowserCommunication from "/common/modules/BrowserCommunication/BrowserCommunication.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
