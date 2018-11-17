@@ -2,7 +2,6 @@
  * Provides the data for the settings.
  *
  * Currently just used to provide the **default** data.
- * TODO: refactor this, i.e. just redirect the usual browser.storage calls here.
  *
  * @module internal/OptionsModel
  */
