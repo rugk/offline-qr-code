@@ -19,3 +19,6 @@
 [submodule "src/common/modules/RandomTips"]
 	path = src/common/modules/RandomTips
 	url = https://github.com/TinyWebEx/RandomTips
+[submodule "src/common/modules/AutomaticSettings"]
+	path = src/common/modules/AutomaticSettings
+	url = https://github.com/TinyWebEx/AutomaticSettings
