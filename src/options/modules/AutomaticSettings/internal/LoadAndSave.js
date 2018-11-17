@@ -1,4 +1,4 @@
-CommonMessages /**
+/**
  * Load, save and apply options to HTML options page.
  *
  * @module internal/LoadAndSave
@@ -10,8 +10,7 @@ CommonMessages /**
  */
 
 // common modules
-import * as Logger from "/common/modules/Logger/Logger.js";
-import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
+import * as Logger from "../../Logger/Logger.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 // import internal modules
@@ -261,7 +260,7 @@ async function resetOptions(event) {
     });
 
     // cleanup resetted cached option after message is hidden
-    CommonMessages.setHook(MESSAGE_LEVEL.SUCCESS, null, () => {
+    CommonMessages.setSuccessHook(null, () => {
         lastOptionsBeforeReset = null;
         Logger.logInfo("reset options message hidden, undo vars cleaned");
     });

@@ -6,7 +6,7 @@
  */
 
 // common modules
-import * as Logger from "/common/modules/Logger/Logger.js";
+import * as Logger from "../../Logger/Logger.js";
 
 import * as OptionsModel from "./OptionsModel.js";
 

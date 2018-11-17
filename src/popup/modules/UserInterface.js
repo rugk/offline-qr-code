@@ -14,7 +14,6 @@
 import isObject from "/common/modules/lib/lodash/isObject.js";
 import throttle from "/common/modules/lib/lodash/throttle.js";
 
-import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 import * as Logger from "/common/modules/Logger/Logger.js";
@@ -490,8 +489,8 @@ export function lateInit() {
  */
 export function init() {
     // set error hooks
-    CommonMessages.setHook(MESSAGE_LEVEL.LOADING, showPlaceholder, hidePlaceholder);
-    CommonMessages.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
+    CommonMessages.setLoadingHook(showPlaceholder, hidePlaceholder);
+    CommonMessages.setErrorHook(showPlaceholder, hidePlaceholder);
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
