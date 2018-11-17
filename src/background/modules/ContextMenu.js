@@ -1,6 +1,6 @@
 import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
-import {createMenu} from "/common/modules/ContextMenu.js";
+import { createMenu } from "/common/modules/ContextMenu.js";
 
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";

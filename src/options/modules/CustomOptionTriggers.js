@@ -1,11 +1,11 @@
 /**
- * Load, save and apply options to HTML options page.
+ * This mdoules contains the custom triggers for some options that are added.
  *
  * @module modules/CustomOptionTriggers
  */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as AutomaticSettings from "./AutomaticSettings/AutomaticSettings.js";
+import * as AutomaticSettings from "/common/modules/AutomaticSettings/AutomaticSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
