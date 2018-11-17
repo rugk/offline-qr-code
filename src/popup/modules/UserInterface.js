@@ -2,8 +2,8 @@
  * Management of GUI elements
  *
  * @module modules/UserInterface
- * @requires /common/modules/lib/lodash/isObject
- * @requires /common/modules/lib/lodash/throttle
+ * @requires /common/modules/lodash/isObject
+ * @requires /common/modules/lodash/throttle
  * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
@@ -11,8 +11,8 @@
  * @requires ./QrCreator
  */
 // lodash
-import isObject from "/common/modules/lib/lodash/isObject.js";
-import throttle from "/common/modules/lib/lodash/throttle.js";
+import isObject from "/common/modules/lodash/isObject.js";
+import throttle from "/common/modules/lodash/throttle.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
