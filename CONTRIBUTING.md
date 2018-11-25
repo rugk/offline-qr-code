@@ -59,6 +59,26 @@ You should always hardcode an English fallback string in the HTML file, so it ca
 
 ## Coding
 
+### Cloning
+
+**Important:** As this project uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) when you clone it, you _have to_ clone it with them, e.g. [like this](https://stackoverflow.com/questions/3796927/how-to-git-clone-including-submodules#4438292):
+
+```sh
+git clone --recurse-submodules <project>
+```
+
+or for older versions of git:
+
+```sh
+git clone --recursive <project>
+```
+
+If you already cloned it, or just need to update the submodules from this repo, do run this:
+
+```sh
+git submodule update --init --recursive
+```
+
 ### Getting started
 
 Developing/improving a WebExtension add-on is easy! **If you have ever made some stuff with HTML/CSS/JS you can do that, too!** It's built on the same technologies.
