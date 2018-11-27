@@ -13,7 +13,10 @@ cp "./scripts/manifests/firefox.json" "./src/manifest.json" || exit
 
 # create zip
 cd src || exit
-zip -r -FS "../build/$EXTENSION_NAME.xpi" ./* --exclude "tests/*"
+zip -r -FS "../build/$EXTENSION_NAME.xpi" ./* -x "tests/*" -x "**/tests/*" \
+    -x "**/README.md" -x "**/CONTRIBUTING.md" -x "**/manifest.json" \
+    -x "**/.git" -x "**/.gitignore" -x "**/.gitmodules" -x "**/.eslintrc" \
+    -x "**/.editorconfig"
 
 # revert changes
 mv LICENSE.md ../LICENSE.md
