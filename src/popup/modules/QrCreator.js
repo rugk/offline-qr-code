@@ -133,7 +133,7 @@ export function setTextInternal(text) {
  */
 export function generateFromTab(tab) {
     if (tab.url === undefined) {
-        throw new Error("URL not yet available.");
+        throw new Error("URL not available.");
     }
 
     setText(tab.url);

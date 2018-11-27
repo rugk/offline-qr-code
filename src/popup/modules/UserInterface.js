@@ -490,7 +490,12 @@ export function lateInit() {
 export function init() {
     // set error hooks
     CommonMessages.setLoadingHook(showPlaceholder, hidePlaceholder);
-    CommonMessages.setErrorHook(showPlaceholder, hidePlaceholder);
+    CommonMessages.setErrorHook(() => {
+        // hide loading first as this may hide the placeholder
+        CommonMessages.hideLoading();
+
+        showPlaceholder();
+    }, hidePlaceholder);
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
