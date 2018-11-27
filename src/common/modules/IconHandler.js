@@ -20,7 +20,7 @@ function setPopupIcon(icon) {
         // ok
         break;
     default:
-        throw Error(`invalid parameter: ${icon}`);
+        throw new TypeError(`invalid parameter: ${icon}`);
     }
 
     if (icon === null || icon === undefined) {
