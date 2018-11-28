@@ -556,6 +556,11 @@ export function init() {
     // initiate settings dependent on the type of the QR code
     const initQrTypespecificSettings = QrCreator.getGenerationType().then((genType) => {
         if (genType !== "svg") {
+            // ignore if menu API is not supported (on Android e.g.)
+            if (browser.menus === undefined) {
+                return Promise.resolve();
+            }
+
             // remove menu item if it has been added before
             browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
 
@@ -577,7 +582,14 @@ export function init() {
             } else {
                 Logger.logInfo("menu item created successfully");
             }
-        }).then(() => browser.menus.onClicked.addListener(menuClicked));
+        }).then(() => {
+            // ignore if menu API is not supported (on Android e.g.)
+            if (browser.menus === undefined) {
+                return Promise.resolve();
+            }
+
+            return browser.menus.onClicked.addListener(menuClicked)
+        });
     });
 
     // return Promise chain

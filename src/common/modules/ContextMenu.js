@@ -11,6 +11,11 @@ const browserInfo = browser.runtime.getBrowserInfo();
  * @returns {Promise}
  */
 export async function createMenu(title, properties, onCreated) {
+    // ignore if menu API is not supported (on Android e.g.)
+    if (browser.menus === undefined) {
+        return Promise.resolve();
+    }
+
     const info = await browserInfo;
     const version = parseInt(info.version, 10);
     if (version > 63) {
