@@ -21,6 +21,7 @@ const MAX_SAVE_AS_RETRIES = 60;
 
 // whether to retry the file saving or not, acts both as a status indicator and a setting
 let saveFileAsRetry = null;
+// the number of retries it already did
 let saveAsRetries = 0;
 
 /**
