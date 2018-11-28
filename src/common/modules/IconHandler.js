@@ -23,6 +23,11 @@ function setPopupIcon(icon) {
         throw new TypeError(`invalid parameter: ${icon}`);
     }
 
+    // ignore request if API is not available
+    if (browser.browserAction.setIcon === undefined) {
+        return Promise.resolve();
+    }
+
     if (icon === null || icon === undefined) {
         return browser.browserAction.setIcon({path: null});
     }
