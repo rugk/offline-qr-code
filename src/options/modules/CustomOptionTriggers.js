@@ -91,13 +91,24 @@ function applyDebugMode(optionValue) {
  *
  * @function
  * @private
- * @param {string} optionValue
+ * @param {number} optionValue
  * @returns {void}
  */
 function updateQrQuietZoneStatus(optionValue) {
     const elQrQuietZoneStatus = document.getElementById("qrQuietZoneStatus");
+    let messageName = "optionQrQuietZoneStatusPlural";
 
-    elQrQuietZoneStatus.textContent = optionValue;
+    if (optionValue === 1) {
+        messageName = "optionQrQuietZoneStatusSingular";
+    }
+
+    const translatedMessage = browser.i18n.getMessage(messageName, optionValue);
+
+    if (!translatedMessage) {
+        throw new Error(`no translation string for "${messageName}" could be found`);
+    }
+
+    elQrQuietZoneStatus.textContent = translatedMessage;
 }
 
 /**

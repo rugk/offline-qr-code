@@ -234,9 +234,25 @@
     "message": "QR çerçevesi (quiet zone):",
     "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
   },
-  "optionQrQuietZoneStatus": {
-    "message": "kare",
-    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code."
+  "optionQrQuietZoneStatusSingular": {
+    "message": "$QRQUIETZONE$ kare",
+    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code.",
+    "placeholders": {
+      "qrQuietZone": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "$QRQUIETZONE$ kareler",
+    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code.",
+    "placeholders": {
+      "qrQuietZone": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   },
   "optionQrQuietZoneDescr": {
     "message": "QR kod çevresinde renkli arkaplandan ayırmak için kullanılacak çerçevenin boyutu.",
