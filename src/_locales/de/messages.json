@@ -239,20 +239,20 @@
     "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
   },
   "optionQrQuietZoneStatusSingular": {
-    "message": "$QRQUIETZONE$ Quadrat",
-    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code.",
+    "message": "($INTEGER$ Quadrat)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
     "placeholders": {
-      "qrQuietZone": {
+      "integer": {
         "content": "$1",
         "example": "1"
       }
     }
   },
   "optionQrQuietZoneStatusPlural": {
-    "message": "$QRQUIETZONE$ Quadrate",
-    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code.",
+    "message": "($INTEGER$ Quadrate)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
     "placeholders": {
-      "qrQuietZone": {
+      "integer": {
         "content": "$1",
         "example": "3"
       }
