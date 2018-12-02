@@ -238,9 +238,25 @@
     "message": "QR-Randzone („quiet zone“):",
     "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
   },
-  "optionQrQuietZoneStatus": {
-    "message": "Quadrat(e)",
-    "description": "This is an option shown in the add-on settings. It should name the empty/'white' modules around the QR code."
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ Quadrat)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ Quadrate)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   },
   "optionQrQuietZoneDescr": {
     "message": "Die Anzahl der in der Hintergrundfarbe gefärbten Randmodule um den QR-Code.",

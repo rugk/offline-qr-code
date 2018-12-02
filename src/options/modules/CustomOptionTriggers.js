@@ -86,18 +86,48 @@ function applyDebugMode(optionValue) {
 }
 
 /**
+ * Gets the plural form of the quiet zone translation, depending on the option value.
+ *
+ * @function
+ * @private
+ * @param {string} language
+ * @param {integer} optionValue
+ * @returns {string} messageName
+ */
+function getPluralForm(language, optionValue) {
+    if (!language) {
+        language = 'en';
+    }
+
+    switch(language) {
+        case 'tr':
+            return optionValue > 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
+        //en, de
+        default:
+            return optionValue !== 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
+    }
+}
+
+/**
  * Adjust UI of QR code quiet zone status (the "N modules" text). Triggers once
  * after the options have been loaded and when the option value is updated by the user.
  *
  * @function
  * @private
- * @param {string} optionValue
+ * @param {integer} optionValue
  * @returns {void}
+ * @throws {Error} if no translation could be found
  */
 function updateQrQuietZoneStatus(optionValue) {
     const elQrQuietZoneStatus = document.getElementById("qrQuietZoneStatus");
+    const messageName = getPluralForm(document.querySelector("html").getAttribute("lang"), optionValue);
+    const translatedMessage = browser.i18n.getMessage(messageName, optionValue);
 
-    elQrQuietZoneStatus.textContent = optionValue;
+    if (!translatedMessage) {
+        throw new Error(`no translation string for "${messageName}" could be found`);
+    }
+
+    elQrQuietZoneStatus.textContent = translatedMessage;
 }
 
 /**
