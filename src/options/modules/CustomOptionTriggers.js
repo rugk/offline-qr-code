@@ -96,15 +96,15 @@ function applyDebugMode(optionValue) {
  */
 function getPluralForm(language, optionValue) {
     if (!language) {
-        language = 'en';
+        language = "en";
     }
 
     switch(language) {
-        case 'tr':
-            return optionValue > 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
-        //en, de
-        default:
-            return optionValue !== 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
+    case "tr":
+        return optionValue > 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
+        // en, de
+    default:
+        return optionValue !== 1 ? "optionQrQuietZoneStatusPlural" : "optionQrQuietZoneStatusSingular";
     }
 }
 
