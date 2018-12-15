@@ -17,6 +17,36 @@
     "description": "The title for the button, which opens the popup."
   },
 
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "Konnte Nachricht nicht anzeigen.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "couldNotLoadOptions": {
+    "message": "Konnte Einstellungen nicht laden.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotSaveOption": {
+    "message": "Konnte diese Einstellung nicht speichern.",
+    "description": "When a setting could not be saved."
+  },
+  "messageUndoButton": {
+    "message": "Rückgängig machen",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotUndoAction": {
+    "message": "Konnte Aktion nicht rückgängig machen.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Konnte Optionen nicht zurück setzen!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
   // errors or other messages
   "unknownError": {
     "message": "unbekannter Fehler",
@@ -26,10 +56,6 @@
     "message": "Laden…",
     "description": "A general loading message."
   },
-  "messageUndoButton": {
-    "message": "Rückgängig machen",
-    "description": "The text of a button that undoes the last action."
-  },
   "couldNotGenerateQrCode": {
     "message": "Konnte QR-Code nicht generieren.",
     "description": ""
@@ -37,10 +63,6 @@
   "couldNotReceiveActiveTab": {
     "message": "Konnte aktiven Tab nicht erhalten.",
     "description": ""
-  },
-  "errorShowingMessage": {
-    "message": "Konnte Nachricht nicht anzeigen.",
-    "description": "When there is an error when showing the error/info/…."
   },
   "errorDownloadingFile": {
     "message": "Konnte Datei nicht herunter laden.",
@@ -54,25 +76,9 @@
     "message": "Berechtigungsabfrage fehlgeschlagen.",
     "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
-  "couldNotSaveOption": {
-    "message": "Konnte diese Einstellung nicht speichern.",
-    "description": "When a setting could not be saved."
-  },
   "couldNotLoadOptions": {
     "message": "Konnte Einstellungen nicht laden.",
     "description": "When one or all settings could not be loaded."
-  },
-  "couldNotUndoAction": {
-    "message": "Konnte Aktion nicht rückgängig machen.",
-    "description": "Shown when an action cannot be undone."
-  },
-  "resettingOptionsWorked": {
-    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
-    "description": "The message shown, when the options of the settings were reset."
-  },
-  "resettingOptionsFailed": {
-    "message": "Konnte Optionen nicht zurück setzen!",
-    "description": "The message shown, when the options of the settings could not have been reset."
   },
   "requestDownloadPermissionForQr": {
     "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
@@ -177,6 +183,10 @@
   "optionLearnMore": {
     "message": "Weitere Informationen",
     "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Setze alle Einstellungen auf Standardwerte zurück",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   "optionPopupIconColored": {
@@ -321,11 +331,6 @@
   "optionDebugModeDescr": {
     "message": "Dies ist nur nützlich, um eine detailliertere Logausgabe in der Konsole zu erhalten, z.B. zum Melden von Fehlern.",
     "description": "The description shown for the debug mode (optionDebugMode)."
-  },
-
-  "optionsResetButton": {
-    "message": "Setze alle Einstellungen auf Standardwerte zurück",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   // ARIA labels/descriptions
