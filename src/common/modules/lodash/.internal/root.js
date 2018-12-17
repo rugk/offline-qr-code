@@ -4,6 +4,6 @@ import freeGlobal from './freeGlobal.js'
 const freeSelf = typeof self == 'object' && self !== null && self.Object === Object && self
 
 /** Used as a reference to the global object. */
-const root = freeGlobal || freeSelf || Function('return this')()
+const root = freeGlobal || freeSelf
 
 export default root
