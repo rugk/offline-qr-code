@@ -17,50 +17,22 @@
     "description": "The title for the button, which opens the popup."
   },
 
-  // errors or other messages
-  "unknownError": {
-    "message": "bilinmeyen hata",
-    "description": ""
-  },
-  "loading": {
-    "message": "Yükleniyor…",
-    "description": "A general loading message."
-  },
-  "messageUndoButton": {
-    "message": "Geri al",
-    "description": "The text of a button that undoes the last action."
-  },
-  "couldNotGenerateQrCode": {
-    "message": "QR Kod oluşturulamadı.",
-    "description": ""
-  },
-  "couldNotReceiveActiveTab": {
-    "message": "Aktif sekmeye ulaşılamadı.",
-    "description": ""
-  },
+  // errors or other messages (mostly for settings)
   "errorShowingMessage": {
     "message": "Mesaj görüntülenemedi.",
     "description": "When there is an error when showing the error/info/…."
   },
-  "errorDownloadingFile": {
-    "message": "Dosya indirilemedi.",
-    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
-  },
-  "errorPermissionRequired": {
-    "message": "Gerekli yetkiler olmadığı için işlem tamamlanamadı.",
-    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
-  },
-  "errorPermissionRequestFailed": {
-    "message": "Yetkilendirma hatası.",
-    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  "couldNotLoadOptions": {
+    "message": "Ayarlar yüklenemedi.",
+    "description": "When one or all settings could not be loaded."
   },
   "couldNotSaveOption": {
     "message": "Ayarlar kaydedilemedi.",
     "description": "When a setting could not be saved."
   },
-  "couldNotLoadOptions": {
-    "message": "Ayarlar yüklenemedi.",
-    "description": "When one or all settings could not be loaded."
+  "messageUndoButton": {
+    "message": "Geri al",
+    "description": "The text of a button that undoes the last action."
   },
   "couldNotUndoAction": {
     "message": "Geri alma işlemi başarısız.",
@@ -73,6 +45,36 @@
   "resettingOptionsFailed": {
     "message": "Seçenekleri sıfırlama başarısız oldu!",
     "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "bilinmeyen hata",
+    "description": ""
+  },
+  "loading": {
+    "message": "Yükleniyor…",
+    "description": "A general loading message."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "QR Kod oluşturulamadı.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Aktif sekmeye ulaşılamadı.",
+    "description": ""
+  },
+  "errorDownloadingFile": {
+    "message": "Dosya indirilemedi.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Gerekli yetkiler olmadığı için işlem tamamlanamadı.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Yetkilendirma hatası.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
   "requestDownloadPermissionForQr": {
     "message": "QR kodu kaydedebilmek için dosya indirma izni gerekiyor.",
@@ -173,6 +175,10 @@
   "optionLearnMore": {
     "message": "Daha fazla bilgi",
     "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Bütün ayarları varsayılanlara sıfırla",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   "optionPopupIconColored": {
@@ -318,11 +324,6 @@
   "optionDebugModeDescr": {
     "message": "Hata tespiti için konsolda daha detaylı çıktı görmeye yarar.",
     "description": "The description shown for the debug mode (optionDebugMode)."
-  },
-
-  "optionsResetButton": {
-    "message": "Bütün ayarları varsayılanlara sıfırla",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   // ARIA labels/descriptions

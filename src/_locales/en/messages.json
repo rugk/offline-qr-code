@@ -17,50 +17,22 @@
     "description": "The title for the button, which opens the popup."
   },
 
-  // errors or other messages
-  "unknownError": {
-    "message": "unknown error",
-    "description": ""
-  },
-  "loading": {
-    "message": "Loading…",
-    "description": "A general loading message."
-  },
-  "messageUndoButton": {
-    "message": "Undo",
-    "description": "The text of a button that undoes the last action."
-  },
-  "couldNotGenerateQrCode": {
-    "message": "Could not generate QR code.",
-    "description": ""
-  },
-  "couldNotReceiveActiveTab": {
-    "message": "Could not get active tab.",
-    "description": ""
-  },
+  // errors or other messages (mostly for settings)
   "errorShowingMessage": {
     "message": "Could not show this message.",
     "description": "When there is an error when showing the error/info/…."
   },
-  "errorDownloadingFile": {
-    "message": "Could not download file.",
-    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
-  },
-  "errorPermissionRequired": {
-    "message": "Cannot continue without permission.",
-    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
-  },
-  "errorPermissionRequestFailed": {
-    "message": "Permission request failed.",
-    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  "couldNotLoadOptions": {
+    "message": "Could not load settings.",
+    "description": "When one or all settings could not be loaded."
   },
   "couldNotSaveOption": {
     "message": "Could not save this setting.",
     "description": "When a setting could not be saved."
   },
-  "couldNotLoadOptions": {
-    "message": "Could not load settings.",
-    "description": "When one or all settings could not be loaded."
+  "messageUndoButton": {
+    "message": "Undo",
+    "description": "The text of a button that undoes the last action."
   },
   "couldNotUndoAction": {
     "message": "Could not undo action.",
@@ -73,6 +45,36 @@
   "resettingOptionsFailed": {
     "message": "Could not reset options!",
     "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "unknown error",
+    "description": ""
+  },
+  "loading": {
+    "message": "Loading…",
+    "description": "A general loading message."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "Could not generate QR code.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Could not get active tab.",
+    "description": ""
+  },
+  "errorDownloadingFile": {
+    "message": "Could not download file.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Cannot continue without permission.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Permission request failed.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
   "requestDownloadPermissionForQr": {
     "message": "To continue to save the QR code, we need the download permission.",
@@ -177,6 +179,10 @@
   "optionLearnMore": {
     "message": "Learn more",
     "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Reset all settings to defaults",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   "optionPopupIconColored": {
@@ -322,11 +328,6 @@
   "optionDebugModeDescr": {
     "message": "This is only useful to get more detailed logging output in the console for reporting bugs, etc.",
     "description": "The description shown for the debug mode (optionDebugMode)."
-  },
-
-  "optionsResetButton": {
-    "message": "Reset all settings to defaults",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   // ARIA labels/descriptions
