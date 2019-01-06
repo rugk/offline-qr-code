@@ -26,6 +26,7 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 See:
 * [More screencasts](assets/screencasts)
 * [More screenshots](assets/screenshots)
+* [Lightning Talk](https://media.ccc.de/v/35c3-9566-lightning_talks_day_2#t=6331) 2018-12-29 at 35th Chaos Communication Congress, Leipzig ([slides](https://github.com/rugk/offline-qr-code-35c3))
 
 ## Features
 * Puts your privacy first! Privacy is the default here, so it is generating QR codes offline.
