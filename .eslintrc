@@ -28,8 +28,8 @@
         // just to make sure (are defaults)
         "indent": ["error", 4],
 
-        // downgrade rules (only warning)
-        "no-console": 1,
+        // allow console output for errors in browsers
+        "no-console": 0,
 
         // technically required, because of CSP
         "no-eval": 2,
