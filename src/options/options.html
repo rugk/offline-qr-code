@@ -65,18 +65,18 @@
 					<span data-i18n="__MSG_optionPopupIconColoredDescr__" class="helper-text">Shows a colored icon instead of the black/white icon in the toolbar.</span>
 				</li>
 				<li>
-					<fieldset id="qrCodeType" data-type="radiogroup" class="setting">
+					<fieldset id="qrCodeType" data-type="radiogroup" class="setting save-on-input">
 						<legend data-i18n="__MSG_optionQrCodeType__">QR code type</legend>
 
 						<ul>
 							<li class="condensed-list">
-								<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="save-on-input">
+								<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="">
 								<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
 								<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
 							</li>
 
 							<li class="condensed-list">
-								<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="save-on-input">
+								<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="">
 								<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
 								<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
 							</li>
@@ -84,7 +84,7 @@
 					</fieldset>
 				</li>
 				<li>
-					<fieldset id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" data-name="sizeType" class="setting">
+					<fieldset id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
 						<legend data-i18n="__MSG_optionQrCodeSize__">QR code size</legend>
 
 						<ul>

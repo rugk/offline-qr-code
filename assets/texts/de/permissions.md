@@ -1,6 +1,6 @@
 # Erfragte Berechtigungen
 
-Für eine allgemeine Erklärung von Add-on-Berechtigungen siehe [diesen Support-Artikel](https://support.mozilla.org/kb/permission-request-messages-firefox-extensions).
+Für eine allgemeine Erklärung von Add-on-Berechtigungen siehe [diesen Support-Artikel](https://support.mozilla.org/de/kb/berechtigungsdialoge-der-firefox-erweiterungen).
 
 ## Berechtigungen bei Installation
 
