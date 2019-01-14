@@ -1,7 +1,8 @@
 /**
- * Sets the default settings for
+ * Sets the default settings for the AddonSettings module.
  *
  * @module data/DefaultSettings
+ * @requires AddonSettings
  */
 
 export const DEFAULT_SETTINGS = Object.freeze({
