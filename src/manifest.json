@@ -34,7 +34,8 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F10"
-      }
+      },
+      "description": "__MSG_commandOpenQrPopup__"
     }
   },
 

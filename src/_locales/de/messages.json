@@ -16,6 +16,10 @@
     "message": "Offline-QR-Code",
     "description": "The title for the button, which opens the popup."
   },
+  "commandOpenQrPopup": {
+    "message": "Öffne QR-Code-Popup",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
 
   // errors or other messages (mostly for settings)
   "errorShowingMessage": {
