@@ -337,6 +337,26 @@
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Close this message",
-    "description": "The label for the close button of the message box"
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "loading message",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "info message",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "success message",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "error message",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "warning message",
+    "description": "the aria label to label the message box as an warning message box"
   }
 }
