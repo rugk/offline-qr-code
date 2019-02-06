@@ -14,7 +14,7 @@
 	</head>
 	<body class="center-container">
 		<div id="topMessageContainer" class="message-container center-container">
-			<div id="messageTips" aria-label="info message" class="message-box info invisible fade-hide">
+			<div id="messageTips" aria-label="info message" data-i18n data-i18n-aria-label="__MSG_ariaMessageInfo__" class="message-box info invisible fade-hide">
 				<span class="message-text"></span>
 				<a href="#">
 					<button class="message-action-button micro-button info invisible"></button>
@@ -33,15 +33,15 @@
 					data-i18n
 					data-i18n-alt="__MSG_qrCodePlaceholder__">
 				<div class="message-container center-container">
-					<div id="messageInfo" aria-label="info message" class="message-box info flot-qr float-qr-bottom invisible fade-hide">
+					<div id="messageInfo" aria-label="info message" data-i18n data-i18n-aria-label="__MSG_ariaMessageInfo__" class="message-box info flot-qr float-qr-bottom invisible fade-hide">
 						<span class="message-text"></span>
 						<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="0" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
 					</div>
-					<div id="messageError" aria-label="error message" class="message-box error flot-qr float-qr-bottom invisible fade-hide">
+					<div id="messageError" aria-label="error message" data-i18n data-i18n-aria-label="__MSG_ariaMessageError__" class="message-box error flot-qr float-qr-bottom invisible fade-hide">
 						<span class="message-text" data-i18n="__MSG_couldNotGenerateQrCode__">Could not generate QR code.</span>
 						<img class="icon-dismiss invisible" src="/common/img/close-white.svg" width="24" height="24" tabindex="0" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
 					</div>
-					<div id="messageLoading" aria-label="loading message" class="message-box info flot-qr float-qr-bottom">
+					<div id="messageLoading" aria-label="loading message" data-i18n data-i18n-aria-label="__MSG_ariaMessageLoading__" class="message-box info flot-qr float-qr-bottom">
 						<span class="message-text" data-i18n="__MSG_loading__">Loading…</span>
 					</div>
 				</div>
