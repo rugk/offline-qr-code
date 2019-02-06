@@ -1,7 +1,7 @@
 /**
- * Contauns some global constants of the add-on..
+ * Contains some global constants of the add-on..
  *
- * @module /common/modules/data/GlobalConsts
+ * @module data/GlobalConsts
  */
 
 /**
@@ -11,7 +11,7 @@
  * @type {string}
  * @default
  */
-export const ADDON_NAME = "Offline QR code generator"; // eslint-disable-line no-unused-vars
+export const ADDON_NAME = "Offline QR code generator";
 
 /**
  * Specifies the short name of this add-on.,

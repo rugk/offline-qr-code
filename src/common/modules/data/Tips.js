@@ -1,5 +1,5 @@
 /**
- * The setting for a tip, represented in an object.
+ * The settings/constraints for a tip, represented in an object.
  *
  * @typedef {Object} TipObject
  * @property {string} id just some ID
@@ -35,6 +35,7 @@
 /**
  * An array of all tips.
  *
+ * @private
  * @const
  * @type {Array.<TipObject>}
  */
@@ -73,13 +74,13 @@ const tipArray = [
     },
     // {
     //     id: "donate",
-    //     // do not show on options page as Firefox already displays a donate button there
     //     requiredShowCount: 4,
     //     requireDismiss: 1,
     //     maximumDismiss: 2,
     //     requiredTriggers: 50,
+    //     // do not show on options page as Firefox already displays a donate button there
     //     maximumInContest: {
-    //         "options": 1
+    //         "options": 0
     //     },
     //     randomizeDisplay: 0.4,
     //     text: "tipDonate",
@@ -104,6 +105,7 @@ tipArray.forEach((object) => Object.freeze(object));
 /**
  * The list of all tips. (now exported)
  *
+ * @public
  * @const
  * @type {Array.<TipObject>}
  */
