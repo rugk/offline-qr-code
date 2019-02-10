@@ -1,3 +1,9 @@
 This add-on does not send any information to the add-on author or any third-party.
 
 An explanation of all permissions, this add-on requests, can be found at https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== THIRD-PARTY SERVICES ==
+
+This ADD-ON uses the “sync storage” of your browser to store the settings. If the USER enables “Sync” in the browser, the settings are uploaded and synchronized across your devices connected to your account. If you do not do, the data is only stored locally on your device.
+In Mozilla Firefox the data is end-to-end encrypted before getting uploaded and stored on servers by Mozilla.
+See https://accounts.firefox.com/legal/privacy and https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 for Mozilla's privacy policies on that topic.

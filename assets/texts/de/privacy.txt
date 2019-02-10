@@ -1,3 +1,9 @@
 Dieses Add-on sendet keine Informationen zum Add-on-Autor oder einer Drittpartei.
 
 Eine Erklärung aller Berechtigungen, die dieses Add-on erfragt kann auf https://github.com/rugk/offline-qr-code/blob/master/assets/texts/de/permissions.md gefunden werden.
+
+== DIENSTE VON DRITTEN ==
+
+Dieses ADD-ON nutzt den „Sync storage” des Browser's um die Einstellungen zu speicheren. Wenn der NUTZER “Sync” im Browser aktiviert, werden die Einstellungen des Add-ons hoch geladen und zwischen den Geräten, die mit dem (Mozilla) Account des Browsers verbunden sind, synchronisiert. Wenn dies nicht gemacht wird, werden die Daten lokal auf dem Gerät gespeichert.
+In Mozilla Firefox werden die Daten Ende-zu-Ende-verschlüsselt bevor sie hoch geladen und auf den Servern von Mozilla gespeichert werden.
+Siehe https://accounts.firefox.com/legal/privacy und https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 für Mozilla's Datenschutzerklärung über dieses Thema.
