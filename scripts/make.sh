@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Makes a release ZIP of the add-on.
+#
 
 EXTENSION_NAME="offline-qr-code@rugk.github.io"
 
