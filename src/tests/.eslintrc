@@ -1,0 +1,51 @@
+{
+    // EsLint config for mocha tests
+    // requires EsLint mocha plugin: https://github.com/lo1tuma/eslint-plugin-mocha
+    "root": false,
+    "env": {
+        "browser": true,
+        "webextensions": true,
+        "es6": true,
+		"mocha": true
+    },
+    "plugins": [
+        "mocha"
+    ],
+
+    "rules": {
+        // arrows are not allowed
+        "prefer-arrow-callback": 0,
+        // "mocha/prefer-arrow-callback": 2,
+        "mocha/no-mocha-arrows": 2,
+
+        // style
+        "mocha/max-top-level-suites": 1,
+        "mocha/valid-suite-description": ["warn", "^([a-zA-Z]+\\(.*\\)|[[A-Z0-9_]+|[\\w\\s:]+)( – .*)?$", ["describe", "context", "suite"]], // function name or function call or header with :
+        // RegEx:for "valid-suite-description": https://regex101.com/r/MKJw59/6
+        "mocha/valid-test-description": ["warn", "^((?!should).)*$", ["it", "specify", "test"]], // must not contain "should", but should be third-person present tense
+        // RegEx for "valid-test-description": https://regex101.com/r/9gYH8f/1, thanks to https://stackoverflow.com/a/406408/5008962
+
+        // hooks
+        "mocha/no-hooks-for-single-case": 1,
+        // "mocha/no-hooks": 2,
+
+        // assyncronous tests
+        // "mocha/no-synchronous-tests": 2, // only
+
+        // common errors when writing tests
+        "mocha/no-global-tests": 2,
+        "mocha/handle-done-callback": 2,
+        "mocha/no-identical-title": 2,
+        "mocha/no-nested-tests": 2,
+        "mocha/no-return-and-callback": 2,
+        "mocha/no-setup-in-describe": 2,
+        "mocha/no-sibling-hooks": 2,
+        "mocha/no-top-level-hooks": 2,
+
+        // warnings to remind devs that there is something to do (debugging/…)
+        "mocha/no-skipped-tests": 1,
+        "mocha/no-exclusive-tests": 1,
+        // "mocha/no-pending-tests": 1,
+
+    }
+}

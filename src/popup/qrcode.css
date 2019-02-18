@@ -38,24 +38,41 @@ html, body {
   width: 100%;
 }
 
-.message-box {
+#topMessageContainer > .message-box {
+  width: calc(100% - 8px);
+
+  margin-top: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+
+  /* get into padding of QR code */
+  margin-bottom: -8px;
+
+  /* some shadow to highlight it a bit more */
+  box-shadow: var(--shadow-10);
+}
+
+.flot-qr > .message-box {
   text-align: center;
 }
 
 /* Let the element float (at the bottom on top of the qr) */
 .flot-qr {
   position: absolute;
+
+  width: auto;
 }
 .float-qr-bottom {
   bottom: 30px;
 }
 /* make background transparent when floating */
 .error.flot-qr {
-  width: auto;
-
-  border-radius: 0px;
-
-  background-color: #d70022ee;
+  /* transparent background */
+  background-color: var(--red-60-a90);
+}
+.info.flot-qr {
+  /* transparent background */
+  background-color: var(--grey-20-a90);
 }
 
 #qrcode-container {

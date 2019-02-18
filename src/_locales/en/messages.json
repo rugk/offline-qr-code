@@ -4,6 +4,10 @@
     "message": "Offline QR Code Generator",
     "description": "Name of the extension."
   },
+  "extensionNameShort": {
+    "message": "Offline QR-Code",
+    "description": "Name of the extension."
+  },
   "extensionDescription": {
     "message": "Allows you to generate a QR code for any website or tab, you have open.",
     "description": "Description of the extension."
@@ -11,6 +15,40 @@
   "browserActionButtonTitle": {
     "message": "Offline QR code",
     "description": "The title for the button, which opens the popup."
+  },
+  "commandOpenQrPopup": {
+    "message": "Open QR code popup",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
+
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "Could not show this message.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "couldNotLoadOptions": {
+    "message": "Could not load settings.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotSaveOption": {
+    "message": "Could not save this setting.",
+    "description": "When a setting could not be saved."
+  },
+  "messageUndoButton": {
+    "message": "Undo",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotUndoAction": {
+    "message": "Could not undo action.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "All settings are now back to defaults again!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Could not reset options!",
+    "description": "The message shown, when the options of the settings could not have been reset."
   },
 
   // errors or other messages
@@ -30,29 +68,71 @@
     "message": "Could not get active tab.",
     "description": ""
   },
-  "errorShowingMessage": {
-    "message": "Could not show this message.",
-    "description": "When there is an error when showing the error/info/…."
+  "errorDownloadingFile": {
+    "message": "Could not download file.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
   },
-  "couldNotSaveOption": {
-    "message": "Could not save this setting.",
-    "description": "When a setting could not be saved."
+  "errorPermissionRequired": {
+    "message": "Cannot continue without permission.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
   },
-  "couldNotLoadOptions": {
-    "message": "Could not load settings.",
-    "description": "When one or all settings could not be loaded."
+  "errorPermissionRequestFailed": {
+    "message": "Permission request failed.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
-  "resettingOptionsWorked": {
-    "message": "All settings are now back to defaults again!",
-    "description": "The message shown, when the options of the settings were reset."
+  "requestDownloadPermissionForQr": {
+    "message": "To continue to save the QR code, we need the download permission.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
   },
-  "resettingOptionsFailed": {
-    "message": "Could not reset options!",
-    "description": "The message shown, when the options of the settings could not have been reset."
+  "lowContrastRatioInfo": {
+    "message": "Your QR code may be hard to scan by some QR code readers because of the low contrast.",
+    "desription": "The message shown when the contrast ratio is too low"
   },
-  "resetOptionsMessage": {
-    "message": "Are you sure that you want to reset all options?",
-    "description": "The message shown, when the user is prompted to confirm the resetting of all options"
+  "lowContrastRatioWarning": {
+    "message": "The contrast ratio of the QR code might be too low to be recognized by the all QR code readers correctly",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "The QR code color and the background color are too similar.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Use contrasting color",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "You like this add-on?",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Rate it",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+    "message": "Did you know you can save QR codes?",
+    "description": "A tip shown to get the user to find the save option."
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
+  "tipQrCodeHotkey": {
+    "message": "Remember the hot key for this add-on is Ctrl+Shift+F10.",
+    "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipDonate": {
+    "message": "Enjoy using this add-on for free?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Support development by donating",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
+  "tipLearnMore": {
+    "message": "Learn more",
+    "description": "The common button for tips, where you can get more information on click."
   },
 
   // placeholder
@@ -70,13 +150,25 @@
     "message": "QR code from selection",
     "description": "The context menu entry shown for generating QR codes from a selection."
   },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "&QR code from selection",
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+  },
   "contextMenuItemConvertLinkSelection": {
     "message": "QR code from link",
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
-  "contextMenuItemOptions": {
-    "message": "Settings",
-    "description": "The context menu entry shown for opening the settings."
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "&QR code from link",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+  },
+  "contextMenuSaveImage": {
+    "message": "Save QR code…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageAccessKey": {
+    "message": "Save &QR code…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 
   // options
@@ -91,6 +183,10 @@
   "optionLearnMore": {
     "message": "Learn more",
     "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Reset all settings to defaults",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   "optionPopupIconColored": {
@@ -119,7 +215,7 @@
     "description": "Option to select a canvas (pixel) image."
   },
   "optionQrCodeTypeCanvasHelper": {
-    "message": "A legacy generation method generating the QR code as an image (\"canvas\").",
+    "message": "A generation method generating the QR code as an image (\"canvas\").",
     "description": "Helper text for canvas QR code type option."
   },
 
@@ -146,6 +242,39 @@
   "optionQrCodeSizeRemember": {
     "message": "Remember last size",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "optionQrQuietZone": {
+    "message": "QR quiet zone:",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ square)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ squares)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "The number of border modules around the QR code colored in the background color.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 
   "optionQrCodeColor": {
@@ -187,6 +316,10 @@
     "description": "The 'Learn more' link in the description of the error correction option."
   },
 
+  "optionAutoGetSelectedText": {
+    "message": "Automatically use the text selected on the website",
+    "description": "This is an option shown in the add-on settings."
+  },
   "optionUseMonospaceFont": {
     "message": "Use monospace font",
     "description": "This is an option shown in the add-on settings."
@@ -200,21 +333,30 @@
     "message": "This is only useful to get more detailed logging output in the console for reporting bugs, etc.",
     "description": "The description shown for the debug mode (optionDebugMode)."
   },
-  "browserActionButtonTitle": {
-    "message": "Offline QR code",
-    "description": "The title for the button, which opens the popup."
-  },  "browserActionButtonTitle": {
-    "message": "Offline QR code",
-    "description": "The title for the button, which opens the popup."
-  },
-  "optionsResetButton": {
-    "message": "Reset all settings to defaults",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
-  },
 
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Close this message",
-    "description": "The label for the close button of the message box"
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "loading message",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "info message",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "success message",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "error message",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "warning message",
+    "description": "the aria label to label the message box as an warning message box"
   }
 }

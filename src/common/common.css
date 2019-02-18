@@ -1,16 +1,18 @@
+@import url("./variables.css");
+
 body {
   direction: __MSG_@@bidi_dir__;
 }
 
 /* https://design.firefox.com/photon/components/links.html */
 a {
-  color: #0060df;
+  color: var(--blue-60);
   text-decoration: none;
 }
 
 a:focus {
   border-radius: 4px;
-  box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
+  box-shadow: 0 0 0 2px var(--blue-50), 0 0 0 6px var(--blue-50-a30);
 }
 
 a:hover, a:active {
@@ -18,7 +20,7 @@ a:hover, a:active {
 }
 
 a:active {
-  color: #003eaa;
+  color: var(--blue-70);
 }
 
 /* external link symbol */
@@ -50,11 +52,85 @@ a:active {
   position: relative;
 }
 
+/* buttons https://design.firefox.com/photon/components/buttons.html */
+.micro-button {
+  min-height: 24px;
+  height: auto;
+  border-radius: 2px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  /* not documented, but looks ugly otherwise */
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+  box-sizing: content-box;
+
+  /* do not break over multiple lines */
+  /* white-space: nowrap; */
+  height: auto; /* currently, we rather prefer breaking until https://github.com/rugk/offline-qr-code/issues/12 is done */
+}
+
+/* use light color for dark backgrounds */
+.micro-button:hover.success,
+.micro-button:active.success,
+.micro-button:hover.warning,
+.micro-button:active.warning,
+.micro-button:hover.error,
+.micro-button:active.error {
+  color: var(--white-100);
+}
+
+.micro-button.info {
+  background-color: var(--grey-90-a10);
+}
+.micro-button:hover.info {
+  background-color: var(--grey-90-a20);
+}
+.micro-button:active.info {
+  background-color: var(--grey-90-a30);
+}
+
+.micro-button.success {
+  background-color: var(--green-60);
+}
+.micro-button:hover.success {
+  background-color: var(--green-70);
+}
+.micro-button:active.success {
+  background-color: var(--green-80);
+}
+
+.micro-button.warning {
+  background-color: var(--yellow-60);
+}
+.micro-button:hover.warning {
+  background-color: var(--yellow-70);
+}
+.micro-button:active.warning {
+  background-color: var(--yellow-80);
+}
+
+.micro-button.error {
+  background-color: var(--red-70);
+  color: var(--white-100);
+}
+.micro-button:hover.error {
+  background-color: var(--red-80);
+}
+.micro-button:active.error {
+  background-color: var(--red-90);
+}
+
+.micro-button:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
+}
+
 /* message box */
 /* follows https://design.firefox.com/photon/components/message-bars.html */
 .message-box {
-  padding-right: 4px;
-  padding-left: 4px;
+  padding: 4px;
 
   border-radius: 4px;
 
@@ -90,9 +166,46 @@ a:active {
   min-height: 0px;
 }
 
+/* add margin when messages are stacked on each other */
+.message-box:not(.invisible) ~ .message-box:not(.invisible) {
+  margin-top: 8px;
+}
+
 .error {
-  color: #ffffff;
-  background-color: #d70022;
+  color: var(--white-100);
+  background-color: var(--red-60);
+}
+
+.info {
+  color: var(--grey-90);
+  background-color: var(--grey-20);
+}
+
+.success {
+  color: var(--green-90);
+  background-color: var(--green-50);
+}
+
+.warning {
+  color: var(--yellow-90);
+  background-color: var(--yellow-50);
+}
+
+/* message box action button */
+.message-action-button {
+  margin-left: 8px;
+
+  /* center vertially */
+  margin-top: auto;
+  margin-bottom: auto;
+
+  /* some minimum margin to dismiss button or similar */
+  margin-right: 4px;
+
+  border: 0;
+  color: var(--grey-90);
+
+  cursor: pointer;
 }
 
 /* icons for the message boxes */
@@ -119,13 +232,16 @@ a:active {
 .success::before {
   background-image: url('/common/img/check.svg');
 }
+.warning::before {
+  background-image: url('/common/img/warning-dark.svg');
+}
 
 .icon-dismiss {
   box-sizing: content-box;
-  padding: 4px;
+  padding: 2px;
 
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 
   margin-left: auto;
   cursor: pointer;
@@ -134,24 +250,14 @@ a:active {
   transition: background-color 150ms cubic-bezier(.07,.95,0,1);
 }
 .icon-dismiss:hover {
-  background-color: rgba(12, 12, 13, 0.1);
+  background-color: var(--grey-90-a10);
   border-radius: 2px;
 }
 .icon-dismiss:active {
-  background-color: rgba(12, 12, 13, 0.2);
+  background-color: var(--grey-90-a20);
   border-radius: 2px;
 }
 .icon-dismiss:focus {
-  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+  box-shadow: 0 0 0 1px var(--blue-50) inset, 0 0 0 1px var(--blue-50), 0 0 0 4px var(--blue-50-a30);
   border-radius: 2px;
-}
-
-.info {
-  color: #0c0c0d;
-  background-color: #ededf0;
-}
-
-.success {
-  color: #003706;
-  background-color: #30e60b;
 }

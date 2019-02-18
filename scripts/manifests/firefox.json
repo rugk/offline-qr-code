@@ -1,0 +1,65 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "short_name": "__MSG_extensionNameShort__",
+  "version": "1.4",
+  "author": "rugk",
+
+  "description": "__MSG_extensionDescription__",
+  "homepage_url": "https://github.com/rugk/offline-qr-code",
+
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "icons/icon-small-dark.svg",
+    "default_title": "__MSG_browserActionButtonTitle__",
+    "default_popup": "popup/qrcode.html",
+    "theme_icons": [
+      {
+        "dark": "icons/icon-small-dark.svg",
+        "light": "icons/icon-small-light.svg",
+        "size": 32
+      }
+    ]
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
+
+  "background": {
+    "page": "background/background.html"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F10"
+      }
+    },
+    "description": "__MSG_commandOpenQrPopup__"
+  },
+
+  "content_security_policy": "default-src 'self'; img-src data:",
+  "icons": {
+    "16": "icons/icon-small-colored.svg",
+    "32": "icons/icon-small-colored.svg",
+    "48": "icons/icon-large.svg",
+    "96": "icons/icon-large.svg"
+  },
+  "default_locale": "en",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "menus"
+  ],
+  "optional_permissions": [
+    "downloads"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "offline-qr-code@rugk.github.io",
+      "strict_min_version": "60.0a1"
+    }
+  }
+}
