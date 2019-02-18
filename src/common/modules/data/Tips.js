@@ -96,6 +96,18 @@ const tipArray = [
         requiredTriggers: 2,
         randomizeDisplay: false,
         text: "tipQrCodeHotkey",
+        showTip: async () => {
+            // find command
+            const allCommands = await browser.commands.getAll();
+            const popupOpenCommand = allCommands.find((command) => command.name === "_execute_browser_action");
+
+            // if shortcut is modified, do not show tip
+            if (popupOpenCommand.shortcut !== "Ctrl+Shift+F10") {
+                return false;
+            }
+
+            return null; // continue as normal
+        }
     }
 ];
 
