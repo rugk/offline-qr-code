@@ -32,6 +32,8 @@
  * @property {Object} [actionButton] adds an action button to the message // TODO: document action button
  */
 
+import {isMobile} from "../MobileHelper.js";
+
 /**
  * An array of all tips.
  *
@@ -97,6 +99,11 @@ const tipArray = [
         randomizeDisplay: false,
         text: "tipQrCodeHotkey",
         showTip: async () => {
+            // do not show if user is on Android
+            if (isMobile()) {
+                return false;
+            }
+
             // find command
             const allCommands = await browser.commands.getAll();
             const popupOpenCommand = allCommands.find((command) => command.name === "_execute_browser_action");
