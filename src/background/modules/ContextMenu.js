@@ -64,6 +64,11 @@ function createItems() {
         contexts: ["link"]
     }, onCreated);
 
+    browser.menus.refresh();
+
+    // if listener is set, because items were hidden -> remove it
+    browser.menus.onHidden.removeListener(createItems);
+
     return Promise.all([selectionMenu, linkMenu]);
 }
 
@@ -95,6 +100,37 @@ function menuClicked(event) {
 }
 
 /**
+ * Triggers when the menu is shown.
+ *
+ *
+ *
+ * @name   ContextMenu.menuShown
+ * @function
+ * @private
+ * @param {event} info
+ * @returns {void}
+ */
+function menuShown(info) {
+    if (info.viewType !== "popup" || !info.pageUrl.startsWith(browser.runtime.getURL("."))) {
+        return;
+    }
+
+    // if no of our own menus are shown, we do not need to do anything
+    if (info.menuIds.length === 0) {
+        return;
+    }
+
+    browser.menus.onHidden.addListener(createItems);
+
+    browser.menus.remove(CONVERT_TEXT_SELECTION);
+    browser.menus.remove(CONVERT_LINK_TEXT_SELECTION);
+
+    browser.menus.refresh();
+}
+
+
+
+/**
  * Init context menu module.
  *
  * Adds menu elements.
@@ -103,7 +139,10 @@ function menuClicked(event) {
  * @returns {Promise}
  */
 export function init() {
-    return createItems().then(() => browser.menus.onClicked.addListener(menuClicked));
+    return createItems().then(() => {
+        browser.menus.onClicked.addListener(menuClicked);
+        browser.menus.onShown.addListener(menuShown);
+    });
 }
 
 Logger.logInfo("ContextMenu module loaded.");
