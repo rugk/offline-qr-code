@@ -100,7 +100,7 @@ const tipArray = [
         text: "tipQrCodeHotkey",
         showTip: async () => {
             // do not show if user is on Android
-            if (isMobile()) {
+            if (await isMobile()) {
                 return false;
             }
 
