@@ -122,6 +122,14 @@
     "message": "Remember the hot key for this add-on is Ctrl+Shift+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
   },
+  "tipAndroidQrReader": {
+    "message": "Firefox has an integrated QR Code scanner.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
   "tipDonate": {
     "message": "Enjoy using this add-on for free?",
     "description": "A tip shown to get the remind them of a donation."
@@ -133,6 +141,10 @@
   "tipLearnMore": {
     "message": "Learn more",
     "description": "The common button for tips, where you can get more information on click."
+  },
+  "tipHowToUse": {
+    "message": "How to use?",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
   },
 
   // placeholder
