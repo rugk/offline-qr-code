@@ -115,6 +115,26 @@ const tipArray = [
 
             return null; // continue as normal
         }
+    },
+    {
+        id: "androidQrReader",
+        requiredShowCount: 3,
+        maximumDismiss: 1,
+        requiredTriggers: 6,
+        randomizeDisplay: false,
+        text: "tipAndroidQrReader",
+        actionButton: {
+            text: "tipHowToUse",
+            action: "tipAndroidQrReaderLink"
+        },
+        showTip: async () => {
+            // only not show if user is on Android
+            if (!(await isMobile())) {
+                return false;
+            }
+
+            return null; // continue as normal
+        }
     }
 ];
 
