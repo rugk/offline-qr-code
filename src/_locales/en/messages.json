@@ -126,7 +126,7 @@
     "message": "Firefox has an integrated QR Code scanner.",
     "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
   },
-  "tipSaveQrCodeLink": {
+  "tipAndroidQrReaderLink": {
     "message": "https://mzl.la/1GQ2fcu",
     "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
   },
