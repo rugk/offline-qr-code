@@ -109,8 +109,15 @@ const refreshQrCode = throttle(() => {
         CommonMessages.hideError();
     }
 
-    QrCreator.setTextInternal(text);
-    QrCreator.generate();
+    try {
+        QrCreator.setTextInternal(text);
+        QrCreator.generate();
+    } catch (e) {
+        if (e === "Data too long") {
+            CommonMessages.showError("Cannot generate Qr Code, data size too big.");
+            Logger.logError("Data exceeds maximum size:", text.length);
+        }
+    }
 }, QR_CODE_REFRESH_TIMEOUT);
 
 /**
