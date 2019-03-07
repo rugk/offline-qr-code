@@ -116,6 +116,8 @@ const refreshQrCode = throttle(() => {
         if (e === "Data too long") {
             CommonMessages.showError("Cannot generate Qr Code, data size too big.");
             Logger.logError("Data exceeds maximum size:", text.length);
+        } else {
+          throw e;
         }
     }
 }, QR_CODE_REFRESH_TIMEOUT);
