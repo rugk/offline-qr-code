@@ -113,8 +113,9 @@ const refreshQrCode = throttle(() => {
         QrCreator.setTextInternal(text);
         QrCreator.generate();
     } catch (e) {
+        // Error thrown from qrcodegen & kjua wrapper when code too long
         if (e === "Data too long") {
-            CommonMessages.showError("Cannot generate Qr Code, data size too big.");
+            CommonMessages.showError("errorQrCodeOverflow", true);
             Logger.logError("Data exceeds maximum size:", text.length);
         } else {
           throw e;
