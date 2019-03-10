@@ -34,9 +34,9 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F10"
-      }
-    },
-    "description": "__MSG_commandOpenQrPopup__"
+      },
+      "description": "__MSG_commandOpenQrPopup__"
+    }
   },
 
   "content_security_policy": "default-src 'self'; img-src data:",
