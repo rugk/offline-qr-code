@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "OfflineQr DEV VERSION",
   "short_name": "__MSG_extensionNameShort__",
-  "version": "1.4",
+  "version": "1.5",
   "author": "rugk",
 
   "description": "__MSG_extensionDescription__",
