@@ -131,7 +131,7 @@
     "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
   },
   "tipTranslateAddon": {
-    "message": "Wenn du eien andere Sprache sprichst, kannst du helfen, dieses Add-on zu übersetzen.",
+    "message": "Wenn du eine andere Sprache sprichst, kannst du helfen, dieses Add-on zu übersetzen.",
     "description": "A tip shown to users that potentially speak another language to translate this add-on."
   },
   "tipTranslateAddonLink": {
