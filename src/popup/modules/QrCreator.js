@@ -42,7 +42,7 @@ function getQrCodeFromLib() {
  */
 export function generate() {
     if (!initFinished) {
-        console.warning("QrCreator.generate called, but init not yet finished. Abort.");
+        console.warn("QrCreator.generate called, but init not yet finished. Abort.");
         return;
     }
 

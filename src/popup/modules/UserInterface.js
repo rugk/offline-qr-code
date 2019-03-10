@@ -577,7 +577,7 @@ export function init() {
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
-                console.warning(`error creating menu item: ${lastError}`);
+                console.warn(`error creating menu item: ${lastError}`);
             } else {
                 console.info("menu item created successfully");
             }
