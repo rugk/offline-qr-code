@@ -6,6 +6,9 @@ const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
 
 const MESSAGE_RESENT_TIMEOUT = 200; // ms
+const MESSAGE_RESENT_MAX = 9;
+
+let messageResentCount = 0;
 
 /**
  * Log error while creating menu item.
@@ -39,7 +42,14 @@ function sendQrCodeText(qrText) {
         qrText: qrText
     }).then(() => {
         console.info(`QR code text "${qrText}" sent to tab successfully`);
-    }).catch(() => {
+    }).catch((e) => {
+        // stop retrying after some time and just throw out error
+        if (messageResentCount >= MESSAGE_RESENT_MAX) {
+            throw e;
+        }
+
+        messageResentCount++;
+
         // recusively re-try message sending
         // This is e.g. needed when the popup has not yet opened and could not get the message.
         setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
@@ -82,12 +92,16 @@ function menuClicked(event) {
     switch (event.menuItemId) {
     case CONVERT_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.selectionText);
         });
         break;
     case CONVERT_LINK_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.linkUrl);
         });
