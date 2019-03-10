@@ -33,7 +33,7 @@ export async function userSpeaksLocaleNotYetTranslated() {
     const acceptedLanguages = await browser.i18n.getAcceptLanguages();
 
     console.log("Addon is translated into", addonLanguage, ", browser into ", uiLanguage, "and user accepts the languages", acceptedLanguages, ".");
-    // Note: actually addonLanguage and uiLanguage should be the same
+    // Note: actually addonLanguage and uiLanguage should be the same, see https://discourse.mozilla.org/t/not-clear-that-there-are-three-locales/27533
 
     // for evaluation, we can assume the user also speaks the language their browser is translated into
     acceptedLanguages.push(uiLanguage);
