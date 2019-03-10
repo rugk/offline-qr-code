@@ -2,6 +2,9 @@
 #
 # Makes a release ZIP of the add-on.
 #
+# IMPORTANT: This is only useful for building release versions of the add-on.
+# For development, please rather follow the guidance in the contributing doc.
+#
 
 EXTENSION_NAME="offline-qr-code@rugk.github.io"
 
