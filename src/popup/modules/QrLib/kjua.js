@@ -111,8 +111,9 @@ export function set(tag, value) {
  * @returns {HTMLElement}
  */
 export function getQr() {
+    Logger.logInfo("generated new qr kjua code", kjuaOptions);
+
     try {
-        Logger.logInfo("generated new qr kjua code", kjuaOptions);
         return kjua(kjuaOptions);
     } catch (err) {
         throw err.message.startsWith("code length overflow.")

@@ -115,7 +115,7 @@ const refreshQrCode = throttle(() => {
     } catch (e) {
         // Error thrown from qrcodegen & kjua wrapper when code too long
         if (e === "Data too long") {
-            CommonMessages.showError("errorQrCodeOverflow", true);
+            CommonMessages.showError("errorQrCodeOverflow");
             Logger.logError("Data exceeds maximum size:", text.length);
         } else {
           throw e;
