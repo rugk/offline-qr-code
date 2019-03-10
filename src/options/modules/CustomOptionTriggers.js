@@ -173,7 +173,7 @@ function applyQrCodeColors(optionValue, option) {
 
     const colorContrast = Colors.contrastRatio(color, colorCompare);
 
-    Logger.logInfo(`Checking color between static color "${optionValue}" == ${color} (${option}) and to-be-changed color "${optionValueCompare}" == ${colorCompare} (${optionCompare}). Has contrast ${colorContrast}.`);
+    console.info(`Checking color between static color "${optionValue}" == ${color} (${option}) and to-be-changed color "${optionValueCompare}" == ${colorCompare} (${optionCompare}). Has contrast ${colorContrast}.`);
 
     const actionButton = {
         text: "messageAutoSelectColorButton",
@@ -185,7 +185,7 @@ function applyQrCodeColors(optionValue, option) {
             browser.storage.sync.set({
                 [optionCompare]: invertedColor
             }).catch((error) => {
-                Logger.logError("could not save option", optionCompare, ":", error);
+                console.error("could not save option", optionCompare, ":", error);
                 CommonMessages.showError("couldNotSaveOption", true);
             }).finally(() => {
                 // also display/"preview" other compared color,

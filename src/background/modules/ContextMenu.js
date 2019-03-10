@@ -1,4 +1,3 @@
-import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import { createMenu } from "/common/modules/ContextMenu.js";
 
@@ -34,12 +33,12 @@ function onCreated() {
  * @returns {void}
  */
 function sendQrCodeText(qrText) {
-    Logger.logInfo("send QR code text from background");
+    console.info("send QR code text from background");
     browser.runtime.sendMessage({
         type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
         qrText: qrText
     }).then(() => {
-        Logger.logInfo(`QR code text "${qrText}" sent to tab successfully`);
+        console.info(`QR code text "${qrText}" sent to tab successfully`);
     }).catch(() => {
         // recusively re-try message sending
         // This is e.g. needed when the popup has not yet opened and could not get the message.
@@ -144,5 +143,3 @@ export function init() {
         browser.menus.onShown.addListener(menuShown);
     });
 }
-
-Logger.logInfo("ContextMenu module loaded.");

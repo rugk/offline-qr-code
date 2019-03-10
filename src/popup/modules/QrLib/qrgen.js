@@ -6,8 +6,6 @@
  */
 /* globals qrcodegen */
 
-import * as Logger from "/common/modules/Logger/Logger.js";
-
 const QRC = qrcodegen.QrCode;
 
 let qrQuietZone;
@@ -99,7 +97,7 @@ export function set(tag, value) {
  * @returns {SVGSVGElement}
  */
 export function getQr() {
-    Logger.logInfo("generated new QrGen qr code");
+    console.info("generated new QrGen qr code");
 
     const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
     const svgString = qrElem.toSvgString(qrQuietZone);

@@ -6,8 +6,6 @@
  */
 /* globals kjua */
 
-import * as Logger from "/common/modules/Logger/Logger.js";
-
 /**
  * The type of QR code this library generates.
  *
@@ -111,7 +109,7 @@ export function set(tag, value) {
  * @returns {HTMLElement}
  */
 export function getQr() {
-    Logger.logInfo("generated new qr kjua code", kjuaOptions);
+    console.info("generated new qr kjua code", kjuaOptions);
     return kjua(kjuaOptions);
 }
 
