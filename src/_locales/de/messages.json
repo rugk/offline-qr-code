@@ -80,10 +80,6 @@
     "message": "Berechtigungsabfrage fehlgeschlagen.",
     "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
-  "couldNotLoadOptions": {
-    "message": "Konnte Einstellungen nicht laden.",
-    "description": "When one or all settings could not be loaded."
-  },
   "requestDownloadPermissionForQr": {
     "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
     "description": "Shown, when the user is asked to allow the download permission to save the QR code."
@@ -133,6 +129,14 @@
   "tipAndroidQrReaderLink": {
     "message": "https://mzl.la/1GQ2fcu",
     "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
+  "tipTranslateAddon": {
+    "message": "Wenn du eien andere Sprache sprichst, kannst du helfen, dieses Add-on zu übersetzen.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
   },
   "tipDonate": {
     "message": "Magst du dieses kostenlose Add-on?",
