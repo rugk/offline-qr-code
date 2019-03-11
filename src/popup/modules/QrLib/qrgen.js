@@ -7,6 +7,7 @@
 /* globals qrcodegen */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
+import * as QrErr from "./qrerr.js";
 
 const QRC = qrcodegen.QrCode;
 
@@ -101,7 +102,13 @@ export function set(tag, value) {
 export function getQr() {
     Logger.logInfo("generated new QrGen qr code");
 
-    const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
+    try {
+        const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
+    } catch (err) {
+        throw (err === 'Data too long')
+            ? QrErr.DataOverflowError : err;
+    }
+
     const svgString = qrElem.toSvgString(qrQuietZone);
 
     return getSvgElement(svgString);
