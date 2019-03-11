@@ -3,11 +3,12 @@
  *
  * @module QrLib/qrgen
  * @requires /common/modules/Logger
+ * @requires QrErrors
  */
 /* globals qrcodegen */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as QrErr from "./qrerr.js";
+import * as QrError from "./QrErrors.js";
 
 const QRC = qrcodegen.QrCode;
 
@@ -105,8 +106,8 @@ export function getQr() {
     try {
         const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
     } catch (err) {
-        throw (err === 'Data too long')
-            ? QrErr.DataOverflowError : err;
+        throw (err === "Data too long")
+            ? QrError.DataOverflowError : err;
     }
 
     const svgString = qrElem.toSvgString(qrQuietZone);

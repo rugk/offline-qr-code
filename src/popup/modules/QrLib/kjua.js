@@ -3,12 +3,12 @@
  *
  * @module QrLib/kjua
  * @requires /common/modules/Logger
- * @requires qrerr
+ * @requires QrErrors
  */
 /* globals kjua */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as QrErr from "./qrerr.js";
+import * as QrError from "./QrErrors.js";
 
 /**
  * The type of QR code this library generates.
@@ -119,7 +119,7 @@ export function getQr() {
         return kjua(kjuaOptions);
     } catch (err) {
         throw err.message.startsWith("code length overflow.")
-          ? new QrErr.DataOverflowError() : err;
+          ? new QrError.DataOverflowError() : err;
     }
 }
 

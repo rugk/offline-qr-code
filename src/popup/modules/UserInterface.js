@@ -8,6 +8,7 @@
  * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler
+ * @requires ./QrLib/QrErrors
  * @requires ./QrCreator
  */
 // lodash
@@ -20,6 +21,7 @@ import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
+import * as QrError from "./QrLib/QrErrors.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 
@@ -114,11 +116,11 @@ const refreshQrCode = throttle(() => {
         QrCreator.generate();
     } catch (e) {
         // Error thrown from qrcodegen & kjua wrapper when code too long
-        if (e === "Data too long") {
+        if (e instanceof QrError.DataOverflowError) {
             CommonMessages.showError("errorQrCodeOverflow");
             Logger.logError("Data exceeds maximum size:", text.length);
         } else {
-          throw e;
+            throw e;
         }
     }
 }, QR_CODE_REFRESH_TIMEOUT);
