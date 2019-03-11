@@ -8,7 +8,7 @@
 /* globals kjua */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as QrError from "./QrErrors.js";
+import * as QrError from "./QrError.js";
 
 /**
  * The type of QR code this library generates.

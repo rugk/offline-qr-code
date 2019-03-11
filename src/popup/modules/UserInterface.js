@@ -21,7 +21,7 @@ import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
-import * as QrError from "./QrLib/QrErrors.js";
+import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 

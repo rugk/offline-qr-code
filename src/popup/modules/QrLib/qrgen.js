@@ -8,7 +8,7 @@
 /* globals qrcodegen */
 
 import * as Logger from "/common/modules/Logger/Logger.js";
-import * as QrError from "./QrErrors.js";
+import * as QrError from "./QrError.js";
 
 const QRC = qrcodegen.QrCode;
 
