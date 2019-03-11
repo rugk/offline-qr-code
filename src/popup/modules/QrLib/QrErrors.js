@@ -1,12 +1,12 @@
 /**
  * Errors in QR code generation
  *
- * @module QrLib/qrerr
+ * @module QrLib/QrErrors
  */
 
 export class DataOverflowError extends Error {
-  constructor(...params) {
-    super(...params);
-    this.message = 'data overflow error';
-  }
+    constructor(...params) {
+        super(...params);
+        this.message = 'data overflow error';
+    }
 }
