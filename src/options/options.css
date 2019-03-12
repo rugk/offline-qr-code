@@ -91,3 +91,19 @@ input[type=radio] ~ .helper-text {
 }
 
 /* TODO: make i icon bigger */
+
+h1 {
+  margin-bottom: 16px;
+}
+
+section {
+  margin-bottom: 32px;
+}
+
+h2, .item {
+  margin-bottom: 4px;
+}
+
+.element {
+  margin-right: 8px;
+}
