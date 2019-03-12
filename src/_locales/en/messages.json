@@ -134,6 +134,14 @@
     "message": "https://mzl.la/1GQ2fcu",
     "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
   },
+  "tipTranslateAddon": {
+    "message": "If you speak another language you can help translating this add-on.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
+  },
   "tipDonate": {
     "message": "Enjoy using this add-on for free?",
     "description": "A tip shown to get the remind them of a donation."

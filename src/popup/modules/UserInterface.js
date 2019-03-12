@@ -17,7 +17,6 @@ import throttle from "/common/modules/lodash/throttle.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
-import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
@@ -100,7 +99,7 @@ function hidePlaceholder() {
  */
 const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
-    Logger.logInfo("new value from textarea: ", text);
+    console.info("new value from textarea: ", text);
 
     // show placeholder when no text is entered
     if (text === "") {
@@ -152,7 +151,7 @@ function selectAllText(event) {
         return;
     }
 
-    Logger.logInfo("selectAllText", event);
+    console.info("selectAllText", event);
 
     event.retry = event.retry + 1 || 0;
 
@@ -181,7 +180,7 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    Logger.logInfo("scrollToTop", event);
+    console.info("scrollToTop", event);
 
     if (event.target.scrollTop !== 0) {
         event.target.scrollTop = 0;
@@ -212,7 +211,7 @@ async function saveQrCodeSizeOption() {
     // never start saving an option, when the old one is stll being saved
     await savingQrCodeSize;
 
-    Logger.logInfo("saved qr code text size/style", qrCodeSizeOption);
+    console.info("saved qr code text size/style", qrCodeSizeOption);
 
     savingQrCodeSize = browser.storage.sync.set({
         "qrCodeSize": qrCodeSizeOption
@@ -303,7 +302,7 @@ function resizeElements() {
     // could cause it to be resized to 0px or so
     const windowHeight = window.innerHeight;
     if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
-        Logger.logInfo("Skipped resize due to low window height", windowHeight);
+        console.info("Skipped resize due to low window height", windowHeight);
         return;
     }
 
@@ -315,7 +314,7 @@ function resizeElements() {
         return;
     }
 
-    Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
+    console.info("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
 
     // do not regenerate QR code if an error or so is shown
     setNewQrCodeSize(newQrCodeSize, !placeholderShown);
@@ -370,7 +369,7 @@ export function replaceQr(elNewQr) {
     const elOldQrCode = getQrCodeElement();
 
     // and replace it
-    Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
+    console.info("replace qr code from", elOldQrCode, "to", elNewQr);
     qrCode.replaceChild(elNewQr, elOldQrCode);
 }
 
@@ -431,9 +430,9 @@ function menuClicked(event) {
                 file: file,
                 filename: "qrcode.svg",
             }).then(() => {
-                Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+                console.info("SVG image saved on disk", svgElem, svgString);
             }).catch((error) => {
-                Logger.logError("Could not save SVG image saved on disk", error, svgElem, svgString);
+                console.error("Could not save SVG image saved on disk", error, svgElem, svgString);
 
                 // in case of user error (i.e. user cancelled e.g.) do not show error message
                 if (error.message.includes("user")) {
@@ -463,10 +462,10 @@ function menuClicked(event) {
                 }
 
                 // if permission is declined, make user aware that this permission was required
-                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
+                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
                 CommonMessages.showError("errorPermissionRequired", true);
             }).catch((error) => {
-                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
                 CommonMessages.showError("errorPermissionRequestFailed", true);
             });
         });
@@ -541,7 +540,7 @@ export function init() {
             await QrCreator.qrCreatorInit;
 
             if (qrLastSize === qrCodeSize.size) {
-                Logger.logInfo("QR code last size is the same as current setting, so do not reset");
+                console.info("QR code last size is the same as current setting, so do not reset");
                 // BUT set CSS stuff to make it consistent
                 setNewQrCodeSize(qrCodeSize.size, false);
             } else {
@@ -552,7 +551,7 @@ export function init() {
 
         // also set height of text (also to prevent display errors) when remember is enabled
         if (qrCodeSize.sizeType === "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
-            Logger.logInfo("restore qr code text size:", qrCodeSize.sizeText);
+            console.info("restore qr code text size:", qrCodeSize.sizeText);
             // is saved as CSS string already
             // height is NOT (anymore) restored, as this may cause display errors (likely due to different content-box settings) and the height does not matter, anyway
             qrCodeText.style.width = qrCodeSize.sizeText.width;
@@ -560,7 +559,7 @@ export function init() {
             // detect too small size
             const minimalSize = qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
             if (window.innerHeight < minimalSize) {
-                Logger.logError("too small size", window.innerHeight, "should be at least: ", minimalSize);
+                console.error("too small size", window.innerHeight, "should be at least: ", minimalSize);
             }
         }
     });
@@ -590,9 +589,9 @@ export function init() {
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
-                Logger.logWarning(`error creating menu item: ${lastError}`);
+                console.warn(`error creating menu item: ${lastError}`);
             } else {
-                Logger.logInfo("menu item created successfully");
+                console.info("menu item created successfully");
             }
         }).then(() => {
             // ignore if menu API is not supported (on Android e.g.)
@@ -600,7 +599,7 @@ export function init() {
                 return Promise.resolve();
             }
 
-            return browser.menus.onClicked.addListener(menuClicked)
+            return browser.menus.onClicked.addListener(menuClicked);
         });
     });
 

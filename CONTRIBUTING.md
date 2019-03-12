@@ -6,6 +6,8 @@ Some links and potential special rules for this repo only are listed below.
 
 ## Translations
 
+The full translation guide is available [in the common CONTRIBUTING docs](https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translations). Following just some links that point directly to the online translator service etc.
+
 * Direct link to online translator: [Web-Ext-Translator for this add-on](https://lusito.github.io/web-ext-translator/?gh=https://github.com/rugk/offline-qr-code).
 * English locales dir: [`src/_locales/en`](src/_locales/en)
 * Text assets to translate: [`assets/texts`](assets/texts)
@@ -21,4 +23,3 @@ Some links and potential special rules for this repo only are listed below.
 
 * Test dir: [`src/tests/`](src/tests/)
 * EsLint config for tests: [`src/tests/.eslintrc`](src/tests/.eslintrc)
-

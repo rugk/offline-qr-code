@@ -9,7 +9,7 @@
  * @requires ./BrowserCommunication
  * @requires ./UserInterface
  */
-import * as Logger from "/common/modules/Logger/Logger.js";
+
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
@@ -24,10 +24,10 @@ export let initCompleted = false;
 const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
 const qrCreatorInit = QrCreator.init().then(() => {
-    Logger.logInfo("QrCreator module loaded.");
+    console.info("QrCreator module loaded.");
 });
 const userInterfaceInit = UserInterface.init().then(() => {
-    Logger.logInfo("UserInterface module loaded.");
+    console.info("UserInterface module loaded.");
 });
 
 // check for selected text
@@ -60,7 +60,7 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
     // do not generate tabs if text is already overwritten
     if (ReceiveBackgroundMessages.isTextOverwritten()) {
-        Logger.logInfo("Text is already overwritten by some message.");
+        console.info("Text is already overwritten by some message.");
         // generate QR code
         QrCreator.generate();
 
@@ -76,7 +76,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     }).catch(() => {
         // …or fallback to tab URL
         return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            Logger.logError(error);
+            console.error(error);
             CommonMessages.showError("couldNotReceiveActiveTab", false);
 
             // re-throw error
@@ -93,5 +93,5 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
     // init is done, set variable to syncronously get values
     initCompleted = true;
 }).catch((error) => {
-    Logger.logError(error);
+    console.error(error);
 });

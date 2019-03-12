@@ -9,7 +9,6 @@
  * @requires /common/modules/data/BrowserCommunicationTypes
  */
 
-import * as Logger from "/common/modules/Logger/Logger.js";
 import * as BrowserCommunication from "/common/modules/BrowserCommunication/BrowserCommunication.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
@@ -36,7 +35,7 @@ let saveAsRetries = 0;
  * @returns {Promise}
  */
 function saveFileAs(request, sender, sendResponse) {
-    Logger.logInfo("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
+    console.info("trigger saveAs download of", request.filename, "retry #", saveAsRetries);
 
     // if we should handle permission errors and apply re-try workaround
     // that's the actual workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
@@ -77,7 +76,7 @@ function saveFileAs(request, sender, sendResponse) {
             return;
         }
 
-        Logger.logInfo("objectUrl revoked:", objectUrl);
+        console.info("objectUrl revoked:", objectUrl);
         URL.revokeObjectURL(objectUrl);
     });
 

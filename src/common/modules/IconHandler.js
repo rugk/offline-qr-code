@@ -1,4 +1,3 @@
-import * as Logger from "/common/modules/Logger/Logger.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 const POPUP_ICON_OPTION = "popupIconColored";
@@ -60,5 +59,3 @@ export function changeIconIfColored(popupIconColored) {
 export function init() {
     return AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => changeIconIfColored(popupIconColored));
 }
-
-Logger.logInfo("IconHandler module loaded.");

@@ -10,7 +10,7 @@
  * @requires ./QrCreator
  * @requires ./InitQrCode
  */
-import * as Logger from "/common/modules/Logger/Logger.js";
+
 import * as BrowserCommunication from "/common/modules/BrowserCommunication/BrowserCommunication.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
@@ -26,7 +26,7 @@ BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT, (reques
 
     // if the old QR code has already been generated/displayed, trigger re-generation
     if (initCompleted) {
-        Logger.logInfo("Initialisation has already been completed, regenerate QR code with new text.");
+        console.info("Initialisation has already been completed, regenerate QR code with new text.");
         QrCreator.generate();
     }
 
