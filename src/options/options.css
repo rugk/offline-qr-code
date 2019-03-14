@@ -20,11 +20,8 @@ body.mobile .mobile-incompatible {
   opacity: 0.4;
 }
 
-#qrQuietZone {
-  position: relative;
-  top: 5px;
-  cursor: pointer;
-  /* -webkit-appearance: none; */
+form {
+  margin: 16px 32px;
 }
 
 h1 {
@@ -74,4 +71,8 @@ h2{
 .helper-text > a {
   margin-left: 4px;
   overflow-wrap: none;
+}
+
+#qrQuietZone {
+  cursor: pointer;
 }
