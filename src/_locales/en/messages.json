@@ -196,6 +196,18 @@
     "message": "Some settings are managed by your system administrator and cannot be changed.",
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
+  "titleGeneral": {
+    "message": "General Settings",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR Code Settings",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Addon Behavior",
+    "description": "The title for the addon behavior settings group."
+  },
   "optionIsDisabledBecauseManaged": {
     "message": "This option is disabled, because it has been configured by your system administrator.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
@@ -242,6 +254,10 @@
   "optionQrCodeSize": {
     "message": "QR code size",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionMisc": {
+    "message": "Miscellaneous Settings",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
   },
   "optionQrCodeSizeFixed": {
     "message": "Fixed size:",
