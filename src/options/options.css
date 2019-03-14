@@ -1,7 +1,7 @@
 body {
-  /* the style the other options in the settings pane use */
-  font-size: 1.11em;
   color: #333;
+  font-family: sans-serif;
+  font-size: 14px;
 }
 
 /* on (small) mobile displays */
@@ -20,11 +20,6 @@ body.mobile .mobile-incompatible {
   opacity: 0.4;
 }
 
-/* special options values */
-#popupIconColor {
-  display: inline;
-}
-
 #qrQuietZone {
   position: relative;
   top: 5px;
@@ -32,14 +27,11 @@ body.mobile .mobile-incompatible {
   /* -webkit-appearance: none; */
 }
 
-#qrCodeSizeFixedValue {
-  width: 4.5em;
-}
-
 h1 {
-  margin-bottom: 16px;
+  margin: 0;
+  padding: 16px 0;
+
   border-top: 1px solid rgba(12, 12, 13, 0.15);
-  
   font-weight: 300;
   font-size: 1.46em;
 }
@@ -59,12 +51,15 @@ h2{
 }
 
 .line {
+  padding: 2px 0;
   margin-bottom: 4px;
+
+  display: flex;
+  align-items: center;
 }
 
 .item .line * {
-  display: inline;
-  margin-right: 8px;
+  margin: 0 8px 0 0;
 }
 
 .item .line.indent {
@@ -72,7 +67,6 @@ h2{
 }
 
 .helper-text {
-  display: block;
   color: var(--grey-50);
 }
 
