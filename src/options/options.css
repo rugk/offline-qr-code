@@ -38,13 +38,27 @@ body.mobile .mobile-incompatible {
 
 h1 {
   margin-bottom: 16px;
+  border-top: 1px solid rgba(12, 12, 13, 0.15);
+  
+  font-weight: 300;
+  font-size: 1.46em;
+}
+
+h1:first-child {
+  border-top: none;
 }
 
 section {
   margin-bottom: 32px;
 }
 
-h2, .line {
+h2{
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 1.14em;
+}
+
+.line {
   margin-bottom: 4px;
 }
 
