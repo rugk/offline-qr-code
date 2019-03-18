@@ -221,16 +221,16 @@
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
-  "optionPopupIconColored": {
+  "subtitlePopupIconColored": {
     "message": "Colored icon",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is a sub heading in the add-on settings."
   },
   "optionPopupIconColoredDescr": {
     "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
 
-  "optionQrCodeType": {
+  "subtitleQrCodeType": {
     "message": "QR code type",
     "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
   },
@@ -251,13 +251,9 @@
     "description": "Helper text for canvas QR code type option."
   },
 
-  "optionQrCodeSize": {
+  "subtitleQrCodeSize": {
     "message": "QR code size",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
-  },
-  "optionMisc": {
-    "message": "Miscellaneous Settings",
-    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
   },
   "optionQrCodeSizeFixed": {
     "message": "Fixed size:",
@@ -280,6 +276,10 @@
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
 
+  "subtitleMisc": {
+    "message": "Miscellaneous Settings",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
   "optionQrQuietZone": {
     "message": "QR quiet zone:",
     "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
