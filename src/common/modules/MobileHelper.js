@@ -1,14 +1,8 @@
 /**
- * Adjusts options page for mobile (Android) compatibility.
- *
- * Notice: You can include this asyncronously even if the whole DOM is not parsed yet.
- * It only accesses the body tag and that is very likely available as it's likely one of
- * the first HTML tags you write and only include this script afterwards.
- * This prevents unnecessary flackering when the CSS is added and the browser needs to
- * re-parse/render the HTML.
+ * Checks whether the user is running a mobvile version of the browser.
  *
  * @public
- * @module MobileOptions
+ * @module MobileHelper
  */
 
 /**

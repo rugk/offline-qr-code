@@ -8,7 +8,7 @@
  * @requires ./QrLib/kjua
  * @requires ./UserInterface
  */
-import * as Logger from "/common/modules/Logger/Logger.js";
+
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 import * as QrLibQrGen from "./QrLib/qrgen.js";
@@ -42,7 +42,7 @@ function getQrCodeFromLib() {
  */
 export function generate() {
     if (!initFinished) {
-        Logger.logWarning("QrCreator.generate called, but init not yet finished. Abort.");
+        console.warn("QrCreator.generate called, but init not yet finished. Abort.");
         return;
     }
 
@@ -68,7 +68,7 @@ export function generate() {
  */
 export function setSize(size) {
     if (size <= 1) {
-        Logger.logError("tried to create QR code with invalid size of 0 or smaller");
+        console.error("tried to create QR code with invalid size of 0 or smaller");
         return;
     }
 

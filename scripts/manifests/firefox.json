@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "short_name": "__MSG_extensionNameShort__",
-  "version": "1.4",
+  "version": "1.5",
   "author": "rugk",
 
   "description": "__MSG_extensionDescription__",
@@ -34,9 +34,9 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F10"
-      }
-    },
-    "description": "__MSG_commandOpenQrPopup__"
+      },
+      "description": "__MSG_commandOpenQrPopup__"
+    }
   },
 
   "content_security_policy": "default-src 'self'; img-src data:",

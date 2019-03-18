@@ -1,4 +1,3 @@
-import * as Logger from "/common/modules/Logger/Logger.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import { createMenu } from "/common/modules/ContextMenu.js";
 
@@ -7,6 +6,9 @@ const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
 
 const MESSAGE_RESENT_TIMEOUT = 200; // ms
+const MESSAGE_RESENT_MAX = 9;
+
+let messageResentCount = 0;
 
 /**
  * Log error while creating menu item.
@@ -34,13 +36,20 @@ function onCreated() {
  * @returns {void}
  */
 function sendQrCodeText(qrText) {
-    Logger.logInfo("send QR code text from background");
+    console.info("send QR code text from background");
     browser.runtime.sendMessage({
         type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
         qrText: qrText
     }).then(() => {
-        Logger.logInfo(`QR code text "${qrText}" sent to tab successfully`);
-    }).catch(() => {
+        console.info(`QR code text "${qrText}" sent to tab successfully`);
+    }).catch((e) => {
+        // stop retrying after some time and just throw out error
+        if (messageResentCount >= MESSAGE_RESENT_MAX) {
+            throw e;
+        }
+
+        messageResentCount++;
+
         // recusively re-try message sending
         // This is e.g. needed when the popup has not yet opened and could not get the message.
         setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
@@ -83,12 +92,16 @@ function menuClicked(event) {
     switch (event.menuItemId) {
     case CONVERT_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.selectionText);
         });
         break;
     case CONVERT_LINK_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.linkUrl);
         });
@@ -144,5 +157,3 @@ export function init() {
         browser.menus.onShown.addListener(menuShown);
     });
 }
-
-Logger.logInfo("ContextMenu module loaded.");
