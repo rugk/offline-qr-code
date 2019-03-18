@@ -1,7 +1,6 @@
 body {
-  color: #333;
-  font-family: sans-serif;
-  font-size: 14px;
+  /* body20 */
+  font-size: 15px;
 }
 
 /* on (small) mobile displays */
@@ -28,9 +27,10 @@ h1 {
   margin: 0;
   padding: 16px 0;
 
+  /* title30 */
+  font-size: 22px;
   border-top: 1px solid rgba(12, 12, 13, 0.15);
   font-weight: 300;
-  font-size: 1.46em;
 }
 
 h1:first-child {
@@ -38,9 +38,10 @@ h1:first-child {
 }
 
 h2{
+  /* title20 */
+  font-size: 17px;
   margin-bottom: 4px;
   font-weight: 600;
-  font-size: 1.14em;
 }
 
 ul {
@@ -63,6 +64,7 @@ li {
 }
 
 .item .line * {
+  /* https://design.firefox.com/photon/visuals/grid.html#spacing */
   margin: 0 8px 0 0;
 }
 
@@ -71,6 +73,8 @@ li {
 }
 
 .helper-text {
+  /* caption20 */
+  font-size: 13px;
   color: var(--grey-50);
 }
 
