@@ -7,6 +7,7 @@
 /* globals kjua */
 
 import * as QrError from "./QrError.js";
+
 /**
  * The type of QR code this library generates.
  *

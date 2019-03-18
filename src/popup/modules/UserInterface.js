@@ -5,7 +5,6 @@
  * @requires /common/modules/lodash/isObject
  * @requires /common/modules/lodash/throttle
  * @requires /common/modules/data/MessageLevel
- * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler
  * @requires ./QrLib/QrErrors
@@ -117,6 +116,7 @@ const refreshQrCode = throttle(() => {
         // Error thrown from qrcodegen & kjua wrapper when code too long
         if (e instanceof QrError.DataOverflowError) {
             CommonMessages.showError("errorQrCodeOverflow");
+            console.error("Maximum size of QR code data exceeded with", text.length, "characters.");
         } else {
             throw e;
         }

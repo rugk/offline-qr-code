@@ -7,7 +7,6 @@
 /* globals qrcodegen */
 
 import * as QrError from "./QrError.js";
-
 const QRC = qrcodegen.QrCode;
 
 let qrQuietZone;
