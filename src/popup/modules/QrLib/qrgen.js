@@ -103,12 +103,10 @@ export function getQr() {
 
     try {
         const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
+        const svgString = qrElem.toSvgString(qrQuietZone);
+        return getSvgElement(svgString);
     } catch (err) {
         throw (err === "Data too long")
             ? QrError.DataOverflowError : err;
     }
-
-    const svgString = qrElem.toSvgString(qrQuietZone);
-
-    return getSvgElement(svgString);
 }

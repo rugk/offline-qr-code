@@ -116,7 +116,7 @@ export function getQr() {
         return kjua(kjuaOptions);
     } catch (err) {
         throw err.message.startsWith("code length overflow.")
-          ? new QrError.DataOverflowError() : err;
+            ? new QrError.DataOverflowError() : err;
     }
 }
 

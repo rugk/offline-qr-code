@@ -7,6 +7,6 @@
 export class DataOverflowError extends Error {
     constructor(...params) {
         super(...params);
-        this.message = 'data overflow error';
+        this.message = "data overflow error";
     }
 }
