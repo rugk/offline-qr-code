@@ -29,11 +29,12 @@ h1 {
 
   /* title30 */
   font-size: 22px;
-  border-top: 1px solid rgba(12, 12, 13, 0.15);
   font-weight: 300;
+
+  border-top: 1px solid rgba(12, 12, 13, 0.15);
 }
 
-h1:first-child {
+h1.first {
   border-top: none;
 }
 
@@ -51,24 +52,20 @@ ul {
 
 li {
   list-style-type: none;
-  margin-top: 10px;
-  padding: 0px;
-}
 
-.line {
   padding: 2px 0;
-  margin-bottom: 4px;
+  margin: 10px 0 4px 0;
 
   display: flex;
   align-items: center;
 }
 
-.item .line * {
+li * {
   /* https://design.firefox.com/photon/visuals/grid.html#spacing */
   margin: 0 8px 0 0;
 }
 
-.item .line.indent {
+li.indent {
   margin-inline-start: 28px;
 }
 
@@ -84,6 +81,6 @@ li {
   overflow-wrap: none;
 }
 
-#qrQuietZone {
+#qrQuietZone, label {
   cursor: pointer;
 }
