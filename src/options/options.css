@@ -37,14 +37,21 @@ h1:first-child {
   border-top: none;
 }
 
-section {
-  margin-bottom: 32px;
-}
-
 h2{
   margin-bottom: 4px;
   font-weight: 600;
   font-size: 1.14em;
+}
+
+ul {
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+li {
+  list-style-type: none;
+  margin-top: 10px;
+  padding: 0px;
 }
 
 .line {
