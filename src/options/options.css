@@ -67,7 +67,7 @@ li {
 }
 
 .item .line.indent {
-  margin-inline-start: 28px !important;
+  margin-inline-start: 28px;
 }
 
 .helper-text {
