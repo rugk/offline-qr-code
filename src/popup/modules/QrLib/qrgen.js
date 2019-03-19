@@ -106,6 +106,6 @@ export function getQr() {
         return getSvgElement(svgString);
     } catch (err) {
         throw (err === "Data too long")
-            ? QrError.DataOverflowError : err;
+            ? new QrError.DataOverflowError() : err;
     }
 }
