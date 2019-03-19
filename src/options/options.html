@@ -59,8 +59,8 @@
 			</div>
 		</div>
 		<form>
-			<h1 class="first" data-i18n="__MSG_titleGeneral__">General</h1>
 			<section class="mobile-incompatible">
+				<h1 class="first" data-i18n="__MSG_titleGeneral__">General</h1>
 				<h2 data-i18n="__MSG_subtitlePopupIconColored__">Colored icon</h2>
 				<ul>
 					<li>
@@ -94,10 +94,9 @@
 						<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
 					</li>
 				</ul>
-			</section>
-			<section id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
+
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
-				<ul>
+				<ul id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
 					<li>
 						<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
 						<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
@@ -123,10 +122,8 @@
 						<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
 					</li>
 				</ul>
-			</section>
-			<section>
-				<h2 data-i18n="__MSG_subtitleMisc__">Miscellaneous Settings</h2>
 
+				<h2 data-i18n="__MSG_subtitleMisc__">Miscellaneous Settings</h2>
 				<ul>
 					<li>
 						<label data-i18n="__MSG_optionQrQuietZone__" for="qrQuietZone">QR quiet zone: </label>
@@ -179,6 +176,7 @@
 					</li>
 				</ul>
 			</section>
+
 			<section>
 				<h1 data-i18n="__MSG_titleAddonBehavior__">Addon behavior</h1>
 				<ul>
@@ -205,6 +203,7 @@
 					</li>
 				</ul>
 			</section>
+
 			<section>
 				<button data-i18n="__MSG_optionsResetButton__" type="button" id="resetButton">Reset all settings to defaults</button>
 			</section>
