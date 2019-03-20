@@ -113,7 +113,7 @@ const refreshQrCode = throttle(() => {
         QrCreator.setTextInternal(text);
         QrCreator.generate();
     } catch (e) {
-        // Error thrown from qrcodegen & kjua wrapper when code too long
+        // error thrown from qrcodegen & kjua wrapper when text input is too long
         if (e instanceof QrError.DataOverflowError) {
             CommonMessages.showError("errorQrCodeOverflow");
             console.error("Maximum size of QR code data exceeded with", text.length, "characters.");
