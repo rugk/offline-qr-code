@@ -75,9 +75,9 @@
 
 				<h2 data-i18n="__MSG_subtitleQrCodeType__">QR code type</h2>
 
-				<ul id="qrCodeType" class="setting save-on-input" data-type="radiogroup">
+				<ul id="qrCodeType" data-type="radiogroup">
 					<li>
-						<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="">
+						<input class="setting save-on-input" id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="">
 						<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
 					</li>
 					<li class="indent">
@@ -87,7 +87,7 @@
 
 				<ul>
 					<li>
-						<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="">
+						<input class="setting save-on-input" id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="">
 						<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
 					</li>
 					<li class="indent">
@@ -96,9 +96,9 @@
 				</ul>
 
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
-				<ul id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup" class="setting">
+				<ul id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup">
 					<li>
-						<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
+						<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="setting save-on-input">
 						<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
 
 						<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
@@ -108,7 +108,7 @@
 
 				<ul>
 					<li>
-						<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="save-on-input">
+						<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="setting save-on-input">
 						<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust size</label>
 					</li>
 					<li class="indent">
@@ -118,7 +118,7 @@
 
 				<ul>
 					<li>
-						<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="save-on-input">
+						<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="setting save-on-input">
 						<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
 					</li>
 				</ul>
@@ -133,11 +133,9 @@
 						</span>
 					</li>
 
-					<li>
-						<span class="helper-text">
-							<span data-i18n="__MSG_optionQrQuietZoneDescr__">The number of border modules around the QR code colored in the background color.</span>
-							<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionQrQuietZoneDescrLink__" href="https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone">Learn more</a>
-						</span>
+					<li class="helper-text">
+						<span data-i18n="__MSG_optionQrQuietZoneDescr__">The number of border modules around the QR code colored in the background color.</span>
+						<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionQrQuietZoneDescrLink__" href="https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone">Learn more</a>
 					</li>
 				</ul>
 
@@ -165,14 +163,12 @@
 							<option data-i18n="__MSG_optionEcHigh__" value="H">High (30%)</option>
 						</select>
 					</li>
-					<li>
-						<span class="helper-text">
-							<span data-i18n="__MSG_optionErrorCorrectionDescr__">
-								If a QR code is damaged or some parts are missing, it can often still be scanned.
-								The higher the value the more the machine is able to understand.
-							</span>
-							<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionErrorCorrectionDescrLink__" href="https://en.wikipedia.org/wiki/QR_code#Error_correction">Learn more</a>
+					<li class="helper-text">
+						<span data-i18n="__MSG_optionErrorCorrectionDescr__">
+							If a QR code is damaged or some parts are missing, it can often still be scanned.
+							The higher the value the more the machine is able to understand.
 						</span>
+						<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionErrorCorrectionDescrLink__" href="https://en.wikipedia.org/wiki/QR_code#Error_correction">Learn more</a>
 					</li>
 				</ul>
 			</section>
