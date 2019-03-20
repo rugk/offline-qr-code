@@ -23,9 +23,13 @@ form {
   margin: 16px 32px;
 }
 
+section {
+  margin-bottom: 32px;
+}
+
 h1 {
-  margin: 0;
-  padding: 16px 0;
+  margin: 32px 0 0 0;
+  padding: 16px 0 0 0;
 
   /* title30 */
   font-size: 22px;
@@ -41,20 +45,20 @@ h1.first {
 h2{
   /* title20 */
   font-size: 17px;
-  margin-bottom: 4px;
   font-weight: 600;
+  margin-top: 32px;
 }
 
 ul {
+  margin: 0;
   padding: 0;
-  margin-bottom: 32px;
 }
 
 li {
   list-style-type: none;
 
   padding: 2px 0;
-  margin: 10px 0 4px 0;
+  margin: 0 0 4px 0;
 
   display: flex;
   align-items: center;
