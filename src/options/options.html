@@ -77,7 +77,7 @@
 
 				<ul id="qrCodeType" data-type="radiogroup">
 					<li>
-						<input class="setting save-on-input" id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg" class="">
+						<input class="setting save-on-input" id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg">
 						<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
 					</li>
 					<li class="indent">
@@ -87,7 +87,7 @@
 
 				<ul>
 					<li>
-						<input class="setting save-on-input" id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas" class="">
+						<input class="setting save-on-input" id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas">
 						<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
 					</li>
 					<li class="indent">
@@ -96,32 +96,34 @@
 				</ul>
 
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
-				<ul id="sizeType" data-optiongroup="qrCodeSize" data-type="radiogroup">
-					<li>
-						<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="setting save-on-input">
-						<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
+				<div id="sizeType" data-type="radiogroup" class="setting">
+					<ul>
+						<li>
+							<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
+							<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
 
-						<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
-						<label for="qrCodeSizeFixedValue">px</label>
-					</li>
-				</ul>
+							<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
+							<label for="qrCodeSizeFixedValue">px</label>
+						</li>
+					</ul>
 
-				<ul>
-					<li>
-						<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="setting save-on-input">
-						<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust size</label>
-					</li>
-					<li class="indent">
-						<span data-i18n="__MSG_optionQrCodeSizeAutoHelper__" class="helper-text">Mostly useful on mobile devices, where the QR code opens in a new tab.</span>
-					</li>
-				</ul>
+					<ul>
+						<li>
+							<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="save-on-input">
+							<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust size</label>
+						</li>
+						<li class="indent">
+							<span data-i18n="__MSG_optionQrCodeSizeAutoHelper__" class="helper-text">Mostly useful on mobile devices, where the QR code opens in a new tab.</span>
+						</li>
+					</ul>
 
-				<ul>
-					<li>
-						<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="setting save-on-input">
-						<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
-					</li>
-				</ul>
+					<ul>
+						<li>
+							<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="save-on-input">
+							<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
+						</li>
+					</ul>
+				</div>
 
 				<h2 data-i18n="__MSG_subtitleMisc__">Miscellaneous Settings</h2>
 				<ul>
