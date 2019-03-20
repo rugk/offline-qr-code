@@ -1,7 +1,7 @@
 /**
  * Errors in QR code generation
  *
- * @module QrLib/QrErrors
+ * @module QrLib/QrError
  */
 
 export class DataOverflowError extends Error {
