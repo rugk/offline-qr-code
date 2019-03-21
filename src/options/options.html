@@ -75,34 +75,36 @@
 
 				<h2 data-i18n="__MSG_subtitleQrCodeType__">QR code type</h2>
 
-				<ul id="qrCodeType" data-type="radiogroup">
-					<li>
-						<input class="setting save-on-input" id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg">
-						<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
-					</li>
-					<li class="indent">
-						<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
-					</li>
-				</ul>
+				<div class="setting save-on-input" data-type="radiogroup" id="qrCodeType">
+					<ul>
+						<li>
+							<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg">
+							<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
+						</li>
+						<li class="indent">
+							<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
+						</li>
+					</ul>
 
-				<ul>
-					<li>
-						<input class="setting save-on-input" id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas">
-						<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
-					</li>
-					<li class="indent">
-						<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
-					</li>
-				</ul>
+					<ul>
+						<li>
+							<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas">
+							<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
+						</li>
+						<li class="indent">
+							<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
+						</li>
+					</ul>
+				</div>
 
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
-				<div id="sizeType" data-type="radiogroup" class="setting">
+				<div id="sizeType" data-type="radiogroup" class="setting" data-optiongroup="qrCodeSize">
 					<ul>
 						<li>
 							<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
 							<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
 
-							<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
+							<input data-i18n="__MSG_optionPixelAbbreviation__" class="save-on-change" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
 							<label for="qrCodeSizeFixedValue">px</label>
 						</li>
 					</ul>
