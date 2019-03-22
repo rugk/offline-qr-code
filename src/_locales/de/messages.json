@@ -80,6 +80,10 @@
     "message": "Berechtigungsabfrage fehlgeschlagen.",
     "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
+  "errorQrCodeOverflow": {
+    "message": "Kann den QR-Code nicht erstellen, da der angegebene Text zu lang ist.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size."
+  },
   "requestDownloadPermissionForQr": {
     "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
     "description": "Shown, when the user is asked to allow the download permission to save the QR code."
