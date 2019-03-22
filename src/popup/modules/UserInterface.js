@@ -5,9 +5,9 @@
  * @requires /common/modules/lodash/isObject
  * @requires /common/modules/lodash/throttle
  * @requires /common/modules/data/MessageLevel
- * @requires /common/modules/Logger
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler
+ * @requires ./QrLib/QrErrors
  * @requires ./QrCreator
  */
 // lodash
@@ -19,6 +19,7 @@ import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunic
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
+import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 
@@ -108,8 +109,18 @@ const refreshQrCode = throttle(() => {
         CommonMessages.hideError();
     }
 
-    QrCreator.setTextInternal(text);
-    QrCreator.generate();
+    try {
+        QrCreator.setTextInternal(text);
+        QrCreator.generate();
+    } catch (e) {
+        // error thrown from qrcodegen & kjua wrapper when text input is too long
+        if (e instanceof QrError.DataOverflowError) {
+            CommonMessages.showError("errorQrCodeOverflow");
+            console.error("Maximum size of QR code data exceeded with", text.length, "characters.");
+        } else {
+            throw e;
+        }
+    }
 }, QR_CODE_REFRESH_TIMEOUT);
 
 /**

@@ -2,9 +2,11 @@
  * Creates and modifies a QR code with the QR code library "kjua".
  *
  * @module QrLib/kjua
- * @requires /common/modules/Logger
+ * @requires QrError
  */
 /* globals kjua */
+
+import * as QrError from "./QrError.js";
 
 /**
  * The type of QR code this library generates.
@@ -110,7 +112,13 @@ export function set(tag, value) {
  */
 export function getQr() {
     console.info("generated new qr kjua code", kjuaOptions);
-    return kjua(kjuaOptions);
+
+    try {
+        return kjua(kjuaOptions);
+    } catch (err) {
+        throw err.message.startsWith("code length overflow.")
+            ? new QrError.DataOverflowError() : err;
+    }
 }
 
 /**

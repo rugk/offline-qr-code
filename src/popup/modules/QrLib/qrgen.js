@@ -2,10 +2,11 @@
  * Creates and modifies a QR code with the QR code library "kjua".
  *
  * @module QrLib/qrgen
- * @requires /common/modules/Logger
+ * @requires QrError
  */
 /* globals qrcodegen */
 
+import * as QrError from "./QrError.js";
 const QRC = qrcodegen.QrCode;
 
 let qrQuietZone;
@@ -99,8 +100,12 @@ export function set(tag, value) {
 export function getQr() {
     console.info("generated new QrGen qr code");
 
-    const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
-    const svgString = qrElem.toSvgString(qrQuietZone);
-
-    return getSvgElement(svgString);
+    try {
+        const qrElem = QRC.encodeText(qrText, qrErrorCorrection);
+        const svgString = qrElem.toSvgString(qrQuietZone);
+        return getSvgElement(svgString);
+    } catch (err) {
+        throw (err === "Data too long")
+            ? new QrError.DataOverflowError() : err;
+    }
 }
