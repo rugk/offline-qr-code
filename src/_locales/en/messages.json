@@ -197,7 +197,7 @@
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
   "titleGeneral": {
-    "message": "General Settings",
+    "message": "Add On",
     "description": "The title for the general settings group."
   },
   "titleQrCodeSetting": {
@@ -221,10 +221,6 @@
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
-  "subtitlePopupIconColored": {
-    "message": "Colored icon",
-    "description": "This is a sub heading in the add-on settings."
-  },
   "optionPopupIconColoredDescr": {
     "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
