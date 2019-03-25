@@ -28,7 +28,7 @@ section {
 }
 
 h1 {
-  margin: 32px 0 0 0;
+  margin: 32px 0 16px 0;
   padding: 16px 0 0 0;
 
   /* title30 */
@@ -46,7 +46,7 @@ h2{
   /* title20 */
   font-size: 17px;
   font-weight: 600;
-  margin-top: 32px;
+  margin: 32px 0 16px 0;
 }
 
 ul {
@@ -73,10 +73,11 @@ li.indent {
   margin-inline-start: 28px;
 }
 
-.helper-text {
+li.helper-text {
   /* caption20 */
   font-size: 13px;
   color: var(--grey-50);
+  display: inline;
 }
 
 /* when a link is used in a helper text, add margin */
