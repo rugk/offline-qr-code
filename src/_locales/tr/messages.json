@@ -2,333 +2,444 @@
   // manifest.json
   "extensionName": {
     "message": "Çevrimdışı QR Kod Üreticisi",
-    "description": "Name of the extension."
+    "description": "Name of the extension.",
+    "hash": "8f698856e9a0ac32513f12b1955fa3c1"
   },
   "extensionNameShort": {
     "message": "Çevrimdışı QR-Kod",
-    "description": "Name of the extension."
+    "description": "Name of the extension.",
+    "hash": "a38edae757cf4b1c8a57c0de97ae7400"
   },
   "extensionDescription": {
     "message": "Tarayıcında açık olan herhangi bir sayfa veya sekme için QR kod oluşturmanı sağlar.",
-    "description": "Description of the extension."
+    "description": "Description of the extension.",
+    "hash": "824ef7416ba4361e3621df1fe8048c3b"
   },
   "browserActionButtonTitle": {
     "message": "Çevrimdışı QR Kod",
-    "description": "The title for the button, which opens the popup."
+    "description": "The title for the button, which opens the popup.",
+    "hash": "dc0228c66afb28e701184df952b0df18"
   },
 
   // errors or other messages (mostly for settings)
   "errorShowingMessage": {
     "message": "Mesaj görüntülenemedi.",
-    "description": "When there is an error when showing the error/info/…."
+    "description": "When there is an error when showing the error/info/….",
+    "hash": "a9440e4f824a372841d4de2b7e2643ee"
   },
   "couldNotLoadOptions": {
     "message": "Ayarlar yüklenemedi.",
-    "description": "When one or all settings could not be loaded."
+    "description": "When one or all settings could not be loaded.",
+    "hash": "9497a5d2c9473aeb2ed9601f46c456be"
   },
   "couldNotSaveOption": {
     "message": "Ayarlar kaydedilemedi.",
-    "description": "When a setting could not be saved."
+    "description": "When a setting could not be saved.",
+    "hash": "6bcb9e36d2c33172b948515a9c50aa8e"
   },
   "messageUndoButton": {
     "message": "Geri al",
-    "description": "The text of a button that undoes the last action."
+    "description": "The text of a button that undoes the last action.",
+    "hash": "a85e775d7404b86c8060a20efd31241c"
   },
   "couldNotUndoAction": {
     "message": "Geri alma işlemi başarısız.",
-    "description": "Shown when an action cannot be undone."
+    "description": "Shown when an action cannot be undone.",
+    "hash": "d2883c6ca0164afc4f360f3e02e3166a"
   },
   "resettingOptionsWorked": {
     "message": "Bütün ayarlar varsayılan değerlere döndürüldü!",
-    "description": "The message shown, when the options of the settings were reset."
+    "description": "The message shown, when the options of the settings were reset.",
+    "hash": "257b99ed2a074fccbfc658d770b50107"
   },
   "resettingOptionsFailed": {
     "message": "Seçenekleri sıfırlama başarısız oldu!",
-    "description": "The message shown, when the options of the settings could not have been reset."
+    "description": "The message shown, when the options of the settings could not have been reset.",
+    "hash": "76e950d2db72a824482411ca6564fb1f"
   },
 
   // errors or other messages
   "unknownError": {
     "message": "bilinmeyen hata",
-    "description": ""
+    "hash": "879b63f6ebf03308a9f4b8a4406663f3"
   },
   "loading": {
     "message": "Yükleniyor…",
-    "description": "A general loading message."
+    "description": "A general loading message.",
+    "hash": "e2a5d4627618472a68f4cb8895e93f30"
   },
   "couldNotGenerateQrCode": {
     "message": "QR Kod oluşturulamadı.",
-    "description": ""
+    "hash": "87e71800b895b0e9695da467734df0e5"
   },
   "couldNotReceiveActiveTab": {
     "message": "Aktif sekmeye ulaşılamadı.",
-    "description": ""
+    "hash": "2b4c5f788e39f7ae35dcca2f96e1e5d4"
   },
   "errorDownloadingFile": {
     "message": "Dosya indirilemedi.",
-    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general.",
+    "hash": "8f5756df0d5dd4d25f01ca4b4ff0ec44"
   },
   "errorPermissionRequired": {
     "message": "Gerekli yetkiler olmadığı için işlem tamamlanamadı.",
-    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed.",
+    "hash": "9742f751499f8c2acf32d83df83c36b9"
   },
   "errorPermissionRequestFailed": {
     "message": "Yetkilendirma hatası.",
-    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission.",
+    "hash": "54aaf50f8bdf6154677a4ff7fd384310"
+  },
+  "errorQrCodeOverflow": {
+    "message": "QR kodu oluşturulamıyor, girilen yazı çok uzun.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size.",
+    "hash": "36c48d76203a1f1362b32abf72af5d8b"
   },
   "requestDownloadPermissionForQr": {
     "message": "QR kodu kaydedebilmek için dosya indirma izni gerekiyor.",
-    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code.",
+    "hash": "6e5a5fe9a077400ba6e4dc66a6dfd44a"
   },
   "lowContrastRatioInfo": {
     "message": "Düşük kontrast sebebiyle QR kodunuz bazı tarayıcılar tarafından zor okunabilir.",
-    "desription": "The message shown when the contrast ratio is too low"
+    "hash": "90432f33baa13153accd007ae2e23e99"
   },
   "lowContrastRatioWarning": {
     "message": "QR kodun kontrast oranı çok düşük olduğu için tüm QR okuyucular tarafından doğru okunamayabilir.",
-    "desription": "The warning shown when the contrast ratio is too low"
+    "hash": "f4264a9b8b24922e4dff589f611b5e2f"
   },
   "lowContrastRatioError": {
     "message": "QR kodun rengi ile arka plan rengi birbirine çok yakın.",
-    "description": "The message shown when the color for the QR code and the background are equal"
+    "description": "The message shown when the color for the QR code and the background are equal",
+    "hash": "a2d1d2fdc32ecb73ffdf0ab537e46f32"
   },
   "messageAutoSelectColorButton": {
     "message": "Zıt renkler kullan",
-    "description": "The text of a button that sets a new color with a sufficient contrast."
+    "description": "The text of a button that sets a new color with a sufficient contrast.",
+    "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
 
   // tips
   "tipYouLikeAddon": {
     "message": "Eklentiyi beğendin mi?",
-    "description": "A tip shown to remind the user to rate the addon."
+    "description": "A tip shown to remind the user to rate the addon.",
+    "hash": "0f5680a5a42bcebf793a44b9dfcf79a1"
   },
   "tipYouLikeAddonButton": {
     "message": "Eklentiyi puanla",
-    "description": "Button for the tip shown to remind the user to rate the addon."
+    "description": "Button for the tip shown to remind the user to rate the addon.",
+    "hash": "821d7f942b02e2b56cd0424d3ab65de8"
   },
   "tipSaveQrCode": {
     "message": "QR kodları kaydedebileceğini biliyor muydun?",
-    "description": "A tip shown to get the user to find the save option."
+    "description": "A tip shown to get the user to find the save option.",
+    "hash": "84f0a0027a58c98d9158ab9894fe8427"
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ.",
+    "hash": "c453089f62132ffa4151c4487209de69"
   },
   "tipQrCodeHotkey": {
     "message": "Bu eklenti için kısayol Ctrl+Shift+F10.",
-    "description": "A tip shown to get the user to notice that there is a hot key."
+    "description": "A tip shown to get the user to notice that there is a hot key.",
+    "hash": "a372dc813085fe800ecb594e33b6c81c"
+  },
+  "tipAndroidQrReader": {
+    "message": "Firefox dahili bir QR okuyucuy sahip.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160.",
+    "hash": "dfa24b6c3e5815e07df938f51fa45065"
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed.",
+    "hash": "094c1bbce6c3a7bcb09f36b7bc970dd0"
+  },
+  "tipTranslateAddon": {
+    "message": "Başka dilleri konuşabiliyorsanız bu eklentiyi çevirmeye yardımcı olabilirsiniz.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on.",
+    "hash": "f22661cb0e9cdc8144d0c3cf59f854e3"
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use.",
+    "hash": "b0421380ecfc4481fd5ee9da72c61516"
   },
   "tipDonate": {
     "message": "Bu eklentiyi ücretsiz olarak kullanmaktan memnun musun?",
-    "description": "A tip shown to get the remind them of a donation."
+    "description": "A tip shown to get the remind them of a donation.",
+    "hash": "1ca77d6621635ae0bec563e15fbc3791"
   },
   "tipDonateButton": {
     "message": "Bağış yaparak destek olabilirsin.",
-    "description": "The button of the donation tip taking the user to the donation site."
+    "description": "The button of the donation tip taking the user to the donation site.",
+    "hash": "8ec498495b752c6d9358208a5564d42c"
   },
   "tipLearnMore": {
     "message": "Daha fazla bilgi",
-    "description": "The common button for tips, where you can get more information on click."
+    "description": "The common button for tips, where you can get more information on click.",
+    "hash": "9085b09f4748be12ab0c241d2e643b31"
   },
 
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR kod için ayrılmış alan",
-    "description": "Alt text of placeholder image."
+    "description": "Alt text of placeholder image.",
+    "hash": "2aad56747125ef1f986b5d952ba68a83"
   },
   "textareaPlaceholder": {
     "message": "QR kod için bir metin gir.",
-    "description": "Placeholder for the textarea, when it is empty."
+    "description": "Placeholder for the textarea, when it is empty.",
+    "hash": "0d0f6b3baffcdbf22a78418b3460d1ad"
   },
 
   // context menu
   "contextMenuItemConvertSelection": {
     "message": "Seçili kısımdan QR kod üret",
-    "description": "The context menu entry shown for generating QR codes from a selection."
+    "description": "The context menu entry shown for generating QR codes from a selection.",
+    "hash": "e8c3fbbac6f04370f00af836aa65b49d"
   },
   "contextMenuItemConvertSelectionAccessKey": {
     "message": "Seçili kısımdan &QR kod üret",
-    "description": "The context menu entry shown for generating QR codes from a selection."
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key.",
+    "hash": "95228af6c838cb7040b6e2441d8d516b"
   },
   "contextMenuItemConvertLinkSelection": {
     "message": "Linkten QR kod üret",
-    "description": "The context menu entry shown for generating QR codes from a selected link."
+    "description": "The context menu entry shown for generating QR codes from a selected link.",
+    "hash": "bc4971948a5e6f453046467bfbf6dbc0"
   },
   "contextMenuItemConvertLinkSelectionAccessKey": {
     "message": "Linkten &QR kod üret",
-    "description": "The context menu entry shown for generating QR codes from a selected link."
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
+    "hash": "312595c39b5cbc8edf0baab8c16875af"
   },
   "contextMenuSaveImage": {
     "message": "QR kod kaydet…",
-    "description": "The context menu entry shown for saving SVG images in the popup."
+    "description": "The context menu entry shown for saving SVG images in the popup.",
+    "hash": "2eefde0a0d140820b10a3f3cadc0b91e"
   },
   "contextMenuSaveImageAccessKey": {
     "message": "&QR kod kaydet…",
-    "description": "The context menu entry shown for saving SVG images in the popup."
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
+    "hash": "5d978e9ed30cc817b82376faefbcfbbb"
   },
 
   // options
   "someSettingsAreManaged": {
     "message": "Bazı ayarlar sistem yöneticin tarafından düzenlendiği için değiştirilemez.",
-    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators.",
+    "hash": "148604ebbeb7df28974d8233f1418d1f"
   },
   "optionIsDisabledBecauseManaged": {
     "message": "Bu özellik sistem yöneticin tarafından ayarlandığı için devredışı.",
-    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option.",
+    "hash": "50fb70682c64e1a1fb4d8884b33cca64"
   },
   "optionLearnMore": {
     "message": "Daha fazla bilgi",
-    "description": "When a link to an explainer needs to be added, this is the link text."
+    "description": "When a link to an explainer needs to be added, this is the link text.",
+    "hash": "9085b09f4748be12ab0c241d2e643b31"
   },
   "optionsResetButton": {
     "message": "Bütün ayarları varsayılanlara sıfırla",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings.",
+    "hash": "4bb60c6c7e7b9e2ff987c244e76ee044"
   },
-
   "optionPopupIconColored": {
     "message": "Renkli ikon",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "d1a73cea0718b619bd2adcfe97bd66a8"
   },
   "optionPopupIconColoredDescr": {
     "message": "Araç çubuğunda siyah beyaz ikon yerine renkli ikon gösterir.",
-    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
+    "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
   },
-
   "optionQrCodeType": {
     "message": "QR kod türü",
-    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
+    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
+    "hash": "b87348b6fb11b28adf124e621c68c459"
   },
   "optionQrCodeTypeSvg": {
     "message": "SVG",
-    "description": "Option to select a scalable vector graphic image (SVG)."
+    "description": "Option to select a scalable vector graphic image (SVG).",
+    "hash": "73765445a2ffe6ef74df1f9b50dab017"
   },
   "optionQrCodeTypeSvgHelper": {
     "message": "QR kod, daha düzgün yeniden boyutlandırma sağlayan vektör grafikler ile oluşturulur.",
-    "description": "Helper text for SVG QR code type option."
+    "description": "Helper text for SVG QR code type option.",
+    "hash": "c5c854179330262bbb43fe22ff3e5f6f"
   },
   "optionQrCodeTypeCanvas": {
     "message": "Canvas resmi",
-    "description": "Option to select a canvas (pixel) image."
+    "description": "Option to select a canvas (pixel) image.",
+    "hash": "8d224978370adc11a9b1a5a944c010bd"
   },
   "optionQrCodeTypeCanvasHelper": {
     "message": "QR kod, imaj (\"canvas\") olarak oluşturulur.",
-    "description": "Helper text for canvas QR code type option."
+    "description": "Helper text for canvas QR code type option.",
+    "hash": "9191c0be558ba93297a58b19d880036c"
   },
-
   "optionQrCodeSize": {
     "message": "QR kod boyutu",
-    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code.",
+    "hash": "c74c1fd09a791c747fab18a81c3e2a5a"
   },
   "optionQrCodeSizeFixed": {
     "message": "Sabit:",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "c68e3c4b50dd64aebeb558b3c600e18f"
   },
   "optionPixelAbbreviation": {
     "message": "px",
-    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English.",
+    "hash": "7b0c117512f22afe7fef1bcda3e474e1"
   },
   "optionQrCodeSizeAuto": {
     "message": "Boyutu otomatik ayarla",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "127515053bfb818e4268a74a81133b71"
   },
   "optionQrCodeSizeAutoHelper": {
     "message": "QR kodunun yeni bir sekme açtığı mobil cihazlarda kullanışlıdır.",
-    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices.",
+    "hash": "8fc122b9bf15ab197091d768fd2f7dff"
   },
   "optionQrCodeSizeRemember": {
     "message": "Son kullanılan boyutu hatırla",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "280612358cfcc5357399f75b697a07bb"
   },
-
   "optionQrQuietZone": {
     "message": "QR çerçevesi (quiet zone):",
-    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code.",
+    "hash": "a11f6e534cf14d30bccdb359489862b9"
   },
   "optionQrQuietZoneStatusSingular": {
     "message": "($INTEGER$ kare)",
     "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
     "placeholders": {
-      "integer": {
-        "content": "$1",
-        "example": "1"
-      }
-    }
+        "integer": { "content": "$1", "example": "1" }
+    },
+    "hash": "dfb928dac26b3da38c89476f22610303"
   },
   "optionQrQuietZoneStatusPlural": {
     "message": "($INTEGER$ kareler)",
     "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
     "placeholders": {
-      "integer": {
-        "content": "$1",
-        "example": "3"
-      }
-    }
+        "integer": { "content": "$1", "example": "3" }
+    },
+    "hash": "717944c73c8d92595af6c07bb960b52d"
   },
   "optionQrQuietZoneDescr": {
     "message": "QR kod çevresinde renkli arkaplandan ayırmak için kullanılacak çerçevenin boyutu.",
-    "description": "The description of the quiet zone option."
+    "description": "The description of the quiet zone option.",
+    "hash": "94a93f5a15d9303e8003eae8c0b94ed1"
   },
   "optionQrQuietZoneDescrLink": {
     "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
-    "description": "The 'Learn more' link in the description of the quiet zone option."
+    "description": "The 'Learn more' link in the description of the quiet zone option.",
+    "hash": "c1647a59859dec44f48888e26ca70661"
   },
-
   "optionQrCodeColor": {
     "message": "QR kodu rengi:",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "d9f06d0c24e89fbc94c03561a7e09fa9"
   },
-
   "optionQrCodeBackgroundColor": {
     "message": "QR kodu arkaplan rengi:",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "7fefdae7b929d22545bf61bc1c26abe3"
   },
-
   "optionErrorCorrection": {
     "message": "Hata düzeltme oranı:",
-    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "112ebf137091b98b587615b7cd3f9e7c"
   },
   "optionEcLow": {
     "message": "Düşük (7%)",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "6e3061544eb22cab11cd1222788610bd"
   },
   "optionEcMedium": {
     "message": "Orta (15%)",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "0ea96235848be6f66788cad72bc0ea02"
   },
   "optionEcQuartile": {
     "message": "Çeyrek (%25)",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "344e853acdaef0ac95e161cdbc201036"
   },
   "optionEcHigh": {
     "message": "Yüksek (%30)",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "30035374d52e135473d464fe1726ad8c"
   },
   "optionErrorCorrectionDescr": {
     "message": "Bu değer kodun ne kadarı eksik olsa bile yine de okunabileceğini gösterir.",
-    "description": "The description of the error correction option."
+    "description": "The description of the error correction option.",
+    "hash": "2bbbd8aafc044a910d26cbf04e560766"
   },
   "optionErrorCorrectionDescrLink": {
     "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
-    "description": "The 'Learn more' link in the description of the error correction option."
+    "description": "The 'Learn more' link in the description of the error correction option.",
+    "hash": "530f6b1ee177dddd7d40571d98a64408"
   },
-
   "optionAutoGetSelectedText": {
     "message": "Seçili metni QR kodu oluşturmak için kullan",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "21667c5a30f89561cea02351172b9c91"
   },
   "optionUseMonospaceFont": {
     "message": "Eşaralıklı (monospace) yazıtipi kullan",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "69191273c436064be8c4f5d6a8f675f5"
   },
-
   "optionDebugMode": {
     "message": "Hata ayıklama modunu etkinleştir",
-    "description": "This is an option shown in the add-on settings."
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "de6506af4973e0980d64f242fba11a19"
   },
   "optionDebugModeDescr": {
     "message": "Hata tespiti için konsolda daha detaylı çıktı görmeye yarar.",
-    "description": "The description shown for the debug mode (optionDebugMode)."
+    "description": "The description shown for the debug mode (optionDebugMode).",
+    "hash": "2aff10770796694827ec4253860e0771"
   },
 
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Bu mesajı kapat",
-    "description": "The label for the close button of the message box"
-  }
+    "description": "the aria label for the close button of the message box",
+    "hash": "632720ab193dcacba4286cb364124856"
+  },
+  "ariaMessageLoading": {
+    "message": "mesaj yükleniyor",
+    "description": "the aria label to label the message box as an info message box",
+    "hash": "570016a957498a1fa1b3e818eb282adb"
+  },
+  "ariaMessageInfo": {
+    "message": "bilgi mesajı",
+    "description": "the aria label to label the message box as an info message box",
+    "hash": "5f54e42067e19895a2641b17a5233418"
+  },
+  "ariaMessageSuccess": {
+    "message": "başarılı mesajı",
+    "description": "the aria label to label the message box as an success message box",
+    "hash": "334387b4ae53483d17f11519a70dd3af"
+  },
+  "ariaMessageError": {
+    "message": "hata mesajı",
+    "description": "the aria label to label the message box as an error message box",
+    "hash": "fcda6eedc61727fe8aae7392a0a541a5"
+  },
+  "ariaMessageWarning": {
+    "message": "uyarı mesajı",
+    "description": "the aria label to label the message box as an warning message box",
+    "hash": "8a5dd7528bead1ccd27cb7430d797bd2"
+  },
+
+  "__WET_LOCALE__": { "message": "tr" }
 }
