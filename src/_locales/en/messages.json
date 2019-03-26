@@ -197,7 +197,7 @@
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
   "titleGeneral": {
-    "message": "Add On",
+    "message": "Add-on",
     "description": "The title for the general settings group."
   },
   "titleQrCodeSetting": {
