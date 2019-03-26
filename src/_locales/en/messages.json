@@ -201,7 +201,7 @@
     "description": "The title for the general settings group."
   },
   "titleQrCodeSetting": {
-    "message": "QR Code Settings",
+    "message": "QR Code",
     "description": "The title for the qr code settings group."
   },
   "titleAddonBehavior": {
