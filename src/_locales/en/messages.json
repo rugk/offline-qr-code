@@ -205,7 +205,7 @@
     "description": "The title for the qr code settings group."
   },
   "titleAddonBehavior": {
-    "message": "Addon Behavior",
+    "message": "Add-on Behavior",
     "description": "The title for the addon behavior settings group."
   },
   "optionIsDisabledBecauseManaged": {
