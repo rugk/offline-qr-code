@@ -201,11 +201,11 @@
     "description": "The title for the general settings group."
   },
   "titleQrCodeSetting": {
-    "message": "QR Code",
+    "message": "QR code",
     "description": "The title for the qr code settings group."
   },
   "titleAddonBehavior": {
-    "message": "Add-on Behavior",
+    "message": "Add-on behavior",
     "description": "The title for the addon behavior settings group."
   },
   "optionIsDisabledBecauseManaged": {
@@ -277,7 +277,7 @@
   },
 
   "subtitleMisc": {
-    "message": "Miscellaneous Settings",
+    "message": "Miscellaneous settings",
     "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
   },
   "optionQrQuietZone": {
