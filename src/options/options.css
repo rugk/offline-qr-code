@@ -73,7 +73,7 @@ li.indent {
   margin-inline-start: 28px;
 }
 
-li.helper-text {
+.helper-text {
   /* caption20 */
   font-size: 13px;
   color: var(--grey-50);
