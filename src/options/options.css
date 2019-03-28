@@ -85,7 +85,3 @@ li.indent {
   margin-left: 4px;
   overflow-wrap: none;
 }
-
-#qrQuietZone, label {
-  cursor: pointer;
-}
