@@ -19,10 +19,6 @@ body.mobile .mobile-incompatible {
   opacity: 0.4;
 }
 
-form {
-  margin: 16px 32px;
-}
-
 section {
   margin-bottom: 32px;
 }
@@ -46,6 +42,7 @@ h1 {
 
 form section:first-child h1 {
   border-top: none;
+  margin-top: 16px;
 }
 
 h2{
