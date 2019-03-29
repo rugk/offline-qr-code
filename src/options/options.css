@@ -27,6 +27,12 @@ section {
   margin-bottom: 32px;
 }
 
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(12, 12, 13, 0.15);
+}
+
 h1 {
   margin: 32px 0 16px 0;
   padding: 16px 0 0 0;
@@ -38,7 +44,7 @@ h1 {
   border-top: 1px solid rgba(12, 12, 13, 0.15);
 }
 
-h1.first {
+form section:first-child h1 {
   border-top: none;
 }
 
@@ -85,3 +91,4 @@ li.indent {
   margin-left: 4px;
   overflow-wrap: none;
 }
+
