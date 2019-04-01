@@ -1,3 +1,7 @@
+:root {
+  --gray: rgba(12, 12, 13, 0.15);
+}
+
 body {
   /* body20 */
   font-size: 15px;
@@ -27,7 +31,7 @@ section {
 hr {
   border: 0;
   height: 1px;
-  background-color: rgba(12, 12, 13, 0.15);
+  background-color: var(--gray);
 }
 
 h1 {
@@ -38,7 +42,7 @@ h1 {
   font-size: 22px;
   font-weight: 300;
 
-  border-top: 1px solid rgba(12, 12, 13, 0.15);
+  border-top: 1px solid var(--gray);
 }
 
 form section:first-child h1 {
