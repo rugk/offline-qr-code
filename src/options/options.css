@@ -94,3 +94,7 @@ li.indent {
   overflow-wrap: none;
 }
 
+button {
+  padding: 4px 8px;
+}
+
