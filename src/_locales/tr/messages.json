@@ -241,7 +241,7 @@
     "description": "The title for the general settings group."
   },
   "titleQrCodeSetting": {
-    "message": "QR code",
+    "message": "QR Kod Seçenekleri",
     "description": "The title for the qr code settings group."
   },
   "titleAddonBehavior": {
@@ -329,7 +329,7 @@
     "hash": "280612358cfcc5357399f75b697a07bb"
   },
   "subtitleMisc": {
-    "message": "Miscellaneous settings",
+    "message": "Diğer Seçenekler",
     "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
   },
   "optionQrQuietZone": {
