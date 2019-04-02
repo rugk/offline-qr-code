@@ -42,7 +42,7 @@ h1 {
   font-size: 22px;
   font-weight: 300;
 
-  border-top: 1px solid var(--gray);
+  border-top: 1px solid var(--gray-separator);
 }
 
 form section:first-child h1 {
