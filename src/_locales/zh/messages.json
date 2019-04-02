@@ -242,6 +242,21 @@
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators.",
     "hash": "148604ebbeb7df28974d8233f1418d1f"
   },
+  "titleGeneral": {
+    "message": "扩展",
+    "description": "The title for the general settings group.",
+    "hash": "3cb58113bf50253738aef3a6d97964b8"
+  },
+  "titleQrCodeSetting": {
+    "message": "二维码",
+    "description": "The title for the QR code settings group.",
+    "hash": "70fe1f61bc42ca4b582a22ba9c00e22f"
+  },
+  "titleAddonBehavior": {
+    "message": "扩展行为",
+    "description": "The title for the addon behavior settings group.",
+    "hash": "fbad6be4d92eb060918e27bc7c8b070b"
+  },
   "optionIsDisabledBecauseManaged": {
     "message": "该选项已禁用，因为你的系统管理员已经配置。",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option.",
@@ -267,7 +282,7 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
     "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
   },
-  "optionQrCodeType": {
+  "subtitleQrCodeType": {
     "message": "二维码类型",
     "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
     "hash": "b87348b6fb11b28adf124e621c68c459"
@@ -292,7 +307,7 @@
     "description": "Helper text for canvas QR code type option.",
     "hash": "9191c0be558ba93297a58b19d880036c"
   },
-  "optionQrCodeSize": {
+  "subtitleQrCodeSize": {
     "message": "二维码大小",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code.",
     "hash": "c74c1fd09a791c747fab18a81c3e2a5a"
@@ -321,6 +336,11 @@
     "message": "记住上次大小",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
     "hash": "280612358cfcc5357399f75b697a07bb"
+  },
+  "subtitleMisc": {
+    "message": "杂项设置",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code.",
+    "hash": "6394c364dd4afc224c653644259bc4ea"
   },
   "optionQrQuietZone": {
     "message": "空白区域:",
