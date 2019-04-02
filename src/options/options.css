@@ -1,7 +1,11 @@
+:root {
+  --gray-separator: rgba(12, 12, 13, 0.15);
+}
+
 body {
-  /* the style the other options in the settings pane use */
-  font-size: 1.11em;
-  color: #333;
+  /* body20 */
+  font-size: 15px;
+  padding: 0 8px;
 }
 
 /* on (small) mobile displays */
@@ -20,51 +24,68 @@ body.mobile .mobile-incompatible {
   opacity: 0.4;
 }
 
-ul {
-  margin: 0px;
-  padding: 0px;
+section {
+  margin-bottom: 32px;
 }
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--gray-separator);
+}
+
+h1 {
+  margin: 32px 0 16px 0;
+  padding: 16px 0 0 0;
+
+  /* title30 */
+  font-size: 22px;
+  font-weight: 300;
+
+  border-top: 1px solid var(--gray-separator);
+}
+
+form section:first-child h1 {
+  border-top: none;
+  margin-top: 16px;
+}
+
+h2{
+  /* title20 */
+  font-size: 17px;
+  font-weight: 600;
+  margin: 32px 0 16px 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 li {
   list-style-type: none;
-  margin-top: 10px;
-  padding: 0px;
-}
-/* in a fieldset e.g. we use a condensed version */
-.condensed-list {
-  margin-left: 0px;
-}
 
-fieldset {
-  /* same border style as separators above */
-  border: 1px solid;
-  border-radius: 4px;
-  border-color: var(--grey-30); /* Firefox: --in-content-box-border-color */
+  padding: 2px 0;
+  margin: 0 0 4px 0;
 
-  /* a big width, but not too big */
-  display: inline-block;
-  width: auto;
-  min-width: 60vw;
-
-  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
 }
 
-/* when a setting has a label *before* it, add some margin */
-label + .setting {
-  margin-left: 8px;
+li * {
+  /* https://design.firefox.com/photon/visuals/grid.html#spacing */
+  margin: 0 8px 0 0;
+}
+
+li.indent {
+  margin-inline-start: 28px;
 }
 
 .helper-text {
-  display: block;
+  /* caption30 */
+  font-size: 15px;
   color: var(--grey-50);
-
-  margin-top: 4px;
-}
-
-/* some margin to align with checkbox */
-input[type=checkbox] ~ .helper-text,
-input[type=radio] ~ .helper-text {
-  /* 4px margin-left + 16px size + 3px margin-right + 5px space (#text) */
-  margin-left: 28px;
+  display: inline;
 }
 
 /* when a link is used in a helper text, add margin */
@@ -73,21 +94,7 @@ input[type=radio] ~ .helper-text {
   overflow-wrap: none;
 }
 
-/* special options values */
-
-#popupIconColor {
-  display: inline;
+button {
+  padding: 4px 8px;
 }
 
-#qrQuietZone {
-  position: relative;
-  top: 5px;
-  cursor: pointer;
-  /* -webkit-appearance: none; */
-}
-
-#qrCodeSizeFixedValue {
-  width: 4.5em;
-}
-
-/* TODO: make i icon bigger */

@@ -135,7 +135,7 @@ a:active {
   border-radius: 4px;
 
   /* use whole width */
-  width: 100%;
+  width: calc(100% - 8px);
   min-height: 32px;
 
   /* make errors selectable, so users can copy them */
