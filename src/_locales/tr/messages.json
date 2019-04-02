@@ -181,6 +181,10 @@
     "description": "The common button for tips, where you can get more information on click.",
     "hash": "9085b09f4748be12ab0c241d2e643b31"
   },
+  "tipHowToUse": {
+    "message": "Nasıl Kullanılır?",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+  },
 
   // placeholder
   "qrCodePlaceholder": {
@@ -232,6 +236,18 @@
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators.",
     "hash": "148604ebbeb7df28974d8233f1418d1f"
   },
+  "titleGeneral": {
+    "message": "Eklenti",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR Kod Seçenekleri",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Eklenti davranışı",
+    "description": "The title for the addon behavior settings group."
+  },
   "optionIsDisabledBecauseManaged": {
     "message": "Bu özellik sistem yöneticin tarafından ayarlandığı için devredışı.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option.",
@@ -257,7 +273,7 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
     "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
   },
-  "optionQrCodeType": {
+  "subtitleQrCodeType": {
     "message": "QR kod türü",
     "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
     "hash": "b87348b6fb11b28adf124e621c68c459"
@@ -282,7 +298,7 @@
     "description": "Helper text for canvas QR code type option.",
     "hash": "9191c0be558ba93297a58b19d880036c"
   },
-  "optionQrCodeSize": {
+  "subtitleQrCodeSize": {
     "message": "QR kod boyutu",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code.",
     "hash": "c74c1fd09a791c747fab18a81c3e2a5a"
@@ -311,6 +327,10 @@
     "message": "Son kullanılan boyutu hatırla",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
     "hash": "280612358cfcc5357399f75b697a07bb"
+  },
+  "subtitleMisc": {
+    "message": "Diğer Seçenekler",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
   },
   "optionQrQuietZone": {
     "message": "QR çerçevesi (quiet zone):",
