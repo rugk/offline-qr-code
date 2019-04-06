@@ -200,8 +200,20 @@
     "message": "Einige Einstellung werden von deinem Systemadministrator festgelegt und können nicht geändert werden.",
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
+  "titleGeneral": {
+    "message": "Add-on",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR-Code",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Add-on-Verhalten",
+    "description": "The title for the addon behavior settings group."
+  },
   "optionIsDisabledBecauseManaged": {
-    "message": "Diese option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
+    "message": "Diese Option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
   "optionLearnMore": {
@@ -222,7 +234,7 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
 
-  "optionQrCodeType": {
+  "subtitleQrCodeType": {
     "message": "QR-Code-Typ",
     "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
   },
@@ -239,11 +251,11 @@
     "description": "Option to select a canvas (pixel) image."
   },
   "optionQrCodeTypeCanvasHelper": {
-    "message": "Eine Generierungsmethode, die den QR-Code als Bild (\"Canvas\") erstellt.",
+    "message": "Eine Generierungsmethode, die den QR-Code als Bild („Canvas”) erstellt.",
     "description": "Helper text for canvas QR code type option."
   },
 
-  "optionQrCodeSize": {
+  "subtitleQrCodeSize": {
     "message": "QR-Code-Größe",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
   },
@@ -268,6 +280,10 @@
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
 
+  "subtitleMisc": {
+    "message": "Verschiedene Einstellungen",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
   "optionQrQuietZone": {
     "message": "QR-Randzone („quiet zone“):",
     "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
