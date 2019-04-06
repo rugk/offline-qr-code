@@ -71,8 +71,12 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 
     // get text from selected text, if possible
     return gettingSelection.then((selection) => {
-        QrCreator.setText(selection);
-        QrCreator.generate();
+        try {
+            QrCreator.setText(selection);
+            QrCreator.generate();
+        } catch (e) {
+            UserInterface.handleQrError(e);
+        }
     }).catch(() => {
         // …or fallback to tab URL
         return queryBrowserTabs.then(QrCreator.generateFromTabs)
