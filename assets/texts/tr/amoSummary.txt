@@ -1,3 +1,3 @@
-Bu eklentiyle açık sekmenin adresini veya herhangi bir seçili metni kullanarak çevrimdışı QR kod üretebilirsin.
+Bu eklentiyle açık sekmenin adresini veya herhangi bir seçili metni kullanarak çevrimdışı QR kod üretebilirsin. 👍
 
 Gizliliğini korumak amacıyla tamamen çevrimdışı olarak çalışmasına rağmen renkli QR kod üretme gibi birçok özelliği kullanabilirsin.
