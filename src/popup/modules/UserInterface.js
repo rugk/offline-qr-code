@@ -113,13 +113,7 @@ const refreshQrCode = throttle(() => {
         QrCreator.setTextInternal(text);
         QrCreator.generate();
     } catch (e) {
-        // error thrown from qrcodegen & kjua wrapper when text input is too long
-        if (e instanceof QrError.DataOverflowError) {
-            CommonMessages.showError("errorQrCodeOverflow");
-            console.error("Maximum size of QR code data exceeded with", text.length, "characters.");
-        } else {
-            throw e;
-        }
+        handleQrError(e);
     }
 }, QR_CODE_REFRESH_TIMEOUT);
 
@@ -370,6 +364,24 @@ export function replaceQr(elNewQr) {
     // and replace it
     console.info("replace qr code from", elOldQrCode, "to", elNewQr);
     qrCode.replaceChild(elNewQr, elOldQrCode);
+}
+
+/**
+ * Shows an error message for a QR code error or similar.
+ *
+ * @function
+ * @param {Error} error
+ * @returns {void}
+ * @throws {Error} if error could not be handled
+ */
+export function handleQrError(error) {
+    // error thrown from qrcodegen & kjua wrapper when text input is too long
+    if (error instanceof QrError.DataOverflowError) {
+        CommonMessages.showError("errorQrCodeOverflow");
+        console.error("Maximum size of QR code data exceeded.");
+    } else {
+        throw error;
+    }
 }
 
 /**

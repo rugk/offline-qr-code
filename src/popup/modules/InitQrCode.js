@@ -75,13 +75,17 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         QrCreator.generate();
     }).catch(() => {
         // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            console.error(error);
-            CommonMessages.showError("couldNotReceiveActiveTab", false);
+        return queryBrowserTabs.then(QrCreator.generateFromTabs)
+            .catch(UserInterface.handleQrError)
+            .catch((error) => {
+                console.error(error);
 
-            // re-throw error
-            throw error;
-        });
+                // show generic error, likely a tab URL error
+                CommonMessages.showError("couldNotReceiveActiveTab", false);
+
+                // re-throw error
+                throw error;
+            });
     });
 }).finally(() => {
     // post-initiation code should still run, even if errors happen
