@@ -141,6 +141,11 @@
         "description": "A tip shown to get the user to find the save option.",
         "hash": "84f0a0027a58c98d9158ab9894fe8427"
     },
+    "tipSaveQrCodeLink": {
+        "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(français)#comment-sauvegarder-un-qr-code-",
+        "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ.",
+        "hash": "c453089f62132ffa4151c4487209de69"
+    },
     "tipQrCodeHotkey": {
         "message": "Souviens toi que la combinaison de touches pour cette extension est Ctrl+Maj+F10.",
         "description": "A tip shown to get the user to notice that there is a hot key.",
@@ -362,6 +367,11 @@
         "message": "Le nombre de modules de bordure autour du Qr-Code de la même couleur que l'arrière-plan.",
         "description": "The description of the quiet zone option.",
         "hash": "94a93f5a15d9303e8003eae8c0b94ed1"
+    },
+    "optionQrQuietZoneDescrLink": {
+        "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(français)#quest-ce-quune-zone-de-bordure-",
+        "description": "The 'Learn more' link in the description of the quiet zone option.",
+        "hash": "c1647a59859dec44f48888e26ca70661"
     },
     "optionQrCodeColor": {
         "message": "Couleur du QR-Code :",
