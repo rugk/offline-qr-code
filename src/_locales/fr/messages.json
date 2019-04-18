@@ -1,5 +1,5 @@
 {
-    // manifest.json
+    // manifest.json 
     "extensionName": {
         "message": "Générateur de QR-Code hors-ligne",
         "description": "Name of the extension.",
