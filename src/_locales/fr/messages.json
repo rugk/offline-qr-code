@@ -1,0 +1,465 @@
+{
+    // manifest.json
+    "extensionName": {
+        "message": "Générateur de QR-Code hors-ligne",
+        "description": "Name of the extension.",
+        "hash": "8f698856e9a0ac32513f12b1955fa3c1"
+    },
+    "extensionNameShort": {
+        "message": "QR-Code hors-ligne",
+        "description": "Name of the extension.",
+        "hash": "a38edae757cf4b1c8a57c0de97ae7400"
+    },
+    "extensionDescription": {
+        "message": "Te permet de générer un QR-Code pour n'importe quel site ou onglet que tu as ouvert.",
+        "description": "Description of the extension.",
+        "hash": "824ef7416ba4361e3621df1fe8048c3b"
+    },
+    "browserActionButtonTitle": {
+        "message": "QR-Code hors-ligne",
+        "description": "The title for the button, which opens the popup.",
+        "hash": "dc0228c66afb28e701184df952b0df18"
+    },
+    "commandOpenQrPopup": {
+        "message": "Ouvre le popup de QR Code",
+        "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10).",
+        "hash": "98e90b2532a0097cd43081b4e1610519"
+    },
+
+    // errors or other messages (mostly for settings)
+    "errorShowingMessage": {
+        "message": "Impossible d'afficher ce message.",
+        "description": "When there is an error when showing the error/info/….",
+        "hash": "a9440e4f824a372841d4de2b7e2643ee"
+    },
+    "couldNotLoadOptions": {
+        "message": "Impossible de charger ces paramètres.",
+        "description": "When one or all settings could not be loaded.",
+        "hash": "9497a5d2c9473aeb2ed9601f46c456be"
+    },
+    "couldNotSaveOption": {
+        "message": "Impossible de sauvegarder ces paramètres.",
+        "description": "When a setting could not be saved.",
+        "hash": "6bcb9e36d2c33172b948515a9c50aa8e"
+    },
+    "messageUndoButton": {
+        "message": "Annuler",
+        "description": "The text of a button that undoes the last action.",
+        "hash": "a85e775d7404b86c8060a20efd31241c"
+    },
+    "couldNotUndoAction": {
+        "message": "Impossible d'annuler cette action.",
+        "description": "Shown when an action cannot be undone.",
+        "hash": "d2883c6ca0164afc4f360f3e02e3166a"
+    },
+    "resettingOptionsWorked": {
+        "message": "Tous les paramètres ont été réinitialisés.",
+        "description": "The message shown, when the options of the settings were reset.",
+        "hash": "257b99ed2a074fccbfc658d770b50107"
+    },
+    "resettingOptionsFailed": {
+        "message": "Impossible de réinitialiser les paramètres !",
+        "description": "The message shown, when the options of the settings could not have been reset.",
+        "hash": "76e950d2db72a824482411ca6564fb1f"
+    },
+
+    // errors or other messages
+    "unknownError": {
+        "message": "erreur inconnue",
+        "hash": "879b63f6ebf03308a9f4b8a4406663f3"
+    },
+    "loading": {
+        "message": "Chargement…",
+        "description": "A general loading message.",
+        "hash": "e2a5d4627618472a68f4cb8895e93f30"
+    },
+    "couldNotGenerateQrCode": {
+        "message": "Impossible de générer le QR-Code.",
+        "hash": "87e71800b895b0e9695da467734df0e5"
+    },
+    "couldNotReceiveActiveTab": {
+        "message": "Impossible de récupérer l'onglet actif.",
+        "hash": "2b4c5f788e39f7ae35dcca2f96e1e5d4"
+    },
+    "errorDownloadingFile": {
+        "message": "Impossible de télécharger le fichier.",
+        "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general.",
+        "hash": "8f5756df0d5dd4d25f01ca4b4ff0ec44"
+    },
+    "errorPermissionRequired": {
+        "message": "Impossible de continuer sans autorisation.",
+        "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed.",
+        "hash": "9742f751499f8c2acf32d83df83c36b9"
+    },
+    "errorPermissionRequestFailed": {
+        "message": "Demande d'autorisation échouée.",
+        "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission.",
+        "hash": "54aaf50f8bdf6154677a4ff7fd384310"
+    },
+    "errorQrCodeOverflow": {
+        "message": "Impossible de générer le QR-Code, le texte fourni est trop long.",
+        "description": "Error shown when QR code cannot be generated due to overflow in input size.",
+        "hash": "36c48d76203a1f1362b32abf72af5d8b"
+    },
+    "requestDownloadPermissionForQr": {
+        "message": "Pour continuer à enregistrer ce QR-Code, il nous faut l'autorisation de télécharger.",
+        "description": "Shown, when the user is asked to allow the download permission to save the QR code.",
+        "hash": "6e5a5fe9a077400ba6e4dc66a6dfd44a"
+    },
+    "lowContrastRatioInfo": {
+        "message": "Ton QR-Code peut être difficile à scanner par d'autres lecteurs de QR-Code à cause du faible contraste.",
+        "hash": "90432f33baa13153accd007ae2e23e99"
+    },
+    "lowContrastRatioWarning": {
+        "message": "Le ratio de contraste du QR-Code est peut-être trop faible pour être reconnu correctement par tous les lecteurs de QR-Code",
+        "hash": "f4264a9b8b24922e4dff589f611b5e2f"
+    },
+    "lowContrastRatioError": {
+        "message": "La couleur du QR-Code est trop proche de celle de l'arrière-plan",
+        "description": "The message shown when the color for the QR code and the background are equal",
+        "hash": "a2d1d2fdc32ecb73ffdf0ab537e46f32"
+    },
+    "messageAutoSelectColorButton": {
+        "message": "Utilise des couleurs en contraste.",
+        "description": "The text of a button that sets a new color with a sufficient contrast.",
+        "hash": "9d422df9f61f2b45e272ae3451ca3ded"
+    },
+
+    // tips
+    "tipYouLikeAddon": {
+        "message": "Tu aimes cette extension ?",
+        "description": "A tip shown to remind the user to rate the addon.",
+        "hash": "0f5680a5a42bcebf793a44b9dfcf79a1"
+    },
+    "tipYouLikeAddonButton": {
+        "message": "Note-la",
+        "description": "Button for the tip shown to remind the user to rate the addon.",
+        "hash": "821d7f942b02e2b56cd0424d3ab65de8"
+    },
+    "tipSaveQrCode": {
+        "message": "Savais-tu que tu peux enregistrer des QR-Codes ?",
+        "description": "A tip shown to get the user to find the save option.",
+        "hash": "84f0a0027a58c98d9158ab9894fe8427"
+    },
+    "tipQrCodeHotkey": {
+        "message": "Souviens toi que la combinaison de touches pour cette extension est Ctrl+Maj+F10.",
+        "description": "A tip shown to get the user to notice that there is a hot key.",
+        "hash": "a372dc813085fe800ecb594e33b6c81c"
+    },
+    "tipAndroidQrReader": {
+        "message": "Firefox a un lecteur de QR-Code intégré.",
+        "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160.",
+        "hash": "dfa24b6c3e5815e07df938f51fa45065"
+    },
+    "tipAndroidQrReaderLink": {
+        "message": "https://mzl.la/1GQ2fcu",
+        "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed.",
+        "hash": "094c1bbce6c3a7bcb09f36b7bc970dd0"
+    },
+    "tipTranslateAddon": {
+        "message": "Si tu parles une autre langue, tu peux nous aider à traduire cette extension.",
+        "description": "A tip shown to users that potentially speak another language to translate this add-on.",
+        "hash": "f22661cb0e9cdc8144d0c3cf59f854e3"
+    },
+    "tipTranslateAddonLink": {
+        "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+        "description": "The link to a description of the translation service/way you can use.",
+        "hash": "b0421380ecfc4481fd5ee9da72c61516"
+    },
+    "tipDonate": {
+        "message": "Tu aimes utiliser cette extension gratuitement ?",
+        "description": "A tip shown to get the remind them of a donation.",
+        "hash": "1ca77d6621635ae0bec563e15fbc3791"
+    },
+    "tipDonateButton": {
+        "message": "Soutiens le développement en faisant un don",
+        "description": "The button of the donation tip taking the user to the donation site.",
+        "hash": "8ec498495b752c6d9358208a5564d42c"
+    },
+    "tipLearnMore": {
+        "message": "En savoir plus",
+        "description": "The common button for tips, where you can get more information on click.",
+        "hash": "9085b09f4748be12ab0c241d2e643b31"
+    },
+    "tipHowToUse": {
+        "message": "Comment ça marche ?",
+        "description": "The common button for tips, where you can get more information about how to use a feature just presented.",
+        "hash": "b48eefa95832b3c6df287ff077b4e28a"
+    },
+
+    // placeholder
+    "qrCodePlaceholder": {
+        "message": "Image de réservation de place du QR-Code",
+        "description": "Alt text of placeholder image.",
+        "hash": "2aad56747125ef1f986b5d952ba68a83"
+    },
+    "textareaPlaceholder": {
+        "message": "Saisis du texte ici pour générer le QR-Code.",
+        "description": "Placeholder for the textarea, when it is empty.",
+        "hash": "0d0f6b3baffcdbf22a78418b3460d1ad"
+    },
+
+    // context menu
+    "contextMenuItemConvertSelection": {
+        "message": "QR-Code à partir de la sélection",
+        "description": "The context menu entry shown for generating QR codes from a selection.",
+        "hash": "e8c3fbbac6f04370f00af836aa65b49d"
+    },
+    "contextMenuItemConvertSelectionAccessKey": {
+        "message": "&QR-Code à partir de la sélection",
+        "description": "the context menu entry shown for generating QR codes from a selection with an access key.",
+        "hash": "95228af6c838cb7040b6e2441d8d516b"
+    },
+    "contextMenuItemConvertLinkSelection": {
+        "message": "QR-Code à partir du lien",
+        "description": "The context menu entry shown for generating QR codes from a selected link.",
+        "hash": "bc4971948a5e6f453046467bfbf6dbc0"
+    },
+    "contextMenuItemConvertLinkSelectionAccessKey": {
+        "message": "&QR-Code à partir du lien",
+        "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
+        "hash": "312595c39b5cbc8edf0baab8c16875af"
+    },
+    "contextMenuSaveImage": {
+        "message": "Enregistrer le QR-Code…",
+        "description": "The context menu entry shown for saving SVG images in the popup.",
+        "hash": "2eefde0a0d140820b10a3f3cadc0b91e"
+    },
+    "contextMenuSaveImageAccessKey": {
+        "message": "Enregistrer le &QR-Code…",
+        "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
+        "hash": "5d978e9ed30cc817b82376faefbcfbbb"
+    },
+
+    // options
+    "someSettingsAreManaged": {
+        "message": "Certains paramètres sont gérés par l'administrateur du système et ne peuvent pas être changés.",
+        "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators.",
+        "hash": "148604ebbeb7df28974d8233f1418d1f"
+    },
+    "titleGeneral": {
+        "message": "Extension",
+        "description": "The title for the general settings group.",
+        "hash": "3cb58113bf50253738aef3a6d97964b8"
+    },
+    "titleQrCodeSetting": {
+        "message": "Qr-Code",
+        "description": "The title for the qr code settings group.",
+        "hash": "70fe1f61bc42ca4b582a22ba9c00e22f"
+    },
+    "titleAddonBehavior": {
+        "message": "Comportement de l'extension",
+        "description": "The title for the addon behavior settings group.",
+        "hash": "fbad6be4d92eb060918e27bc7c8b070b"
+    },
+    "optionIsDisabledBecauseManaged": {
+        "message": "Cette option est désactivée, parce qu'elle a été paramétrée par l'administrateur du système.",
+        "description": "The title (tooltip) shown, when hovering over a disabled, managed option.",
+        "hash": "50fb70682c64e1a1fb4d8884b33cca64"
+    },
+    "optionLearnMore": {
+        "message": "En savoir plus",
+        "description": "When a link to an explainer needs to be added, this is the link text.",
+        "hash": "9085b09f4748be12ab0c241d2e643b31"
+    },
+    "optionsResetButton": {
+        "message": "Réinitialiser les paramètres",
+        "description": "The button to delete all current settings and load the defaults, shown in the add-on settings.",
+        "hash": "4bb60c6c7e7b9e2ff987c244e76ee044"
+    },
+    "optionPopupIconColored": {
+        "message": "Icône colorée",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "d1a73cea0718b619bd2adcfe97bd66a8"
+    },
+    "optionPopupIconColoredDescr": {
+        "message": "Affiche une icône colorée au lieu de l'icône en noir et blanc dans la barre d'outils.",
+        "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
+        "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
+    },
+    "subtitleQrCodeType": {
+        "message": "Type de QR-Code",
+        "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
+        "hash": "b87348b6fb11b28adf124e621c68c459"
+    },
+    "optionQrCodeTypeSvg": {
+        "message": "SVG",
+        "description": "Option to select a scalable vector graphic image (SVG).",
+        "hash": "73765445a2ffe6ef74df1f9b50dab017"
+    },
+    "optionQrCodeTypeSvgHelper": {
+        "message": "Utilise une méthode de génération moderne qui utilise des graphiques vectoriels et permet un redimensionnement plus doux.",
+        "description": "Helper text for SVG QR code type option.",
+        "hash": "c5c854179330262bbb43fe22ff3e5f6f"
+    },
+    "optionQrCodeTypeCanvas": {
+        "message": "Image canevas",
+        "description": "Option to select a canvas (pixel) image.",
+        "hash": "8d224978370adc11a9b1a5a944c010bd"
+    },
+    "optionQrCodeTypeCanvasHelper": {
+        "message": "Une méthode de génération qui génère le QR-Code en tant qu'image (\"canevas\").",
+        "description": "Helper text for canvas QR code type option.",
+        "hash": "9191c0be558ba93297a58b19d880036c"
+    },
+    "subtitleQrCodeSize": {
+        "message": "Taille du QR-Code",
+        "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code.",
+        "hash": "c74c1fd09a791c747fab18a81c3e2a5a"
+    },
+    "optionQrCodeSizeFixed": {
+        "message": "Taille fixe :",
+        "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+        "hash": "c68e3c4b50dd64aebeb558b3c600e18f"
+    },
+    "optionPixelAbbreviation": {
+        "message": "px",
+        "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English.",
+        "hash": "7b0c117512f22afe7fef1bcda3e474e1"
+    },
+    "optionQrCodeSizeAuto": {
+        "message": "Ajuster la taille automatiquement",
+        "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+        "hash": "127515053bfb818e4268a74a81133b71"
+    },
+    "optionQrCodeSizeAutoHelper": {
+        "message": "Particulièrement utile sur des équipements mobiles, où le QR-Code s'ouvre dans un nouvel onglet.",
+        "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices.",
+        "hash": "8fc122b9bf15ab197091d768fd2f7dff"
+    },
+    "optionQrCodeSizeRemember": {
+        "message": "Se souvenir de la dernière taille.",
+        "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+        "hash": "280612358cfcc5357399f75b697a07bb"
+    },
+    "subtitleMisc": {
+        "message": "Paramètres divers",
+        "description": "The heading/grouping title shown for the miscellaneous setting of the QR code.",
+        "hash": "6394c364dd4afc224c653644259bc4ea"
+    },
+    "optionQrQuietZone": {
+        "message": "Zone de bordure de QR-Code (\"quiet zone\") :",
+        "description": "This is an option shown in the add-on settings. It's about the area around the QR code.",
+        "hash": "a11f6e534cf14d30bccdb359489862b9"
+    },
+    "optionQrQuietZoneStatusSingular": {
+        "message": "($INTEGER$ carré)",
+        "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+        "placeholders": {
+            "integer": { "content": "$1", "example": "1" }
+        },
+        "hash": "dfb928dac26b3da38c89476f22610303"
+    },
+    "optionQrQuietZoneStatusPlural": {
+        "message": "($INTEGER$ carrés)",
+        "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+        "placeholders": {
+            "integer": { "content": "$1", "example": "3" }
+        },
+        "hash": "717944c73c8d92595af6c07bb960b52d"
+    },
+    "optionQrQuietZoneDescr": {
+        "message": "Le nombre de modules de bordure autour du Qr-Code de la même couleur que l'arrière-plan.",
+        "description": "The description of the quiet zone option.",
+        "hash": "94a93f5a15d9303e8003eae8c0b94ed1"
+    },
+    "optionQrCodeColor": {
+        "message": "Couleur du QR-Code :",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "d9f06d0c24e89fbc94c03561a7e09fa9"
+    },
+    "optionQrCodeBackgroundColor": {
+        "message": "Couleur de l'arrière-plan du QR-Code :",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "7fefdae7b929d22545bf61bc1c26abe3"
+    },
+    "optionErrorCorrection": {
+        "message": "Niveau de correction des erreurs :",
+        "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+        "hash": "112ebf137091b98b587615b7cd3f9e7c"
+    },
+    "optionEcLow": {
+        "message": "Niveau L - Faible (7%)",
+        "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+        "hash": "6e3061544eb22cab11cd1222788610bd"
+    },
+    "optionEcMedium": {
+        "message": "Niveau M - Moyen (15%)",
+        "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+        "hash": "0ea96235848be6f66788cad72bc0ea02"
+    },
+    "optionEcQuartile": {
+        "message": "Niveau Q - Quartile (25%)",
+        "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+        "hash": "344e853acdaef0ac95e161cdbc201036"
+    },
+    "optionEcHigh": {
+        "message": "Niveau H - Élevé (30%)",
+        "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+        "hash": "30035374d52e135473d464fe1726ad8c"
+    },
+    "optionErrorCorrectionDescr": {
+        "message": "Cette valeur indique quel pourcentage du code peut manquer pour qu'il soit toujours lisible.",
+        "description": "The description of the error correction option.",
+        "hash": "2bbbd8aafc044a910d26cbf04e560766"
+    },
+    "optionErrorCorrectionDescrLink": {
+        "message": "https://fr.wikipedia.org/wiki/Code_QR#Correction_d'erreur",
+        "description": "The 'Learn more' link in the description of the error correction option.",
+        "hash": "530f6b1ee177dddd7d40571d98a64408"
+    },
+    "optionAutoGetSelectedText": {
+        "message": "Automatiquement utiliser le texte sélectionné sur le site",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "21667c5a30f89561cea02351172b9c91"
+    },
+    "optionUseMonospaceFont": {
+        "message": "Utiliser une police de caractères à chasse fixe",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "69191273c436064be8c4f5d6a8f675f5"
+    },
+    "optionDebugMode": {
+        "message": "Activer le mode débogage",
+        "description": "This is an option shown in the add-on settings.",
+        "hash": "de6506af4973e0980d64f242fba11a19"
+    },
+    "optionDebugModeDescr": {
+        "message": "Ceci est utile seulement pour avoir des logs plus détaillés dans la console pour signaler des bugs, etc.",
+        "description": "The description shown for the debug mode (optionDebugMode).",
+        "hash": "2aff10770796694827ec4253860e0771"
+    },
+
+    // ARIA labels/descriptions
+    "dismissIconDescription": {
+        "message": "Fermer ce message",
+        "description": "the aria label for the close button of the message box",
+        "hash": "632720ab193dcacba4286cb364124856"
+    },
+    "ariaMessageLoading": {
+        "message": "chargement du message",
+        "description": "the aria label to label the message box as an info message box",
+        "hash": "570016a957498a1fa1b3e818eb282adb"
+    },
+    "ariaMessageInfo": {
+        "message": "message d'information",
+        "description": "the aria label to label the message box as an info message box",
+        "hash": "5f54e42067e19895a2641b17a5233418"
+    },
+    "ariaMessageSuccess": {
+        "message": "message de succès",
+        "description": "the aria label to label the message box as an success message box",
+        "hash": "334387b4ae53483d17f11519a70dd3af"
+    },
+    "ariaMessageError": {
+        "message": "message d'erreur",
+        "description": "the aria label to label the message box as an error message box",
+        "hash": "fcda6eedc61727fe8aae7392a0a541a5"
+    },
+    "ariaMessageWarning": {
+        "message": "message d'avertissement",
+        "description": "the aria label to label the message box as an warning message box",
+        "hash": "8a5dd7528bead1ccd27cb7430d797bd2"
+    },
+
+    "__WET_LOCALE__": { "message": "fr" }
+}
