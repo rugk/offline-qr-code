@@ -1,6 +1,6 @@
 Cette extension ne transmet aucune information à l'auteur de l'extension ni a aucun tiers.
 
-Une explication de toutes les autorisations dont cette extension a besoin peut être trouvée ici : https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+Une explication de toutes les autorisations dont cette extension a besoin peut être trouvée ici : https://github.com/rugk/offline-qr-code/blob/master/assets/texts/fr/permissions.md.
 
 == SERVICES TIERS ==
 
