@@ -1,0 +1,9 @@
+Cette extension ne transmet aucune information à l'auteur de l'extension ni a aucun tiers.
+
+Une explication de toutes les autorisations dont cette extension a besoin peut être trouvée ici : https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== SERVICES TIERS ==
+
+Cette extension utilise le "stockage synchronisé" ("sync storage") de ton navigateur pour stocker les paramètres. Si l'UTILISATEUR active la "Synchronisation" dans le navigateur, les paramètres sont uploadés et synchronisés entre les appareils connectés à ton compte. Si tu ne l'actives pas, les données sont stockées localement sur l'appareil.
+Dans Mozilla Firefox, les données sont chiffrées de bout-en-bout avant d'être uploadées et stockées sur les serveurs de Mozilla.
+Regarde https://accounts.firefox.com/legal/privacy et https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 pour les politiques de confidentialité de Mozilla à ce sujet.
