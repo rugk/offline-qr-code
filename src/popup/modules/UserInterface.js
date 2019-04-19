@@ -2,25 +2,26 @@
  * Management of GUI elements
  *
  * @module modules/UserInterface
- * @requires /common/modules/lib/lodash/isObject
- * @requires /common/modules/lib/lodash/throttle
- * @requires /common/modules/MessageLevel
- * @requires /common/modules/Logger
+ * @requires /common/modules/lodash/isObject
+ * @requires /common/modules/lodash/throttle
+ * @requires /common/modules/data/MessageLevel
  * @requires /common/modules/AddonSettings
  * @requires /common/modules/MessageHandler
+ * @requires ./QrLib/QrErrors
  * @requires ./QrCreator
  */
 // lodash
-import isObject from "/common/modules/lib/lodash/isObject.js";
-import throttle from "/common/modules/lib/lodash/throttle.js";
+import isObject from "/common/modules/lodash/isObject.js";
+import throttle from "/common/modules/lodash/throttle.js";
 
-import {MESSAGE_LEVEL} from "/common/modules/MessageLevel.js";
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
-import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
+import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
+import {createMenu} from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
 const SELECT_TEXT_TIMEOUT = 100; // ms
@@ -97,7 +98,7 @@ function hidePlaceholder() {
  */
 const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
-    Logger.logInfo("new value from textarea: ", text);
+    console.info("new value from textarea: ", text);
 
     // show placeholder when no text is entered
     if (text === "") {
@@ -105,11 +106,15 @@ const refreshQrCode = throttle(() => {
         return;
     } else if (placeholderShown) {
         hidePlaceholder();
-        MessageHandler.hideError();
+        CommonMessages.hideError();
     }
 
-    QrCreator.setTextInternal(text);
-    QrCreator.generate();
+    try {
+        QrCreator.setTextInternal(text);
+        QrCreator.generate();
+    } catch (e) {
+        handleQrError(e);
+    }
 }, QR_CODE_REFRESH_TIMEOUT);
 
 /**
@@ -139,7 +144,7 @@ function selectAllText(event) {
         return;
     }
 
-    Logger.logInfo("selectAllText", event);
+    console.info("selectAllText", event);
 
     event.retry = event.retry + 1 || 0;
 
@@ -168,7 +173,7 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    Logger.logInfo("scrollToTop", event);
+    console.info("scrollToTop", event);
 
     if (event.target.scrollTop !== 0) {
         event.target.scrollTop = 0;
@@ -199,7 +204,7 @@ async function saveQrCodeSizeOption() {
     // never start saving an option, when the old one is stll being saved
     await savingQrCodeSize;
 
-    Logger.logInfo("saved qr code text size/style", qrCodeSizeOption);
+    console.info("saved qr code text size/style", qrCodeSizeOption);
 
     savingQrCodeSize = browser.storage.sync.set({
         "qrCodeSize": qrCodeSizeOption
@@ -290,7 +295,7 @@ function resizeElements() {
     // could cause it to be resized to 0px or so
     const windowHeight = window.innerHeight;
     if (windowHeight < WINDOW_MINIMUM_HEIGHT) {
-        Logger.logInfo("Skipped resize due to low window height", windowHeight);
+        console.info("Skipped resize due to low window height", windowHeight);
         return;
     }
 
@@ -302,7 +307,7 @@ function resizeElements() {
         return;
     }
 
-    Logger.logInfo("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
+    console.info("resize QR code from ", qrLastSize, " to ", newQrCodeSize);
 
     // do not regenerate QR code if an error or so is shown
     setNewQrCodeSize(newQrCodeSize, !placeholderShown);
@@ -357,8 +362,26 @@ export function replaceQr(elNewQr) {
     const elOldQrCode = getQrCodeElement();
 
     // and replace it
-    Logger.logInfo("replace qr code from", elOldQrCode, "to", elNewQr);
+    console.info("replace qr code from", elOldQrCode, "to", elNewQr);
     qrCode.replaceChild(elNewQr, elOldQrCode);
+}
+
+/**
+ * Shows an error message for a QR code error or similar.
+ *
+ * @function
+ * @param {Error} error
+ * @returns {void}
+ * @throws {Error} if error could not be handled
+ */
+export function handleQrError(error) {
+    // error thrown from qrcodegen & kjua wrapper when text input is too long
+    if (error instanceof QrError.DataOverflowError) {
+        CommonMessages.showError("errorQrCodeOverflow");
+        console.error("Maximum size of QR code data exceeded.");
+    } else {
+        throw error;
+    }
 }
 
 /**
@@ -372,8 +395,6 @@ export function replaceQr(elNewQr) {
  * @returns {void}
  */
 function menuClicked(event) {
-    const SAVE_FILE_AS = "saveFileAs";
-    const SAVE_FILE_AS_STOP_RETRY = "saveFileAsStopRetry";
     const DOWNLOAD_PERMISSIONS = {
         permissions: ["downloads"]
     };
@@ -387,7 +408,7 @@ function menuClicked(event) {
 
     // do not trigger when placeholder is shown
     if (placeholderShown === true) {
-        MessageHandler.showError("Cannot save QR code if it is not displayed.", true);
+        CommonMessages.showError("Cannot save QR code if it is not displayed.", true);
         return;
     }
 
@@ -411,32 +432,32 @@ function menuClicked(event) {
             // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
             if (!isAlreadyGranted) {
                 usePermissionWorkaround = true;
-                MessageHandler.showInfo("requestDownloadPermissionForQr");
+                CommonMessages.showInfo("requestDownloadPermissionForQr");
             }
 
             browser.runtime.sendMessage({
-                type: SAVE_FILE_AS,
+                type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
                 usePermissionWorkaround: usePermissionWorkaround,
                 file: file,
                 filename: "qrcode.svg",
             }).then(() => {
-                Logger.logInfo("SVG image saved on disk", svgElem, svgString);
+                console.info("SVG image saved on disk", svgElem, svgString);
             }).catch((error) => {
-                Logger.logError("Could not save SVG image saved on disk", error, svgElem, svgString);
+                console.error("Could not save SVG image saved on disk", error, svgElem, svgString);
 
                 // in case of user error (i.e. user cancelled e.g.) do not show error message
                 if (error.message.includes("user")) {
                     return;
                 }
 
-                MessageHandler.showError("errorDownloadingFile", error);
+                CommonMessages.showError("errorDownloadingFile", error);
             });
 
             // show error when promise is rejected
             requestDownloadPermissions.then((permissionGranted) => {
                 if (usePermissionWorkaround) {
                     // if permission result is there, hide info message
-                    MessageHandler.hideInfo();
+                    CommonMessages.hideInfo();
                 }
 
                 // in case of success there is nothing else to do
@@ -447,16 +468,16 @@ function menuClicked(event) {
                 // and stop retrying to download in background script
                 if (usePermissionWorkaround) {
                     browser.runtime.sendMessage({
-                        type: SAVE_FILE_AS_STOP_RETRY
+                        type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY
                     });
                 }
 
                 // if permission is declined, make user aware that this permission was required
-                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
-                MessageHandler.showError("errorPermissionRequired", true);
+                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
+                CommonMessages.showError("errorPermissionRequired", true);
             }).catch((error) => {
-                Logger.logError("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
-                MessageHandler.showError("errorPermissionRequestFailed", true);
+                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+                CommonMessages.showError("errorPermissionRequestFailed", true);
             });
         });
     });
@@ -490,8 +511,13 @@ export function lateInit() {
  */
 export function init() {
     // set error hooks
-    MessageHandler.setHook(MESSAGE_LEVEL.LOADING, showPlaceholder, hidePlaceholder);
-    MessageHandler.setHook(MESSAGE_LEVEL.ERROR, showPlaceholder, hidePlaceholder);
+    CommonMessages.setLoadingHook(showPlaceholder, hidePlaceholder);
+    CommonMessages.setErrorHook(() => {
+        // hide loading first as this may hide the placeholder
+        CommonMessages.hideLoading();
+
+        showPlaceholder();
+    }, hidePlaceholder);
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
@@ -525,7 +551,7 @@ export function init() {
             await QrCreator.qrCreatorInit;
 
             if (qrLastSize === qrCodeSize.size) {
-                Logger.logInfo("QR code last size is the same as current setting, so do not reset");
+                console.info("QR code last size is the same as current setting, so do not reset");
                 // BUT set CSS stuff to make it consistent
                 setNewQrCodeSize(qrCodeSize.size, false);
             } else {
@@ -536,7 +562,7 @@ export function init() {
 
         // also set height of text (also to prevent display errors) when remember is enabled
         if (qrCodeSize.sizeType === "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
-            Logger.logInfo("restore qr code text size:", qrCodeSize.sizeText);
+            console.info("restore qr code text size:", qrCodeSize.sizeText);
             // is saved as CSS string already
             // height is NOT (anymore) restored, as this may cause display errors (likely due to different content-box settings) and the height does not matter, anyway
             qrCodeText.style.width = qrCodeSize.sizeText.width;
@@ -544,7 +570,7 @@ export function init() {
             // detect too small size
             const minimalSize = qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
             if (window.innerHeight < minimalSize) {
-                Logger.logError("too small size", window.innerHeight, "should be at least: ", minimalSize);
+                console.error("too small size", window.innerHeight, "should be at least: ", minimalSize);
             }
         }
     });
@@ -552,16 +578,20 @@ export function init() {
     // initiate settings dependent on the type of the QR code
     const initQrTypespecificSettings = QrCreator.getGenerationType().then((genType) => {
         if (genType !== "svg") {
+            // ignore if menu API is not supported (on Android e.g.)
+            if (browser.menus === undefined) {
+                return Promise.resolve();
+            }
+
             // remove menu item if it has been added before
             browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
 
-            return;
+            return Promise.resolve();
         }
 
         // create save menu if needed
-        browser.menus.create({
+        return createMenu("contextMenuSaveImage", {
             id: CONTEXT_MENU_SAVE_IMAGE,
-            title: browser.i18n.getMessage("contextMenuSaveImage"),
             contexts: ["page"],
             documentUrlPatterns: [
                 document.URL // only apply to own URL = popup
@@ -570,13 +600,18 @@ export function init() {
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
-                Logger.logWarning(`error creating menu item: ${lastError}`);
+                console.warn(`error creating menu item: ${lastError}`);
             } else {
-                Logger.logInfo("menu item created successfully");
+                console.info("menu item created successfully");
             }
-        });
+        }).then(() => {
+            // ignore if menu API is not supported (on Android e.g.)
+            if (browser.menus === undefined) {
+                return Promise.resolve();
+            }
 
-        browser.menus.onClicked.addListener(menuClicked);
+            return browser.menus.onClicked.addListener(menuClicked);
+        });
     });
 
     // return Promise chain

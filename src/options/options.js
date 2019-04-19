@@ -4,18 +4,19 @@
  * @module qrcode
  * @requires modules/OptionHandler
  */
-"use strict";
 
-import * as Logger from "/common/modules/Logger.js";
-import * as RandomTips from "/common/modules/RandomTips.js";
+import { tips } from "/common/modules/data/Tips.js";
+import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
+import * as AutomaticSettings from "/common/modules/AutomaticSettings/AutomaticSettings.js";
 
-import * as OptionHandler from "./modules/OptionHandler.js";
+import * as CustomOptionTriggers from "./modules/CustomOptionTriggers.js";
 
 // init module
-OptionHandler.init();
-RandomTips.init().then(() => {
+CustomOptionTriggers.registerTrigger();
+AutomaticSettings.setDefaultOptionProvider(AddonSettings.getDefaultValue);
+AutomaticSettings.init();
+RandomTips.init(tips).then(() => {
     RandomTips.setContext("options");
     RandomTips.showRandomTipIfWanted();
 });
-
-Logger.logInfo("Options.js finished.");

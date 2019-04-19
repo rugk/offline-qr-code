@@ -9,12 +9,12 @@
  * @requires ./BrowserCommunication
  * @requires ./UserInterface
  */
-import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
-import * as MessageHandler from "/common/modules/MessageHandler.js";
+
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
+import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 
 import * as QrCreator from "./QrCreator.js";
-import * as BrowserCommunication from "./BrowserCommunication.js";
+import * as ReceiveBackgroundMessages from "./ReceiveBackgroundMessages.js";
 import * as UserInterface from "./UserInterface.js";
 
 /* globals */
@@ -23,12 +23,11 @@ export let initCompleted = false;
 // init modules
 const queryBrowserTabs = browser.tabs.query({active: true, currentWindow: true});
 AddonSettings.loadOptions();
-BrowserCommunication.init();
 const qrCreatorInit = QrCreator.init().then(() => {
-    Logger.logInfo("QrCreator module loaded.");
+    console.info("QrCreator module loaded.");
 });
 const userInterfaceInit = UserInterface.init().then(() => {
-    Logger.logInfo("UserInterface module loaded.");
+    console.info("UserInterface module loaded.");
 });
 
 // check for selected text
@@ -60,8 +59,8 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
     // do not generate tabs if text is already overwritten
-    if (BrowserCommunication.isTextOverwritten()) {
-        Logger.logInfo("Text is already overwritten by some message.");
+    if (ReceiveBackgroundMessages.isTextOverwritten()) {
+        console.info("Text is already overwritten by some message.");
         // generate QR code
         QrCreator.generate();
 
@@ -72,27 +71,35 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 
     // get text from selected text, if possible
     return gettingSelection.then((selection) => {
-        QrCreator.setText(selection);
-        QrCreator.generate();
+        try {
+            QrCreator.setText(selection);
+            QrCreator.generate();
+        } catch (e) {
+            UserInterface.handleQrError(e);
+        }
     }).catch(() => {
         // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs).catch((error) => {
-            Logger.logError(error);
-            MessageHandler.showError("couldNotReceiveActiveTab", false);
+        return queryBrowserTabs.then(QrCreator.generateFromTabs)
+            .catch(UserInterface.handleQrError)
+            .catch((error) => {
+                console.error(error);
 
-            // re-throw error
-            throw error;
-        });
+                // show generic error, likely a tab URL error
+                CommonMessages.showError("couldNotReceiveActiveTab", false);
+
+                // re-throw error
+                throw error;
+            });
     });
 }).finally(() => {
     // post-initiation code should still run, even if errors happen
     UserInterface.lateInit();
 
     // hide loading message shown by default
-    MessageHandler.hideLoading();
+    CommonMessages.hideLoading();
 
     // init is done, set variable to syncronously get values
     initCompleted = true;
 }).catch((error) => {
-    Logger.logError(error);
+    console.error(error);
 });

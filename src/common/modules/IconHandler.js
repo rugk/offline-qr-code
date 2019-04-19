@@ -1,15 +1,13 @@
-import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 const POPUP_ICON_OPTION = "popupIconColored";
 
 /**
  * Sets a popup icon variant.
  *
- * @function
  * @private
  * @param {string} icon version or "null"/"undefined" to reset to default
- * @returns {void}
+ * @returns {Promise}
  */
 function setPopupIcon(icon) {
     // verify parameter
@@ -21,43 +19,43 @@ function setPopupIcon(icon) {
         // ok
         break;
     default:
-        throw Error(`invalid parameter: ${icon}`);
+        throw new TypeError(`invalid parameter: ${icon}`);
+    }
+
+    // ignore request if API is not available
+    if (browser.browserAction.setIcon === undefined) {
+        return Promise.resolve();
     }
 
     if (icon === null || icon === undefined) {
-        browser.browserAction.setIcon({path: null});
-        return;
+        return browser.browserAction.setIcon({path: null});
     }
 
-    browser.browserAction.setIcon({path: `/icons/icon-small-${icon}.svg`});
+    return browser.browserAction.setIcon({path: `/icons/icon-small-${icon}.svg`});
 }
 
 /**
  * Set icon depending on whether it should be colored, or not.
  *
- * @function
+ * @public
  * @param {boolean} popupIconColored if popupIconColored is colored or not
- * @returns {void}
+ * @returns {Promise}
  */
 export function changeIconIfColored(popupIconColored) {
     if (popupIconColored === true) {
-        setPopupIcon("colored");
+        return setPopupIcon("colored");
     } else {
         // reset icon
-        setPopupIcon(null);
+        return setPopupIcon(null);
     }
 }
 
 /**
  * Init icon module.
  *
- * @function
+ * @public
  * @returns {void}
  */
 export function init() {
-    AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => {
-        changeIconIfColored(popupIconColored);
-    });
+    return AddonSettings.get(POPUP_ICON_OPTION).then((popupIconColored) => changeIconIfColored(popupIconColored));
 }
-
-Logger.logInfo("IconHandler module loaded.");

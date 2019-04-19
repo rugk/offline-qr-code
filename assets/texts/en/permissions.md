@@ -15,7 +15,7 @@ These permissions are requested when doing some specific actions, if they are ne
 | `downloads` | Download files and read and modify the browser’s download history | Download of QR code as SVG | Needed for downloading (saving) the SVG and alllowing the usere to choose a file location. This add-on does not access your downloaded files, it just uses this permission to start the download. |
 
 ## Hidden permissions
-Additionally it requests these permission, which are not requested in Firefox when the add-on is installed, as they are not a serious permission.
+Additionally it requests these permission, which are not requested in Firefox when the add-on is installed, as they are not a profound permission.
 
 | Internal Id | Permission                   | Explanation                                                       |
 |:------------|:-----------------------------|:------------------------------------------------------------------|

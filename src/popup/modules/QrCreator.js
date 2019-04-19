@@ -8,8 +8,8 @@
  * @requires ./QrLib/kjua
  * @requires ./UserInterface
  */
-import * as Logger from "/common/modules/Logger.js";
-import * as AddonSettings from "/common/modules/AddonSettings.js";
+
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 import * as QrLibQrGen from "./QrLib/qrgen.js";
 import * as QrLibKjua from "./QrLib/kjua.js";
@@ -42,7 +42,7 @@ function getQrCodeFromLib() {
  */
 export function generate() {
     if (!initFinished) {
-        Logger.logWarning("QrCreator.generate called, but init not yet finished. Abort.");
+        console.warn("QrCreator.generate called, but init not yet finished. Abort.");
         return;
     }
 
@@ -68,11 +68,28 @@ export function generate() {
  */
 export function setSize(size) {
     if (size <= 1) {
-        Logger.logError("tried to create QR code with invalid size of 0 or smaller");
+        console.error("tried to create QR code with invalid size of 0 or smaller");
         return;
     }
 
     qrCodeLib.set("size", size);
+}
+
+/**
+ * Pre-processes the text before making the QR code. Changes about:reader URLs to regular URLs.
+ *
+ * @function
+ * @param {string} text
+ * @returns {string}
+ */
+function preprocess(text) {
+    // check for an about:reader URL
+    const readerUrl = "about:reader?url=";
+    if (text.startsWith(readerUrl)) {
+        return decodeURIComponent(text.substring(17));
+    }
+
+    return text;
 }
 
 /**
@@ -88,6 +105,7 @@ export function setSize(size) {
  * @returns {void}
  */
 export function setText(text) {
+    text = preprocess(text);
     setTextInternal(text);
     UserInterface.setQrInputFieldText(text);
 }
@@ -115,7 +133,7 @@ export function setTextInternal(text) {
  */
 export function generateFromTab(tab) {
     if (tab.url === undefined) {
-        throw new Error("URL not yet available.");
+        throw new TypeError("URL not available.");
     }
 
     setText(tab.url);
@@ -169,6 +187,7 @@ export function init() {
             throw new Error("invalid QR code type setting");
         }
 
+        qrCodeLib.set("qrQuietZone", settings.qrQuietZone);
         qrCodeLib.set("qrColor", settings.qrColor);
         qrCodeLib.set("qrBackgroundColor", settings.qrBackgroundColor);
         qrCodeLib.set("qrErrorCorrection", settings.qrErrorCorrection);

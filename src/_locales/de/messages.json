@@ -16,15 +16,45 @@
     "message": "Offline-QR-Code",
     "description": "The title for the button, which opens the popup."
   },
+  "commandOpenQrPopup": {
+    "message": "Öffne QR-Code-Popup",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
+
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "Konnte Nachricht nicht anzeigen.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "couldNotLoadOptions": {
+    "message": "Konnte Einstellungen nicht laden.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotSaveOption": {
+    "message": "Konnte diese Einstellung nicht speichern.",
+    "description": "When a setting could not be saved."
+  },
+  "messageUndoButton": {
+    "message": "Rückgängig machen",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotUndoAction": {
+    "message": "Konnte Aktion nicht rückgängig machen.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Konnte Optionen nicht zurück setzen!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
 
   // errors or other messages
   "unknownError": {
     "message": "unbekannter Fehler",
     "description": ""
-  },
-  "messageUndoButton": {
-    "message": "Rückgängig machen",
-    "description": "The text of a button that undoes the last action."
   },
   "loading": {
     "message": "Laden…",
@@ -38,10 +68,6 @@
     "message": "Konnte aktiven Tab nicht erhalten.",
     "description": ""
   },
-  "errorShowingMessage": {
-    "message": "Konnte Nachricht nicht anzeigen.",
-    "description": "When there is an error when showing the error/info/…."
-  },
   "errorDownloadingFile": {
     "message": "Konnte Datei nicht herunter laden.",
     "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
@@ -54,25 +80,9 @@
     "message": "Berechtigungsabfrage fehlgeschlagen.",
     "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
   },
-  "couldNotSaveOption": {
-    "message": "Konnte diese Einstellung nicht speichern.",
-    "description": "When a setting could not be saved."
-  },
-  "couldNotLoadOptions": {
-    "message": "Konnte Einstellungen nicht laden.",
-    "description": "When one or all settings could not be loaded."
-  },
-  "couldNotUndoAction": {
-    "message": "Konnte Aktion nicht rückgängig machen.",
-    "description": "Shown when an action cannot be undone."
-  },
-  "resettingOptionsWorked": {
-    "message": "Alle Einstellungen benutzen nun wieder die Standardwerte!",
-    "description": "The message shown, when the options of the settings were reset."
-  },
-  "resettingOptionsFailed": {
-    "message": "Konnte Optionen nicht zurück setzen!",
-    "description": "The message shown, when the options of the settings could not have been reset."
+  "errorQrCodeOverflow": {
+    "message": "Kann den QR-Code nicht erstellen, da der angegebene Text zu lang ist.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size."
   },
   "requestDownloadPermissionForQr": {
     "message": "Wir benötigen die Download-Berechtigung, um das Speichern des QR-Codes fortzusetzen.",
@@ -108,9 +118,29 @@
     "message": "Schon gewusst? Du kannst QR-Codes als Bild abspeichern.",
     "description": "A tip shown to get the add-on to find the save option."
   },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(deutsch)#wie-speichere-ich-den-qr-code",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
   "tipQrCodeHotkey": {
     "message": "Die Tastenkombination für dieses Add-on ist Strg+Umschalt+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipAndroidQrReader": {
+    "message": "Firefox besitzt einen integrierten QR-Code-Scanner.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
+  "tipTranslateAddon": {
+    "message": "Wenn du eine andere Sprache sprichst, kannst du helfen, dieses Add-on zu übersetzen.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
   },
   "tipDonate": {
     "message": "Magst du dieses kostenlose Add-on?",
@@ -123,6 +153,10 @@
   "tipLearnMore": {
     "message": "Mehr Infos",
     "description": "The common button for tips, where you can get more information on click."
+  },
+  "tipHowToUse": {
+    "message": "Wie nutzen?",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
   },
 
   // placeholder
@@ -140,17 +174,25 @@
     "message": "QR-Code aus Auswahl",
     "description": "The context menu entry shown for generating QR codes from a selection."
   },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "&QR-Code aus Auswahl",
+    "description": "The context menu entry shown for generating QR codes from a selection with an access key."
+  },
   "contextMenuItemConvertLinkSelection": {
     "message": "QR-Code aus Link",
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
-  "contextMenuItemOptions": {
-    "message": "Einstellungen",
-    "description": "The context menu entry shown for opening the settings."
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "&QR-Code aus Link",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
   "contextMenuSaveImage": {
     "message": "QR-Code speichern…",
     "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageAccessKey": {
+    "message": "&QR-Code speichern…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 
   // options
@@ -158,13 +200,29 @@
     "message": "Einige Einstellung werden von deinem Systemadministrator festgelegt und können nicht geändert werden.",
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
+  "titleGeneral": {
+    "message": "Add-on",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR-Code",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Add-on-Verhalten",
+    "description": "The title for the addon behavior settings group."
+  },
   "optionIsDisabledBecauseManaged": {
-    "message": "Diese option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
+    "message": "Diese Option ist deaktiviert, weil sie von deinem Systemadministrator festgelegt wurde.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
   },
   "optionLearnMore": {
     "message": "Weitere Informationen",
     "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Setze alle Einstellungen auf Standardwerte zurück",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
   },
 
   "optionPopupIconColored": {
@@ -176,7 +234,7 @@
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
 
-  "optionQrCodeType": {
+  "subtitleQrCodeType": {
     "message": "QR-Code-Typ",
     "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
   },
@@ -193,11 +251,11 @@
     "description": "Option to select a canvas (pixel) image."
   },
   "optionQrCodeTypeCanvasHelper": {
-    "message": "Eine Generierungsmethode, die den QR-Code als Bild (\"Canvas\") erstellt.",
+    "message": "Eine Generierungsmethode, die den QR-Code als Bild („Canvas”) erstellt.",
     "description": "Helper text for canvas QR code type option."
   },
 
-  "optionQrCodeSize": {
+  "subtitleQrCodeSize": {
     "message": "QR-Code-Größe",
     "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
   },
@@ -220,6 +278,43 @@
   "optionQrCodeSizeRemember": {
     "message": "An letzte Größe erinnern",
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "subtitleMisc": {
+    "message": "Verschiedene Einstellungen",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
+  "optionQrQuietZone": {
+    "message": "QR-Randzone („quiet zone“):",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ Quadrat)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ Quadrate)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "Die Anzahl der in der Hintergrundfarbe gefärbten Randmodule um den QR-Code.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(deutsch)#was-ist-die-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
   },
 
   "optionQrCodeColor": {
@@ -278,14 +373,29 @@
     "description": "The description shown for the debug mode (optionDebugMode)."
   },
 
-  "optionsResetButton": {
-    "message": "Setze alle Einstellungen auf Standardwerte zurück",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
-  },
-
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Diese Nachricht schließen",
-    "description": "The label for the close button of the message box"
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "Ladenachricht",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "Info",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "Erfolg",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "Fehlermeldung",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "Warnung",
+    "description": "the aria label to label the message box as an warning message box"
   }
 }

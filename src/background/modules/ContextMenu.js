@@ -1,19 +1,18 @@
-import * as Logger from "/common/modules/Logger.js";
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
+import { createMenu } from "/common/modules/ContextMenu.js";
 
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
-// TODO: This constant should be usable for all scripts.
-const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
-    "SET_QR_TEXT": "setQrText",
-});
 
 const MESSAGE_RESENT_TIMEOUT = 200; // ms
+const MESSAGE_RESENT_MAX = 9;
+
+let messageResentCount = 0;
 
 /**
  * Log error while creating menu item.
  *
- * @function
  * @private
  * @returns {void}
  */
@@ -32,19 +31,25 @@ function onCreated() {
 /**
  * Send new text for the QR code.
  *
- * @function
  * @private
  * @param {string} qrText
  * @returns {void}
  */
 function sendQrCodeText(qrText) {
-    Logger.logInfo("send QR code text from background");
+    console.info("send QR code text from background");
     browser.runtime.sendMessage({
         type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
         qrText: qrText
     }).then(() => {
-        Logger.logInfo(`QR code text "${qrText}" sent to tab successfully`);
-    }).catch(() => {
+        console.info(`QR code text "${qrText}" sent to tab successfully`);
+    }).catch((e) => {
+        // stop retrying after some time and just throw out error
+        if (messageResentCount >= MESSAGE_RESENT_MAX) {
+            throw e;
+        }
+
+        messageResentCount++;
+
         // recusively re-try message sending
         // This is e.g. needed when the popup has not yet opened and could not get the message.
         setTimeout(sendQrCodeText, MESSAGE_RESENT_TIMEOUT, qrText);
@@ -54,28 +59,31 @@ function sendQrCodeText(qrText) {
 /**
  * Creates the items in the context menu.
  *
- * @function
- * @returns {void}
+ * @private
+ * @returns {Promise}
  */
 function createItems() {
-    browser.menus.create({
+    const selectionMenu = createMenu("contextMenuItemConvertSelection", {
         id: CONVERT_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertSelection"),
         contexts: ["selection"]
     }, onCreated);
 
-    browser.menus.create({
+    const linkMenu = createMenu("contextMenuItemConvertLinkSelection", {
         id: CONVERT_LINK_TEXT_SELECTION,
-        title: browser.i18n.getMessage("contextMenuItemConvertLinkSelection"),
         contexts: ["link"]
     }, onCreated);
 
+    browser.menus.refresh();
+
+    // if listener is set, because items were hidden -> remove it
+    browser.menus.onHidden.removeListener(createItems);
+
+    return Promise.all([selectionMenu, linkMenu]);
 }
 
 /**
  * Triggers when a context menu item has been clicked.
  *
- * @function
  * @private
  * @param {event} event
  * @returns {void}
@@ -84,12 +92,16 @@ function menuClicked(event) {
     switch (event.menuItemId) {
     case CONVERT_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.selectionText);
         });
         break;
     case CONVERT_LINK_TEXT_SELECTION:
         browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+
             // send message to popup
             sendQrCodeText(event.linkUrl);
         });
@@ -101,16 +113,47 @@ function menuClicked(event) {
 }
 
 /**
+ * Triggers when the menu is shown.
+ *
+ *
+ *
+ * @name   ContextMenu.menuShown
+ * @function
+ * @private
+ * @param {event} info
+ * @returns {void}
+ */
+function menuShown(info) {
+    if (info.viewType !== "popup" || !info.pageUrl.startsWith(browser.runtime.getURL("."))) {
+        return;
+    }
+
+    // if no of our own menus are shown, we do not need to do anything
+    if (info.menuIds.length === 0) {
+        return;
+    }
+
+    browser.menus.onHidden.addListener(createItems);
+
+    browser.menus.remove(CONVERT_TEXT_SELECTION);
+    browser.menus.remove(CONVERT_LINK_TEXT_SELECTION);
+
+    browser.menus.refresh();
+}
+
+
+
+/**
  * Init context menu module.
  *
  * Adds menu elements.
  *
- * @function
- * @returns {void}
+ * @private
+ * @returns {Promise}
  */
 export function init() {
-    createItems();
-    browser.menus.onClicked.addListener(menuClicked);
+    return createItems().then(() => {
+        browser.menus.onClicked.addListener(menuClicked);
+        browser.menus.onShown.addListener(menuShown);
+    });
 }
-
-Logger.logInfo("ContextMenu module loaded.");

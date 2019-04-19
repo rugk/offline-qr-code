@@ -1,0 +1,475 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Offline QR Code Generator",
+    "description": "Name of the extension.",
+    "hash": "8f698856e9a0ac32513f12b1955fa3c1"
+  },
+  "extensionNameShort": {
+    "message": "Offline QR-Code",
+    "description": "Name of the extension.",
+    "hash": "a38edae757cf4b1c8a57c0de97ae7400"
+  },
+  "extensionDescription": {
+    "message": "你可以为任意已打开的网站或标签生成二维码。",
+    "description": "Description of the extension.",
+    "hash": "824ef7416ba4361e3621df1fe8048c3b"
+  },
+  "browserActionButtonTitle": {
+    "message": "离线生成二维码",
+    "description": "The title for the button, which opens the popup.",
+    "hash": "dc0228c66afb28e701184df952b0df18"
+  },
+  "commandOpenQrPopup": {
+    "message": "打开二维码弹出框",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10).",
+    "hash": "98e90b2532a0097cd43081b4e1610519"
+  },
+
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "无法显示该消息。",
+    "description": "When there is an error when showing the error/info/….",
+    "hash": "a9440e4f824a372841d4de2b7e2643ee"
+  },
+  "couldNotLoadOptions": {
+    "message": "无法加载设置。",
+    "description": "When one or all settings could not be loaded.",
+    "hash": "9497a5d2c9473aeb2ed9601f46c456be"
+  },
+  "couldNotSaveOption": {
+    "message": "无法保存该设置。",
+    "description": "When a setting could not be saved.",
+    "hash": "6bcb9e36d2c33172b948515a9c50aa8e"
+  },
+  "messageUndoButton": {
+    "message": "撤销",
+    "description": "The text of a button that undoes the last action.",
+    "hash": "a85e775d7404b86c8060a20efd31241c"
+  },
+  "couldNotUndoAction": {
+    "message": "无法撤销动作。",
+    "description": "Shown when an action cannot be undone.",
+    "hash": "d2883c6ca0164afc4f360f3e02e3166a"
+  },
+  "resettingOptionsWorked": {
+    "message": "已重置所有设置为默认值！",
+    "description": "The message shown, when the options of the settings were reset.",
+    "hash": "257b99ed2a074fccbfc658d770b50107"
+  },
+  "resettingOptionsFailed": {
+    "message": "无法重置选项！",
+    "description": "The message shown, when the options of the settings could not have been reset.",
+    "hash": "76e950d2db72a824482411ca6564fb1f"
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "未知错误",
+    "hash": "879b63f6ebf03308a9f4b8a4406663f3"
+  },
+  "loading": {
+    "message": "正在加载…",
+    "description": "A general loading message.",
+    "hash": "e2a5d4627618472a68f4cb8895e93f30"
+  },
+  "couldNotGenerateQrCode": {
+    "message": "无法生成二维码。",
+    "hash": "87e71800b895b0e9695da467734df0e5"
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "无法获取活动标签页。",
+    "hash": "2b4c5f788e39f7ae35dcca2f96e1e5d4"
+  },
+  "errorDownloadingFile": {
+    "message": "无法下载文件。",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general.",
+    "hash": "8f5756df0d5dd4d25f01ca4b4ff0ec44"
+  },
+  "errorPermissionRequired": {
+    "message": "需要权限才能继续。",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed.",
+    "hash": "9742f751499f8c2acf32d83df83c36b9"
+  },
+  "errorPermissionRequestFailed": {
+    "message": "请求权限失败。",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission.",
+    "hash": "54aaf50f8bdf6154677a4ff7fd384310"
+  },
+  "errorQrCodeOverflow": {
+    "message": "无法生成二维码，提供的文本太长。",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size.",
+    "hash": "36c48d76203a1f1362b32abf72af5d8b"
+  },
+  "requestDownloadPermissionForQr": {
+    "message": "需要下载权限以继续保存二维码。",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code.",
+    "hash": "6e5a5fe9a077400ba6e4dc66a6dfd44a"
+  },
+  "lowContrastRatioInfo": {
+    "message": "你的二维码在某些二维码读取设备上可能较较验证识别，因为对比度较低。",
+    "hash": "90432f33baa13153accd007ae2e23e99"
+  },
+  "lowContrastRatioWarning": {
+    "message": "二维码的对比度太低，可能无法在所有二维码读取设备上识别。",
+    "hash": "f4264a9b8b24922e4dff589f611b5e2f"
+  },
+  "lowContrastRatioError": {
+    "message": "二维码颜色与背景色过于相似。",
+    "description": "The message shown when the color for the QR code and the background are equal",
+    "hash": "a2d1d2fdc32ecb73ffdf0ab537e46f32"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "使用对比度高的颜色",
+    "description": "The text of a button that sets a new color with a sufficient contrast.",
+    "hash": "9d422df9f61f2b45e272ae3451ca3ded"
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "喜欢这个扩展",
+    "description": "A tip shown to remind the user to rate the addon.",
+    "hash": "0f5680a5a42bcebf793a44b9dfcf79a1"
+  },
+  "tipYouLikeAddonButton": {
+    "message": "请评分吧",
+    "description": "Button for the tip shown to remind the user to rate the addon.",
+    "hash": "821d7f942b02e2b56cd0424d3ab65de8"
+  },
+  "tipSaveQrCode": {
+    "message": "你知道可以保存二维码吗？",
+    "description": "A tip shown to get the user to find the save option.",
+    "hash": "84f0a0027a58c98d9158ab9894fe8427"
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ.",
+    "hash": "c453089f62132ffa4151c4487209de69"
+  },
+  "tipQrCodeHotkey": {
+    "message": "记住扩展的快捷键是Ctrl+Shift+F10。",
+    "description": "A tip shown to get the user to notice that there is a hot key.",
+    "hash": "a372dc813085fe800ecb594e33b6c81c"
+  },
+  "tipAndroidQrReader": {
+    "message": "Firefox 有内置的二维码识别功能。",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160.",
+    "hash": "dfa24b6c3e5815e07df938f51fa45065"
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed.",
+    "hash": "094c1bbce6c3a7bcb09f36b7bc970dd0"
+  },
+  "tipTranslateAddon": {
+    "message": "如果你说其它语言，可以帮忙翻译此扩展。",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on.",
+    "hash": "f22661cb0e9cdc8144d0c3cf59f854e3"
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use.",
+    "hash": "b0421380ecfc4481fd5ee9da72c61516"
+  },
+  "tipDonate": {
+    "message": "免费使用此扩展很爽？",
+    "description": "A tip shown to get the remind them of a donation.",
+    "hash": "1ca77d6621635ae0bec563e15fbc3791"
+  },
+  "tipDonateButton": {
+    "message": "捐赠以支持开发",
+    "description": "The button of the donation tip taking the user to the donation site.",
+    "hash": "8ec498495b752c6d9358208a5564d42c"
+  },
+  "tipLearnMore": {
+    "message": "了解更多",
+    "description": "The common button for tips, where you can get more information on click.",
+    "hash": "9085b09f4748be12ab0c241d2e643b31"
+  },
+  "tipHowToUse": {
+    "message": "如何使用？",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented.",
+    "hash": "b48eefa95832b3c6df287ff077b4e28a"
+  },
+
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "二维码占位图像",
+    "description": "Alt text of placeholder image.",
+    "hash": "2aad56747125ef1f986b5d952ba68a83"
+  },
+  "textareaPlaceholder": {
+    "message": "在此处输入要生成二维码的文本。",
+    "description": "Placeholder for the textarea, when it is empty.",
+    "hash": "0d0f6b3baffcdbf22a78418b3460d1ad"
+  },
+
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "为选中内容生成二维码",
+    "description": "The context menu entry shown for generating QR codes from a selection.",
+    "hash": "e8c3fbbac6f04370f00af836aa65b49d"
+  },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "为选中内容生成二维码(&Q)",
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key.",
+    "hash": "95228af6c838cb7040b6e2441d8d516b"
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "为链接生成二维码",
+    "description": "The context menu entry shown for generating QR codes from a selected link.",
+    "hash": "bc4971948a5e6f453046467bfbf6dbc0"
+  },
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "为链接生成二维码(&Q)",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
+    "hash": "312595c39b5cbc8edf0baab8c16875af"
+  },
+  "contextMenuSaveImage": {
+    "message": "保存二维码…",
+    "description": "The context menu entry shown for saving SVG images in the popup.",
+    "hash": "2eefde0a0d140820b10a3f3cadc0b91e"
+  },
+  "contextMenuSaveImageAccessKey": {
+    "message": "保存二维码(&Q)…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
+    "hash": "5d978e9ed30cc817b82376faefbcfbbb"
+  },
+
+  // options
+  "someSettingsAreManaged": {
+    "message": "某些设置由你的系统管理员管理，无法更改。",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators.",
+    "hash": "148604ebbeb7df28974d8233f1418d1f"
+  },
+  "titleGeneral": {
+    "message": "扩展",
+    "description": "The title for the general settings group.",
+    "hash": "3cb58113bf50253738aef3a6d97964b8"
+  },
+  "titleQrCodeSetting": {
+    "message": "二维码",
+    "description": "The title for the QR code settings group.",
+    "hash": "70fe1f61bc42ca4b582a22ba9c00e22f"
+  },
+  "titleAddonBehavior": {
+    "message": "扩展行为",
+    "description": "The title for the addon behavior settings group.",
+    "hash": "fbad6be4d92eb060918e27bc7c8b070b"
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "该选项已禁用，因为你的系统管理员已经配置。",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option.",
+    "hash": "50fb70682c64e1a1fb4d8884b33cca64"
+  },
+  "optionLearnMore": {
+    "message": "了解更多",
+    "description": "When a link to an explainer needs to be added, this is the link text.",
+    "hash": "9085b09f4748be12ab0c241d2e643b31"
+  },
+  "optionsResetButton": {
+    "message": "重置所有设置为默认值",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings.",
+    "hash": "4bb60c6c7e7b9e2ff987c244e76ee044"
+  },
+  "optionPopupIconColored": {
+    "message": "彩色图标",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "d1a73cea0718b619bd2adcfe97bd66a8"
+  },
+  "optionPopupIconColoredDescr": {
+    "message": "在工具栏上显示彩色图标，替代黑白图标。",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
+    "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
+  },
+  "subtitleQrCodeType": {
+    "message": "二维码类型",
+    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
+    "hash": "b87348b6fb11b28adf124e621c68c459"
+  },
+  "optionQrCodeTypeSvg": {
+    "message": "SVG",
+    "description": "Option to select a scalable vector graphic image (SVG).",
+    "hash": "73765445a2ffe6ef74df1f9b50dab017"
+  },
+  "optionQrCodeTypeSvgHelper": {
+    "message": "使用新的矢量图形生成方式，缩放不失真。",
+    "description": "Helper text for SVG QR code type option.",
+    "hash": "c5c854179330262bbb43fe22ff3e5f6f"
+  },
+  "optionQrCodeTypeCanvas": {
+    "message": "Canvas 图像",
+    "description": "Option to select a canvas (pixel) image.",
+    "hash": "8d224978370adc11a9b1a5a944c010bd"
+  },
+  "optionQrCodeTypeCanvasHelper": {
+    "message": "以图像(\"canvas\")方式生成二维码。",
+    "description": "Helper text for canvas QR code type option.",
+    "hash": "9191c0be558ba93297a58b19d880036c"
+  },
+  "subtitleQrCodeSize": {
+    "message": "二维码大小",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code.",
+    "hash": "c74c1fd09a791c747fab18a81c3e2a5a"
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "固定大小:",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "c68e3c4b50dd64aebeb558b3c600e18f"
+  },
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English.",
+    "hash": "7b0c117512f22afe7fef1bcda3e474e1"
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "自动调整大小",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "127515053bfb818e4268a74a81133b71"
+  },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "适用于移动设备，二维码将在新标签中打开。",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices.",
+    "hash": "8fc122b9bf15ab197091d768fd2f7dff"
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "记住上次大小",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size.",
+    "hash": "280612358cfcc5357399f75b697a07bb"
+  },
+  "subtitleMisc": {
+    "message": "杂项设置",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code.",
+    "hash": "6394c364dd4afc224c653644259bc4ea"
+  },
+  "optionQrQuietZone": {
+    "message": "空白区域:",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code.",
+    "hash": "a11f6e534cf14d30bccdb359489862b9"
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ 个方块)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": { "content": "$1", "example": "1" }
+    },
+    "hash": "dfb928dac26b3da38c89476f22610303"
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ 个方块)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": { "content": "$1", "example": "3" }
+    },
+    "hash": "717944c73c8d92595af6c07bb960b52d"
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "二维码四周的空白块个数，显示为背景色。",
+    "description": "The description of the quiet zone option.",
+    "hash": "94a93f5a15d9303e8003eae8c0b94ed1"
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option.",
+    "hash": "c1647a59859dec44f48888e26ca70661"
+  },
+  "optionQrCodeColor": {
+    "message": "二维码颜色:",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "d9f06d0c24e89fbc94c03561a7e09fa9"
+  },
+  "optionQrCodeBackgroundColor": {
+    "message": "二维码背景色:",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "7fefdae7b929d22545bf61bc1c26abe3"
+  },
+  "optionErrorCorrection": {
+    "message": "纠错级别：",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "112ebf137091b98b587615b7cd3f9e7c"
+  },
+  "optionEcLow": {
+    "message": "低(7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "6e3061544eb22cab11cd1222788610bd"
+  },
+  "optionEcMedium": {
+    "message": "中(15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "0ea96235848be6f66788cad72bc0ea02"
+  },
+  "optionEcQuartile": {
+    "message": "四分位(25%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "344e853acdaef0ac95e161cdbc201036"
+  },
+  "optionEcHigh": {
+    "message": "高(30%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction.",
+    "hash": "30035374d52e135473d464fe1726ad8c"
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "该值表示多少码块可以丢失且不影响扫描。",
+    "description": "The description of the error correction option.",
+    "hash": "2bbbd8aafc044a910d26cbf04e560766"
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option.",
+    "hash": "530f6b1ee177dddd7d40571d98a64408"
+  },
+  "optionAutoGetSelectedText": {
+    "message": "自动使用网站上选中的文本",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "21667c5a30f89561cea02351172b9c91"
+  },
+  "optionUseMonospaceFont": {
+    "message": "使用等宽字体",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "69191273c436064be8c4f5d6a8f675f5"
+  },
+  "optionDebugMode": {
+    "message": "启用调试模式",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "de6506af4973e0980d64f242fba11a19"
+  },
+  "optionDebugModeDescr": {
+    "message": "仅用于在控制台获取更详细的日志输出用于汇报问题，等等。",
+    "description": "The description shown for the debug mode (optionDebugMode).",
+    "hash": "2aff10770796694827ec4253860e0771"
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "关闭该消息",
+    "description": "the aria label for the close button of the message box",
+    "hash": "632720ab193dcacba4286cb364124856"
+  },
+  "ariaMessageLoading": {
+    "message": "正在加载消息",
+    "description": "the aria label to label the message box as an info message box",
+    "hash": "570016a957498a1fa1b3e818eb282adb"
+  },
+  "ariaMessageInfo": {
+    "message": "信息消息",
+    "description": "the aria label to label the message box as an info message box",
+    "hash": "5f54e42067e19895a2641b17a5233418"
+  },
+  "ariaMessageSuccess": {
+    "message": "成功消息",
+    "description": "the aria label to label the message box as an success message box",
+    "hash": "334387b4ae53483d17f11519a70dd3af"
+  },
+  "ariaMessageError": {
+    "message": "错误消息",
+    "description": "the aria label to label the message box as an error message box",
+    "hash": "fcda6eedc61727fe8aae7392a0a541a5"
+  },
+  "ariaMessageWarning": {
+    "message": "警告消息",
+    "description": "the aria label to label the message box as an warning message box",
+    "hash": "8a5dd7528bead1ccd27cb7430d797bd2"
+  },
+
+  "__WET_LOCALE__": { "message": "zh-CN" }
+}

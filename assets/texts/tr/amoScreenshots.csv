@@ -1,0 +1,8 @@
+qrBig.png; "QR kodu yeniden boyutlandırılabilir!";
+qrDark.png; "QR kodu temana uyacak şekilde ayarlayabilirsin.";
+qrMenuFromLink.png; "Direkt olarak bir linkten QR kod üretebilirsin."
+qrMenuFromPhoneNumber.png; "Direkt olarak seçili metinden QR kod üretebilirsin."
+qrSave.png; "QR kodları SVG veya PNG olarak kaydedebilirsin.";
+qrSettings.png; "Davranışı ve görünüşü özelleştirebileceğin birçok seçenek mevcut.";
+qrSmall.png; "Herhangi bir boyutta QR kod üretebilirsin.";
+qrText.png; "QR kod üretmek için butona tıkladıktan sonra metni değiştirerek anında yeni bir QR kod yaratabilirsin.";

@@ -1,0 +1,24 @@
+[submodule "src/common/modules/Localizer"]
+	path = src/common/modules/Localizer
+	url = https://github.com/TinyWebEx/Localizer/
+[submodule "src/tests/helper"]
+	path = src/tests/helper
+	url = https://github.com/TinyWebEx/TestHelper
+[submodule "src/common/modules/AddonSettings"]
+	path = src/common/modules/AddonSettings
+	url = https://github.com/TinyWebEx/AddonSettings
+[submodule "src/common/modules/Logger"]
+	path = src/common/modules/Logger
+	url = https://github.com/TinyWebEx/Logger
+[submodule "src/common/modules/MessageHandler"]
+	path = src/common/modules/MessageHandler
+	url = https://github.com/TinyWebEx/MessageHandler
+[submodule "src/common/modules/BrowserCommunication"]
+	path = src/common/modules/BrowserCommunication
+	url = https://github.com/TinyWebEx/BrowserCommunication
+[submodule "src/common/modules/RandomTips"]
+	path = src/common/modules/RandomTips
+	url = https://github.com/TinyWebEx/RandomTips
+[submodule "src/common/modules/AutomaticSettings"]
+	path = src/common/modules/AutomaticSettings
+	url = https://github.com/TinyWebEx/AutomaticSettings

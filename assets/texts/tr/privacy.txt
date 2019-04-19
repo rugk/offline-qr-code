@@ -1,0 +1,3 @@
+Bu eklenti hiç bir üçüncü partiye veya eklenti sahibine herhangi bir bilgi göndermemektedir.
+
+Bu eklentinin gerektirdiği bütün izinlere dair açıklamaya bu linkten ulaşılabilir: https://github.com/rugk/offline-qr-code/blob/master/assets/texts/tr/permissions.md.
