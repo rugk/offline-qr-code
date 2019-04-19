@@ -1,0 +1,3 @@
+Cette extension te permet de générer rapidemment un QR-Code avec l'URL du site de l'onglet actuel, ou n'importe quel texte (sélectionné), le tout hors-ligne ! 👍
+
+Cela fonctionne totalement hors-ligne pour protéger ta vie privée et propose de nombreuses fonctionnalités comme des QR-Codes colorés !
