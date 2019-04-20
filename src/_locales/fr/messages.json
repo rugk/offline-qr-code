@@ -124,6 +124,10 @@
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
+  "contributorsCredit": {
+	"message": "Cette extension a été traduite en Français par Nicolas Trouin (@nicolas-trouin). Cette extension n'existerait pas sans tous les autres contributeurs.",
+	"description": "The text shown at the end of the options page, crediting the current language translator and other contributors"
+  },
 
   // tips
   "tipYouLikeAddon": {
