@@ -124,6 +124,24 @@
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
+    "translatorCredit": {
+    "message": "Cette application a été traduite en Français par Nicolas Trouin $LINK$ !",
+    "description": "The credit text for the translator.",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "<a href=\"https://example.com\">for more details</a>"
+      }
+    }
+  },
+  "translatorsGithub": {
+    "message": "https://github.com/nicolas-trouin",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorsGithubUsername": {
+    "message": " (@nicolas-trouin)",
+    "description": "The translator's GitHub username."
+  },
 
   // tips
   "tipYouLikeAddon": {
