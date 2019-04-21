@@ -374,6 +374,45 @@
     "description": "The description shown for the debug mode (optionDebugMode)."
   },
 
+  "translatorCredit": {
+    "message": "This add-on has been translated into English by $TRANSLATORS$.",
+    "description": "The credit text for the translator. If there is one main translator and slight adjustments were added in the translation, add 'and others'. Note you can only link one translator via the translators placeholder.
+    If you need to link to multiple translators, just link to the line in the CONTRIBUTORS file.",
+    "placeholders": {
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+      }
+    }
+  },
+  "translatorLink": {
+    "message": "https://github.com/rugk",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorUsername": {
+    "message": "rugk",
+    "description": "The username that the translator want to be referred to."
+  },
+
+  "contributorsThanks": {
+    "message": "Also thanks to $CONTRIBUTORS$.",
+    "description": "The credit text for the translator. If slightly adjustments were added in the translation, add 'and others'. Note you can only link one translator via the translators placeholder.",
+    "placeholders": {
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+      }
+    }
+  },
+  "translatorLink": {
+    "message": "https://github.com/rugk",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorUsername": {
+    "message": "rugk",
+    "description": "The username that the translator want to be referred to."
+  },
+
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Close this message",
