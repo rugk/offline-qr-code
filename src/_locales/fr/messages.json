@@ -124,24 +124,6 @@
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
-    "translatorCredit": {
-    "message": "Cette application a été traduite en Français par Nicolas Trouin $LINK$ !",
-    "description": "The credit text for the translator.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "<a href=\"https://github.com/nicolas-trouin\"> (@nicolas-trouin)</a>"
-      }
-    }
-  },
-  "translatorsGithub": {
-    "message": "https://github.com/nicolas-trouin",
-    "description": "The link to the translator's GitHub profile."
-  },
-  "translatorsGithubUsername": {
-    "message": " (@nicolas-trouin)",
-    "description": "The translator's GitHub username."
-  },
 
   // tips
   "tipYouLikeAddon": {
@@ -455,6 +437,24 @@
     "message": "Ceci est utile seulement pour avoir des logs plus détaillés dans la console pour signaler des bugs, etc.",
     "description": "The description shown for the debug mode (optionDebugMode).",
     "hash": "2aff10770796694827ec4253860e0771"
+  },
+  "translatorCredit": {
+    "message": "Cette application a été traduite en Français par Nicolas Trouin $LINK$ !",
+    "description": "The credit text for the translator.",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/nicolas-trouin\"> (@nicolas-trouin)</a>"
+      }
+    }
+  },
+  "translatorsGithub": {
+    "message": "https://github.com/nicolas-trouin",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorsGithubUsername": {
+    "message": " (@nicolas-trouin)",
+    "description": "The translator's GitHub username."
   },
 
   // ARIA labels/descriptions

@@ -376,8 +376,7 @@
 
   "translatorCredit": {
     "message": "This add-on has been translated into English by $TRANSLATORS$.",
-    "description": "The credit text for the translator. If there is one main translator and slight adjustments were added in the translation, add 'and others'. Note you can only link one translator via the translators placeholder.
-    If you need to link to multiple translators, just link to the line in the CONTRIBUTORS file.",
+    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
       "translators": {
         "content": "$1",
@@ -391,26 +390,26 @@
   },
   "translatorUsername": {
     "message": "rugk",
-    "description": "The username that the translator want to be referred to."
+    "description": "The username that the translator wants to be referred to."
   },
 
   "contributorsThanks": {
     "message": "Also thanks to $CONTRIBUTORS$.",
-    "description": "The credit text for the translator. If slightly adjustments were added in the translation, add 'and others'. Note you can only link one translator via the translators placeholder.",
+    "description": "Text thanking all contributors and linking to the contributors file.",
     "placeholders": {
-      "translators": {
+      "contributors": {
         "content": "$1",
-        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS\">all other contributors</a>"
       }
     }
   },
-  "translatorLink": {
-    "message": "https://github.com/rugk",
-    "description": "The link to the translator's GitHub profile."
+  "contributorsThanksLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS",
+    "description": "The link to the CONTRIBUTORS file."
   },
-  "translatorUsername": {
-    "message": "rugk",
-    "description": "The username that the translator want to be referred to."
+  "contributorsThanksLinkText": {
+    "message": "all other contributors",
+    "description": "The link text linking to the contributors file. See contributorsThanks."
   },
 
   // ARIA labels/descriptions
