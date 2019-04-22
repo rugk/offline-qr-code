@@ -439,7 +439,7 @@
     "hash": "2aff10770796694827ec4253860e0771"
   },
   "translatorCredit": {
-    "message": "Cette extension a été traduite en Français par Nicolas Trouin $LINK$!",
+    "message": "Cette extension a été traduite en Français par Nicolas Trouin $LINK$ !",
     "description": "The credit text for the translator.",
     "placeholders": {
       "link": {
