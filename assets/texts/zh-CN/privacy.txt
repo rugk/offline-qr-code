@@ -1,0 +1,9 @@
+该扩展不发送任何信息给扩展作者或第三方。
+
+该扩展请求的所有权限的用途，在此处查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== 第三方服务 ==
+
+该扩展使用浏览器的“同步存储”以保存设置。如果用户在浏览器中启用“同步”，设置会自动上传并且在连接到你账号的所有设备间同步。如果你未启用，数据只在设备本地保存。
+在 Mozilla Firefox 中，数据上传并保存到 Mozilla 的服务器前会使用端到端加密数据。
+查看 https://accounts.firefox.com/legal/privacy 与 https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 了解 Mozilla 的隐私策略。
