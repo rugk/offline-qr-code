@@ -52,12 +52,12 @@ html, body {
   box-shadow: var(--shadow-10);
 }
 
-.flot-qr > .message-box {
+.float-qr > .message-box {
   text-align: center;
 }
 
 /* Let the element float (at the bottom on top of the qr) */
-.flot-qr {
+.float-qr {
   position: absolute;
 
   width: auto;
@@ -66,11 +66,11 @@ html, body {
   bottom: 30px;
 }
 /* make background transparent when floating */
-.error.flot-qr {
+.error.float-qr {
   /* transparent background */
   background-color: var(--red-60-a90);
 }
-.info.flot-qr {
+.info.float-qr {
   /* transparent background */
   background-color: var(--grey-20-a90);
 }
