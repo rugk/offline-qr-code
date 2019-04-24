@@ -1,8 +1,8 @@
-qrBig.png; "QR codes are resizable!";
-qrDark.png; "You can adjust the QR code to your theme.";
-qrMenuFromLink.png; "You can create QR codes directly from links."
-qrMenuFromPhoneNumber.png; "You can create QR codes directly from selected text."
-qrSave.png; "You can save QR codes as SVGs or PNGs.";
-qrSettings.png; "Many options allow you to customize the behavior and appearance.";
-qrSmall.png; "QR codes can be generated with any size.";
-qrText.png; "Instantly type custom text after clicking the button to generate a new QR code on-the-fly.";
+qrBig.png; "二维码可调整大小！";
+qrDark.png; "你可以调整二维码适应你的主题。";
+qrMenuFromLink.png; "你可以直接从链接生成二维码。"
+qrMenuFromPhoneNumber.png; "你可以选中文本直接生成二维码。"
+qrSave.png; "你可以保存二维码为SVG或PNG。";
+qrSettings.png; "你可以调整多个选项，自定义行为与外观。";
+qrSmall.png; "可生成任意大小的二维码。";
+qrText.png; "点击按钮生成二维码，即时输入文本，自动刷新。";
