@@ -1,11 +1,17 @@
 /**
- * Sets the default settings for the AddonSettings module.
+ * Specifies the default settings of the add-on.
  *
  * @module data/DefaultSettings
- * @requires AddonSettings
  */
 
-export const DEFAULT_SETTINGS = Object.freeze({
+/**
+ * An object of all default settings.
+ *
+ * @private
+ * @const
+ * @type {Object}
+ */
+const defaultSettings = Object.freeze({
     debugMode: false,
     popupIconColored: false,
     qrCodeType: "svg",
@@ -23,3 +29,17 @@ export const DEFAULT_SETTINGS = Object.freeze({
         tips: {}
     }
 });
+
+
+
+// freeze the inner objects, this is strongly recommend
+Object.values(defaultSettings).map(Object.freeze);
+
+/**
+ * Export the default settings to be used.
+ *
+ * @public
+ * @const
+ * @type {Object}
+ */
+export const DEFAULT_SETTINGS = Object.freeze(defaultSettings);

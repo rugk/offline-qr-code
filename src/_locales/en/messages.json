@@ -200,18 +200,6 @@
     "message": "Some settings are managed by your system administrator and cannot be changed.",
     "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
   },
-  "titleGeneral": {
-    "message": "Add-on",
-    "description": "The title for the general settings group."
-  },
-  "titleQrCodeSetting": {
-    "message": "QR code",
-    "description": "The title for the qr code settings group."
-  },
-  "titleAddonBehavior": {
-    "message": "Add-on behavior",
-    "description": "The title for the addon behavior settings group."
-  },
   "optionIsDisabledBecauseManaged": {
     "message": "This option is disabled, because it has been configured by your system administrator.",
     "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
@@ -223,6 +211,19 @@
   "optionsResetButton": {
     "message": "Reset all settings to defaults",
     "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  "titleGeneral": {
+    "message": "Add-on",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR code",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Add-on behavior",
+    "description": "The title for the addon behavior settings group."
   },
 
   "optionPopupIconColored": {
