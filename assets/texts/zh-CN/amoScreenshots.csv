@@ -1,0 +1,8 @@
+qrBig.png; "二维码可调整大小！";
+qrDark.png; "你可以调整二维码适应你的主题。";
+qrMenuFromLink.png; "你可以直接从链接生成二维码。"
+qrMenuFromPhoneNumber.png; "你可以选中文本直接生成二维码。"
+qrSave.png; "你可以保存二维码为SVG或PNG。";
+qrSettings.png; "你可以调整多个选项，自定义行为与外观。";
+qrSmall.png; "可生成任意大小的二维码。";
+qrText.png; "点击按钮生成二维码，即时输入文本，自动刷新。";
