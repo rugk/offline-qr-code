@@ -93,7 +93,7 @@
                 "Number": "number",
                 "object": "Object",
                 "String": "string",
-                "HTMLElement": "HTMLElement"
+                "HtmlElement": "HTMLElement"
             },
             "requireReturnType": true,
             "matchDescription": ".+",
