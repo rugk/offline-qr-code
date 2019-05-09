@@ -42,8 +42,8 @@ See:
 * Translated in English and German already. [Contribute your own language!](CONTRIBUTING.md#Translations)
 * Compatible with Firefox for Android
 * Uses up-to-date features and APIs of Firefox for efficient and clean code.
-* Settings are synced across devices.
-* Settings can be managed by your administrator. (work in progress)
+* Settings are synced across devices with Firefox Sync.
+* Settings can be managed by your administrator. (see [issue #177](https://github.com/rugk/offline-qr-code/issues/177))
 
 ## Notes
 
