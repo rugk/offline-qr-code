@@ -63,11 +63,13 @@
 				<h1 data-i18n="__MSG_titleGeneral__">Add-on</h1>
 				<ul>
 					<li>
-						<input class="setting save-on-change" type="checkbox" id="popupIconColored" name="popupIconColored">
-						<label data-i18n="__MSG_optionPopupIconColored__" for="popupIconColored">Colored Icon</label>
-					</li>
-					<li class="indent">
-						<span class="helper-text" data-i18n="__MSG_optionPopupIconColoredDescr__">Shows a colored icon instead of the black/white icon in the toolbar.</span>
+						<div class="line">
+							<input class="setting save-on-change" type="checkbox" id="popupIconColored" name="popupIconColored">
+							<label data-i18n="__MSG_optionPopupIconColored__" for="popupIconColored">Colored Icon</label>
+						</div>
+						<div class="line indent">
+							<span class="helper-text" data-i18n="__MSG_optionPopupIconColoredDescr__">Shows a colored icon instead of the black/white icon in the toolbar.</span>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -77,104 +79,106 @@
 
 				<h2 data-i18n="__MSG_subtitleQrCodeType__">QR code type</h2>
 
-				<div class="setting save-on-input" data-type="radiogroup" id="qrCodeType">
-					<ul>
-						<li>
+				<ul class="setting save-on-input" data-type="radiogroup" id="qrCodeType">
+					<li>
+						<div class="line">
 							<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg">
 							<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
-						</li>
-						<li class="indent">
+						</div>
+						<div class="line indent">
 							<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
-						</li>
-					</ul>
+						</div>
+					</li>
 
-					<ul>
-						<li>
+					<li>
+						<div class="line">
 							<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas">
 							<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
-						</li>
-						<li class="indent">
+						</div>
+						<div class="line indent">
 							<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
-						</li>
-					</ul>
-				</div>
+						</div>
+					</li>
+				</ul>
 
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
-				<div id="sizeType" data-type="radiogroup" class="setting" data-optiongroup="qrCodeSize">
-					<ul>
-						<li>
+				<ul id="sizeType" data-type="radiogroup" class="setting" data-optiongroup="qrCodeSize">
+					<li>
+						<div class="line">
 							<input id="qrCodeSizeFixed" type="radio" name="sizeType" value="fixed" class="save-on-input">
 							<label data-i18n="__MSG_optionQrCodeSizeFixed__" for="qrCodeSizeFixed">Fixed size: </label>
 
 							<input data-i18n="__MSG_optionPixelAbbreviation__" class="setting save-on-change" data-optiongroup="qrCodeSize" type="number" id="qrCodeSizeFixedValue" min="160" step="5" size="5" name="size">
 							<label for="qrCodeSizeFixedValue">px</label>
-						</li>
-					</ul>
+						</div>
+					</li>
 
-					<ul>
-						<li>
+					<li>
+						<div class="line">
 							<input id="qrCodeSizeAuto" type="radio" name="sizeType" value="auto" class="save-on-input">
 							<label data-i18n="__MSG_optionQrCodeSizeAuto__" for="qrCodeSizeAuto">Automatically adjust size</label>
-						</li>
-						<li class="indent">
+						</div>
+						<div class="line indent">
 							<span data-i18n="__MSG_optionQrCodeSizeAutoHelper__" class="helper-text">Mostly useful on mobile devices, where the QR code opens in a new tab.</span>
-						</li>
-					</ul>
+						</div>
+					</li>
 
-					<ul>
-						<li>
+					<li>
+						<div class="line">
 							<input id="qrCodeSizeRemember" type="radio" name="sizeType" value="remember" class="save-on-input">
 							<label data-i18n="__MSG_optionQrCodeSizeRemember__" for="qrCodeSizeRemember">Remember last size</label>
-						</li>
-					</ul>
-				</div>
+						</div>
+					</li>
+				</ul>
 
 				<h2 data-i18n="__MSG_subtitleMisc__">Miscellaneous settings</h2>
 				<ul>
 					<li>
-						<label data-i18n="__MSG_optionQrQuietZone__" for="qrQuietZone">QR quiet zone: </label>
-						<input class="setting save-on-input" type="range" value="1" min="0" max="5" step="1" id="qrQuietZone" name="qrQuietZone">
-						<span>
-							<span id="qrQuietZoneStatus">(1 square)</span>
-						</span>
+						<div class="line">
+							<label data-i18n="__MSG_optionQrQuietZone__" for="qrQuietZone">QR quiet zone: </label>
+							<input class="setting save-on-input" type="range" value="1" min="0" max="5" step="1" id="qrQuietZone" name="qrQuietZone">
+							<span>
+								<span id="qrQuietZoneStatus">(1 square)</span>
+							</span>
+						</div>
+
+						<li class="line helper-text">
+							<span data-i18n="__MSG_optionQrQuietZoneDescr__">The number of border modules around the QR code colored in the background color.</span>
+							<a class="learn-more" data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionQrQuietZoneDescrLink__" href="https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone">Learn more</a>
+						</div>
 					</li>
 
-					<li class="helper-text">
-						<span data-i18n="__MSG_optionQrQuietZoneDescr__">The number of border modules around the QR code colored in the background color.</span>
-						<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionQrQuietZoneDescrLink__" href="https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone">Learn more</a>
-					</li>
-				</ul>
-
-				<ul>
 					<li>
-						<label data-i18n="__MSG_optionQrCodeColor__" for="qrColor">QR code color: </label>
-						<input class="setting save-on-change trigger-on-update" type="color" id="qrColor" name="qrColor">
+						<div class="line">
+							<label data-i18n="__MSG_optionQrCodeColor__" for="qrColor">QR code color: </label>
+							<input class="setting save-on-change trigger-on-update" type="color" id="qrColor" name="qrColor">
+						</div>
 					</li>
-				</ul>
 
-				<ul>
 					<li>
-						<label data-i18n="__MSG_optionQrCodeBackgroundColor__" for="qrBackgroundColor">QR code background color: </label>
-						<input class="setting save-on-change trigger-on-update" type="color" id="qrBackgroundColor" name="qrBackgroundColor">
+						<div class="line">
+							<label data-i18n="__MSG_optionQrCodeBackgroundColor__" for="qrBackgroundColor">QR code background color: </label>
+							<input class="setting save-on-change trigger-on-update" type="color" id="qrBackgroundColor" name="qrBackgroundColor">
+						</div>
 					</li>
-				</ul>
 
-				<ul>
 					<li>
-						<label data-i18n="__MSG_optionErrorCorrection__" for="qrErrorCorrection">Error correction level: </label>
-						<select id="qrErrorCorrection" class="setting save-on-change" name="qrErrorCorrection" size="0">
-							<option data-i18n="__MSG_optionEcLow__" value="L">Low (7%)</option>
-							<option data-i18n="__MSG_optionEcMedium__" value="M">Medium (15%)</option>
-							<option data-i18n="__MSG_optionEcQuartile__" value="Q">Quartile (25%)</option>
-							<option data-i18n="__MSG_optionEcHigh__" value="H">High (30%)</option>
-						</select>
-					</li>
-					<li class="helper-text">
-						<span data-i18n="__MSG_optionErrorCorrectionDescr__">
-							If a QR code is damaged or some parts are missing, it can often still be scanned.
-							The higher the value the more the machine is able to understand.
-						</span>
-						<a data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionErrorCorrectionDescrLink__" href="https://en.wikipedia.org/wiki/QR_code#Error_correction">Learn more</a>
+						<div class="line">
+							<label data-i18n="__MSG_optionErrorCorrection__" for="qrErrorCorrection">Error correction level: </label>
+							<select id="qrErrorCorrection" class="setting save-on-change" name="qrErrorCorrection" size="0">
+								<option data-i18n="__MSG_optionEcLow__" value="L">Low (7%)</option>
+								<option data-i18n="__MSG_optionEcMedium__" value="M">Medium (15%)</option>
+								<option data-i18n="__MSG_optionEcQuartile__" value="Q">Quartile (25%)</option>
+								<option data-i18n="__MSG_optionEcHigh__" value="H">High (30%)</option>
+							</select>
+						</div>
+						<li class="line helper-text">
+							<span data-i18n="__MSG_optionErrorCorrectionDescr__">
+								If a QR code is damaged or some parts are missing, it can often still be scanned.
+								The higher the value the more the machine is able to understand.
+							</span>
+							<a class="learn-more" data-i18n="__MSG_optionLearnMore__" data-i18n-href="__MSG_optionErrorCorrectionDescrLink__" href="https://en.wikipedia.org/wiki/QR_code#Error_correction">Learn more</a>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -183,25 +187,27 @@
 				<h1 data-i18n="__MSG_titleAddonBehavior__">Addon behavior</h1>
 				<ul>
 					<li>
-						<input class="setting save-on-change" type="checkbox" id="autoGetSelectedText" name="autoGetSelectedText">
-						<label data-i18n="__MSG_optionAutoGetSelectedText__" for="autoGetSelectedText">Automatically use text selected on website</label>
+						<div class="line">
+							<input class="setting save-on-change" type="checkbox" id="autoGetSelectedText" name="autoGetSelectedText">
+							<label data-i18n="__MSG_optionAutoGetSelectedText__" for="autoGetSelectedText">Automatically use text selected on website</label>
+						</div>
 					</li>
-				</ul>
 
-				<ul>
 					<li>
-						<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospaceFont">
-						<label data-i18n="__MSG_optionUseMonospaceFont__" for="monospaceFont">Use monospace font</label>
+						<div class="line">
+							<input class="setting save-on-change" type="checkbox" id="monospaceFont" name="monospaceFont">
+							<label data-i18n="__MSG_optionUseMonospaceFont__" for="monospaceFont">Use monospace font</label>
+						</div>
 					</li>
-				</ul>
 
-				<ul>
 					<li>
-						<input class="setting save-on-change" type="checkbox" id="debugMode" name="debugMode">
-						<label data-i18n="__MSG_optionDebugMode__" for="debugMode">Enable debug mode</label>
-					</li>
-					<li class="indent">
-						<span data-i18n="__MSG_optionDebugModeDescr__" class="helper-text">This is only useful to get more detailed logging output in the console for reporting bugs, etc.</span>
+						<div class="line">
+							<input class="setting save-on-change" type="checkbox" id="debugMode" name="debugMode">
+							<label data-i18n="__MSG_optionDebugMode__" for="debugMode">Enable debug mode</label>
+						</div>
+						<div class="line indent">
+							<span data-i18n="__MSG_optionDebugModeDescr__" class="helper-text">This is only useful to get more detailed logging output in the console for reporting bugs, etc.</span>
+						</div>
 					</li>
 				</ul>
 			</section>

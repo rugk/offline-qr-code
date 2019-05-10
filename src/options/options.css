@@ -50,7 +50,7 @@ form section:first-child h1 {
   margin-top: 16px;
 }
 
-h2{
+h2 {
   /* title20 */
   font-size: 17px;
   font-weight: 600;
@@ -58,13 +58,21 @@ h2{
 }
 
 ul {
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
+}
+/* still show padding if ul is used for indentation */
+ul ul {
+  padding-left: 40px;
 }
 
 li {
   list-style-type: none;
+  margin-top: 10px;
+  padding: 0px;
+}
 
+.line {
   padding: 2px 0;
   margin: 0 0 4px 0;
 
@@ -72,7 +80,7 @@ li {
   align-items: center;
 }
 
-li * {
+.line * {
   /* https://design.firefox.com/photon/visuals/grid.html#spacing */
   margin: 0 8px 0 0;
 }
@@ -88,13 +96,7 @@ li.indent {
   display: inline;
 }
 
-/* when a link is used in a helper text, add margin */
-.helper-text > a {
-  margin-left: 4px;
-  overflow-wrap: none;
+/* do not break "Learn more" links inside of the text */
+.learn-more {
+  display: inline-block;
 }
-
-button {
-  padding: 4px 8px;
-}
-
