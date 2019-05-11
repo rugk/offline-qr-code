@@ -462,12 +462,12 @@
     "placeholders": {
       "contributors": {
         "content": "$1",
-        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS\"> à tous les autres contributeurs</a>"
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\"> à tous les autres contributeurs</a>"
       }
     }
   },
   "contributorsThanksLink": {
-    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS",
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
     "description": "The link to the CONTRIBUTORS file."
   },
   "contributorsThanksLinkText": {
