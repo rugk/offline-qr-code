@@ -1,6 +1,6 @@
 # Contributors
 
-- [Alex](https://github.com/obitech)
+- [Alexander Knipping](https://github.com/obitech)
 - [Amauri Bizerra](https://github.com/AmauriAires)
 - [anirudh-modi](https://github.com/anirudh-modi)
 - [ENT8R](https://github.com/ENT8R)
