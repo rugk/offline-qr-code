@@ -11,6 +11,7 @@
 - Michael Corwin ([@mcorwin22](https://github.com/mcorwin22))
 - OogieBoogieInJSON ([@OogieBoogieInJSON](https://github.com/OogieBoogieInJSON))
 - [@redagavin](https://github.com/redagavin)
+- [@Thammarith](https://github.com/Thammarith)
 - [@xlomonosvx](https://github.com/xlomonosvx)
 
 ## Translations
