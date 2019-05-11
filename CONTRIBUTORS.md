@@ -13,7 +13,7 @@
 - redagavin ([@redagavin](https://github.com/redagavin))
 - xlomonosvx ([@xlomonosvx](https://github.com/xlomonosvx))
 
-## Translations
+## Translators
 
 ### Chinese
 
