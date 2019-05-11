@@ -12,12 +12,21 @@
  * there may be a lot of strings that are missing it's localized version, it may
  * be removed from that list here.
  *
+ * Include the base language and the region-specific version you want to target,
+ * even if you only have a general translation for the base locale.
+ *
  * @private
- * @type {String[]}
+ * @type {string[]}
  */
 const ADDON_TRANSLATED_INTO = [
-    "de", "en", "tr", "fr", // base languages
-    "de-DE", "en-US", "tr-TR", "fr-FR" // locale versions, we actually (seem to) target
+    // German
+    "de", "de-DE",
+    // English
+    "en", "en-US",
+    // Turkish
+    "tr", "tr-TR",
+    // French
+    "fr", "fr-FR",
     // Chinese not included yet, as it is not 100%ly translated
 ].map((lang) => lang.toLowerCase());
 
