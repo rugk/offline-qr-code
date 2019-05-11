@@ -14,7 +14,7 @@
 - [@Thammarith](https://github.com/Thammarith)
 - [@xlomonosvx](https://github.com/xlomonosvx)
 
-## Translations
+## Translators
 
 ### Chinese
 
