@@ -19,6 +19,15 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 
 **[![Get it for Firefox!](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?src=external-github-download)**
 
+## How to support us?
+
+You don't need to be able to write code to support this project!
+You can e.g. **review and like the add-on** or this GitHub repo, you can add translations or do documentation tasks.
+
+See the [contributing guidelines](CONTRIBUTING.md) for more information on how you can help and vote for this browser extension.
+
+In any case, spread the word and recommend it to others! 🤗😍
+
 ## In action…
 
 ![showing resizing](assets/screencasts/qrResize.gif)
