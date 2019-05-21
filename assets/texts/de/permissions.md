@@ -22,4 +22,4 @@ Zusätzlich verlangt dieses Add-on folgende Berechtigungen, welche in Firefox ab
 |:------------|:----------------------------------|:------------------------------------------------------------------------------|
 | `activeTab` | Auf aktuelle Webseite zugreifen   | Benötigt, um die URL des aktuellen Tabs für den QR-Code zu erhalten           |
 | `storage`   | Zugriff auf lokalen Speicher      | Benötigt um Einstellungen abzuspeichern                                       |
-| `menus`     | Browser-Kontextemnüs modifizieren | Benötigt um Kontextmenueinträge wie "QR-Code aus Auswahl" (etc.) hinzuzufügen |
+| `menus`     | Browser-Kontextmenüs modifizieren | Benötigt um Kontextmenüeinträge wie "QR-Code aus Auswahl" (etc.) hinzuzufügen |
