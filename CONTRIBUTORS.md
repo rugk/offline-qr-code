@@ -27,7 +27,7 @@
 ### German
 
 - [@rugk](https://github.com/rugk)
-- Tamara Undesser [@tamarau](https://github.com/tamarau)
+- Tamara Undesser ([@tamarau](https://github.com/tamarau))
 
 ### Turkish
 
