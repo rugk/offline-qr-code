@@ -476,7 +476,7 @@ function menuClicked(event) {
 export function lateInit() {
     selectAllText({ target: qrCodeText });
 
-    // start listening for resize events very late, so taht it does not
+    // start listening for resize events very late, so that it does not
     // conflict with restoring the popup size
     resizeMutationObserver.observe(qrCodeText, {
         attributes: true,
@@ -577,7 +577,7 @@ export function init() {
             documentUrlPatterns: [
                 document.URL // only apply to own URL = popup
             ]
-        }, () => { // @TODO unify with background.js (module!)
+        }, () => { // TODO unify with background.js (module!)
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
