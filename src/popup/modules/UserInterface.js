@@ -158,10 +158,6 @@ function selectAllText(event) {
         // (selecting makes the scroll position go to the bottom)
         setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
     }
-
-    // recheck selection as a workaround for <FF 60 that it really selected
-    // it -> recursive retry
-    setTimeout(selectAllText, SELECT_TEXT_TIMEOUT, event);
 }
 
 /**
@@ -187,10 +183,6 @@ function scrollToTop(event) {
     // Attention: make sure this does not collide with the retry-property set
     // in selectAllText()!
     event.setScrolled = true;
-
-    // recheck selection as a workaround for <FF 60 that it really selected
-    // it -> recursive retry
-    setTimeout(selectAllText, TOP_SCROLL_TIMEOUT, event);
 }
 
 /**
