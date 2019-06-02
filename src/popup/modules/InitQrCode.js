@@ -58,13 +58,9 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
 
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
-    // do not generate tabs if text is already overwritten
+    // do not use tab URL as text if text is already overwritten
     if (ReceiveBackgroundMessages.isTextOverwritten()) {
         console.info("Text is already overwritten by some message.");
-        // generate QR code
-        QrCreator.generate();
-
-        UserInterface.lateInit();
 
         return Promise.resolve();
     }
@@ -74,6 +70,7 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
         try {
             QrCreator.setText(selection);
             QrCreator.generate();
+            UserInterface.postInitGenerate();
         } catch (e) {
             UserInterface.handleQrError(e);
         }

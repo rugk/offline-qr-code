@@ -315,13 +315,22 @@ const throttledResizeElements = throttle(resizeElements);
  *
  * @function
  * @param  {string} text
+ * @param  {Object} [options]
+ * @param  {boolean} [options.focus=true] focus the text after change
+ * @param  {boolean} [options.select=false] select & scroll the text after change
  * @returns {void}
  */
-export function setQrInputFieldText(text) {
+export function setQrInputFieldText(text, options = {}) {
     qrCodeText.textContent = text;
 
     // as text has been changed, we need to focus & (potentially) re-select the text
-    qrCodeText.focus();
+    options.focus = options.focus || true;
+    if (options.focus) {
+        qrCodeText.focus();
+    }
+    if (options.select) {
+        selectAllText({ target: qrCodeText });
+    }
 }
 
 /**
@@ -468,20 +477,31 @@ function menuClicked(event) {
 }
 
 /**
- * Initiates after the QR code has been generated.
+ * Do things after whole initialisation completed.
+ *
+ * This will only run onceper page load.
  *
  * @function
  * @returns {void}
  */
 export function lateInit() {
-    selectAllText({ target: qrCodeText });
-
     // start listening for resize events very late, so that it does not
     // conflict with restoring the popup size
     resizeMutationObserver.observe(qrCodeText, {
         attributes: true,
         attributeFilter: ["style"]
     });
+}
+
+/**
+ * Initiates directly after the QR code has been generated, but only in the
+ * initialisation phase.
+ *
+ * @function
+ * @returns {void}
+ */
+export function postInitGenerate() {
+    selectAllText({ target: qrCodeText });
 }
 
 /**
