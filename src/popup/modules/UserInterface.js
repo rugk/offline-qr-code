@@ -482,10 +482,7 @@ function menuClicked(event) {
  * @returns {void}
  */
 export function lateInit() {
-    // manually focus (and select) element when starting
-    // in brute-force-style as bugs seem to prevent it from working otherwise
-    // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
-    setTimeout(selectAllText, 50, { target: qrCodeText });
+    selectAllText({ target: qrCodeText });
 
     // start listening for resize events very late, so taht it does not
     // conflict with restoring the popup size
