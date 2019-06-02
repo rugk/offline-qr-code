@@ -139,14 +139,8 @@ function isSelected(input) {
  */
 function selectAllText(event) {
     const targetIsSelected = document.activeElement === event.target && isSelected(event.target);
-    // prevent endless loop after two rechecks (i.e. re-check only three times)
-    if (targetIsSelected || event.retry > 3) {
-        return;
-    }
 
     console.info("selectAllText", event);
-
-    event.retry = event.retry + 1 || 0;
 
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
@@ -180,8 +174,6 @@ function scrollToTop(event) {
         return;
     }
 
-    // Attention: make sure this does not collide with the retry-property set
-    // in selectAllText()!
     event.setScrolled = true;
 }
 
