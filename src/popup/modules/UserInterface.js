@@ -314,23 +314,14 @@ const throttledResizeElements = throttle(resizeElements);
  * Note that this also triggers the actions to show it nicely in the UI.
  *
  * @function
- * @param  {string} text
- * @param  {Object} [options]
- * @param  {boolean} [options.focus=true] focus the text after change
- * @param  {boolean} [options.select=false] select & scroll the text after change
+ * @param  {string} text* *
  * @returns {void}
  */
-export function setQrInputFieldText(text, options = {}) {
+export function setQrInputFieldText(text) {
     qrCodeText.textContent = text;
 
-    // as text has been changed, we need to focus & (potentially) re-select the text
-    options.focus = options.focus || true;
-    if (options.focus) {
-        qrCodeText.focus();
-    }
-    if (options.select) {
-        selectAllText({ target: qrCodeText });
-    }
+    // as text has been changed, we need to focus
+    qrCodeText.focus();
 }
 
 /**
