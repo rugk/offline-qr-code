@@ -118,7 +118,7 @@ html, body {
   margin: 0px;
 }
 
-/* shift popup colors if user has specified dark mode */
+/* shift popup colors if user has specified dark mode (reads preference from OS, not browser) */
 @media (prefers-color-scheme: dark) {
   .qrcode {
     background-color: var(--grey-30);
