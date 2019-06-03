@@ -13,6 +13,7 @@
 - [@redagavin](https://github.com/redagavin)
 - [@Thammarith](https://github.com/Thammarith)
 - [@xlomonosvx](https://github.com/xlomonosvx)
+- David Floyd [@davidfloyd91](https://github.com/davidfloyd91)
 
 ## Translators
 
