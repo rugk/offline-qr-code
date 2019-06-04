@@ -117,17 +117,3 @@ html, body {
   /* override inerhited from browser-style */
   margin: 0px;
 }
-
-/* shift popup colors if user has specified dark mode (reads preference from OS, not browser) */
-@media (prefers-color-scheme: dark) {
-  .qrcode {
-    background-color: var(--grey-30);
-  }
-  #qrcode-container {
-    background-color: var(--grey-60);
-  }
-  #qrcodetext {
-      background-color: var(--grey-60);
-      color: var(--white-100);
-  }
-}

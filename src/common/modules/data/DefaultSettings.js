@@ -11,12 +11,22 @@
  * @const
  * @type {Object}
  */
+
+// checks for OS dark theme and returns the appropriate background color
+ const setQrBackgroundColor = () => {
+     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return "#4a4a4f"; // Photon Grey 60
+     } else {
+        return "ffffff";
+     }
+ };
+
 const defaultSettings = Object.freeze({
     debugMode: false,
     popupIconColored: false,
     qrCodeType: "svg",
     qrColor: "#0c0c0d",
-    qrBackgroundColor: "#ffffff",
+    qrBackgroundColor: setQrBackgroundColor(),
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
     monospaceFont: false,
