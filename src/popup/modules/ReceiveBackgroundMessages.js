@@ -15,6 +15,7 @@ import * as BrowserCommunication from "/common/modules/BrowserCommunication/Brow
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
+import * as UserInterface from "./UserInterface.js";
 import * as QrCreator from "./QrCreator.js";
 import { initCompleted } from "./InitQrCode.js";
 
@@ -28,6 +29,7 @@ BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT, (reques
     if (initCompleted) {
         console.info("Initialisation has already been completed, regenerate QR code with new text.");
         QrCreator.generate();
+        UserInterface.postInitGenerate();
     }
 
     overwroteQrCode = true;

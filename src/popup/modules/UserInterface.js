@@ -24,7 +24,6 @@ import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
-const SELECT_TEXT_TIMEOUT = 100; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
 const QR_CODE_CONTAINER_MARGIN = 40; // px
 const QR_CODE_SIZE_SNAP = 5; // px
@@ -139,14 +138,8 @@ function isSelected(input) {
  */
 function selectAllText(event) {
     const targetIsSelected = document.activeElement === event.target && isSelected(event.target);
-    // prevent endless loop after two rechecks (i.e. re-check only three times)
-    if (targetIsSelected || event.retry > 3) {
-        return;
-    }
 
     console.info("selectAllText", event);
-
-    event.retry = event.retry + 1 || 0;
 
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
@@ -158,10 +151,6 @@ function selectAllText(event) {
         // (selecting makes the scroll position go to the bottom)
         setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
     }
-
-    // recheck selection as a workaround for <FF 60 that it really selected
-    // it -> recursive retry
-    setTimeout(selectAllText, SELECT_TEXT_TIMEOUT, event);
 }
 
 /**
@@ -184,13 +173,7 @@ function scrollToTop(event) {
         return;
     }
 
-    // Attention: make sure this does not collide with the retry-property set
-    // in selectAllText()!
     event.setScrolled = true;
-
-    // recheck selection as a workaround for <FF 60 that it really selected
-    // it -> recursive retry
-    setTimeout(selectAllText, TOP_SCROLL_TIMEOUT, event);
 }
 
 /**
@@ -330,13 +313,13 @@ const throttledResizeElements = throttle(resizeElements);
  * Note that this also triggers the actions to show it nicely in the UI.
  *
  * @function
- * @param  {string} text
+ * @param  {string} text* *
  * @returns {void}
  */
 export function setQrInputFieldText(text) {
     qrCodeText.textContent = text;
 
-    // as text has been changed, we need to focus & (potentially) re-select the text
+    // as text has been changed, we need to focus
     qrCodeText.focus();
 }
 
@@ -484,23 +467,31 @@ function menuClicked(event) {
 }
 
 /**
- * Initiates after the QR code has been generated.
+ * Do things after whole initialisation completed.
+ *
+ * This will only run onceper page load.
  *
  * @function
  * @returns {void}
  */
 export function lateInit() {
-    // manually focus (and select) element when starting
-    // in brute-force-style as bugs seem to prevent it from working otherwise
-    // bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1324255, < FF 60
-    setTimeout(selectAllText, 50, { target: qrCodeText });
-
-    // start listening for resize events very late, so taht it does not
+    // start listening for resize events very late, so that it does not
     // conflict with restoring the popup size
     resizeMutationObserver.observe(qrCodeText, {
         attributes: true,
         attributeFilter: ["style"]
     });
+}
+
+/**
+ * Initiates directly after the QR code has been generated, but only in the
+ * initialisation phase.
+ *
+ * @function
+ * @returns {void}
+ */
+export function postInitGenerate() {
+    selectAllText({ target: qrCodeText });
 }
 
 /**
@@ -596,7 +587,7 @@ export function init() {
             documentUrlPatterns: [
                 document.URL // only apply to own URL = popup
             ]
-        }, () => { // @TODO unify with background.js (module!)
+        }, () => { // TODO unify with background.js (module!)
             const lastError = browser.runtime.lastError;
 
             if (lastError) {
