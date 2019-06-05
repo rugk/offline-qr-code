@@ -3,7 +3,7 @@
 - Alexander Knipping ([@obitech](https://github.com/obitech))
 - Amauri Bizerra ([@AmauriAires](https://github.com/AmauriAires))
 - [@anirudh-modi](https://github.com/anirudh-modi)
-- David Floyd [@davidfloyd91](https://github.com/davidfloyd91)
+- David Floyd ([@davidfloyd91](https://github.com/davidfloyd91))
 - [@ENT8R](https://github.com/ENT8R)
 - Flo Becker ([@beckerei](https://github.com/beckerei))
 - Josh Cooper ([@JoshCooperr](https://github.com/JoshCooperr))
