@@ -19,7 +19,7 @@ const defaultSettings = Object.freeze({
     popupIconColored: false,
     qrCodeType: "svg",
     qrColor: "#0c0c0d",
-    qrBackgroundColor: (darkTheme ? "#d7d7db" : "#ffffff"),
+    qrBackgroundColor: (darkTheme ? "#d7d7db" : "#ffffff"), // dark uses Firefox Photon's grey-30
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
     monospaceFont: false,
