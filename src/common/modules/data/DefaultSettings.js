@@ -4,6 +4,9 @@
  * @module data/DefaultSettings
  */
 
+// checks for OS dark theme
+const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
 /**
  * An object of all default settings.
  *
@@ -11,22 +14,12 @@
  * @const
  * @type {Object}
  */
-
-// checks for OS dark theme and returns the appropriate background color
- const setQrBackgroundColor = () => {
-     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return "#d7d7db"; // Photon Grey 30
-     } else {
-        return "ffffff";
-     }
- };
-
 const defaultSettings = Object.freeze({
     debugMode: false,
     popupIconColored: false,
     qrCodeType: "svg",
     qrColor: "#0c0c0d",
-    qrBackgroundColor: setQrBackgroundColor(),
+    qrBackgroundColor: (darkTheme ? "#d7d7db" : "#ffffff"),
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
     monospaceFont: false,

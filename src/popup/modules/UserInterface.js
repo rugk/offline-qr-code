@@ -532,12 +532,6 @@ export function init() {
     const applyingQrColor = AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
         if (qrBackgroundColor) {
             document.body.style.backgroundColor = qrBackgroundColor;
-
-            // checks for OS dark theme and sets sets colors in text field
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                qrCodeText.style.backgroundColor = "#4a4a4f"; // Photon Grey 60 -- FF dark theme popup color
-                qrCodeText.style.color = "#ffffff";
-            }
         }
     });
 
