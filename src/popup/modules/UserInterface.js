@@ -24,7 +24,6 @@ import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
-const SELECT_TEXT_TIMEOUT = 100; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
 const QR_CODE_CONTAINER_MARGIN = 40; // px
 const QR_CODE_SIZE_SNAP = 5; // px
