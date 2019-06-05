@@ -15,7 +15,7 @@
 // checks for OS dark theme and returns the appropriate background color
  const setQrBackgroundColor = () => {
      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return "#4a4a4f"; // Photon Grey 60
+        return "#d7d7db"; // Photon Grey 30
      } else {
         return "ffffff";
      }

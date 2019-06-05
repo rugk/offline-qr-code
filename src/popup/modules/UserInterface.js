@@ -536,16 +536,11 @@ export function init() {
             // checks for OS dark theme and sets appropriate background colors
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 // sets dark theme background and text colors in text field
-                qrCodeText.style.backgroundColor = "#4a4a4f"; // Photon Grey 60
+                qrCodeText.style.backgroundColor = "#4a4a4f"; // Photon Grey 60 -- FF dark theme popup color
                 qrCodeText.style.color = "#ffffff";
-
-                if (qrBackgroundColor === "#4a4a4f") {
-                    // sets qrCode inner background color if user hasn't selected their own color
-                    qrCode.style.backgroundColor = "rgba(249,249,250,0.8)"; // Photon Grey 90 a80
-                } else {
-                    // otherwise matches qrCode inner background color to user's selected background color
-                    qrCode.style.backgroundColor = qrBackgroundColor;
-                }
+            } else {
+                // otherwise matches qrCode inner background color to user's selected background color
+                qrCode.style.backgroundColor = qrBackgroundColor;
             }
         }
     });
