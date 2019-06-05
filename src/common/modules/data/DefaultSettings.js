@@ -33,8 +33,6 @@ const defaultSettings = Object.freeze({
     }
 });
 
-
-
 // freeze the inner objects, this is strongly recommend
 Object.values(defaultSettings).map(Object.freeze);
 
