@@ -1,6 +1,7 @@
 # Contributors
 
 - Alexander Knipping ([@obitech](https://github.com/obitech))
+- Andrew Jones ([@cornu-ammonis](https://github.com/cornu-ammonis))
 - Amauri Bizerra ([@AmauriAires](https://github.com/AmauriAires))
 - [@anirudh-modi](https://github.com/anirudh-modi)
 - David Floyd [@davidfloyd91](https://github.com/davidfloyd91)
