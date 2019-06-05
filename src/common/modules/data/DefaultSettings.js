@@ -5,7 +5,7 @@
  */
 
 // checks for OS dark theme
-const darkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 /**
  * An object of all default settings.
@@ -19,7 +19,7 @@ const defaultSettings = Object.freeze({
     popupIconColored: false,
     qrCodeType: "svg",
     qrColor: "#0c0c0d",
-    qrBackgroundColor: (darkTheme ? "#d7d7db" : "#ffffff"), // dark uses Firefox Photon's grey-30
+    qrBackgroundColor: (isDarkTheme ? "#d7d7db" : "#ffffff"), // dark uses Firefox Photon's grey-30
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
     monospaceFont: false,
