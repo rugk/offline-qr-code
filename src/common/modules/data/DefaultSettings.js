@@ -5,7 +5,7 @@
  */
 
 // checks for OS dark theme
-const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const darkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 /**
  * An object of all default settings.
