@@ -121,7 +121,7 @@ html, body {
 /* shift popup colors if user has specified dark mode */
 @media (prefers-color-scheme: dark) {
   #qrcodetext {
-      background-color: var(--grey-60);
-      color: var(--white-100);
+    background-color: var(--grey-60);
+    color: var(--white-100);
   }
 }
