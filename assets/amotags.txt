@@ -1,1 +1,1 @@
-offline, privacy, private, qr, qr-code, qrcode, qr-code-generator, javascript, qr-generator, qrcode-generator
+javascript, local, locally, offline, privacy, private, qr, qr-code, qr-code-generator, qr-generator, qrcode, qrcode-generator
