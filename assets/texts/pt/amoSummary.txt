@@ -1,0 +1,3 @@
+Este add-on permite que você crie rapidamente um QR Code offline com a URL na aba aberta ou qualquer outro texto (selecionado)! 👍
+
+Funciona completamente offline, protejendo sua privacidade e possui uma grande variedade de configurações como QR Codes coloridos!
