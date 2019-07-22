@@ -22,7 +22,7 @@ const defaultSettings = Object.freeze({
     qrBackgroundColor: (isDarkTheme ? "#d7d7db" : "#ffffff"), // dark uses Firefox Photon's grey-30
     qrErrorCorrection: "Q",
     autoGetSelectedText: false,
-    removeContextMenuItem: true,
+    showContextMenuItem: true,
     monospaceFont: false,
     qrCodeSize: {
         sizeType: "fixed",
