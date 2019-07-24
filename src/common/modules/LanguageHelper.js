@@ -27,6 +27,8 @@ const ADDON_TRANSLATED_INTO = [
     "tr", "tr-TR",
     // French
     "fr", "fr-FR",
+    // Portuguese
+    "pt", "pt-BR",
     // Chinese not included yet, as it is not 100%ly translated
 ].map((lang) => lang.toLowerCase());
 

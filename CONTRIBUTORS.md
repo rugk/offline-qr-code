@@ -31,6 +31,10 @@
 - [@rugk](https://github.com/rugk)
 - Tamara Undesser ([@tamarau](https://github.com/tamarau))
 
+### Portuguese
+
+- [@CGReinhold](https://github.com/CGReinhold)
+
 ### Turkish
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
