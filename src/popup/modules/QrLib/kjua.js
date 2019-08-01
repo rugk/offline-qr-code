@@ -9,13 +9,13 @@
 import * as QrError from "./QrError.js";
 
 /**
- * The type of QR code this library generates.
+ * The library name/ID.
  *
  * @type {string}
  * @const
  * @default
  */
-export const GENERATION_TYPE = "canvas";
+export const LIBRARY_NAME = "kjua-svg";
 
 /**
  * The saved options for Kjua.

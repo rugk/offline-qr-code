@@ -46,12 +46,12 @@ export function generate() {
     }
 
     // special shortcuts for SVG output when text does not need to be regenerated
-    if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) {
-        // color won't be changed
-        // size does not need adjustment for SVGs
-
-        return;
-    }
+    // if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) { // TODO: remove?
+    //     // color won't be changed
+    //     // size does not need adjustment for SVGs
+    //
+    //     return;
+    // }
 
     UserInterface.replaceQr(getQrCodeFromLib());
 
@@ -153,15 +153,15 @@ export function generateFromTabs(tabs) {
 }
 
 /**
- * Returns the type of the generated QR code.
+ * Returns the name of the used QR code library.
  *
  * @function
  * @returns {Promise}
  */
-export async function getGenerationType() {
+export async function getLibraryName() {
     await qrCreatorInit; // module needs to be initiated
 
-    return qrCodeLib.GENERATION_TYPE;
+    return qrCodeLib.LIBRARY_NAME;
 }
 
 /**

@@ -7,24 +7,38 @@ const browserInfo = browser.runtime.getBrowserInfo();
  * @public
  * @param {string} title
  * @param {Object} properties
- * @param {function} onCreated
  * @returns {Promise}
  */
-export async function createMenu(title, properties, onCreated) {
-    // ignore if menu API is not supported (on Android e.g.)
-    if (browser.menus === undefined) {
+export function createMenu(title, properties) {
+    return new Promise(async (resolve, reject) => {
+        // ignore if menu API is not supported (on Android e.g.)
+        if (browser.menus === undefined) {
+            reject(new Error("context menu feature is not supported"));
+        }
+
+        const info = await browserInfo;
+        const version = parseInt(info.version, 10);
+        if (version > 63) {
+            properties.title = browser.i18n.getMessage(`${title}AccessKey`);
+        }
+
+        if (!("title" in properties) || !properties.title) {
+            properties.title = browser.i18n.getMessage(title);
+        }
+
+        // create menu and log errors
+        const newId = browser.menus.create(properties, () => {
+            const lastError = browser.runtime.lastError;
+
+            if (lastError) {
+                console.log(`error creating menu item: ${lastError}`);
+                reject(lastError);
+            } else {
+                console.log("menu item created successfully");
+                resolve(newId);
+            }
+        });
+
         return Promise.resolve();
-    }
-
-    const info = await browserInfo;
-    const version = parseInt(info.version, 10);
-    if (version > 63) {
-        properties.title = browser.i18n.getMessage(`${title}AccessKey`);
-    }
-
-    if (!("title" in properties) || !properties.title) {
-        properties.title = browser.i18n.getMessage(title);
-    }
-
-    return browser.menus.create(properties, onCreated);
+    });
 }

@@ -31,7 +31,8 @@ const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
 const WINDOW_MINIMUM_HEIGHT = 250; // px
 const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
 
-const CONTEXT_MENU_SAVE_IMAGE = "save-image";
+const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
+const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
 
 const qrCode = document.getElementById("qrcode");
 const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
@@ -467,6 +468,45 @@ function menuClicked(event) {
 }
 
 /**
+ * Creates the context menu entries for the popup.
+ *
+ * @private
+ * @returns {Promise}
+ */
+async function createContextMenu() {
+    // ignore if menu API is not supported (on Android e.g.)
+    if (browser.menus === undefined) {
+        return Promise.resolve();
+    }
+
+    // remove menu item if it has been added before
+    browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CANVAS);
+    browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_SVG);
+
+    // create save menu if needed
+    await Promise.all([
+        createMenu("contextMenuSaveImageCanvas", {
+                id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
+                contexts: ["page"],
+                documentUrlPatterns: [
+                    document.URL // only apply to own URL = popup
+                ]
+            }
+        ),
+        createMenu("contextMenuSaveImageSvg", {
+                id: CONTEXT_MENU_SAVE_IMAGE_SVG,
+                contexts: ["page"],
+                documentUrlPatterns: [
+                    document.URL // only apply to own URL = popup
+                ]
+            }
+        )
+    ]);
+
+    browser.menus.onClicked.addListener(menuClicked);
+}
+
+/**
  * Do things after whole initialisation completed.
  *
  * This will only run onceper page load.
@@ -566,44 +606,7 @@ export function init() {
         }
     });
 
-    // initiate settings dependent on the type of the QR code
-    const initQrTypespecificSettings = QrCreator.getGenerationType().then((genType) => {
-        if (genType !== "svg") {
-            // ignore if menu API is not supported (on Android e.g.)
-            if (browser.menus === undefined) {
-                return Promise.resolve();
-            }
-
-            // remove menu item if it has been added before
-            browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE);
-
-            return Promise.resolve();
-        }
-
-        // create save menu if needed
-        return createMenu("contextMenuSaveImage", {
-            id: CONTEXT_MENU_SAVE_IMAGE,
-            contexts: ["page"],
-            documentUrlPatterns: [
-                document.URL // only apply to own URL = popup
-            ]
-        }, () => { // TODO unify with background.js (module!)
-            const lastError = browser.runtime.lastError;
-
-            if (lastError) {
-                console.warn(`error creating menu item: ${lastError}`);
-            } else {
-                console.info("menu item created successfully");
-            }
-        }).then(() => {
-            // ignore if menu API is not supported (on Android e.g.)
-            if (browser.menus === undefined) {
-                return Promise.resolve();
-            }
-
-            return browser.menus.onClicked.addListener(menuClicked);
-        });
-    });
+    const initQrTypespecificSettings = createContextMenu();
 
     // return Promise chain
     return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
