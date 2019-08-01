@@ -11,7 +11,6 @@
 
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
-import * as QrLibQrGen from "./QrLib/qrgen.js";
 import * as QrLibKjua from "./QrLib/kjua.js";
 import * as UserInterface from "./UserInterface.js";
 
@@ -174,18 +173,10 @@ export async function getGenerationType() {
 export function init() {
     // get all settings
     qrCreatorInit = AddonSettings.get().then((settings) => {
-        switch (settings.qrCodeType) {
-        case "svg":
-            qrCodeLib = QrLibQrGen;
-            break;
-        case "canvas":
-            QrLibKjua.init();
+        qrCodeLib = QrLibKjua;
+        QrLibKjua.init();
 
-            qrCodeLib = QrLibKjua;
-            break;
-        default:
-            throw new Error("invalid QR code type setting");
-        }
+        qrCodeLib.set("render", settings.qrCodeType);
 
         qrCodeLib.set("qrQuietZone", settings.qrQuietZone);
         qrCodeLib.set("qrColor", settings.qrColor);
