@@ -22,6 +22,7 @@ import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.j
 import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
+import debounce from "../../common/modules/lodash/debounce.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
@@ -369,6 +370,82 @@ export function handleQrError(error) {
 }
 
 /**
+ * Save a file.
+ *
+ * Sends a message to the background script to request the permissions and download the file.
+ *
+ * @function
+ * @private
+ * @param {File} file
+ * @param {string} filename
+ * @returns {void}
+ */
+function triggerFileSave(file, filename) {
+    const DOWNLOAD_PERMISSIONS = {
+        permissions: ["downloads"]
+    };
+
+    const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSIONS);
+    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSIONS);
+
+    downloadPermissionGranted.then((isAlreadyGranted) => {
+        let usePermissionWorkaround = false;
+
+        // if permission is not yet required
+        // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
+        if (!isAlreadyGranted) {
+            usePermissionWorkaround = true;
+            CommonMessages.showInfo("requestDownloadPermissionForQr");
+        }
+
+        browser.runtime.sendMessage({
+            type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
+            usePermissionWorkaround: usePermissionWorkaround,
+            file: file,
+            filename: filename,
+        }).then(() => {
+            console.info("SVG image saved on disk", svgElem, svgString);
+        }).catch((error) => {
+            console.error("Could not save SVG image saved on disk", error, svgElem, svgString);
+
+            // in case of user error (i.e. user cancelled e.g.) do not show error message
+            if (error.message.includes("user")) {
+                return;
+            }
+
+            CommonMessages.showError("errorDownloadingFile", error);
+        });
+
+        // show error when promise is rejected
+        requestDownloadPermissions.then((permissionGranted) => {
+            if (usePermissionWorkaround) {
+                // if permission result is there, hide info message
+                CommonMessages.hideInfo();
+            }
+
+            // in case of success there is nothing else to do
+            if (permissionGranted) {
+                return;
+            }
+
+            // and stop retrying to download in background script
+            if (usePermissionWorkaround) {
+                browser.runtime.sendMessage({
+                    type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY
+                });
+            }
+
+            // if permission is declined, make user aware that this permission was required
+            console.error("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
+            CommonMessages.showError("errorPermissionRequired", true);
+        }).catch((error) => {
+            console.error("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+            CommonMessages.showError("errorPermissionRequestFailed", true);
+        });
+    });
+}
+
+/**
  * Triggers when a context menu item has been clicked.
  *
  * It downloads the QR code image.
@@ -379,92 +456,23 @@ export function handleQrError(error) {
  * @returns {void}
  */
 function menuClicked(event) {
-    const DOWNLOAD_PERMISSIONS = {
-        permissions: ["downloads"]
-    };
-
-    if (event.menuItemId !== CONTEXT_MENU_SAVE_IMAGE) {
-        return;
+    switch (event.menuItemId) {
+        case CONTEXT_MENU_SAVE_IMAGE_SVG: {
+            const svgElem = QrCreator.getQrCodeSvgFromLib();
+            const svgString = (new XMLSerializer()).serializeToString(svgElem);
+            const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
+            triggerFileSave(file, "qrcode.svg");
+            break;
+        }
+        case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
+            const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+            canvasElem.toBlob((blob) => {
+                const file = new File([blob], "qrcode.png", { type: "image/png" });
+                triggerFileSave(file, "qrcode.png");
+            }, "image/png");
+            break;
+        }
     }
-
-    const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSIONS);
-    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSIONS);
-
-    // do not trigger when placeholder is shown
-    if (placeholderShown === true) {
-        CommonMessages.showError("Cannot save QR code if it is not displayed.", true);
-        return;
-    }
-
-    AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
-        // const svgString = qrCodeLib.getSvgString();
-        const svgElem = document.getElementsByTagName("svg")[0].cloneNode(true);
-
-        // prettify SVG for saving
-        svgElem.setAttribute("height", qrLastSize);
-        svgElem.setAttribute("width", qrLastSize);
-        svgElem.querySelector("rect").setAttribute("fill", qrBackgroundColor); // replace transparent background
-
-        const svgString = (new XMLSerializer()).serializeToString(svgElem);
-
-        const file = new File([svgString], "qrcode.svg", {type: "image/svg+xml;charset=utf-8"});
-
-        downloadPermissionGranted.then((isAlreadyGranted) => {
-            let usePermissionWorkaround = false;
-
-            // if permission is not yet required
-            // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1292701
-            if (!isAlreadyGranted) {
-                usePermissionWorkaround = true;
-                CommonMessages.showInfo("requestDownloadPermissionForQr");
-            }
-
-            browser.runtime.sendMessage({
-                type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
-                usePermissionWorkaround: usePermissionWorkaround,
-                file: file,
-                filename: "qrcode.svg",
-            }).then(() => {
-                console.info("SVG image saved on disk", svgElem, svgString);
-            }).catch((error) => {
-                console.error("Could not save SVG image saved on disk", error, svgElem, svgString);
-
-                // in case of user error (i.e. user cancelled e.g.) do not show error message
-                if (error.message.includes("user")) {
-                    return;
-                }
-
-                CommonMessages.showError("errorDownloadingFile", error);
-            });
-
-            // show error when promise is rejected
-            requestDownloadPermissions.then((permissionGranted) => {
-                if (usePermissionWorkaround) {
-                    // if permission result is there, hide info message
-                    CommonMessages.hideInfo();
-                }
-
-                // in case of success there is nothing else to do
-                if (permissionGranted) {
-                    return;
-                }
-
-                // and stop retrying to download in background script
-                if (usePermissionWorkaround) {
-                    browser.runtime.sendMessage({
-                        type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY
-                    });
-                }
-
-                // if permission is declined, make user aware that this permission was required
-                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
-                CommonMessages.showError("errorPermissionRequired", true);
-            }).catch((error) => {
-                console.error("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
-                CommonMessages.showError("errorPermissionRequestFailed", true);
-            });
-        });
-    });
 }
 
 /**
@@ -483,25 +491,23 @@ async function createContextMenu() {
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CANVAS);
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_SVG);
 
-    // create save menu if needed
-    await Promise.all([
-        createMenu("contextMenuSaveImageCanvas", {
-                id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
-                contexts: ["page"],
-                documentUrlPatterns: [
-                    document.URL // only apply to own URL = popup
-                ]
-            }
-        ),
-        createMenu("contextMenuSaveImageSvg", {
-                id: CONTEXT_MENU_SAVE_IMAGE_SVG,
-                contexts: ["page"],
-                documentUrlPatterns: [
-                    document.URL // only apply to own URL = popup
-                ]
-            }
-        )
-    ]);
+    // create save menus if needed
+    await createMenu("contextMenuSaveImageSvg", {
+            id: CONTEXT_MENU_SAVE_IMAGE_SVG,
+            contexts: ["page"],
+            documentUrlPatterns: [
+                document.URL // only apply to own URL = popup
+            ]
+        }
+    );
+    await createMenu("contextMenuSaveImageCanvas", {
+            id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
+            contexts: ["page"],
+            documentUrlPatterns: [
+                document.URL // only apply to own URL = popup
+            ]
+        }
+    );
 
     browser.menus.onClicked.addListener(menuClicked);
 }

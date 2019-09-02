@@ -23,13 +23,24 @@ let qrCodeLib = null;
 const changedValues = new Set("text", "color", "size");
 
 /**
- * Provide connection to library and get QR code with current options.
+ * Provide connection to library and get QR code as an SVG with current options.
  *
- * @function
- * @private
+ * @public
  * @returns {HTMLElement}
  */
-function getQrCodeFromLib() {
+export function getQrCodeSvgFromLib() {
+    qrCodeLib.set("render", "svg");
+    return qrCodeLib.getQr();
+}
+
+/**
+ * Provide connection to library and get QR code as a canvas with current options.
+ *
+ * @public
+ * @returns {HTMLElement}
+ */
+export function getQrCodeCanvasFromLib() {
+    qrCodeLib.set("render", "canvas");
     return qrCodeLib.getQr();
 }
 
@@ -53,7 +64,7 @@ export function generate() {
     //     return;
     // }
 
-    UserInterface.replaceQr(getQrCodeFromLib());
+    UserInterface.replaceQr(getQrCodeSvgFromLib());
 
     changedValues.clear();
 }
@@ -175,8 +186,6 @@ export function init() {
     qrCreatorInit = AddonSettings.get().then((settings) => {
         qrCodeLib = QrLibKjua;
         QrLibKjua.init();
-
-        qrCodeLib.set("render", settings.qrCodeType);
 
         qrCodeLib.set("qrQuietZone", settings.qrQuietZone);
         qrCodeLib.set("qrColor", settings.qrColor);
