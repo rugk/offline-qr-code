@@ -22,7 +22,6 @@ import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.j
 import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
-import debounce from "../../common/modules/lodash/debounce.js";
 
 const TOP_SCROLL_TIMEOUT = 10; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
@@ -186,7 +185,7 @@ function scrollToTop(event) {
  * @returns {Promise}
  */
 async function saveQrCodeSizeOption() {
-    // never start saving an option, when the old one is stll being saved
+    // never start saving an option, when the old one is still being saved
     await savingQrCodeSize;
 
     console.info("saved qr code text size/style", qrCodeSizeOption);
@@ -404,9 +403,9 @@ function triggerFileSave(file, filename) {
             file: file,
             filename: filename,
         }).then(() => {
-            console.info("SVG image saved on disk", svgElem, svgString);
+            console.info("image saved on disk", file, filename);
         }).catch((error) => {
-            console.error("Could not save SVG image saved on disk", error, svgElem, svgString);
+            console.error("Could not save SVG image saved on disk", error, file, filename);
 
             // in case of user error (i.e. user cancelled e.g.) do not show error message
             if (error.message.includes("user")) {
@@ -457,21 +456,21 @@ function triggerFileSave(file, filename) {
  */
 function menuClicked(event) {
     switch (event.menuItemId) {
-        case CONTEXT_MENU_SAVE_IMAGE_SVG: {
-            const svgElem = QrCreator.getQrCodeSvgFromLib();
-            const svgString = (new XMLSerializer()).serializeToString(svgElem);
-            const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
-            triggerFileSave(file, "qrcode.svg");
-            break;
-        }
-        case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
-            const canvasElem = QrCreator.getQrCodeCanvasFromLib();
-            canvasElem.toBlob((blob) => {
-                const file = new File([blob], "qrcode.png", { type: "image/png" });
-                triggerFileSave(file, "qrcode.png");
-            }, "image/png");
-            break;
-        }
+    case CONTEXT_MENU_SAVE_IMAGE_SVG: {
+        const svgElem = QrCreator.getQrCodeSvgFromLib();
+        const svgString = (new XMLSerializer()).serializeToString(svgElem);
+        const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
+        triggerFileSave(file, "qrcode.svg");
+        break;
+    }
+    case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
+        const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+        canvasElem.toBlob((blob) => {
+            const file = new File([blob], "qrcode.png", { type: "image/png" });
+            triggerFileSave(file, "qrcode.png");
+        }, "image/png");
+        break;
+    }
     }
 }
 
@@ -493,23 +492,24 @@ async function createContextMenu() {
 
     // create save menus if needed
     await createMenu("contextMenuSaveImageSvg", {
-            id: CONTEXT_MENU_SAVE_IMAGE_SVG,
-            contexts: ["page"],
-            documentUrlPatterns: [
-                document.URL // only apply to own URL = popup
-            ]
-        }
+        id: CONTEXT_MENU_SAVE_IMAGE_SVG,
+        contexts: ["page"],
+        documentUrlPatterns: [
+            document.URL // only apply to own URL = popup
+        ]
+    }
     );
     await createMenu("contextMenuSaveImageCanvas", {
-            id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
-            contexts: ["page"],
-            documentUrlPatterns: [
-                document.URL // only apply to own URL = popup
-            ]
-        }
+        id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
+        contexts: ["page"],
+        documentUrlPatterns: [
+            document.URL // only apply to own URL = popup
+        ]
+    }
     );
 
     browser.menus.onClicked.addListener(menuClicked);
+    return Promise.resolve();
 }
 
 /**

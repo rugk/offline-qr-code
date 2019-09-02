@@ -56,13 +56,13 @@ export function generate() {
         return;
     }
 
-    // special shortcuts for SVG output when text does not need to be regenerated
-    // if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) { // TODO: remove?
-    //     // color won't be changed
-    //     // size does not need adjustment for SVGs
-    //
-    //     return;
-    // }
+    // SVG version does not need to be regenerated when text has not changed
+    if (!changedValues.has("text")) {
+        // color won't be changed
+        // size does not need adjustment for SVGs
+    
+        return;
+    }
 
     UserInterface.replaceQr(getQrCodeSvgFromLib());
 
