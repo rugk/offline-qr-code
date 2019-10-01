@@ -15,6 +15,7 @@
 - [@redagavin](https://github.com/redagavin)
 - [@Thammarith](https://github.com/Thammarith)
 - [@xlomonosvx](https://github.com/xlomonosvx)
+- Joshua Winters-Brown [@winters-brown](https://github.com/winters-brown)
 
 ## Translators
 
