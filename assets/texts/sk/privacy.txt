@@ -1,0 +1,9 @@
+Rozšírenie neposiela žiadne informácie autorovi rozšírenia ani žiadnej tretej strane.
+
+Vysvtelenie všetkých povolení, ktoré rozšírenie vyžaduje, je možné nájsť na https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== Servisy tretích strán ==
+
+Rozšírenie používa synchronizačné úložisko prehliadača, na ukladanie nastavení. Ak používateľ povolí "Synchronizáciu" v prehliadači, nastavenia sa nahrajú a synchronizujú medzi všetkými zariadeniami pripojenými na jeho účet. V opačnom prípade sú dáta uložené iba lokálne na zariadení.
+V Mozille sa dáta enkryptujú koncovým enkryptovaním predtým, než sú nahrané a uložené na serveroch Mozilly.
+Pozrite sa na https://accounts.firefox.com/legal/privacy a https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 pre postup súkromia Mozilly na túto tému.
