@@ -31,6 +31,10 @@
 - [@rugk](https://github.com/rugk)
 - Tamara Undesser ([@tamarau](https://github.com/tamarau))
 
+### Hebrew
+
+- Shani Rub ([@shanirub](https://github.com/shanirub))
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
