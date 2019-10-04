@@ -1,0 +1,8 @@
+qrBig.png; "QR Codes são redimensionáveis!";
+qrDark.png; "Você pode ajustar o QR Code ao seu tema.";
+qrMenuFromLink.png; "Você pode criar QR Codes diretamente dos links."
+qrMenuFromPhoneNumber.png; "Você pode criar QR Codes diretamente do texto selecionado".
+qrSave.png; "Você pode salvar QR Codes como SVGs ou PNGs.";
+qrSettings.png; "Muitas opções permitem personalizar o comportamento e a aparência.";
+qrSmall.png; "QR Codes podem ser gerados com qualquer tamanho.";
+qrText.png; "Digite texto personalizado instantaneamente após clicar no botão para gerar um novo QR Code on-the-fly";
