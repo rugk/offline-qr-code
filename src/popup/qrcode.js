@@ -7,11 +7,12 @@
  */
 "use strict";
 
+import { tips } from "/common/modules/data/Tips.js";
 import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
 
 import "./modules/InitQrCode.js";
 
 RandomTips.init().then(() => {
     RandomTips.setContext("popup");
-    RandomTips.showRandomTipIfWanted();
+    RandomTips.showRandomTipIfWanted(tips);
 });

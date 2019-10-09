@@ -5,6 +5,8 @@
  * @requires modules/OptionHandler
  */
 
+import { tips } from "/common/modules/data/Tips.js";
+
 import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as AutomaticSettings from "/common/modules/AutomaticSettings/AutomaticSettings.js";
@@ -17,5 +19,5 @@ AutomaticSettings.setDefaultOptionProvider(AddonSettings.getDefaultValue);
 AutomaticSettings.init();
 RandomTips.init().then(() => {
     RandomTips.setContext("options");
-    RandomTips.showRandomTipIfWanted();
+    RandomTips.showRandomTipIfWanted(tips);
 });
