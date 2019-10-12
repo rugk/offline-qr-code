@@ -43,6 +43,10 @@
 
 - [@m1ndm1n3r](https://github.com/m1ndm1n3r)
 
+### Slovak
+
+- Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
+
 ### Turkish
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
