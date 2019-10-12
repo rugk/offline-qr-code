@@ -1,0 +1,3 @@
+Toto rozšírenie umožňuje rýchlo generovať QR kód offline z URL akejkoľvek otvorenej karty alebo vybraného textu! 👍
+
+Rozšírenie funguje offline chrániac tvoju bezpečnosť a má veľké množstvo funkcíí ako napríklad farebné QR kódy!

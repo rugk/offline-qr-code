@@ -1,0 +1,8 @@
+qrBig.png; "Je možné zmeniť veľkosť QR kódov!";
+qrDark.png; "QR kód môžeš upraviť podľa svojej témy.";
+qrMenuFromLink.png; "QR kódy môžeš generovať aj z linkov."
+qrMenuFromPhoneNumber.png; "QR kód môžeš vytvoriť priamo z vybraného textu."
+qrSave.png; "Ukladať QR kódy je možné vo formáte SVG a PNG.";
+qrSettings.png; "Veľa možností ti umožňuje prispôsobenie správania alebo vzhľadu rozširenia.";
+qrSmall.png; "QR kódy môžú byť generované v akejkoľvek veľkosti.";
+qrText.png; "Okamžite píš vlastný text po kliknutí na tlačidlo pre vygenerovanie nového QR kódu priebežne.";
