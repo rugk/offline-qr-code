@@ -34,6 +34,10 @@ const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
 const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
 const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
 
+const DOWNLOAD_PERMISSION = {
+    permissions: ["downloads"]
+};
+
 const qrCode = document.getElementById("qrcode");
 const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
 const qrCodeContainer = document.getElementById("qrcode-container");
@@ -377,15 +381,11 @@ export function handleQrError(error) {
  * @private
  * @param {File} file
  * @param {string} filename
+ * @param {Promise} requestDownloadPermissions required permission request via browser.permissions.request
  * @returns {void}
  */
-function triggerFileSave(file, filename) {
-    const DOWNLOAD_PERMISSIONS = {
-        permissions: ["downloads"]
-    };
-
-    const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSIONS);
-    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSIONS);
+function triggerFileSave(file, filename, requestDownloadPermissions) {
+    const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSION);
 
     downloadPermissionGranted.then((isAlreadyGranted) => {
         let usePermissionWorkaround = false;
@@ -435,10 +435,10 @@ function triggerFileSave(file, filename) {
             }
 
             // if permission is declined, make user aware that this permission was required
-            console.error("Permission request for", DOWNLOAD_PERMISSIONS, "declined.");
+            console.error("Permission request for", DOWNLOAD_PERMISSION, "declined.");
             CommonMessages.showError("errorPermissionRequired", true);
         }).catch((error) => {
-            console.error("Permission request for", DOWNLOAD_PERMISSIONS, "failed:", error);
+            console.error("Permission request for", DOWNLOAD_PERMISSION, "failed:", error);
             CommonMessages.showError("errorPermissionRequestFailed", true);
         });
     });
@@ -455,19 +455,21 @@ function triggerFileSave(file, filename) {
  * @returns {void}
  */
 function menuClicked(event) {
+    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
+
     switch (event.menuItemId) {
     case CONTEXT_MENU_SAVE_IMAGE_SVG: {
         const svgElem = QrCreator.getQrCodeSvgFromLib();
         const svgString = (new XMLSerializer()).serializeToString(svgElem);
         const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
-        triggerFileSave(file, "qrcode.svg");
+        triggerFileSave(file, "qrcode.svg", requestDownloadPermissions);
         break;
     }
     case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
         const canvasElem = QrCreator.getQrCodeCanvasFromLib();
         canvasElem.toBlob((blob) => {
             const file = new File([blob], "qrcode.png", { type: "image/png" });
-            triggerFileSave(file, "qrcode.png");
+            triggerFileSave(file, "qrcode.png", requestDownloadPermissions);
         }, "image/png");
         break;
     }
