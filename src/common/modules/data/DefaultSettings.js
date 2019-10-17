@@ -17,7 +17,6 @@ const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const defaultSettings = Object.freeze({
     debugMode: false,
     popupIconColored: false,
-    qrCodeType: "svg",
     qrColor: "#0c0c0d",
     qrBackgroundColor: (isDarkTheme ? "#d7d7db" : "#ffffff"), // dark uses Firefox Photon's grey-30
     qrErrorCorrection: "Q",

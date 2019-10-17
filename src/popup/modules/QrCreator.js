@@ -11,7 +11,6 @@
 
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
-import * as QrLibQrGen from "./QrLib/qrgen.js";
 import * as QrLibKjua from "./QrLib/kjua.js";
 import * as UserInterface from "./UserInterface.js";
 
@@ -24,13 +23,24 @@ let qrCodeLib = null;
 const changedValues = new Set("text", "color", "size");
 
 /**
- * Provide connection to library and get QR code with current options.
+ * Provide connection to library and get QR code as an SVG with current options.
  *
- * @function
- * @private
+ * @public
  * @returns {HTMLElement}
  */
-function getQrCodeFromLib() {
+export function getQrCodeSvgFromLib() {
+    qrCodeLib.set("render", "svg");
+    return qrCodeLib.getQr();
+}
+
+/**
+ * Provide connection to library and get QR code as a canvas with current options.
+ *
+ * @public
+ * @returns {HTMLElement}
+ */
+export function getQrCodeCanvasFromLib() {
+    qrCodeLib.set("render", "canvas");
     return qrCodeLib.getQr();
 }
 
@@ -46,15 +56,15 @@ export function generate() {
         return;
     }
 
-    // special shortcuts for SVG output when text does not need to be regenerated
-    if (qrCodeLib.GENERATION_TYPE === "svg" && !changedValues.has("text")) {
+    // SVG version does not need to be regenerated when text has not changed
+    if (!changedValues.has("text")) {
         // color won't be changed
         // size does not need adjustment for SVGs
-
+    
         return;
     }
 
-    UserInterface.replaceQr(getQrCodeFromLib());
+    UserInterface.replaceQr(getQrCodeSvgFromLib());
 
     changedValues.clear();
 }
@@ -154,15 +164,15 @@ export function generateFromTabs(tabs) {
 }
 
 /**
- * Returns the type of the generated QR code.
+ * Returns the name of the used QR code library.
  *
  * @function
  * @returns {Promise}
  */
-export async function getGenerationType() {
+export async function getLibraryName() {
     await qrCreatorInit; // module needs to be initiated
 
-    return qrCodeLib.GENERATION_TYPE;
+    return qrCodeLib.LIBRARY_NAME;
 }
 
 /**
@@ -174,18 +184,8 @@ export async function getGenerationType() {
 export function init() {
     // get all settings
     qrCreatorInit = AddonSettings.get().then((settings) => {
-        switch (settings.qrCodeType) {
-        case "svg":
-            qrCodeLib = QrLibQrGen;
-            break;
-        case "canvas":
-            QrLibKjua.init();
-
-            qrCodeLib = QrLibKjua;
-            break;
-        default:
-            throw new Error("invalid QR code type setting");
-        }
+        qrCodeLib = QrLibKjua;
+        QrLibKjua.init();
 
         qrCodeLib.set("qrQuietZone", settings.qrQuietZone);
         qrCodeLib.set("qrColor", settings.qrColor);

@@ -31,6 +31,10 @@
 - [@rugk](https://github.com/rugk)
 - Tamara Undesser ([@tamarau](https://github.com/tamarau))
 
+### Hebrew
+
+- Shani Rub ([@shanirub](https://github.com/shanirub))
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
@@ -38,6 +42,10 @@
 ### Russian
 
 - [@m1ndm1n3r](https://github.com/m1ndm1n3r)
+
+### Slovak
+
+- Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
 
 ### Turkish
 

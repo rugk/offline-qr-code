@@ -50,13 +50,6 @@
 				</a>
 				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="0" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
 			</div>
-			<div id="messageContrast" aria-label="info message" data-i18n data-i18n-aria-label="__MSG_ariaMessageInfo__" class="message-box info invisible fade-hide">
-				<span class="message-text"></span>
-				<a class="message-link" href="#">
-					<button type="button" class="message-action-button micro-button info invisible"></button>
-				</a>
-				<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="0" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
-			</div>
 		</div>
 		<form>
 			<section class="mobile-incompatible">
@@ -76,30 +69,6 @@
 
 			<section>
 				<h1 data-i18n="__MSG_titleQrCodeSetting__">QR code</h1>
-
-				<h2 data-i18n="__MSG_subtitleQrCodeType__">QR code type</h2>
-
-				<ul class="setting save-on-input" data-type="radiogroup" id="qrCodeType">
-					<li>
-						<div class="line">
-							<input id="qrCodeTypeSvg" type="radio" name="qrCodeType" value="svg">
-							<label data-i18n="__MSG_optionQrCodeTypeSvg__" for="qrCodeTypeSvg">SVG</label>
-						</div>
-						<div class="line indent">
-							<span data-i18n="__MSG_optionQrCodeTypeSvgHelper__" class="helper-text">Uses a modern generation method with vector graphics that enable smoother resizing.</span>
-						</div>
-					</li>
-
-					<li>
-						<div class="line">
-							<input id="qrCodeTypeCanvas" type="radio" name="qrCodeType" value="canvas">
-							<label data-i18n="__MSG_optionQrCodeTypeCanvas__" for="qrCodeTypeCanvas">Canvas image</label>
-						</div>
-						<div class="line indent">
-							<span data-i18n="__MSG_optionQrCodeTypeCanvasHelper__" class="helper-text">A legacy generation method generating the QR code as an image ("canvas").</span>
-						</div>
-					</li>
-				</ul>
 
 				<h2 data-i18n="__MSG_subtitleQrCodeSize__">QR code size</h2>
 				<ul id="sizeType" data-type="radiogroup" class="setting" data-optiongroup="qrCodeSize">
@@ -159,6 +128,16 @@
 						<div class="line">
 							<label data-i18n="__MSG_optionQrCodeBackgroundColor__" for="qrBackgroundColor">QR code background color: </label>
 							<input class="setting save-on-change trigger-on-update" type="color" id="qrBackgroundColor" name="qrBackgroundColor">
+						</div>
+					</li>
+
+					<li class="message-container">
+						<div id="messageContrast" aria-label="info message" data-i18n data-i18n-aria-label="__MSG_ariaMessageInfo__" class="message-box info invisible fade-hide">
+							<span class="message-text"></span>
+							<a href="#" class="message-link">
+								<button type="button" class="message-action-button micro-button info invisible"></button>
+							</a>
+							<img class="icon-dismiss invisible" src="/common/img/close.svg" width="24" height="24" tabindex="0" data-i18n data-i18n-aria-label="__MSG_dismissIconDescription__"></span>
 						</div>
 					</li>
 

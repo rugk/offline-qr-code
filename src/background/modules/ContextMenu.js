@@ -11,24 +11,6 @@ const MESSAGE_RESENT_MAX = 9;
 let messageResentCount = 0;
 
 /**
- * Log error while creating menu item.
- *
- * @private
- * @returns {void}
- */
-function onCreated() {
-    const lastError = browser.runtime.lastError;
-
-    /* eslint-disable no-console */
-    if (lastError) {
-        console.log(`error creating menu item: ${lastError}`);
-    } else {
-        console.log("menu item created successfully");
-    }
-    /* eslint-enable no-console */
-}
-
-/**
  * Send new text for the QR code.
  *
  * @private
@@ -66,12 +48,12 @@ function createItems() {
     const selectionMenu = createMenu("contextMenuItemConvertSelection", {
         id: CONVERT_TEXT_SELECTION,
         contexts: ["selection"]
-    }, onCreated);
+    });
 
     const linkMenu = createMenu("contextMenuItemConvertLinkSelection", {
         id: CONVERT_LINK_TEXT_SELECTION,
         contexts: ["link"]
-    }, onCreated);
+    });
 
     browser.menus.refresh();
 
@@ -140,8 +122,6 @@ function menuShown(info) {
 
     browser.menus.refresh();
 }
-
-
 
 /**
  * Init context menu module.

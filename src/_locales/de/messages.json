@@ -186,12 +186,20 @@
     "message": "&QR-Code aus Link",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
-  "contextMenuSaveImage": {
-    "message": "QR-Code speichern…",
+  "contextMenuSaveImageCanvas": {
+    "message": "QR-Code als Bild speichern…",
     "description": "The context menu entry shown for saving SVG images in the popup."
   },
-  "contextMenuSaveImageAccessKey": {
-    "message": "&QR-Code speichern…",
+  "contextMenuSaveImageCanvasAccessKey": {
+    "message": "QR-Code als &Bild speichern…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+  },
+  "contextMenuSaveImageSvg": {
+    "message": "QR-Code als SVG speichern…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageSvgAccessKey": {
+    "message": "QR-Code als &SVG speichern…",
     "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 
@@ -232,27 +240,6 @@
   "optionPopupIconColoredDescr": {
     "message": "Zeigt ein farbiges Icon anstatt eines schwarz/weißen Icons in der Toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
-  },
-
-  "subtitleQrCodeType": {
-    "message": "QR-Code-Typ",
-    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code."
-  },
-  "optionQrCodeTypeSvg": {
-    "message": "SVG",
-    "description": "Option to select a scalable vector graphic image (SVG)."
-  },
-  "optionQrCodeTypeSvgHelper": {
-    "message": "Benutzt eine moderne Generierungsmethode mit Vektorgrafiken was eine flüssigere Größenänderung erlaubt.",
-    "description": "Helper text for SVG QR code type option."
-  },
-  "optionQrCodeTypeCanvas": {
-    "message": "Canvas-Bild",
-    "description": "Option to select a canvas (pixel) image."
-  },
-  "optionQrCodeTypeCanvasHelper": {
-    "message": "Eine Generierungsmethode, die den QR-Code als Bild („Canvas”) erstellt.",
-    "description": "Helper text for canvas QR code type option."
   },
 
   "subtitleQrCodeSize": {
