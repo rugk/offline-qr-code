@@ -133,6 +133,8 @@ a:active {
   padding: 4px;
 
   border-radius: 4px;
+  display: flex;
+
 
   /* use whole width */
   width: calc(100% - 8px);
@@ -169,6 +171,21 @@ a:active {
 /* add margin when messages are stacked on each other */
 .message-box:not(.invisible) ~ .message-box:not(.invisible) {
   margin-top: 8px;
+}
+
+@media screen and (max-width: 767px) {
+  .message-box {
+    flex-wrap: wrap;
+  }
+  .message-text {
+    display: inline-block;
+  }
+
+  .message-link {
+    flex-basis: 100%;
+    margin: 8px 0 auto 18px;
+
+  }
 }
 
 .error {
@@ -222,6 +239,8 @@ a:active {
   content: "";
   margin: 4px;
 }
+
+
 
 .error::before {
   background-image: url('/common/img/error-white.svg');
