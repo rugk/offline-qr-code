@@ -149,14 +149,13 @@ function selectAllText(event) {
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
         event.target.focus();
-        event.target.select();
-
-        // but set scroll position to top one, because you want to see the
-        // top of the URL ;)
-        // (selecting makes the scroll position go to the bottom)
-        
+        event.target.select(); 
     }
     
+    // set scroll position to top one, because you want to see the
+    // start of an URL
+    // (selecting makes the scroll position go to the bottom)
+
     setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
 }
 
@@ -171,13 +170,6 @@ function selectAllText(event) {
 function scrollToTop(event) {
     console.info("scrollToTop", event); 
     event.target.scrollTo(0,0);
-  
-    // only retry once, if needed
-    if (event.setScrolled) {
-        return;
-    }
-
-    event.setScrolled = true;
 }
 
 /**
