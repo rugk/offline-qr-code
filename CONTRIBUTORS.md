@@ -1,5 +1,5 @@
 # Contributors
-
+- Kuvam Devgan ([@phoenix-kd](https://github.com/phoenix-kd))
 - Alexander Knipping ([@obitech](https://github.com/obitech))
 - Andrew Jones ([@cornu-ammonis](https://github.com/cornu-ammonis))
 - Amauri Bizerra ([@AmauriAires](https://github.com/AmauriAires))
