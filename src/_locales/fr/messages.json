@@ -226,7 +226,7 @@
     "hash": "312595c39b5cbc8edf0baab8c16875af"
   },
   "contextMenuSaveImageCanvas": {
-    "message": "Sauvegarder QR-Code comme image…",
+    "message": "Enregistrer le QR-Code en tant qu'image…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup.",
     "hash": "885e0352965b98e4b3d0aa8f09d4524b"
   },
