@@ -231,7 +231,7 @@
     "hash": "885e0352965b98e4b3d0aa8f09d4524b"
   },
   "contextMenuSaveImageCanvasAccessKey": {
-    "message": "Sauvegarder QR-Code comme &image…",
+    "message": "Enregistrer le QR-Code en tant que &image…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key.",
     "hash": "78988a6b9ff2df27d234ac56b64727e1"
   },
