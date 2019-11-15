@@ -181,10 +181,9 @@ a:active {
     display: inline-block;
   }
 
-  .message-link {
+  .message-box > a{
     flex-basis: 100%;
     margin: 8px 0 auto 18px;
-
   }
 }
 
