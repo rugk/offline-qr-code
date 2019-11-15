@@ -25,6 +25,7 @@
 ### French
 
 - Nicolas Trouin ([@nicolas-trouin](https://github.com/nicolas-trouin))
+- [@kinafu](https://github.com/kinafu)
 
 ### German
 
