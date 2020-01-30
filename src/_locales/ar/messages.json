@@ -363,7 +363,7 @@
     },
   
     "translatorCredit": {
-      "message": "This add-on has been translated into Arabic by Ahmad Ayman $LINK$ !",
+      "message": "This add-on has been translated into Arabic by Ahmad Ayman ($LINK$)!",
       "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
       "placeholders": {
         "translators": {
@@ -373,16 +373,16 @@
       }
     },
     "translatorLink": {
-      "message": "https://github.com/rugk",
+      "message": "https://github.com/AhmadAymanA99",
       "description": "The link to the translator's GitHub profile."
     },
     "translatorUsername": {
-      "message": "(@AhmadAymanA99)",
+      "message": "@AhmadAymanA99",
       "description": "The username that the translator wants to be referred to."
     },
   
     "contributorsThanks": {
-      "message": "Also thanks to $CONTRIBUTORS$.",
+      "message": "شكرا لجميع المشاركين $CONTRIBUTORS$.",
       "description": "Text thanking all contributors and linking to the contributors file.",
       "placeholders": {
         "contributors": {
@@ -396,7 +396,7 @@
       "description": "The link to the CONTRIBUTORS file."
     },
     "contributorsThanksLinkText": {
-      "message": "all other contributors",
+      "message": "جميع المشاركين الاخرين",
       "description": "The link text linking to the contributors file. See contributorsThanks."
     },
   
