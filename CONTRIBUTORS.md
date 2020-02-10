@@ -36,6 +36,10 @@
 
 - Shani Rub ([@shanirub](https://github.com/shanirub))
 
+### Japanese
+
+- Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
