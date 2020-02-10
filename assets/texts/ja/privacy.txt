@@ -1,0 +1,9 @@
+このアドオンは作者や第三者へ一切情報を送信しません。
+
+このアドオンが要求する全ての権限に関する解説は https://github.com/rugk/offline-qr-code/blob/master/assets/texts/ja/permissions.md でご確認ください。
+
+== サードパーティのサービスについて ==
+
+このアドオンはブラウザの“sync ストレージ”を設定の保存に使用します。ブラウザの“Sync”機能を有効化すると、設定がアップロードされ、あなたのアカウントに紐付けられているデバイス間で設定が同期されます。“Sync”機能を有効化しなければ、データはデバイス上でローカルにのみ保存されます。
+Mozilla Firefoxではデータはエンドツーエンドで暗号化されてからアップロードされ、Mozillaのサーバに保管されます。
+本件についてのMozillaのプライバシーポリシーについては https://accounts.firefox.com/legal/privacy および https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 をご確認ください。
