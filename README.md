@@ -19,6 +19,8 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 
 **[![Get it for Firefox!](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?src=external-github-download)**
 
+> **BTW:** If you want to search and insert emojis easily on all your websites, do check out our **[Awesome Emoji Picker](https://github.com/rugk/awesome-emoji-picker/)** too!
+
 ## How to support us?
 
 You don't need to be able to write code to support this project!
