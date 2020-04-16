@@ -1,6 +1,6 @@
 # Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
 
-[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?src=external-github-shield-downloads)  
+[![Financial Contributors on Open Collective](https://opencollective.com/offline-qr-code/all/badge.svg?label=financial+contributors)](https://opencollective.com/offline-qr-code) [![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?src=external-github-shield-downloads)  
 [![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?src=external-github-shield-downloads)
 [![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/statistics/)
 [![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/)
@@ -69,3 +69,33 @@ You can easily get involved in this FLOSS project and any help is certainly appr
 * 💡 [Or check out some other add-on issues](CONTRIBUTING.md#need-ideas) (or translate them).
 
 Or, in any case, [support us by spreading the word!](./CONTRIBUTING.md#support-us) ❤️
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/rugk/offline-qr-code/graphs/contributors"><img src="https://opencollective.com/offline-qr-code/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/offline-qr-code/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/offline-qr-code"><img src="https://opencollective.com/offline-qr-code/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/offline-qr-code/contribute)]
+
+<a href="https://opencollective.com/offline-qr-code/organization/0/website"><img src="https://opencollective.com/offline-qr-code/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/1/website"><img src="https://opencollective.com/offline-qr-code/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/2/website"><img src="https://opencollective.com/offline-qr-code/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/3/website"><img src="https://opencollective.com/offline-qr-code/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/4/website"><img src="https://opencollective.com/offline-qr-code/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/5/website"><img src="https://opencollective.com/offline-qr-code/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/6/website"><img src="https://opencollective.com/offline-qr-code/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/7/website"><img src="https://opencollective.com/offline-qr-code/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/8/website"><img src="https://opencollective.com/offline-qr-code/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/offline-qr-code/organization/9/website"><img src="https://opencollective.com/offline-qr-code/organization/9/avatar.svg"></a>
