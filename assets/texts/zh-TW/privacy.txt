@@ -1,0 +1,9 @@
+這個元件不發送任何訊息給元件作者或第三方。
+
+該元件請求的所有權限用途，在此處查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== 第三方服務 ==
+
+該元件使用瀏覽器的"同步儲存"已保存設定值。如果用戶在瀏覽器中啟用"同步"，設置會自動上傳並在連揪到您帳號的所有設備同步。如果您未啟用，資料只在這個設備本地保存。
+在 Mozilla Firefox 中，數據上傳並保存到 Mozilla 的服務器前會使用點對點加密數據。
+查看 https://accounts.firefox.com/legal/privacy 與 https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 瞭解 Mozilla 的隱私策略。
