@@ -59,4 +59,4 @@
 
 ### Traditional Chinese
 
-- [@Nio] (https://github.com/niotw)
+- [@Nio](https://github.com/niotw)
