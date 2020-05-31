@@ -1,0 +1,429 @@
+{
+    // manifest.json
+    "extensionName": {
+      "message": "مولد رمز الاستجابة السريعة غير نشط",
+      "description": "Name of the extension."
+    },
+    "extensionNameShort": {
+      "message": "رمز الاستجابة السريعة غير نشط",
+      "description": "Name of the extension."
+    },
+    "extensionDescription": {
+      "message": "يسمح لك بإنشاء رمز استجابة سريع لأي موقع ويب أو علامة تبويب ، فتحته",
+      "description": "Description of the extension."
+    },
+    "browserActionButtonTitle": {
+      "message": "رمز الاستجابة السريعة غير نشط",
+      "description": "The title for the button, which opens the popup."
+    },
+    "commandOpenQrPopup": {
+      "message": "افتح نافذة رمز الاستجابة السريعة",
+      "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+    },
+  
+    // errors or other messages (mostly for settings)
+    "errorShowingMessage": {
+      "message": "لا يمكن إظهار هذه الرسالة",
+      "description": "When there is an error when showing the error/info/…."
+    },
+    "couldNotLoadOptions": {
+      "message": "لا يمكن تحميل الإعدادات",
+      "description": "When one or all settings could not be loaded."
+    },
+    "couldNotSaveOption": {
+      "message": "لا يمكن حفظ هذا الإعداد",
+      "description": "When a setting could not be saved."
+    },
+    "messageUndoButton": {
+      "message": "تراجع",
+      "description": "The text of a button that undoes the last action."
+    },
+    "couldNotUndoAction": {
+      "message": "لا يمكن التراجع",
+      "description": "Shown when an action cannot be undone."
+    },
+    "resettingOptionsWorked": {
+      "message": "عادت جميع الإعدادات الآن إلى الإعدادات الافتراضية مرة أخرى",
+      "description": "The message shown, when the options of the settings were reset."
+    },
+    "resettingOptionsFailed": {
+      "message": "لا يمكن إعادة ضبط الاختيارات",
+      "description": "The message shown, when the options of the settings could not have been reset."
+    },
+  
+    // errors or other messages
+    "unknownError": {
+      "message": "خطأ غير معروف",
+      "description": ""
+    },
+    "loading": {
+      "message": "جار التحميل",
+      "description": "A general loading message."
+    },
+    "couldNotGenerateQrCode": {
+      "message": "لا يمكن إنشاء رمز الاستجابة السريعة",
+      "description": ""
+    },
+    "couldNotReceiveActiveTab": {
+      "message": "تعذر الحصول على علامة تبويب",
+      "description": ""
+    },
+    "errorDownloadingFile": {
+      "message": "لا يمكن تنزيل الملف",
+      "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+    },
+    "errorPermissionRequired": {
+      "message": "لا يمكن المتابعة دون إذن",
+      "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+    },
+    "errorPermissionRequestFailed": {
+      "message": "فشل طلب الإذن",
+      "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+    },
+    "errorQrCodeOverflow": {
+      "message": "لا يمكن إنشاء رمز الاستجابة السريعة ، النص المقدم طويل جدًا",
+      "description": "Error shown when QR code cannot be generated due to overflow in input size."
+    },
+    "requestDownloadPermissionForQr": {
+      "message": "لمتابعة حفظ رمز الاستجابة السريعة ، نحتاج إلى إذن التنزيل",
+      "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+    },
+    "lowContrastRatioInfo": {
+      "message": "قد يكون رمز الاستجابة السريعة صعب المسح من قبل قارئات رمز الاستجابة السريعة بسبب التباين المنخفض فى الصورة",
+      "desription": "The message shown when the contrast ratio is too low"
+    },
+    "lowContrastRatioWarning": {
+      "message": "قد تكون نسبة التباين في رمز الاستجابة السريعة منخفضة جدًا بحيث يتعذر على جميع قارئات رموز الاستجابة السريعة التعرف عليها بشكل صحيح",
+      "desription": "The warning shown when the contrast ratio is too low"
+    },
+    "lowContrastRatioError": {
+      "message": "لون رمز الاستجابة السريعة ولون الخلفية متشابهان للغاية",
+      "description": "The message shown when the color for the QR code and the background are equal"
+    },
+    "messageAutoSelectColorButton": {
+      "message": "استخدام لون متباين",
+      "description": "The text of a button that sets a new color with a sufficient contrast."
+    },
+  
+    // tips
+    "tipYouLikeAddon": {
+      "message": "هل تحب هذه الإضافة؟",
+      "description": "A tip shown to remind the user to rate the addon."
+    },
+    "tipYouLikeAddonButton": {
+      "message": "اعطيه تقيماً",
+      "description": "Button for the tip shown to remind the user to rate the addon."
+    },
+    "tipSaveQrCode": {
+      "message": "هل تعلم أنه يمكنك حفظ رموز الاستجابة السريعة؟",
+      "description": "A tip shown to get the user to find the save option."
+    },
+    "tipSaveQrCodeLink": {
+      "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+      "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+    },
+    "tipQrCodeHotkey": {
+      "message": "تذكر أن المفتاح السريع لهذه الوظيفة الإضافية هو Ctrl+Shift+F10.",
+      "description": "A tip shown to get the user to notice that there is a hot key."
+    },
+    "tipAndroidQrReader": {
+      "message": "فايرفوكس لديه ناسخ ضوئي لرمز الاستجابة السريعة ",
+      "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+    },
+    "tipAndroidQrReaderLink": {
+      "message": "https://mzl.la/1GQ2fcu",
+      "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+    },
+    "tipTranslateAddon": {
+      "message": "إذا كنت تتحدث لغة أخرى ، فيمكنك المساعدة في ترجمة هذه الوظيفة الإضافية",
+      "description": "A tip shown to users that potentially speak another language to translate this add-on."
+    },
+    "tipTranslateAddonLink": {
+      "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+      "description": "The link to a description of the translation service/way you can use."
+    },
+    "tipDonate": {
+      "message": "هل تستمتع باستخدام هذه الوظيفة الإضافية مجانًا؟",
+      "description": "A tip shown to get the remind them of a donation."
+    },
+    "tipDonateButton": {
+      "message": "دعم التطوير عن طريق التبرع",
+      "description": "The button of the donation tip taking the user to the donation site."
+    },
+    "tipLearnMore": {
+      "message": "أعرف أكثر",
+      "description": "The common button for tips, where you can get more information on click."
+    },
+    "tipHowToUse": {
+      "message": "كيفية الاستخدام؟",
+      "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+    },
+  
+    // placeholder
+    "qrCodePlaceholder": {
+      "message": "الصورة النائبة لرمز الاستجابة السريعة",
+      "description": "Alt text of placeholder image."
+    },
+    "textareaPlaceholder": {
+      "message": "أدخل النص هنا لتوليد رمز الاستجابة السريعة",
+      "description": "Placeholder for the textarea, when it is empty."
+    },
+  
+    // context menu
+    "contextMenuItemConvertSelection": {
+      "message": "رمز الاستجابة السريعة من الاختيار",
+      "description": "The context menu entry shown for generating QR codes from a selection."
+    },
+    "contextMenuItemConvertSelectionAccessKey": {
+      "message": " و رمز الاستجابة السريعة من الاختيار",
+      "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+    },
+    "contextMenuItemConvertLinkSelection": {
+      "message": "رمز الاستجابة السريعة من الرابط",
+      "description": "The context menu entry shown for generating QR codes from a selected link."
+    },
+    "contextMenuItemConvertLinkSelectionAccessKey": {
+      "message": "و رمز الاستجابة السريعة من الرابط",
+      "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+    },
+    "contextMenuSaveImageCanvas": {
+      "message": "حفظ رمز الاستجابة السريعة كصورة",
+      "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+    },
+    "contextMenuSaveImageCanvasAccessKey": {
+      "message": "حفظ رمز الاستجابة السريعة كصورة",
+      "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+    },
+    "contextMenuSaveImageSvg": {
+      "message": "حفظ رمز الاستجابة السريعة كـ SVG",
+      "description": "The context menu entry shown for saving SVG images in the popup."
+    },
+    "contextMenuSaveImageSvgAccessKey": {
+      "message": "حفظ رمز الاستجابة السريعة كـ &SVG",
+      "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+    },
+  
+    // options
+    "someSettingsAreManaged": {
+      "message": "تتم إدارة بعض الإعدادات بواسطة مسؤول النظام الخاص بك ولا يمكن تغييرها",
+      "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+    },
+    "optionIsDisabledBecauseManaged": {
+      "message": "تم تعطيل هذا الخيار ، لأنه تم تكوينه بواسطة مسؤول النظام لديك",
+      "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+    },
+    "optionLearnMore": {
+      "message": "أعرف أكثر",
+      "description": "When a link to an explainer needs to be added, this is the link text."
+    },
+    "optionsResetButton": {
+      "message": "إعادة تعيين جميع الإعدادات إلى الإعدادات الافتراضية",
+      "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+    },
+  
+    "titleGeneral": {
+      "message": "اضافه",
+      "description": "The title for the general settings group."
+    },
+    "titleQrCodeSetting": {
+      "message": "رمز الاستجابة السريعة",
+      "description": "The title for the qr code settings group."
+    },
+    "titleAddonBehavior": {
+      "message": "تصرفات الاضافة",
+      "description": "The title for the addon behavior settings group."
+    },
+  
+    "optionPopupIconColored": {
+      "message": "أيقونة ملونة",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionPopupIconColoredDescr": {
+      "message": "إظهار أيقونة ملونة بدلاً من أيقونة أسود و أبيض في شريط الأدوات",
+      "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+    },
+  
+    "subtitleQrCodeSize": {
+      "message": "حجم رمز الاستجابة السريعة",
+      "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+    },
+    "optionQrCodeSizeFixed": {
+      "message": "حجم ثابت:",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+    "optionPixelAbbreviation": {
+      "message": "px",
+      "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+    },
+    "optionQrCodeSizeAuto": {
+      "message": "ضبط الحجم تلقائيا",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+    "optionQrCodeSizeAutoHelper": {
+      "message": "مفيد للغاية على الأجهزة المحمولة ، حيث يتم فتح رمز الاستجابة السريعة في علامة تبويب جديدة",
+      "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+    },
+    "optionQrCodeSizeRemember": {
+      "message": "تذكر الحجم الأخير",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+  
+    "subtitleMisc": {
+      "message": "إعدادات متنوعة",
+      "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+    },
+    "optionQrQuietZone": {
+      "message": "المنطقة المحيطة لرمز الاستجابة السريعة:",
+      "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+    },
+    "optionQrQuietZoneStatusSingular": {
+      "message": "($INTEGER$ مربع)",
+      "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+      "placeholders": {
+        "integer": {
+          "content": "$1",
+          "example": "1"
+        }
+      }
+    },
+    "optionQrQuietZoneStatusPlural": {
+      "message": "($INTEGER$ مربعات)",
+      "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+      "placeholders": {
+        "integer": {
+          "content": "$1",
+          "example": "3"
+        }
+      }
+    },
+    "optionQrQuietZoneDescr": {
+      "message": "عدد وحدات الحدود حول رمز الاستجابة السريعة الملونة في لون الخلفية",
+      "description": "The description of the quiet zone option."
+    },
+    "optionQrQuietZoneDescrLink": {
+      "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+      "description": "The 'Learn more' link in the description of the quiet zone option."
+    },
+  
+    "optionQrCodeColor": {
+      "message": "لون رمز الاستجابة السريعة:",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionQrCodeBackgroundColor": {
+      "message": "لون خلفية رمز الاستجابة السريعة:",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionErrorCorrection": {
+      "message": "مستوى تصحيح الخطأ:",
+      "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcLow": {
+      "message": "(7%) منخفض",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcMedium": {
+      "message": "(15%) متوسط",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcQuartile": {
+      "message": "(25%) ربع",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcHigh": {
+      "message": "(30%) مرتفع",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionErrorCorrectionDescr": {
+      "message": "تشير هذه القيمة إلى مدى فقد الرمز ، بحيث لا يزال من الممكن مسحه ضوئيًا",
+      "description": "The description of the error correction option."
+    },
+    "optionErrorCorrectionDescrLink": {
+      "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+      "description": "The 'Learn more' link in the description of the error correction option."
+    },
+  
+    "optionAutoGetSelectedText": {
+      "message": "استخدم النص المحدد على موقع الويب تلقائيًا",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionUseMonospaceFont": {
+      "message": "استخدام الخط monospace",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionDebugMode": {
+      "message": "تمكين وضع التفحيص",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionDebugModeDescr": {
+      "message": "هذا مفيد فقط للحصول على ناتج تسجيل أكثر تفصيلاً في وحدة التحكم للإبلاغ عن الأخطاء ، إلخ",
+      "description": "The description shown for the debug mode (optionDebugMode)."
+    },
+  
+    "translatorCredit": {
+      "message": "This add-on has been translated into Arabic by Ahmad Ayman ($LINK$)!",
+      "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+      "placeholders": {
+        "translators": {
+          "content": "$1",
+          "example": "<a href=\"https://github.com/AhmadAymanA99\">@AhmadAymanA99</a>"
+        }
+      }
+    },
+    "translatorLink": {
+      "message": "https://github.com/AhmadAymanA99",
+      "description": "The link to the translator's GitHub profile."
+    },
+    "translatorUsername": {
+      "message": "@AhmadAymanA99",
+      "description": "The username that the translator wants to be referred to."
+    },
+  
+    "contributorsThanks": {
+      "message": "شكرا لجميع المشاركين $CONTRIBUTORS$.",
+      "description": "Text thanking all contributors and linking to the contributors file.",
+      "placeholders": {
+        "contributors": {
+          "content": "$1",
+          "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+        }
+      }
+    },
+    "contributorsThanksLink": {
+      "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
+      "description": "The link to the CONTRIBUTORS file."
+    },
+    "contributorsThanksLinkText": {
+      "message": "جميع المشاركين الاخرين",
+      "description": "The link text linking to the contributors file. See contributorsThanks."
+    },
+  
+    // ARIA labels/descriptions
+    "dismissIconDescription": {
+      "message": "أغلق هذه الرسالة",
+      "description": "the aria label for the close button of the message box"
+    },
+    "ariaMessageLoading": {
+      "message": "التحميل",
+      "description": "the aria label to label the message box as an info message box"
+    },
+    "ariaMessageInfo": {
+      "message": "معلومات",
+      "description": "the aria label to label the message box as an info message box"
+    },
+    "ariaMessageSuccess": {
+      "message": "نجاح",
+      "description": "the aria label to label the message box as an success message box"
+    },
+    "ariaMessageError": {
+      "message": "خطأ",
+      "description": "the aria label to label the message box as an error message box"
+    },
+    "ariaMessageWarning": {
+      "message": "تحذير",
+      "description": "the aria label to label the message box as an warning message box"
+    }
+  }
+  
