@@ -56,3 +56,7 @@
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
 - Serkan Algur ([@serkanalgur](https://github.com/serkanalgur))
+
+### Traditional Chinese
+
+- [@Nio](https://github.com/niotw)
