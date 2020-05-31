@@ -42,7 +42,7 @@ See:
 * Puts your privacy first! Privacy is the default here, so it is generating QR codes offline.
 * Follows [Firefox Photon Design](https://design.firefox.com/photon/).
 * Has a simple, but intuitive and usable User Interface.
-* Uses an up-to-date, great and customizable [libraries](https://larsjung.de/kjua/).
+* Uses an up-to-date, great and customizable [libraries](https://github.com/werthdavid/kjua).
 * You can generate and save QR codes as SVG or Canvas (PNG image)!
 * You can choose the size of the QR code and customize things.
 * Is completely internationalized (i18n).
