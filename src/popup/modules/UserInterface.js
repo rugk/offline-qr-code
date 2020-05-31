@@ -23,7 +23,7 @@ import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
 import {createMenu} from "/common/modules/ContextMenu.js";
 
-const TOP_SCROLL_TIMEOUT = 10; // ms
+const TOP_SCROLL_TIMEOUT = 20; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
 const QR_CODE_CONTAINER_MARGIN = 40; // px
 const QR_CODE_SIZE_SNAP = 5; // px
@@ -149,13 +149,14 @@ function selectAllText(event) {
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
         event.target.focus();
-        event.target.select();
-
-        // but set scroll position to top one, because you want to see the
-        // top of the URL ;)
-        // (selecting makes the scroll position go to the bottom)
-        setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
+        event.target.select(); 
     }
+    
+    // set scroll position to top one, because you want to see the
+    // start of an URL
+    // (selecting makes the scroll position go to the bottom)
+
+    setTimeout(scrollToTop, TOP_SCROLL_TIMEOUT, event);
 }
 
 /**
@@ -167,18 +168,8 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    console.info("scrollToTop", event);
-
-    if (event.target.scrollTop !== 0) {
-        event.target.scrollTop = 0;
-    }
-
-    // only retry once, if needed
-    if (event.setScrolled) {
-        return;
-    }
-
-    event.setScrolled = true;
+    console.info("scrollToTop", event); 
+    event.target.scrollTo(0,0);
 }
 
 /**
