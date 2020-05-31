@@ -1,6 +1,6 @@
 這個元件不發送任何訊息給元件作者或第三方。
 
-該元件請求的所有權限用途，在此處查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+該元件請求的所有權限用途，在此處查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/zh-TW/permissions.md.
 
 == 第三方服務 ==
 
