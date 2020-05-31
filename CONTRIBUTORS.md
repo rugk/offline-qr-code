@@ -18,9 +18,13 @@
 
 ## Translators
 
-### Chinese
+### Chinese (Simplified)
 
 - [@Cye3s](https://github.com/Cye3s)
+
+### Chinese (Traditional)
+
+- [@Nio](https://github.com/niotw)
 
 ### French
 
@@ -56,7 +60,3 @@
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
 - Serkan Algur ([@serkanalgur](https://github.com/serkanalgur))
-
-### Traditional Chinese
-
-- [@Nio](https://github.com/niotw)
