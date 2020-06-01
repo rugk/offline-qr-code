@@ -327,7 +327,7 @@
     "hash": "a11f6e534cf14d30bccdb359489862b9"
   },
   "optionQrQuietZoneStatusSingular": {
-    "message": "($ INTEGER $ mraba)",
+    "message": "($INTEGER$ mraba)",
     "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
     "placeholders": {
       "integer": {
@@ -338,7 +338,7 @@
     "hash": "dfb928dac26b3da38c89476f22610303"
   },
   "optionQrQuietZoneStatusPlural": {
-    "message": "(Mraba $ INTEGER $)",
+    "message": "(Mraba $INTEGER$)",
     "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
     "placeholders": {
       "integer": {
@@ -424,7 +424,7 @@
     "hash": "2aff10770796694827ec4253860e0771"
   },
   "translatorCredit": {
-    "message": "Ongeza hii imetafsiriwa kwa Kiingereza na $ TRANSLATORS $.",
+    "message": "Ongeza hii imetafsiriwa kwa Kiingereza na $TRANSLATORS$.",
     "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
       "translators": {
@@ -435,17 +435,15 @@
     "hash": "a6f5deecd624d5f8cd58350c72dd8fdf"
   },
   "translatorLink": {
-    "message": "https://github.com/rugk",
-    "description": "The link to the translator's GitHub profile.",
-    "hash": "4775fb2f88fd33d02b871e5021dec3e9"
+    "message": "https://github.com/Paulmburu",
+    "description": "The link to the translator's GitHub profile."
   },
   "translatorUsername": {
-    "message": "rugk",
-    "description": "The username that the translator wants to be referred to.",
-    "hash": "ce96c18a8a1b4b528b294e981ee4d651"
+    "message": "Paulmburu",
+    "description": "The translator's GitHub username."
   },
   "contributorsThanks": {
-    "message": "Pia shukrani kwa $ WAKUWA WA $ $.",
+    "message": "Pia shukrani kwa $CONTRIBUTORS$.",
     "description": "Text thanking all contributors and linking to the contributors file.",
     "placeholders": {
       "contributors": {
