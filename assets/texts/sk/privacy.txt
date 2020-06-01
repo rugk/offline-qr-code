@@ -1,6 +1,6 @@
 Rozšírenie neposiela žiadne informácie autorovi rozšírenia ani žiadnej inej tretej strane.
 
-Vysvtelenie všetkých povolení, ktoré rozšírenie vyžaduje, je možné nájsť na https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+Vysvtelenie všetkých povolení, ktoré rozšírenie vyžaduje, je možné nájsť na https://github.com/rugk/offline-qr-code/blob/master/assets/texts/sk/permissions.md.
 
 == Servisy tretích strán ==
 
