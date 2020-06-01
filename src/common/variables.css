@@ -8,6 +8,7 @@
  */
 
 :root {
+  --blue-40: #45a1ff;
   --blue-50: #0a84ff;
   --blue-50-a30: rgba(10, 132, 255, 0.3);
   --blue-60: #0060df;
@@ -35,6 +36,7 @@
 
   --grey-20: #ededf0;
   --grey-30: #d7d7db;
+  --grey-40: #b1b1b3;
   --grey-50: #737373;
   --grey-60: #4a4a4f;
   --grey-90: #0c0c0d;
@@ -50,6 +52,7 @@
 
 :root {
   --red-60-a90: rgba(215, 0, 34, 0.9);
+  --red-60-light-shadow: rgba(217, 61, 85, 0.75);
   --grey-20-a90: rgba(237, 237, 240, 0.9);
 
   /* shadows https://design.firefox.com/photon/patterns/shadows.html */

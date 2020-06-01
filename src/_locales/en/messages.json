@@ -187,19 +187,19 @@
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
   "contextMenuSaveImageCanvas": {
-    "message": "Save QR-Code as an image…",
+    "message": "Save QR code as an image…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
   },
   "contextMenuSaveImageCanvasAccessKey": {
-    "message": "Save QR-Code as an &image…",
+    "message": "Save QR code as an &image…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
   },
   "contextMenuSaveImageSvg": {
-    "message": "Save QR-Code as an SVG…",
+    "message": "Save QR code as an SVG…",
     "description": "The context menu entry shown for saving SVG images in the popup."
   },
   "contextMenuSaveImageSvgAccessKey": {
-    "message": "Save QR-Code as an &SVG…",
+    "message": "Save QR code as an &SVG…",
     "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 

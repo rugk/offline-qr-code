@@ -1,0 +1,8 @@
+qrBig.png; "QRコードはリサイズできます！";
+qrDark.png; "ブラウザのテーマに合わせてQRコードの色を変更できます。";
+qrMenuFromLink.png; "リンクから直接QRコードを作成できます。"
+qrMenuFromPhoneNumber.png; "選択したテキストから直接QRコードを作成できます。"
+qrSaveSvg.png; "QRコードをSVGとPNGで保存できます。.";
+qrSettings.png; "たくさんのオプションで外観と振る舞いをカスタマイズできます。";
+qrSmall.png; "QRコードはお好みのサイズで作成できます。";
+qrText.png; "好きなテキストからQRコードを作ることができます。";
