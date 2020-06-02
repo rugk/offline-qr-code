@@ -11,7 +11,7 @@
     "hash": "a38edae757cf4b1c8a57c0de97ae7400"
   },
   "extensionDescription": {
-    "message": "Te permet de générer un QR-Code pour n'importe quel site ou onglet que tu as ouvert.",
+    "message": "Vous permet de générer un QR-Code pour n'importe quel site ou onglet ouvert.",
     "description": "Description of the extension.",
     "hash": "824ef7416ba4361e3621df1fe8048c3b"
   },
@@ -107,7 +107,7 @@
     "hash": "6e5a5fe9a077400ba6e4dc66a6dfd44a"
   },
   "lowContrastRatioInfo": {
-    "message": "Ton QR-Code peut être difficile à scanner par d'autres lecteurs de QR-Code à cause du faible contraste.",
+    "message": "Votre QR-Code peut être difficile à scanner par d'autres lecteurs de QR-Code à cause du faible contraste.",
     "hash": "90432f33baa13153accd007ae2e23e99"
   },
   "lowContrastRatioWarning": {
@@ -120,24 +120,24 @@
     "hash": "a2d1d2fdc32ecb73ffdf0ab537e46f32"
   },
   "messageAutoSelectColorButton": {
-    "message": "Utilise des couleurs en contraste.",
+    "message": "Utilisez des couleurs contrastée.",
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
 
   // tips
   "tipYouLikeAddon": {
-    "message": "Tu aimes cette extension ?",
+    "message": "Vous appréciez cette extension ?",
     "description": "A tip shown to remind the user to rate the addon.",
     "hash": "0f5680a5a42bcebf793a44b9dfcf79a1"
   },
   "tipYouLikeAddonButton": {
-    "message": "Note-la",
+    "message": "Notez-la",
     "description": "Button for the tip shown to remind the user to rate the addon.",
     "hash": "821d7f942b02e2b56cd0424d3ab65de8"
   },
   "tipSaveQrCode": {
-    "message": "Savais-tu que tu peux enregistrer des QR-Codes ?",
+    "message": "Saviez-vous que vous pouviez enregistrer des QR-Codes ?",
     "description": "A tip shown to get the user to find the save option.",
     "hash": "84f0a0027a58c98d9158ab9894fe8427"
   },
@@ -147,7 +147,7 @@
     "hash": "c453089f62132ffa4151c4487209de69"
   },
   "tipQrCodeHotkey": {
-    "message": "Souviens toi que la combinaison de touches pour cette extension est Ctrl+Maj+F10.",
+    "message": "N'oubliez pas, la combinaison de touches pour cette extension est Ctrl+Maj+F10.",
     "description": "A tip shown to get the user to notice that there is a hot key.",
     "hash": "a372dc813085fe800ecb594e33b6c81c"
   },
@@ -162,7 +162,7 @@
     "hash": "094c1bbce6c3a7bcb09f36b7bc970dd0"
   },
   "tipTranslateAddon": {
-    "message": "Si tu parles une autre langue, tu peux nous aider à traduire cette extension.",
+    "message": "Si vous parlez une autre langue, vous pouvez nous aider à traduire cette extension.",
     "description": "A tip shown to users that potentially speak another language to translate this add-on.",
     "hash": "f22661cb0e9cdc8144d0c3cf59f854e3"
     },
@@ -172,12 +172,12 @@
     "hash": "b0421380ecfc4481fd5ee9da72c61516"
   },
   "tipDonate": {
-    "message": "Tu aimes utiliser cette extension gratuitement ?",
+    "message": "Vous aimez utiliser cette extension gratuitement ?",
     "description": "A tip shown to get the remind them of a donation.",
     "hash": "1ca77d6621635ae0bec563e15fbc3791"
   },
     "tipDonateButton": {
-    "message": "Soutiens le développement en faisant un don",
+    "message": "Soutenez le développement en faisant un don",
     "description": "The button of the donation tip taking the user to the donation site.",
     "hash": "8ec498495b752c6d9358208a5564d42c"
   },
@@ -199,7 +199,7 @@
     "hash": "2aad56747125ef1f986b5d952ba68a83"
   },
   "textareaPlaceholder": {
-    "message": "Saisis du texte ici pour générer le QR-Code.",
+    "message": "Saisissez du texte ici pour générer le QR-Code.",
     "description": "Placeholder for the textarea, when it is empty.",
     "hash": "0d0f6b3baffcdbf22a78418b3460d1ad"
   },
