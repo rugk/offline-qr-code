@@ -1,4 +1,4 @@
-AqrBig.png; "Les QR-Codes sont redimensionnables !";
+qrBig.png; "Les QR-Codes sont redimensionnables !";
 qrDark.png; "Vous pouvez ajuster le QR-Code à votre thème.";
 qrMenuFromLink.png; "Vous pouvez créer des QR-Codes directement à partir de liens."
 qrMenuFromPhoneNumber.png; "Vous pouvez créer des QR-Codes directement à partir du texte sélectionné."
