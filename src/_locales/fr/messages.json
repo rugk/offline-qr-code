@@ -120,7 +120,7 @@
     "hash": "a2d1d2fdc32ecb73ffdf0ab537e46f32"
   },
   "messageAutoSelectColorButton": {
-    "message": "Utilisez des couleurs contrastée.",
+    "message": "Utilisez des couleurs contrastées.",
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
