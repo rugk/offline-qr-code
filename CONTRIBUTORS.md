@@ -57,6 +57,10 @@
 
 - Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
 
+### Swahili
+
+- Paul Mburu ([@Paulmburu](https://github.com/Paulmburu))
+
 ### Turkish
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
