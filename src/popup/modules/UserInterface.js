@@ -52,6 +52,7 @@ let placeholderShown = true;
 let qrLastSize = 200;
 let qrCodeSizeOption = {};
 let savingQrCodeSize = null; // promise
+let qrCodeInputText = "";
 
 /**
  * Hide QR code and show placeholder instead.
@@ -103,7 +104,8 @@ function hidePlaceholder() {
 const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
     console.info("new value from textarea: ", text);
-
+    qrCodeInputText = text; // Save it for filename generation
+    
     // show placeholder when no text is entered
     if (text === "") {
         showPlaceholder();
@@ -436,6 +438,37 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
 }
 
 /**
+ * If qrcode text was an URL i.e contains :// this function generates a filename using the domain and replacing all special characters with _
+ *.If not return "qrcode"
+ *
+ * @function
+ * @private
+ * @param { } 
+ * @returns {filename}
+ */
+function generateFilename(){
+	var firstIndex = qrCodeInputText.indexOf("://");
+	if(firstIndex > 0) {
+		// URL found
+		var filename = qrCodeInputText.substring(firstIndex+3);
+		var wwwIndex = filename.indexOf("www");
+		if(wwwIndex >= 0){
+			// remove www(*.).
+			filename = filename.substring(filename.indexOf(".")+1);
+		}
+		// keep text until first "/"
+		filename = filename.substring(0,filename.indexOf("/"));
+		// replace . by _
+		//filename = filename.replace(/\./g,"_");
+		// Replace all strange characters
+		filename = filename.replace(/[^a-z0-9_-]/g,"_");
+		// prepend "qrcode"
+		return "qrcode-" + filename;			
+	}
+	return "qrcode";
+}
+
+/**
  * Triggers when a context menu item has been clicked.
  *
  * It downloads the QR code image.
@@ -447,20 +480,23 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  */
 function menuClicked(event) {
     const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
-
+    var filename = generateFilename();
+    
     switch (event.menuItemId) {
     case CONTEXT_MENU_SAVE_IMAGE_SVG: {
+        filename= filename + ".svg";
         const svgElem = QrCreator.getQrCodeSvgFromLib();
         const svgString = (new XMLSerializer()).serializeToString(svgElem);
-        const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
-        triggerFileSave(file, "qrcode.svg", requestDownloadPermissions);
+        const file = new File([svgString], filename, { type: "image/svg+xml;charset=utf-8" });
+        triggerFileSave(file, filename, requestDownloadPermissions);
         break;
     }
     case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
+        filename= filename + ".png";
         const canvasElem = QrCreator.getQrCodeCanvasFromLib();
         canvasElem.toBlob((blob) => {
-            const file = new File([blob], "qrcode.png", { type: "image/png" });
-            triggerFileSave(file, "qrcode.png", requestDownloadPermissions);
+            const file = new File([blob], filename, { type: "image/png" });
+            triggerFileSave(file, filename, requestDownloadPermissions);
         }, "image/png");
         break;
     }
