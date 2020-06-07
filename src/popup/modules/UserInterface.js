@@ -447,20 +447,18 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  * @returns {filename}
  */
 function generateFilename(){
-	var firstIndex = qrCodeInputText.indexOf("://");
+	let firstIndex = qrCodeInputText.indexOf("://");
 	if(firstIndex > 0) {
 		// URL found
-		var filename = qrCodeInputText.substring(firstIndex + 3);
-		var wwwIndex = filename.indexOf("www");
+		let filename = qrCodeInputText.substring(firstIndex + 3);
+		let wwwIndex = filename.indexOf("www");
 		if (wwwIndex >= 0) {
 			// remove www(*.).
-			filename = filename.substring(filename.indexOf(".")+1);
+			filename = filename.substring(filename.indexOf(".") + 1);
 		}
 		// keep text until first "/"
 		filename = filename.substring(0,filename.indexOf("/"));
-		// replace . by _
-		//filename = filename.replace(/\./g,"_");
-		// Replace all strange characters
+		// Replace "." and all strange characters by _
 		filename = filename.replace(/[^a-z0-9_-]/g,"_");
 		// prepend "qrcode"
 		return "qrcode-" + filename;			
@@ -480,7 +478,7 @@ function generateFilename(){
  */
 function menuClicked(event) {
     const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
-    var filename = generateFilename();
+    let filename = generateFilename();
     
     switch (event.menuItemId) {
     case CONTEXT_MENU_SAVE_IMAGE_SVG: {
