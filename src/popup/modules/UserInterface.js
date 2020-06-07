@@ -452,7 +452,7 @@ function generateFilename(){
 		// URL found
 		var filename = qrCodeInputText.substring(firstIndex+3);
 		var wwwIndex = filename.indexOf("www");
-		if(wwwIndex >= 0){
+		if (wwwIndex >= 0) {
 			// remove www(*.).
 			filename = filename.substring(filename.indexOf(".")+1);
 		}
