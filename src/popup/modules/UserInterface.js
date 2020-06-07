@@ -450,7 +450,7 @@ function generateFilename(){
 	var firstIndex = qrCodeInputText.indexOf("://");
 	if(firstIndex > 0) {
 		// URL found
-		var filename = qrCodeInputText.substring(firstIndex+3);
+		var filename = qrCodeInputText.substring(firstIndex + 3);
 		var wwwIndex = filename.indexOf("www");
 		if (wwwIndex >= 0) {
 			// remove www(*.).
