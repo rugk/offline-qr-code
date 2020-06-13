@@ -445,22 +445,27 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  */
 function generateFilename() {
     let qrCodeInputText =  qrCodeText.value; // get current value from input
-    let firstIndex = qrCodeInputText.indexOf("://");
-    if (firstIndex <= 0) {
+    let url;
+
+    try {
+        url = new URL(qrCodeInputText);
+        // throws "TypeError: URL constructor:  is not a valid URL." if it's not
+        // valid URL
+    } catch (e) {
         return "qrcode";
     }
 
-    // protocol found
-    let filename = qrCodeInputText.substring(firstIndex + 3);
-    let wwwIndex = filename.indexOf("www");
-    if (wwwIndex >= 0) {
-        // remove www(*.).
-        filename = filename.substring(filename.indexOf(".") + 1);
-    }
-    // keep text until first "/"
-    filename = filename.substring(0, filename.indexOf("/") || filename.indexOf("?") || filename.indexOf("\\"));
+    let filename = url.host;
+    // fallback to protocol + path (for special URLs like about:config etc.)
+    filename = filename || `${url.protocol}${url.pathname}`;
     // Replace "." and all strange characters by _
     filename = filename.replace(/[^a-z0-9_-]/g, "-");
+
+    // if filename has no characters, fall back to simple string
+    if (!filename) {
+        return "qrcode";
+    }
+
     // prepend "qrcode"
     return `qrcode_${filename}`;
 }
