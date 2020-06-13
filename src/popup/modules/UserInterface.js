@@ -458,11 +458,11 @@ function generateFilename() {
         filename = filename.substring(filename.indexOf(".") + 1);
     }
     // keep text until first "/"
-    filename = filename.substring(0, filename.indexOf("/"));
+    filename = filename.substring(0, filename.indexOf("/") || filename.indexOf("?") || filename.indexOf("\\"));
     // Replace "." and all strange characters by _
-    filename = filename.replace(/[^a-z0-9_-]/g, "_");
+    filename = filename.replace(/[^a-z0-9_-]/g, "-");
     // prepend "qrcode"
-    return `qrcode-${filename}`;
+    return `qrcode_${filename}`;
 }
 
 /**
