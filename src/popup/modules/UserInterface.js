@@ -52,7 +52,6 @@ let placeholderShown = true;
 let qrLastSize = 200;
 let qrCodeSizeOption = {};
 let savingQrCodeSize = null; // promise
-let qrCodeInputText = "";
 
 /**
  * Hide QR code and show placeholder instead.
@@ -104,7 +103,6 @@ function hidePlaceholder() {
 const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
     console.info("new value from textarea: ", text);
-    qrCodeInputText = text; // Save it for filename generation
 
     // show placeholder when no text is entered
     if (text === "") {
@@ -446,6 +444,7 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  * @returns {filename}
  */
 function generateFilename() {
+    let qrCodeInputText =  qrCodeText.value; // get current value from input
     let firstIndex = qrCodeInputText.indexOf("://");
     if (firstIndex <= 0) {
         return "qrcode";
