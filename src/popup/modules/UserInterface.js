@@ -105,7 +105,7 @@ const refreshQrCode = throttle(() => {
     const text = qrCodeText.value;
     console.info("new value from textarea: ", text);
     qrCodeInputText = text; // Save it for filename generation
-    
+
     // show placeholder when no text is entered
     if (text === "") {
         showPlaceholder();
@@ -151,9 +151,9 @@ function selectAllText(event) {
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
         event.target.focus();
-        event.target.select(); 
+        event.target.select();
     }
-    
+
     // set scroll position to top one, because you want to see the
     // start of an URL
     // (selecting makes the scroll position go to the bottom)
@@ -170,7 +170,7 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    console.info("scrollToTop", event); 
+    console.info("scrollToTop", event);
     event.target.scrollTo(0,0);
 }
 
@@ -441,29 +441,29 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  * If qrcode text was an URL i.e contains :// this function generates a filename using the domain and replacing all special characters with _
  *.If not return "qrcode"
  *
- * @function
  * @private
- * @param { } 
+ * @function
  * @returns {filename}
  */
-function generateFilename(){
-	let firstIndex = qrCodeInputText.indexOf("://");
-	if(firstIndex > 0) {
-		// URL found
-		let filename = qrCodeInputText.substring(firstIndex + 3);
-		let wwwIndex = filename.indexOf("www");
-		if (wwwIndex >= 0) {
-			// remove www(*.).
-			filename = filename.substring(filename.indexOf(".") + 1);
-		}
-		// keep text until first "/"
-		filename = filename.substring(0,filename.indexOf("/"));
-		// Replace "." and all strange characters by _
-		filename = filename.replace(/[^a-z0-9_-]/g,"_");
-		// prepend "qrcode"
-		return "qrcode-" + filename;			
-	}
-	return "qrcode";
+function generateFilename() {
+    let firstIndex = qrCodeInputText.indexOf("://");
+    if (firstIndex <= 0) {
+        return "qrcode";
+    }
+
+    // protocol found
+    let filename = qrCodeInputText.substring(firstIndex + 3);
+    let wwwIndex = filename.indexOf("www");
+    if (wwwIndex >= 0) {
+        // remove www(*.).
+        filename = filename.substring(filename.indexOf(".") + 1);
+    }
+    // keep text until first "/"
+    filename = filename.substring(0, filename.indexOf("/"));
+    // Replace "." and all strange characters by _
+    filename = filename.replace(/[^a-z0-9_-]/g, "_");
+    // prepend "qrcode"
+    return `qrcode-${filename}`;
 }
 
 /**
@@ -479,7 +479,7 @@ function generateFilename(){
 function menuClicked(event) {
     const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
     let filename = generateFilename();
-    
+
     switch (event.menuItemId) {
     case CONTEXT_MENU_SAVE_IMAGE_SVG: {
         filename= filename + ".svg";
