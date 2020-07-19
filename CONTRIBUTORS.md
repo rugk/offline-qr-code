@@ -45,6 +45,10 @@
 
 - Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
 
+### Persian
+
+- Pouria Khakpour [@Enlightments](https://github.com/Enlightments)
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
