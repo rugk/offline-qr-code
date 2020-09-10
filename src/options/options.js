@@ -20,3 +20,5 @@ RandomTips.init(tips).then(() => {
     RandomTips.setContext("options");
     RandomTips.showRandomTipIfWanted();
 });
+
+document.getElementById("popupShowContextMenu").checked = true;
