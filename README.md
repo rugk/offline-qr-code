@@ -59,6 +59,7 @@ See:
 ## Notes
 
 ”QR Code” is a registered trademark of DENSO WAVE.
+"QR Code" is a secure way to complete your transaction.
 
 ## Contribute
 
