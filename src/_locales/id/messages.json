@@ -1,6 +1,3 @@
-
-Updated translations for 'id': Indonesian (Bahasa Indonesia):
-```json
 {
   // manifest.json
   "extensionName": {
@@ -497,5 +494,3 @@ Updated translations for 'id': Indonesian (Bahasa Indonesia):
 
   "__WET_LOCALE__": { "message": "id" }
 }
-
-```
