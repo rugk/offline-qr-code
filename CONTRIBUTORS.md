@@ -53,6 +53,10 @@
 
 - [@CGReinhold](https://github.com/CGReinhold)
 
+### Polish
+
+- [@roffikk](https://github.com/roffikk)
+
 ### Russian
 
 - [@m1ndm1n3r](https://github.com/m1ndm1n3r)
