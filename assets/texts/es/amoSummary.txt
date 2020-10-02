@@ -1,0 +1,3 @@
+Esta extensión te permite generar rápidamente códigos QR offline de una URL abierta en tus pestañas o cualquier texto (seleccionado)! 👍
+
+Funciona completamente offline protegiendo así tu privacidad y cuenta con un vasto rango de funciones incluyendo la opción de colorear tus códigos QR!
