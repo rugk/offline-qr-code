@@ -33,8 +33,8 @@ For more details, [see the official docs](https://developer.mozilla.org/Add-ons/
 
 * Text assets to translate: [`assets/texts`](assets/texts)
 * Screenshots: [`assets/screenshots`](assets/screenshots)
-* Wiki to translate: [wiki](/wiki)
-* Sidebar file for adding language: [`_Sidebar` file](/wiki/_Sidebar/_edit)
+* Wiki to translate: [wiki](../../wiki)
+* Sidebar file for adding language: [`_Sidebar` file](../../wiki/_Sidebar/_edit)
 
 For more information, see the whole [contributing doc](https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translations).
 

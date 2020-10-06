@@ -1,0 +1,7 @@
+The warnings that occur are from a third-party library. This library is kjua-svg v1.10.0.
+
+See https://github.com/werthdavid/kjua
+
+The included minified file is just the unpacked version from https://unpkg.com/kjua-svg@1.10.0/kjua.min.js
+No modifications to this file were made.
+

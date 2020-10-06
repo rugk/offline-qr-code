@@ -1,6 +1,6 @@
 该扩展不发送任何信息给扩展作者或第三方。
 
-该扩展请求的所有权限的用途，在此处查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+该扩展请求的所有权限的用途，在此处查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/zh-CN/permissions.md.
 
 == 第三方服务 ==
 
