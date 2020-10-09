@@ -45,9 +45,17 @@
 
 - Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
 
+### Persian
+
+- Pouria Khakpour [@Enlightments](https://github.com/Enlightments)
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
+
+### Polish
+
+- [@roffikk](https://github.com/roffikk)
 
 ### Russian
 
@@ -57,7 +65,15 @@
 
 - Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
 
+### Swahili
+
+- Paul Mburu ([@Paulmburu](https://github.com/Paulmburu))
+
 ### Turkish
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
 - Serkan Algur ([@serkanalgur](https://github.com/serkanalgur))
+
+### Arabic
+
+- Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))

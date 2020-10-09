@@ -149,9 +149,9 @@ function selectAllText(event) {
     // re-selecting when already selected, causes flashing, so we avoid that
     if (!targetIsSelected) {
         event.target.focus();
-        event.target.select(); 
+        event.target.select();
     }
-    
+
     // set scroll position to top one, because you want to see the
     // start of an URL
     // (selecting makes the scroll position go to the bottom)
@@ -168,7 +168,7 @@ function selectAllText(event) {
  * @returns {void}
  */
 function scrollToTop(event) {
-    console.info("scrollToTop", event); 
+    console.info("scrollToTop", event);
     event.target.scrollTo(0,0);
 }
 
@@ -436,6 +436,41 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
 }
 
 /**
+ * If qrcode text was an URL i.e contains :// this function generates a filename using the domain and replacing all special characters with _
+ *.If not return "qrcode"
+ *
+ * @private
+ * @function
+ * @returns {filename}
+ */
+function generateFilename() {
+    let qrCodeInputText =  qrCodeText.value; // get current value from input
+    let url;
+
+    try {
+        url = new URL(qrCodeInputText);
+        // throws "TypeError: URL constructor:  is not a valid URL." if it's not
+        // valid URL
+    } catch (e) {
+        return "qrcode";
+    }
+
+    let filename = url.host;
+    // fallback to protocol + path (for special URLs like about:config etc.)
+    filename = filename || `${url.protocol}${url.pathname}`;
+    // Replace "." and all strange characters by _
+    filename = filename.replace(/[^a-z0-9_-]/g, "-");
+
+    // if filename has no characters, fall back to simple string
+    if (!filename) {
+        return "qrcode";
+    }
+
+    // prepend "qrcode"
+    return `qrcode_${filename}`;
+}
+
+/**
  * Triggers when a context menu item has been clicked.
  *
  * It downloads the QR code image.
@@ -447,20 +482,23 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  */
 function menuClicked(event) {
     const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
+    let filename = generateFilename();
 
     switch (event.menuItemId) {
     case CONTEXT_MENU_SAVE_IMAGE_SVG: {
+        filename= filename + ".svg";
         const svgElem = QrCreator.getQrCodeSvgFromLib();
         const svgString = (new XMLSerializer()).serializeToString(svgElem);
-        const file = new File([svgString], "qrcode.svg", { type: "image/svg+xml;charset=utf-8" });
-        triggerFileSave(file, "qrcode.svg", requestDownloadPermissions);
+        const file = new File([svgString], filename, { type: "image/svg+xml;charset=utf-8" });
+        triggerFileSave(file, filename, requestDownloadPermissions);
         break;
     }
     case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
+        filename= filename + ".png";
         const canvasElem = QrCreator.getQrCodeCanvasFromLib();
         canvasElem.toBlob((blob) => {
-            const file = new File([blob], "qrcode.png", { type: "image/png" });
-            triggerFileSave(file, "qrcode.png", requestDownloadPermissions);
+            const file = new File([blob], filename, { type: "image/png" });
+            triggerFileSave(file, filename, requestDownloadPermissions);
         }, "image/png");
         break;
     }

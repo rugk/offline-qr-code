@@ -1,8 +1,5 @@
-* **New:** Thanks to a new QR code generation library, you can now always save the QR as a PNG or SVG. The setting to choose between these two modes has been removed from the settings. ([#188](https://github.com/rugk/offline-qr-code/issues/188))
-* **New:** The add-on now supports the dark system mode. ([#186](https://github.com/rugk/offline-qr-code/issues/186), [#190](https://github.com/rugk/offline-qr-code/issues/190), also thanks [@davidfloyd91](https://github.com/davidfloyd91))
-* **New:** The translation for Chinese (Traditional) has been added, thanks to [@Nio](https://github.com/niotw).
-* **New:** The translation for Hebrew has been added, thanks to [@shanirub](https://github.com/shanirub).
-* **New:** The translation for Japanese has been added, thanks to [@fluoros-jp](https://github.com/fluoros-jp).
-* **New:** The translation for Portuguese has been added, thanks to [@CGReinhold](https://github.com/CGReinhold).
-* **New:** The translation for Russian has been added, thanks to [@m1ndm1n3r](https://github.com/m1ndm1n3r).
-* **New:** The translation for Slovak has been added, thanks to [@daaAd1](https://github.com/daaAd1).
+* **Fixed:** Improved robustness of scrolling the entered text to the top ([#203](https://github.com/rugk/offline-qr-code/issues/203), thanks [@pradyumnamahajan](https://github.com/pradyumnamahajan))
+* **New:** The translation for Arabic has been added, thanks to [@AhmadAymanA99](https://github.com/AhmadAymanA99).
+* **New:** The translation for Swahili has been added, thanks to [@Paulmburu](https://github.com/Paulmburu).
+* **New:** The translation for Persian has been added, thanks to [@Enlightments](https://github.com/Enlightments).
+* **New:** The translation for Polish has been added, thanks to [@roffikk](https://github.com/roffikk).
