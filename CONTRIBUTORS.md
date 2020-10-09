@@ -1,20 +1,21 @@
 # Contributors
 
-- Alexander Knipping ([@obitech](https://github.com/obitech))
-- Andrew Jones ([@cornu-ammonis](https://github.com/cornu-ammonis))
-- Amauri Bizerra ([@AmauriAires](https://github.com/AmauriAires))
 - [@anirudh-modi](https://github.com/anirudh-modi)
-- David Floyd ([@davidfloyd91](https://github.com/davidfloyd91))
 - [@ENT8R](https://github.com/ENT8R)
+- [@OogieBoogieInJSON](https://github.com/OogieBoogieInJSON)
+- [@redagavin](https://github.com/redagavin)
+- [@Thammarith](https://github.com/Thammarith)
+- [@xlomonosvx](https://github.com/xlomonosvx)
+- Alexander Knipping ([@obitech](https://github.com/obitech))
+- Amauri Bizerra ([@AmauriAires](https://github.com/AmauriAires))
+- Andrew Jones ([@cornu-ammonis](https://github.com/cornu-ammonis))
+- David Floyd ([@davidfloyd91](https://github.com/davidfloyd91))
 - Flo Becker ([@beckerei](https://github.com/beckerei))
 - Josh Cooper ([@JoshCooperr](https://github.com/JoshCooperr))
 - Linus Brogan ([@linusaurusrex](https://github.com/linusaurusrex))
 - Metta Ong ([@ongspxm](https://github.com/ongspxm))
 - Michael Corwin ([@mcorwin22](https://github.com/mcorwin22))
-- [@OogieBoogieInJSON](https://github.com/OogieBoogieInJSON)
-- [@redagavin](https://github.com/redagavin)
-- [@Thammarith](https://github.com/Thammarith)
-- [@xlomonosvx](https://github.com/xlomonosvx)
+- Pradyumna Mahajan ([@pradyumnamahajan](https://github.com/pradyumnamahajan))
 
 ## Translators
 
@@ -44,9 +45,17 @@
 
 - Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
 
+### Persian
+
+- Pouria Khakpour [@Enlightments](https://github.com/Enlightments)
+
 ### Portuguese
 
 - [@CGReinhold](https://github.com/CGReinhold)
+
+### Polish
+
+- [@roffikk](https://github.com/roffikk)
 
 ### Russian
 
@@ -56,6 +65,10 @@
 
 - Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
 
+### Swahili
+
+- Paul Mburu ([@Paulmburu](https://github.com/Paulmburu))
+
 ### Turkish
 
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
@@ -63,4 +76,4 @@
 
 ### Arabic
 
-- Ahmad Ayman([@AhmadAymanA99](https://github.com/AhmadAymanA99))
+- Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
