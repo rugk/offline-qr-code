@@ -69,6 +69,10 @@
 
 - Samuel Sepeši ([@daaAd1](https://github.com/daaAd1))
 
+### Spanish
+
+- [@Fanksies](https://github.com/Fanksies)
+
 ### Swahili
 
 - Paul Mburu ([@Paulmburu](https://github.com/Paulmburu))
