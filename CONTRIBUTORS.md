@@ -41,6 +41,10 @@
 
 - Shani Rub ([@shanirub](https://github.com/shanirub))
 
+### Indonesian
+
+- Rizal Fakhri ([@rizalfakhri](https://github.com/rizalfakhri))
+
 ### Japanese
 
 - Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
