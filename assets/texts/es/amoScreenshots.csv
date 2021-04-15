@@ -1,0 +1,8 @@
+qrBig.png; "Puedes ajustar el tamaño de los códigos QR!"; 
+qrDark.png; "Puedes adaptar el código QR a tu tema";
+qrMenuFromLink.png; "Puedes crear códigos QR directamente de enlances."
+qrMenuFromPhoneNumber.png; "Puedes crear códigos QR directamente de texto seleccionado"
+qrSaveSvg.png; "Puedes guardar códigos QR como SVGs o PNGs";
+qrSettings.png; "Amplia variedad de opciones para personalizar el comportamiento y apariencia";
+qrSmall.png; "Genera códigos QR en cualquier tamaño";
+qrText.png; "Genera un código QR instantáneamente en base al texto que quieras";

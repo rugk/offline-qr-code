@@ -1,0 +1,9 @@
+Esta extensión no envía ninguna información al autor de la misma o a terceros.
+
+Una explicación detallada de todos los permisos que solicita esta extensión puede ser encontrada en https://github.com/rugk/offline-qr-code/blob/master/assets/texts/en/permissions.md.
+
+== SERVICIOS DE EXTERNOS ==
+
+Esta extensión usa el "almacenamiento sincronizado" de tu navegador para almacenar la configuración. Si el USUARIO habilita dicha "Sincronización" en el navegador, las configuraciones son subidas y sincronizadas a través de los dispositivos asociados a tu cuenta. En caso de no hacerlo, los datos solo son almacenados localmente en tu dispositivo.
+En Mozilla Firefox los datos es encriptada de punto-a-punto antes de ser subida y almacenada en los servidores de Mozilla.
+Consulta https://accounts.firefox.com/legal/privacy y https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 para saber más de las posturas de privacidad de Mozilla en este tema.
