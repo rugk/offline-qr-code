@@ -1,9 +1,9 @@
 # Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
 
-[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-version&campaign=github)  
-[![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-downloads&campaign=github)
-[![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-users&campaign=github)
-[![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/?utm_source=github.com&utm_medium=git&utm_content=badge-stars&campaign=github)
+[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-version&utm_campaign=github)  
+[![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-downloads&utm_campaign=github)
+[![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-users&utm_campaign=github)
+[![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/?utm_source=github.com&utm_medium=git&utm_content=badge-stars&utm_campaign=github)
 
 <img height="200" width="200" src="assets/qrbig-optimized.svg">
 
@@ -17,9 +17,9 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 
 ## Download
 
-**[![Get it for Firefox!](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=download-button&campaign=github)**
+**[![Get it for Firefox!](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=download-button&&utm_campaign=github)**
 
-> **BTW:** If you want to search and insert emojis easily on all your websites, do check out our **[Awesome Emoji Picker](https://github.com/rugk/awesome-emoji-picker/)** too!
+> **BTW:** If you want to search and insert emojis easily on all your websites, do check out our **[Awesome Emoji Picker](https://github.com/rugk/awesome-emoji-picker/?utm_source=github.com&utm_medium=git&utm_content=download-button&&utm_campaign=github-btw-do-you-also-know-readme)** too!
 
 ## How to support us?
 
