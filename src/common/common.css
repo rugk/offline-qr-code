@@ -171,6 +171,20 @@ a:active {
   margin-top: 8px;
 }
 
+#messageContrast {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 1fr 40px;
+}
+
+#messageContrast > a {
+  grid-area: 2/2;
+}
+
+#messageContrast > a > button {
+  margin-left: 0;
+}
+
 .error {
   color: var(--white-100);
   background-color: var(--red-60);
@@ -211,6 +225,7 @@ a:active {
 /* icons for the message boxes */
 .message-box::before {
   display: inline-block;
+  align-self: baseline;
 
   /* fixed size */
   background-size: 16px 16px;
