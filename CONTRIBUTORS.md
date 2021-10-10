@@ -45,6 +45,10 @@
 
 - Rizal Fakhri ([@rizalfakhri](https://github.com/rizalfakhri))
 
+### Italian
+
+- Giuseppe Pignataro ([@Fastbyte01](https://github.com/Fastbyte01))
+
 ### Japanese
 
 - Fluoros ([@fluoros-jp](https://github.com/fluoros-jp))
