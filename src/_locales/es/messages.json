@@ -161,7 +161,7 @@
   
   // placeholder
   "qrCodePlaceholder": {
-    "message": "Ímagen por definir del código QR",
+    "message": "Imagen por definir del código QR",
     "description": "Alt text of placeholder image."
   },
   "textareaPlaceholder": {
@@ -260,7 +260,7 @@
     "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
   },
   "optionQrCodeSizeAutoHelper": {
-    "message": "Util en dispositivos móviles donde el código QR se abre en una ventana nueva.",
+    "message": "Útil en dispositivos móviles donde el código QR se abre en una ventana nueva.",
     "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
   },
   "optionQrCodeSizeRemember": {
