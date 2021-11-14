@@ -76,6 +76,7 @@
 ### Spanish
 
 - [@Fanksies](https://github.com/Fanksies)
+- Bryan Calisto ([@bryancalisto](https://github.com/bryancalisto))
 
 ### Swahili
 
