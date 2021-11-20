@@ -42,8 +42,6 @@ For more information, see the whole [contributing doc](https://github.com/TinyWe
 
 See the **common guide** on how to [start coding](https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#coding) and what rules to follow.
 
-**Attention:** For this add-on, you need to execute [`scripts/downloadEmojiImages.sh`](scripts/downloadEmojiImages.sh) to download the bundled emoji sheets if you use anything else than the "native emojis" ("emojis from your OS") in the settings of this add-on. The reason is just, that these big files are not bundled/distributed in this repo.
-
 ### Tests
 
 * Test dir: [`src/tests/`](src/tests/)
