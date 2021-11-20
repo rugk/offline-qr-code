@@ -25,6 +25,7 @@
     "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10).",
     "hash": "98e90b2532a0097cd43081b4e1610519"
   },
+
   // errors or other messages (mostly for settings)
   "errorShowingMessage": {
     "message": "Haikuweza kuonyesha ujumbe huu.",
@@ -61,6 +62,7 @@
     "description": "The message shown, when the options of the settings could not have been reset.",
     "hash": "76e950d2db72a824482411ca6564fb1f"
   },
+
   // errors or other messages
   "unknownError": {
     "message": "kosa lisilojulikana",
@@ -122,6 +124,7 @@
     "description": "The text of a button that sets a new color with a sufficient contrast.",
     "hash": "9d422df9f61f2b45e272ae3451ca3ded"
   },
+
   // tips
   "tipYouLikeAddon": {
     "message": "Je! Unapenda nyongeza hii?",
@@ -188,6 +191,7 @@
     "description": "The common button for tips, where you can get more information about how to use a feature just presented.",
     "hash": "b48eefa95832b3c6df287ff077b4e28a"
   },
+
   // placeholder
   "qrCodePlaceholder": {
     "message": "Picha ya mmiliki wa msimbo wa QR",
@@ -199,6 +203,7 @@
     "description": "Placeholder for the textarea, when it is empty.",
     "hash": "0d0f6b3baffcdbf22a78418b3460d1ad"
   },
+
   // context menu
   "contextMenuItemConvertSelection": {
     "message": "Nambari ya QR kutoka kwa uteuzi",
@@ -240,6 +245,7 @@
     "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
     "hash": "7a9c86c16fd7341fbb18fd907bb005bb"
   },
+
   // options
   "someSettingsAreManaged": {
     "message": "Baadhi ya mipangilio inasimamiwa na msimamizi wa mfumo wako na haiwezi kubadilishwa.",
@@ -330,10 +336,7 @@
     "message": "($INTEGER$ mraba)",
     "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
     "placeholders": {
-      "integer": {
-        "content": "$1",
-        "example": "1"
-      }
+      "integer": { "content": "$1", "example": "1" }
     },
     "hash": "dfb928dac26b3da38c89476f22610303"
   },
@@ -341,10 +344,7 @@
     "message": "(Mraba $INTEGER$)",
     "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
     "placeholders": {
-      "integer": {
-        "content": "$1",
-        "example": "3"
-      }
+      "integer": { "content": "$1", "example": "3" }
     },
     "hash": "717944c73c8d92595af6c07bb960b52d"
   },
@@ -427,29 +427,25 @@
     "message": "Ongeza hii imetafsiriwa kwa Kiingereza na $TRANSLATORS$.",
     "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
-      "translators": {
-        "content": "$1",
-        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
-      }
+      "translators": { "content": "$1", "example": "<a href=\"https://github.com/rugk/\">@rugk</a>" }
     },
     "hash": "a6f5deecd624d5f8cd58350c72dd8fdf"
   },
   "translatorLink": {
     "message": "https://github.com/Paulmburu",
-    "description": "The link to the translator's GitHub profile."
+    "description": "The link to the translator's GitHub profile.",
+    "hash": "4775fb2f88fd33d02b871e5021dec3e9"
   },
   "translatorUsername": {
     "message": "Paulmburu",
-    "description": "The translator's GitHub username."
+    "description": "The username that the translator wants to be referred to.",
+    "hash": "ce96c18a8a1b4b528b294e981ee4d651"
   },
   "contributorsThanks": {
     "message": "Pia shukrani kwa $CONTRIBUTORS$.",
     "description": "Text thanking all contributors and linking to the contributors file.",
     "placeholders": {
-      "contributors": {
-        "content": "$1",
-        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
-      }
+      "contributors": { "content": "$1", "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>" }
     },
     "hash": "b1434b8b42b1707f37d0531a8efdc7f8"
   },
@@ -463,6 +459,7 @@
     "description": "The link text linking to the contributors file. See contributorsThanks.",
     "hash": "ce03e1f3b15df3bba66048b30c4f8de4"
   },
+
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "Funga ujumbe huu",
@@ -494,7 +491,6 @@
     "description": "the aria label to label the message box as an warning message box",
     "hash": "8a5dd7528bead1ccd27cb7430d797bd2"
   },
-  "__WET_LOCALE__": {
-    "message": "sw"
-  }
+
+  "__WET_LOCALE__": { "message": "sw" }
 }

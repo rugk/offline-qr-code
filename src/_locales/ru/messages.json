@@ -225,16 +225,6 @@
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
     "hash": "312595c39b5cbc8edf0baab8c16875af"
   },
-  "contextMenuSaveImage": {
-    "message": "Сохранить QR-код...",
-    "description": "The context menu entry shown for saving SVG images in the popup.",
-    "hash": "2eefde0a0d140820b10a3f3cadc0b91e"
-  },
-  "contextMenuSaveImageAccessKey": {
-    "message": "Сохранить &QR-код...",
-    "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
-    "hash": "5d978e9ed30cc817b82376faefbcfbbb"
-  },
 
   // options
   "someSettingsAreManaged": {
@@ -281,31 +271,6 @@
     "message": "Показывает цветной значок вместо черно-белого на панели инструментов.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
     "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
-  },
-  "subtitleQrCodeType": {
-    "message": "Тип QR-кода",
-    "description": "The heading/grouping title shown for the radio buttons for the type setting of the QR code.",
-    "hash": "b87348b6fb11b28adf124e621c68c459"
-  },
-  "optionQrCodeTypeSvg": {
-    "message": "SVG",
-    "description": "Option to select a scalable vector graphic image (SVG).",
-    "hash": "73765445a2ffe6ef74df1f9b50dab017"
-  },
-  "optionQrCodeTypeSvgHelper": {
-    "message": "Использует современный метод генерации в векторной графике, позволяющий плавно измененять размер.",
-    "description": "Helper text for SVG QR code type option.",
-    "hash": "c5c854179330262bbb43fe22ff3e5f6f"
-  },
-  "optionQrCodeTypeCanvas": {
-    "message": "Canvas image",
-    "description": "Option to select a canvas (pixel) image.",
-    "hash": "8d224978370adc11a9b1a5a944c010bd"
-  },
-  "optionQrCodeTypeCanvasHelper": {
-    "message": "Метод генерации QR-кода в виде изображения (\"холст\").",
-    "description": "Helper text for canvas QR code type option.",
-    "hash": "9191c0be558ba93297a58b19d880036c"
   },
   "subtitleQrCodeSize": {
     "message": "Размер QR-кода",

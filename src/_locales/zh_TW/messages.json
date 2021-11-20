@@ -427,7 +427,7 @@
     "message": "該擴充元件正體中文翻譯由 $TRANSLATORS$ 參考 Cye3s的 zh_CN 完成。",
     "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
-      "translators": { "content": "$1", "example": "<a href=\"https://github.com/niotw/\">@nio</a>" }
+      "translators": { "content": "$1", "example": "<a href=\"https://github.com/rugk/\">@rugk</a>" }
     },
     "hash": "a6f5deecd624d5f8cd58350c72dd8fdf"
   },
@@ -492,5 +492,5 @@
     "hash": "8a5dd7528bead1ccd27cb7430d797bd2"
   },
 
-  "__WET_LOCALE__": { "message": "zh-TW" }
+  "__WET_LOCALE__": { "message": "zh_TW" }
 }
