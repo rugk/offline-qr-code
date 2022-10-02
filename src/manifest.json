@@ -52,7 +52,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "menus"
+    "menus",
+    "clipboardRead"
   ],
   "optional_permissions": [
     "downloads"

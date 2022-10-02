@@ -17,8 +17,9 @@ These permissions are requested when doing some specific actions, if they are ne
 ## Hidden permissions
 Additionally, it requests these permissions, which are not requested in Firefox when the add-on is installed, as they are not major permissions.
 
-| Internal Id | Permission                   | Explanation                                                       |
-|:------------|:-----------------------------|:------------------------------------------------------------------|
-| `activeTab` | Access current tab website   | Needed for getting the URL of the current website for the QR code |
-| `storage`   | Access local storage         | Needed for saving options                                         |
-| `menus`     | Modify browser context menus | Needed for adding context menus "QR code from selection" (etc.)   |
+| Internal Id    | Permission                   | Explanation                                                       |
+|:---------------|:-----------------------------|:------------------------------------------------------------------|
+| `activeTab`    | Access current tab website   | Needed for getting the URL of the current website for the QR code |
+| `storage`      | Access local storage         | Needed for saving options                                         |
+| `menus`        | Modify browser context menus | Needed for adding context menus "QR code from selection" (etc.)   |
+| `clipboardRead`| Access clipboard content     | Needed for using clipboard content to create QR code              |

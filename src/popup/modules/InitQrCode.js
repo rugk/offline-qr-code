@@ -56,6 +56,14 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
     });
 });
 
+// check for clipboard text
+const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((autoGetClipboardContent) => {
+    if (autoGetClipboardContent !== true) {
+        return Promise.reject(new Error("using clipboard content is disabled"));
+    }
+    return navigator.clipboard.readText();
+});
+
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
     // do not use tab URL as text if text is already overwritten
@@ -75,18 +83,29 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
             UserInterface.handleQrError(e);
         }
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs)
-            .catch(UserInterface.handleQrError)
-            .catch((error) => {
-                console.error(error);
+        // try getting text from the clipboard
+        return gettingClipboard.then((clipboard) => {
+            try {
+                QrCreator.setText(clipboard);
+                QrCreator.generate();
+                UserInterface.postInitGenerate();
+            } catch (e) {
+                UserInterface.handleQrError(e);
+            }
+        }).catch(() => {
+            // …or fallback to tab URL
+            return queryBrowserTabs.then(QrCreator.generateFromTabs)
+                .catch(UserInterface.handleQrError)
+                .catch((error) => {
+                    console.error(error);
 
-                // show generic error, likely a tab URL error
-                CommonMessages.showError("couldNotReceiveActiveTab", false);
+                    // show generic error, likely a tab URL error
+                    CommonMessages.showError("couldNotReceiveActiveTab", false);
 
-                // re-throw error
-                throw error;
-            });
+                    // re-throw error
+                    throw error;
+                }); 
+        });
     });
 }).finally(() => {
     // post-initiation code should still run, even if errors happen
