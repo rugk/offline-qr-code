@@ -27,6 +27,10 @@
 
 - [@Nio](https://github.com/niotw)
 
+### Finnish
+
+- [@NixuK](https://github.com/NixuK)
+
 ### French
 
 - Nicolas Trouin ([@nicolas-trouin](https://github.com/nicolas-trouin))
