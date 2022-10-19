@@ -406,20 +406,23 @@
     "hash": "2aff10770796694827ec4253860e0771"
   },
   "translatorCredit": {
-    "message": "This add-on has been translated into English by $TRANSLATORS$.",
-    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+    "message": "ఈ యాడ్-ఆన్‌ని సాయి ప్రచోదన్ తెలుగులోకి అనువదించారు.",
+    "description": "అనువాదకుని క్రెడిట్ టెక్స్ట్. https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.mdని చూడండి",
     "placeholders": {
-      "translators": { "content": "$1", "example": "<a href=\"https://github.com/rugk/\">@rugk</a>" }
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/devulapallisai\">@devulapallisai</a>"
+      }
     },
     "hash": "a6f5deecd624d5f8cd58350c72dd8fdf"
   },
   "translatorLink": {
-    "message": "https://github.com/rugk",
+    "message": "https://github.com/devulapallisai",
     "description": "The link to the translator's GitHub profile.",
     "hash": "4775fb2f88fd33d02b871e5021dec3e9"
   },
   "translatorUsername": {
-    "message": "rugk",
+    "message": "devulapallisai",
     "description": "The username that the translator wants to be referred to.",
     "hash": "ce96c18a8a1b4b528b294e981ee4d651"
   },
@@ -427,7 +430,10 @@
     "message": "CONTRIBUTORSకి కూడా ధన్యవాదాలు.",
     "description": "Text thanking all contributors and linking to the contributors file.",
     "placeholders": {
-      "contributors": { "content": "$1", "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>" }
+      "contributors": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+      }
     },
     "hash": "b1434b8b42b1707f37d0531a8efdc7f8"
   },
