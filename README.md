@@ -7,9 +7,9 @@
 
 <img height="200" width="200" src="assets/qrbig-optimized.svg">
 
-This is a (Firefox) add-on (WebExtension) allowing you to generate a QR code from any website and any text.
+This is a (Firefox) add-on (WebExtension) allowing you to generate a dynamic QR code from any website and any text that you change.
 
-In contrast to many other add-ons, which use Google Web APIs for that, this add-on works completely offline. **This QR code generator puts your privacy first!** It does this by working _offline_, independently of any internet connection! Always.
+In contrast to many other add-ons, which use Google Web APIs for that, this add-on works completely **offline**. **This QR code generator puts your privacy first!** It does this by working _offline_, independently of any internet connection! Always.
 
 It has a radically **simple, yet powerful** interface, allowing you to tweak many things in the settings, but being lightweight when you use it. It's really easy to use! For instance, you can **just resize the QR code** with your mouse via dragging and dropping. Its **lightweight** size also makes it fast and easy to install – even on mobile connections.
 
