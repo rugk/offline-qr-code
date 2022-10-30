@@ -90,3 +90,7 @@
 ### Arabic
 
 - Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
+
+### Telugu 
+
+- Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))

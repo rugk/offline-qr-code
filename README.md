@@ -46,7 +46,7 @@ See:
 * You can generate and save QR codes as SVG or Canvas (PNG image)!
 * You can choose the size of the QR code and customize things.
 * Is completely internationalized (i18n).
-* You can use a shortcut (Ctrl+Shift+F10) for generating the QR code.
+* You can use a shortcut (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd>) for generating the QR code.
 * Generates QR codes from selected text on the website.
 * Has complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
