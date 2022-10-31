@@ -43,6 +43,9 @@ const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
 const qrCodeContainer = document.getElementById("qrcode-container");
 const qrCodeResizeContainer = document.getElementById("qrcode-resize-container");
 const qrCodeText = document.getElementById("qrcodetext");
+const saveButtonSVG = document.getElementById("save-button-SVG");
+const saveButtonPNG = document.getElementById("save-button-png");
+const copyButton = document.getElementById("copy-button");
 
 let resizeMutationObserver;
 
@@ -505,6 +508,27 @@ function menuClicked(event) {
     }
 }
 
+function saveSVG(){
+    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
+    let filename = generateFilename();
+    filename= filename + ".svg";
+    const svgElem = QrCreator.getQrCodeSvgFromLib();
+    const svgString = (new XMLSerializer()).serializeToString(svgElem);
+    const file = new File([svgString], filename, { type: "image/svg+xml;charset=utf-8" });
+    triggerFileSave(file, filename, requestDownloadPermissions);
+}
+
+function savePNG(){
+    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
+    let filename = generateFilename();
+    filename= filename + ".png";
+    const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+    canvasElem.toBlob((blob) => {
+        const file = new File([blob], filename, { type: "image/png" });
+        triggerFileSave(file, filename, requestDownloadPermissions);
+    }, "image/png");
+}
+
 /**
  * Creates the context menu entries for the popup.
  *
@@ -590,6 +614,8 @@ export function init() {
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
     qrCodeText.addEventListener("focus", selectAllText);
+    saveButtonSVG.addEventListener("click", saveSVG);
+    saveButtonPNG.addEventListener("click", savePNG);
 
     const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
         if (monospaceFont) {

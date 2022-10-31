@@ -23,10 +23,18 @@
 			</div>
 		</div>
 		<div id="qrcode-container" class="center-container">
+			<div class="menu-dropdown">
+				<button>Hover for menu</button>
+				<div class="menu-dropdown-content">
+					<a class="menu-dropdown-button" id="save-button-SVG">Save QR code as SVG</a>
+					<a class="menu-dropdown-button" id="save-button-png">Save QR code as png</a>
+				</div>
+			</div>
 			<div id="qrcode-resize-container">
 				<div id="qrcode" class="qrcode invisible">
 					<img src="" width="200" height="200"></img>
 				</div>
+				
 				<img id="qrcode-placeholder" class="qrcode" src="img/qr-grey.svg" alt="QR code placeholder image"
 					width="200"
 					height="200"

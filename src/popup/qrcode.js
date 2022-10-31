@@ -11,6 +11,7 @@ import { tips } from "/common/modules/data/Tips.js";
 import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
 
 import "./modules/InitQrCode.js";
+import "./modules/UserInterface.js";
 
 RandomTips.init(tips).then(() => {
     RandomTips.setContext("popup");
