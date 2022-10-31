@@ -45,7 +45,6 @@ const qrCodeResizeContainer = document.getElementById("qrcode-resize-container")
 const qrCodeText = document.getElementById("qrcodetext");
 const saveButtonSVG = document.getElementById("save-button-SVG");
 const saveButtonPNG = document.getElementById("save-button-png");
-const copyButton = document.getElementById("copy-button");
 
 let resizeMutationObserver;
 
