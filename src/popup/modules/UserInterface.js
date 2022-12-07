@@ -624,7 +624,7 @@ export function init() {
                 setNewQrCodeSize(qrCodeSize.size, false);
             } else {
                 // regenerate QR code
-                setNewQrCodeSize(qrCodeSize.size, true);
+                setNewQrCodeSize(qrLastSize, true);
             }
         }
 
@@ -648,3 +648,15 @@ export function init() {
     // return Promise chain
     return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
 }
+
+function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 61 && evtobj.ctrlKey) {
+        setNewQrCodeSize(qrLastSize+20, true);
+    };
+    if (evtobj.keyCode == 173 && evtobj.ctrlKey) {
+        setNewQrCodeSize(qrLastSize-20, true);
+    };
+}
+
+document.onkeydown = KeyPress;
