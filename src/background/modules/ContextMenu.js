@@ -1,5 +1,6 @@
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import { createMenu } from "/common/modules/ContextMenu.js";
+import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
@@ -132,8 +133,13 @@ function menuShown(info) {
  * @returns {Promise}
  */
 export function init() {
-    return createItems().then(() => {
-        browser.menus.onClicked.addListener(menuClicked);
-        browser.menus.onShown.addListener(menuShown);
-    });
-}
+    const menuDisabled = AddonSettings.get("disableContextMenu")
+
+
+    if(menuDisabled === false){
+        return createItems().then(() => {
+            browser.menus.onClicked.addListener(menuClicked);
+            browser.menus.onShown.addListener(menuShown);
+        });
+    }
+    }

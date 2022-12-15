@@ -4,6 +4,7 @@
 - [@ENT8R](https://github.com/ENT8R)
 - [@OogieBoogieInJSON](https://github.com/OogieBoogieInJSON)
 - [@redagavin](https://github.com/redagavin)
+- [@starborne-nova](https://github.com/starborne-nova)
 - [@Thammarith](https://github.com/Thammarith)
 - [@xlomonosvx](https://github.com/xlomonosvx)
 - Alexander Knipping ([@obitech](https://github.com/obitech))

@@ -1,0 +1,207 @@
+21:42:28.783 Offline QR code [WARN] could not get managed options Error: Managed storage manifest not found Logger.js:76:21
+21:42:28.783 Offline QR code [INFO] AddonSettings module loaded. Logger.js:79:21
+21:42:28.784 Offline QR code [WARN] Could not get option "debugMode". Using default. false Logger.js:76:21
+21:42:28.784 Offline QR code [WARN] Could not get option "popupIconColored". Using default. false Logger.js:76:21
+21:42:28.784 Offline QR code [WARN] Could not get option "disableContextMenu". Using default. false Logger.js:76:21
+21:42:55.378 Offline QR code [WARN] null does not exist. Skip registering message type. 2 Logger.js:76:21
+21:42:55.387 Offline QR code [WARN] could not get managed options Error: Managed storage manifest not found Logger.js:76:21
+21:42:55.387 Content Security Policy: The page’s settings blocked the loading of a resource at eval (“script-src”). moz-extension:2:91524
+21:42:55.388 Offline QR code [INFO] AddonSettings module loaded. Logger.js:79:21
+21:42:55.389 Offline QR code [WARN] could not get managed options Error: Managed storage manifest not found Logger.js:76:21
+21:42:55.391 Offline QR code [WARN] Could not get option "debugMode". Using default. false Logger.js:76:21
+21:42:55.392 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { debugMode: false, popupIconColored: false, qrColor: "#0c0c0d", qrBackgroundColor: "#d7d7db", qrErrorCorrection: "Q", autoGetSelectedText: false, monospaceFont: false, disableContextMenu: false, qrCodeSize: {…}, qrQuietZone: 1, … }
+Logger.js:76:21
+21:42:55.392 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:42:55.393 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { tips: {} }
+Logger.js:76:21
+21:42:55.393 Offline QR code [WARN] Could not get option "monospaceFont". Using default. false Logger.js:76:21
+21:42:55.393 Offline QR code [WARN] Could not get option "qrBackgroundColor". Using default. #d7d7db Logger.js:76:21
+21:42:55.394 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:42:55.394 Offline QR code [WARN] Could not get option "qrCodeSize". Using default. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:42:55.394 Offline QR code [WARN] Could not get option "autoGetSelectedText". Using default. false Logger.js:76:21
+21:42:55.394 Offline QR code [INFO] Synced setting got for "randomTips". 
+Object { tips: {…}, triggeredOpen: 1 }
+Logger.js:79:21
+21:42:55.395 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { tips: {} }
+Logger.js:76:21
+21:42:55.400 Uncaught (in promise) Error: show no random tip, because randomize did not pass
+    showRandomTipIfWanted moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/common/modules/RandomTips/RandomTips.js:333
+    <anonymous> moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/qrcode.js:17
+    promise callback* moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/qrcode.js:15
+RandomTips.js:333:31
+21:42:55.400 Uncaught (in promise) Error: using selection is disabled
+    gettingSelection moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/modules/InitQrCode.js:37
+    promise callback* moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/modules/InitQrCode.js:35
+InitQrCode.js:37:31
+21:44:47.276 could not get managed options Error: Managed storage manifest not found AddonSettings.js:98:21
+21:44:47.276 AddonSettings module loaded. AddonSettings.js:342:13
+21:44:47.323 could not get managed options Error: Managed storage manifest not found
+    disableManagedStore moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/common/modules/AddonSettings/tests/helper/AddonSettingsStub.js:71
+    stubSettings moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/common/modules/AddonSettings/tests/helper/AddonSettingsStub.js:117
+    <anonymous> moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/tests/iconHandler.test.js:93
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4550
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4965
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4573
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4940
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+    setTimeout handler*[1]</</Mocha.Runner.immediately https://unpkg.com/mocha@5.2.0/mocha.js:98
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4969
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4995
+    hooks https://unpkg.com/mocha@5.2.0/mocha.js:5006
+    hookUp https://unpkg.com/mocha@5.2.0/mocha.js:5018
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5228
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4555
+    promise callback*callFn https://unpkg.com/mocha@5.2.0/mocha.js:4553
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+    setTimeout handler*[1]</</Mocha.Runner.immediately https://unpkg.com/mocha@5.2.0/mocha.js:98
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4969
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4995
+    hooks https://unpkg.com/mocha@5.2.0/mocha.js:5006
+    hookUp https://unpkg.com/mocha@5.2.0/mocha.js:5018
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5228
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4555
+    promise callback*callFn https://unpkg.com/mocha@5.2.0/mocha.js:4553
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+AddonSettings.js:98:21
+21:44:47.323 Synced setting got for "popupIconColored". true AddonSettings.js:251:21
+21:44:47.326 could not get managed options Error: Managed storage manifest not found
+    disableManagedStore moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/common/modules/AddonSettings/tests/helper/AddonSettingsStub.js:71
+    stubSettings moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/common/modules/AddonSettings/tests/helper/AddonSettingsStub.js:117
+    <anonymous> moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/tests/iconHandler.test.js:101
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4550
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4965
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4573
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4940
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+    setTimeout handler*[1]</</Mocha.Runner.immediately https://unpkg.com/mocha@5.2.0/mocha.js:98
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4969
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4995
+    hooks https://unpkg.com/mocha@5.2.0/mocha.js:5006
+    hookUp https://unpkg.com/mocha@5.2.0/mocha.js:5018
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5228
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4555
+    promise callback*callFn https://unpkg.com/mocha@5.2.0/mocha.js:4553
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4965
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4573
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4940
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+    setTimeout handler*[1]</</Mocha.Runner.immediately https://unpkg.com/mocha@5.2.0/mocha.js:98
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4969
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4995
+    hooks https://unpkg.com/mocha@5.2.0/mocha.js:5006
+    hookUp https://unpkg.com/mocha@5.2.0/mocha.js:5018
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5228
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4555
+    promise callback*callFn https://unpkg.com/mocha@5.2.0/mocha.js:4553
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+    setTimeout handler*[1]</</Mocha.Runner.immediately https://unpkg.com/mocha@5.2.0/mocha.js:98
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4969
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4995
+    hooks https://unpkg.com/mocha@5.2.0/mocha.js:5006
+    hookUp https://unpkg.com/mocha@5.2.0/mocha.js:5018
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5228
+    done https://unpkg.com/mocha@5.2.0/mocha.js:4497
+    callFn https://unpkg.com/mocha@5.2.0/mocha.js:4555
+    promise callback*callFn https://unpkg.com/mocha@5.2.0/mocha.js:4553
+    run https://unpkg.com/mocha@5.2.0/mocha.js:4542
+    runTest https://unpkg.com/mocha@5.2.0/mocha.js:5078
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5196
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4992
+    next https://unpkg.com/mocha@5.2.0/mocha.js:5002
+    next https://unpkg.com/mocha@5.2.0/mocha.js:4926
+    hook https://unpkg.com/mocha@5.2.0/mocha.js:4970
+    timeslice https://unpkg.com/mocha@5.2.0/mocha.js:82
+AddonSettings.js:98:21
+21:44:47.327 Synced setting got for "popupIconColored". false AddonSettings.js:251:21
+21:45:21.109 Content Security Policy: The page’s settings blocked the loading of a resource at eval (“script-src”). moz-extension:2:91524
+21:45:21.215 Offline QR code [WARN] could not get managed options Error: Managed storage manifest not found Logger.js:76:21
+21:45:21.215 Offline QR code [INFO] AddonSettings module loaded. Logger.js:79:21
+21:45:21.216 Offline QR code [WARN] Could not get option "debugMode". Using default. false Logger.js:76:21
+21:45:21.220 Offline QR code [WARN] null does not exist. Skip registering message type. 2 Logger.js:76:21
+21:45:21.225 Offline QR code [WARN] could not get managed options Error: Managed storage manifest not found Logger.js:76:21
+21:45:21.229 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { debugMode: false, popupIconColored: false, qrColor: "#0c0c0d", qrBackgroundColor: "#d7d7db", qrErrorCorrection: "Q", autoGetSelectedText: false, monospaceFont: false, disableContextMenu: false, qrCodeSize: {…}, qrQuietZone: 1, … }
+Logger.js:76:21
+21:45:21.230 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:45:21.230 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { tips: {} }
+Logger.js:76:21
+21:45:21.231 Offline QR code [WARN] Could not get option "monospaceFont". Using default. false Logger.js:76:21
+21:45:21.231 Offline QR code [WARN] Could not get option "qrBackgroundColor". Using default. #d7d7db Logger.js:76:21
+21:45:21.231 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:45:21.232 Offline QR code [WARN] Could not get option "qrCodeSize". Using default. 
+Object { sizeType: "fixed", size: 220 }
+Logger.js:76:21
+21:45:21.232 Offline QR code [WARN] Could not get option "autoGetSelectedText". Using default. false Logger.js:76:21
+21:45:21.232 Offline QR code [WARN] The following defined default value of type object is not frozen. It is recommend that all default options are frozen. 
+Object { tips: {} }
+Logger.js:76:21
+21:45:21.238 Uncaught (in promise) Error: using selection is disabled
+    gettingSelection moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/modules/InitQrCode.js:37
+    promise callback* moz-extension://41d70f35-2c45-421a-be42-844a9d7fb6a4/popup/modules/InitQrCode.js:35
+InitQrCode.js:37:31
