@@ -712,26 +712,19 @@ export function init() {
     ]);
 }
 
-// zoom listener
-document.onkeydown = zoomQrCode;
-
 /**
  * Listens to Alt + plus/minus keypresses to alter 
  * QR code size.
- *
- * @function
- * @returns {void}
  */
-function zoomQrCode(e) {
-    var evtobj = window.event ? event : e;
-    if (evtobj.keyCode == 61 && evtobj.altKey && qrLastSize < 440) {
+document.addEventListener('keydown', function(event) {
+    if ((event.key == '=' || event.key == '+') && event.altKey && qrLastSize < 440) {
         setNewQrCodeSize(qrLastSize + 30, true);
 
         localStorage.setItem("lastSize", qrLastSize);
     }
-    if (evtobj.keyCode == 173 && evtobj.altKey && qrLastSize > 50) {
+    if (event.key == '-' && event.altKey && qrLastSize > 50) {
         setNewQrCodeSize(qrLastSize - 30, true);
 
         localStorage.setItem("lastSize", qrLastSize);
     }
-}
+});

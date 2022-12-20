@@ -125,7 +125,3 @@ html, body {
     color: var(--white-100);
   }
 }
-
-#zoomTooltip {
-  font-weight: 700;
-}

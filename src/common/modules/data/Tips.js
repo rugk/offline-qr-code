@@ -119,6 +119,18 @@ const tipArray = [
             action: "tipSaveQrCodeLink"
         }
     },
+    {
+        id: "zoomQrHotkey",
+        requiredShowCount: 5,
+        requireDismiss: 1,
+        maximumDismiss: 2,
+        requiredTriggers: 5,
+        showInContext: {
+            "popup": 1
+        },
+        randomizeDisplay: false,
+        text: "tipZoomQrCodeHotkey"
+    },
     // {
     //     id: "donate",
     //     requiredShowCount: 4,
