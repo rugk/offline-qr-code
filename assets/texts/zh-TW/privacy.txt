@@ -1,9 +1,9 @@
-這個元件不發送任何訊息給元件作者或第三方。
+本附加元件不會將任何資訊傳送給第三方或附加元件的作者。
 
-該元件請求的所有權限用途，在此處查看 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/zh-TW/permissions.md.
+本附加元件所要求的權限說明，請至 https://github.com/rugk/offline-qr-code/blob/master/assets/texts/zh-TW/permissions.md 查看。
 
 == 第三方服務 ==
 
-該元件使用瀏覽器的"同步儲存"已保存設定值。如果用戶在瀏覽器中啟用"同步"，設置會自動上傳並在連揪到您帳號的所有設備同步。如果您未啟用，資料只在這個設備本地保存。
-在 Mozilla Firefox 中，數據上傳並保存到 Mozilla 的服務器前會使用點對點加密數據。
-查看 https://accounts.firefox.com/legal/privacy 與 https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 瞭解 Mozilla 的隱私策略。
+本附加元件使用瀏覽器的「同步儲存器」來儲存設定值。如果用使用者的瀏覽器有啟用「同步」功能，設定值就會自動上傳，並在所有連接到您帳號的裝置上同步。如不啟用，資料就不會同步到裝置。
+在 Mozilla Firefox 中，資料在被 Mozilla 上傳及儲存到伺服器之前會先經過端對端加密。
+請參閱 https://accounts.firefox.com/legal/privacy 及 https://www.mozilla.org/privacy/firefox/#c-privacy-topic-8 來瞭解 Mozilla 的隱私政策。
