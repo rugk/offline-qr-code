@@ -33,6 +33,7 @@ const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
 
 const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
 const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
+const CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD = "save-image-clipboard";
 
 const DOWNLOAD_PERMISSION = {
     permissions: ["downloads"]
@@ -502,6 +503,10 @@ function menuClicked(event) {
         }, "image/png");
         break;
     }
+    case CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD: {
+        copyToClipboard()
+        break;
+    }
     }
 }
 
@@ -520,6 +525,8 @@ async function createContextMenu() {
     // remove menu item if it has been added before
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CANVAS);
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_SVG);
+    browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD);
+
 
     // create save menus if needed
     await createMenu("contextMenuSaveImageSvg", {
@@ -538,6 +545,13 @@ async function createContextMenu() {
         ]
     }
     );
+    await createMenu("contextMenuSaveImageClipboard", {
+        id: CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD,
+        contexts: ["page"],
+        documentUrlPatterns: [
+            document.URL // only apply to own URL = popup
+        ]
+    });
 
     browser.menus.onClicked.addListener(menuClicked);
     return Promise.resolve();
@@ -571,6 +585,27 @@ export function postInitGenerate() {
     selectAllText({ target: qrCodeText });
 }
 
+// TODO: Improve naming of these 2 functions, a bit too similar at the moment
+function copyQRCodeToClipboard(event) {
+    const standardCopyCommand = event.ctrlKey && event.key === "c"
+    // CMD + C is standard for macOS
+    const macCopyCommand = event.metaKey && event.key === "c"
+
+    if (standardCopyCommand || macCopyCommand) {
+        copyToClipboard()
+    }
+}
+
+function copyToClipboard() {
+    const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+
+    canvasElem.toBlob((blob) => {
+        const clipboardImage = new ClipboardItem({"image/png": blob})
+        navigator.clipboard.write([clipboardImage])
+    }, "image/png")
+
+}
+
 /**
  * Initalises the module.
  *
@@ -589,7 +624,9 @@ export function init() {
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
-    qrCodeText.addEventListener("focus", selectAllText);
+    // TODO: Disable event listener below depending on user preference
+    qrCodeText.addEventListener("keydown", copyQRCodeToClipboard)
+    // qrCodeText.addEventListener("focus", selectAllText);
 
     const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
         if (monospaceFont) {
