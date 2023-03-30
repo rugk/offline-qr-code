@@ -33,6 +33,7 @@ const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
 
 const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
 const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
+const CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD = "save-image-clipboard";
 
 const DOWNLOAD_PERMISSION = {
     permissions: ["downloads"]
@@ -502,6 +503,10 @@ function menuClicked(event) {
         }, "image/png");
         break;
     }
+    case CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD: {
+        writeQRToClipboard()
+        break;
+    }
     }
 }
 
@@ -520,6 +525,8 @@ async function createContextMenu() {
     // remove menu item if it has been added before
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CANVAS);
     browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_SVG);
+    browser.menus.remove(CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD);
+
 
     // create save menus if needed
     await createMenu("contextMenuSaveImageSvg", {
@@ -538,6 +545,13 @@ async function createContextMenu() {
         ]
     }
     );
+    await createMenu("contextMenuSaveImageClipboard", {
+        id: CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD,
+        contexts: ["page"],
+        documentUrlPatterns: [
+            document.URL // only apply to own URL = popup
+        ]
+    });
 
     browser.menus.onClicked.addListener(menuClicked);
     return Promise.resolve();
@@ -572,6 +586,43 @@ export function postInitGenerate() {
 }
 
 /**
+ * Listens for the default copy commands CTRL+C (Windows/Linux) and CMD+C (macOS)
+ * and subsequently writes the current QR code to the clipboard
+ *
+ * @function
+ * @private
+ * @param {event} event
+ * @returns {void}
+ */
+function copyQRCodeToClipboard(event) {
+    const standardCopyCommand = event.ctrlKey && event.key === "c"
+    // CMD + C is standard for macOS
+    const macCopyCommand = event.metaKey && event.key === "c"
+
+    if (standardCopyCommand || macCopyCommand) {
+        writeQRToClipboard()
+    }
+}
+
+/**
+ * Writes the current QR code to the clipboard using the Clipboard API
+ *
+ * @function
+ * @private
+ * @returns {void}
+ */
+function writeQRToClipboard() {
+    const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+
+    // Only works when you set dom.events.asyncClipboard.clipboardItem to True
+    canvasElem.toBlob((blob) => {
+        const clipboardImage = new ClipboardItem({"image/png": blob})
+        navigator.clipboard.write([clipboardImage])
+    }, "image/png")
+
+}
+
+/**
  * Initalises the module.
  *
  * @function
@@ -590,6 +641,12 @@ export function init() {
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
     qrCodeText.addEventListener("focus", selectAllText);
+
+    const applyingCopyListener = AddonSettings.get("overrideCopy").then((overrideCopy) =>  {
+        if (overrideCopy) {
+            window.addEventListener("keydown", copyQRCodeToClipboard)
+        }
+    })
 
     const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
         if (monospaceFont) {
@@ -646,5 +703,5 @@ export function init() {
     const initQrTypespecificSettings = createContextMenu();
 
     // return Promise chain
-    return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
+    return Promise.all([applyingCopyListener, applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
 }
