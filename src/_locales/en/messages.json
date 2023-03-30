@@ -362,6 +362,11 @@
     "description": "This is an option shown in the add-on settings."
   },
 
+  "optionOverrideCopy": {
+    "message": "CTRL+C/⌘+C to copy QR code",
+    "description": "This is an option shown in the add-on"
+  },
+
   "optionDebugMode": {
     "message": "Enable debug mode",
     "description": "This is an option shown in the add-on settings."

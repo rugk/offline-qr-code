@@ -29,7 +29,8 @@ const defaultSettings = Object.freeze({
     qrQuietZone: 1,
     randomTips: {
         tips: {}
-    }
+    },
+    overrideCopy: true
 });
 
 // freeze the inner objects, this is strongly recommend

@@ -504,7 +504,7 @@ function menuClicked(event) {
         break;
     }
     case CONTEXT_MENU_SAVE_IMAGE_CLIPBOARD: {
-        copyToClipboard()
+        writeQRToClipboard()
         break;
     }
     }
@@ -585,20 +585,36 @@ export function postInitGenerate() {
     selectAllText({ target: qrCodeText });
 }
 
-// TODO: Improve naming of these 2 functions, a bit too similar at the moment
+/**
+ * Listens for the default copy commands CTRL+C (Windows/Linux) and CMD+C (macOS)
+ * and subsequently writes the current QR code to the clipboard
+ *
+ * @function
+ * @private
+ * @param {event} event
+ * @returns {void}
+ */
 function copyQRCodeToClipboard(event) {
     const standardCopyCommand = event.ctrlKey && event.key === "c"
     // CMD + C is standard for macOS
     const macCopyCommand = event.metaKey && event.key === "c"
 
     if (standardCopyCommand || macCopyCommand) {
-        copyToClipboard()
+        writeQRToClipboard()
     }
 }
 
-function copyToClipboard() {
+/**
+ * Writes the current QR code to the clipboard using the Clipboard API
+ *
+ * @function
+ * @private
+ * @returns {void}
+ */
+function writeQRToClipboard() {
     const canvasElem = QrCreator.getQrCodeCanvasFromLib();
 
+    // Only works when you set dom.events.asyncClipboard.clipboardItem to True
     canvasElem.toBlob((blob) => {
         const clipboardImage = new ClipboardItem({"image/png": blob})
         navigator.clipboard.write([clipboardImage])
@@ -624,9 +640,13 @@ export function init() {
 
     // add event listeners
     qrCodeText.addEventListener("input", refreshQrCode);
-    // TODO: Disable event listener below depending on user preference
-    qrCodeText.addEventListener("keydown", copyQRCodeToClipboard)
-    // qrCodeText.addEventListener("focus", selectAllText);
+    qrCodeText.addEventListener("focus", selectAllText);
+
+    const applyingCopyListener = AddonSettings.get("overrideCopy").then((overrideCopy) =>  {
+        if (overrideCopy) {
+            window.addEventListener("keydown", copyQRCodeToClipboard)
+        }
+    })
 
     const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
         if (monospaceFont) {
@@ -683,5 +703,5 @@ export function init() {
     const initQrTypespecificSettings = createContextMenu();
 
     // return Promise chain
-    return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
+    return Promise.all([applyingCopyListener, applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
 }
