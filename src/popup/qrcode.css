@@ -56,6 +56,15 @@ html, body {
   text-align: center;
 }
 
+.message-box {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
 /* Let the element float (at the bottom on top of the qr) */
 .float-qr {
   position: absolute;
