@@ -1,19 +1,20 @@
 {
-  "manifest_version": 2,
-  "name": "OfflineQr DEV VERSION",
-  "short_name": "__MSG_extensionNameShort__",
-  "version": "1.8",
-  "author": "rugk",
+  "manifest_version": 2,  // Manifest file version.
 
-  "description": "__MSG_extensionDescription__",
-  "homepage_url": "https://github.com/rugk/offline-qr-code",
+  "name": "OfflineQr DEV VERSION",  // Add-on name.
+  "short_name": "__MSG_extensionNameShort__",  // Short name.
+  "version": "1.8",  // Add-on version.
+  "author": "rugk",  // Author's name.
 
-  "browser_action": {
-    "browser_style": true,
-    "default_icon": "icons/icon-small-dark.svg",
-    "default_title": "__MSG_browserActionButtonTitle__",
-    "default_popup": "popup/qrcode.html",
-    "theme_icons": [
+  "description": "__MSG_extensionDescription__",  // Brief add-on description.
+  "homepage_url": "https://github.com/rugk/offline-qr-code",  // Add-on's homepage URL.
+
+  "browser_action": {  // Configuration for the browser action button.
+    "browser_style": true,  // Use browser's style.
+    "default_icon": "icons/icon-small-dark.svg",  // Default icon.
+    "default_title": "__MSG_browserActionButtonTitle__",  // Tooltip text.
+    "default_popup": "popup/qrcode.html",  // Popup HTML file.
+    "theme_icons": [  // Icons for light and dark themes.
       {
         "dark": "icons/icon-small-dark.svg",
         "light": "icons/icon-small-light.svg",
@@ -22,45 +23,49 @@
     ]
   },
 
-  "options_ui": {
-    "page": "options/options.html",
-    "browser_style": true
+  "options_ui": {  // Configuration for the options page.
+    "page": "options/options.html",  // Options page HTML file.
+    "browser_style": true,  // Use browser's style.
   },
 
-  "background": {
-    "page": "background/background.html"
+  "background": {  // Configuration for the background page.
+    "page": "background/background.html"  // Background page HTML file.
   },
-  "commands": {
+
+  "commands": {  // Keyboard shortcuts and commands.
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+F10"
+        "default": "Ctrl+Shift+F10"  // Default keyboard shortcut.
       },
-      "description": "__MSG_commandOpenQrPopup__"
+      "description": "__MSG_commandOpenQrPopup__"  // Command description.
     }
   },
 
-  // testing version allows loading unit test libraries from CDNs
-  "content_security_policy": "default-src 'self'; img-src data:; style-src 'self' https://unpkg.com; script-src 'self' https://unpkg.com",
-  "icons": {
+  "content_security_policy": "default-src 'self'; img-src data:; style-src 'self' https://unpkg.com; script-src 'self' https://unpkg.com",  // Content Security Policy.
+
+  "icons": {  // Icons for the add-on.
     "16": "icons/icon-small-colored.svg",
     "32": "icons/icon-small-colored.svg",
     "48": "icons/icon-large.svg",
     "96": "icons/icon-large.svg"
   },
-  "default_locale": "en",
 
-  "permissions": [
-    "activeTab",
-    "storage",
-    "menus"
+  "default_locale": "en",  // Default locale for message localization.
+
+  "permissions": [  // Required permissions.
+    "activeTab",  // Interaction with the active tab.
+    "storage",  // Data storage on the user's device.
+    "menus"  // Adding items to context menus.
   ],
-  "optional_permissions": [
-    "downloads"
+
+  "optional_permissions": [  // Optional permissions.
+    "downloads"  // Managing downloads.
   ],
-  "applications": {
+
+  "applications": {  // Compatibility settings for Firefox (Gecko).
     "gecko": {
-      "id": "offline-qr-code@rugk.github.io",
-      "strict_min_version": "60.0a1"
+      "id": "offline-qr-code@rugk.github.io",  // Unique identifier for the add-on.
+      "strict_min_version": "60.0a1"  // Minimum required Firefox version.
     }
   }
 }
