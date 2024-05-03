@@ -62,10 +62,12 @@ See:
 
 ## Contribute
 
-You can easily get involved in this FLOSS project and any help is certainly appreciated. Here are some ideas:
+Want to contribute? There are multiple ways you can contribute to this project. Here are some ideas:
 
 * 📃 [Translate this add-on into multiple languages!](./CONTRIBUTING.md#translations)
 * 🐛 [Fix some easy issues and get started in add-on development](CONTRIBUTING.md#coding) (or just try out the development version)
 * 💡 [Or check out some other add-on issues](CONTRIBUTING.md#need-ideas) (or translate them).
 
 Or, in any case, [support us by spreading the word!](./CONTRIBUTING.md#support-us) ❤️
+
+Checkout our contributing guidelines in [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
