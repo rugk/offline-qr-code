@@ -1,7 +1,8 @@
 Nice to see you want to contribute to this project! :+1: :tada:
 Please have a look at this guide to know what you are changing.
 
-### **Note:** This project is an add-on from the TinyWebEx modules. 
+> [!NOTE]
+> This project uses the same guidelines as the TinyWebEx library modules for add-on's. 
 
 There is a master document outlining the common contributing guidelines for this project and other TinyWebEx modules (common add-on files for my add-on(-related) projects). 
 
