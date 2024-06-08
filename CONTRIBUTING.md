@@ -1,9 +1,14 @@
 Nice to see you want to contribute to this project! :+1: :tada:
 Please have a look at this guide to know what you are changing.
 
-As I do not want to duplicate the instructions all over, please **find the common contributors docs here**: https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md
+> [!NOTE]
+> This project uses the same guidelines as the TinyWebEx library modules for add-on's. 
 
-Some links and potential special rules for this repo only are listed below.
+There is a master document outlining the common contributing guidelines for this project and other TinyWebEx modules (common add-on files for my add-on(-related) projects). 
+
+As I do not want to duplicate the instructions all over, please find the common contributors docs for TinyWebEx modules [here](https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md). 
+
+Some links and potential special rules only for the **Offline QR Code Generator** project are are listed below.
 
 ## Support us!
 
