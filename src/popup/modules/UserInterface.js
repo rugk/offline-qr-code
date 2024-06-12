@@ -378,6 +378,10 @@ export function handleQrError(error) {
 function triggerFileSave(file, filename, requestDownloadPermissions) {
     const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSION);
 
+    // Blur QR code so that it is clear that user did not give permission yet
+    qrCode.style.filter = "blur(5px)"; // add the blur effect
+
+
     downloadPermissionGranted.then((isAlreadyGranted) => {
         let usePermissionWorkaround = false;
 
@@ -387,6 +391,7 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
             usePermissionWorkaround = true;
             CommonMessages.showInfo("requestDownloadPermissionForQr");
         }
+
 
         browser.runtime.sendMessage({
             type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
@@ -411,10 +416,13 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
             if (usePermissionWorkaround) {
                 // if permission result is there, hide info message
                 CommonMessages.hideInfo();
+
+
             }
 
-            // in case of success there is nothing else to do
+            // in case of success remove the blur and return
             if (permissionGranted) {
+                qrCode.style.filter = "none";
                 return;
             }
 
