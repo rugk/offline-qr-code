@@ -91,6 +91,10 @@
 
 - Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
 
+### Vietnamese
+
+- Cretzen ([@hellotinh03](https://github.com/hellotinh03))
+
 ### Telugu 
 
 - Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))
