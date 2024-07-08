@@ -17,7 +17,7 @@ It is inspired by [the old Offline QR code generator add-on](https://github.com/
 
 ## Download
 
-**[![Get it for Firefox!](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=download-button&utm_campaign=github)**
+**[![Get it for Firefox!](https://extensionworkshop.com/assets/img/documentation/publish/get-the-addon-178x60px.dad84b42.png)](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=download-button&utm_campaign=github)**
 
 > **BTW:** If you want to search and insert emojis easily on all your websites, do check out our **[Awesome Emoji Picker](https://github.com/rugk/awesome-emoji-picker/?utm_source=github.com&utm_medium=git&utm_content=download-button&&utm_campaign=github-btw-do-you-also-know-readme)** too!
 
@@ -46,7 +46,7 @@ See:
 * You can generate and save QR codes as SVG or Canvas (PNG image)!
 * You can choose the size of the QR code and customize things.
 * Is completely internationalized (i18n).
-* You can use a shortcut (Ctrl+Shift+F10) for generating the QR code.
+* You can use a shortcut (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd>) for generating the QR code.
 * Generates QR codes from selected text on the website.
 * Has complete Unicode/UTF-8/Emoji support.
 * Looks good on desktop and mobile devices, i.e. it is responsive!
@@ -62,10 +62,12 @@ See:
 
 ## Contribute
 
-You can easily get involved in this FLOSS project and any help is certainly appreciated. Here are some ideas:
+Want to contribute? There are multiple ways you can contribute to this project. Here are some ideas:
 
 * 📃 [Translate this add-on into multiple languages!](./CONTRIBUTING.md#translations)
 * 🐛 [Fix some easy issues and get started in add-on development](CONTRIBUTING.md#coding) (or just try out the development version)
 * 💡 [Or check out some other add-on issues](CONTRIBUTING.md#need-ideas) (or translate them).
 
 Or, in any case, [support us by spreading the word!](./CONTRIBUTING.md#support-us) ❤️
+
+Checkout our contributing guidelines in [CONTRIBUTING.md](./CONTRIBUTING.md) for details.

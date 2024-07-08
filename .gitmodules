@@ -22,3 +22,6 @@
 [submodule "src/common/modules/AutomaticSettings"]
 	path = src/common/modules/AutomaticSettings
 	url = https://github.com/TinyWebEx/AutomaticSettings
+[submodule "src/common/modules/CommonCss"]
+	path = src/common/modules/CommonCss
+	url = https://github.com/TinyWebEx/CommonCss

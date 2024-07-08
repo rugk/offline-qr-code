@@ -94,3 +94,7 @@
 ### Vietnamese
 
 - Cretzen ([@hellotinh03](https://github.com/hellotinh03))
+
+### Telugu 
+
+- Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))

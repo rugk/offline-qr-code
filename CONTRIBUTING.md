@@ -1,9 +1,14 @@
 Nice to see you want to contribute to this project! :+1: :tada:
 Please have a look at this guide to know what you are changing.
 
-As I do not want to duplicate the instructions all over, please **find the common contributors docs here**: https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md
+> [!NOTE]
+> This project uses the same guidelines as the TinyWebEx library modules for add-on's. 
 
-Some links and potential special rules for this repo only are listed below.
+There is a master document outlining the common contributing guidelines for this project and other TinyWebEx modules (common add-on files for my add-on(-related) projects). 
+
+As I do not want to duplicate the instructions all over, please find the common contributors docs for TinyWebEx modules [here](https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md). 
+
+Some links and potential special rules only for the **Offline QR Code Generator** project are are listed below.
 
 ## Support us!
 
@@ -12,7 +17,7 @@ You like this add-on, but have no idea how to support us?
 Here are some easy things you can always do:
 
 * Spread the word and recommend it to others! 🤗😍
-* Leave a rating [at addons.mozilla.org](https://addons.mozilla.org/firefox/addon/offline-qr-code/reviews/) if you like it!
+* Leave a rating [at addons.mozilla.org](https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/) if you like it!
   Also consider writing some text and not only leaving stars there. It's always nice to hear some warm words. ☺️
 * Star this project [on GitHub](https://github.com/rugk/offline-qr-code) by clicking the "star" icon!
 * Leave a [review at alternativeto.net](https://alternativeto.net/software/offline-qr-code-generator/reviews/) and click the like button there, if you want. (Also, you can obviously recommend this add-on as an alternative to other emoji pickers.)
