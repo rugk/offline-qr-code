@@ -19,18 +19,24 @@
  * @type {string[]}
  */
 const ADDON_TRANSLATED_INTO = [
-    // German
+    "ar",
     "de", "de-DE",
-    // English
     "en", "en-US",
-    // Turkish
-    "tr", "tr-TR",
-    // French
+    "es",
+    "fa",
     "fr", "fr-FR",
-    // Portuguese
-    "pt", "pt-BR", // pt-PT (?)
-    // zh-CN not included yet, as it is not 100%ly translated
-    "zh-TW",
+    "he",
+    "id",
+    "it",
+    "ja",
+    "pl",
+    "pt", "pt-BR",
+    "ru",
+    "sw",
+    "te",
+    "tr", "tr-TR",
+    "zh_CN",
+    "zh_TW"
 ].map((lang) => lang.toLowerCase());
 
 /**
