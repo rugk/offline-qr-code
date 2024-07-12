@@ -1,0 +1,428 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Generator De QR Coduri Offline",
+    "description": "Name of the extension."
+  },
+  "extensionNameShort": {
+    "message": "QR-Code Offline",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "O extensie care îți generează un cod QR pentru orice website sau fișier care îl ai deschis.",
+    "description": "Description of the extension."
+  },
+  "browserActionButtonTitle": {
+    "message": "QR Coduri Offline",
+    "description": "The title for the button, which opens the popup."
+  },
+  "commandOpenQrPopup": {
+    "message": "Deschide popup-ul QR",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
+
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "Nu s-a putut afișa acest mesaj.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "couldNotLoadOptions": {
+    "message": "Setările nu au putut fi incărcate.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotSaveOption": {
+    "message": "Setarea nu a putut fi salvată.",
+    "description": "When a setting could not be saved."
+  },
+  "messageUndoButton": {
+    "message": "Anulează",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotUndoAction": {
+    "message": "Acțiunea nu a putut fi anulată.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Toate setările au fost resetate!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Setările nu au putut fi resetate!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "Eroare necunoscută",
+    "description": ""
+  },
+  "loading": {
+    "message": "Încărcare…",
+    "description": "A general loading message."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "QR Codul nu a putut fi generat.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Nu s-a putut lua tab-ul activ.",
+    "description": ""
+  },
+  "errorDownloadingFile": {
+    "message": "Fișierul nu a putut fi instalat.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Nu poți continua fără permisiuni.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Cererea de permisiuni nu a reușit.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  },
+  "errorQrCodeOverflow": {
+    "message": "QR Codul nu a fost generat, textul primit este prea lung.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size."
+  },
+  "requestDownloadPermissionForQr": {
+    "message": "Pentru a salva codul QR, îți trebuie permisiunea de a descărca.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+  },
+  "lowContrastRatioInfo": {
+    "message": "Codul tău QR s-ar putea să fie greu de scanat de cititoare de coduri din cauza contrast-ului mic.",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioWarning": {
+    "message": "Rata de contrast al codului QR s-ar putea să fie prea mică sa fie recunoscută de toate cititoarele de cod QR",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "Culoarea codului QR și culoarea de fundal sunt prea similare.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Foloseste o culoare contrastantă",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "Îți place această extensie?",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Dă-ne un rating",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+      "message": "Știai că poți să salvezi codurile QR?",
+      "description": "A tip shown to get the user to find the save option."
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
+  "tipQrCodeHotkey": {
+      "message": "Ține minte tastele pentru această extensie: Ctrl+Shift+F10.",
+      "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipAndroidQrReader": {
+    "message": "Firefox are un scanner integrat de coduri QR.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
+  "tipTranslateAddon": {
+    "message": "Dacă vorbești altă limbă, poți ajuta la traducerea acestei extensii.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
+  },
+  "tipDonate": {
+    "message": "Îți place să folosești această extensie pe gratis?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Ajută dezvoltarea prin o donație",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
+  "tipLearnMore": {
+    "message": "Mai multe informații",
+    "description": "The common button for tips, where you can get more information on click."
+  },
+  "tipHowToUse": {
+    "message": "Cum se folosește această extensie?",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+  },
+
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "Imaginea de substituție a codului QR",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "Introduceți textul pentru codul QR aici pentru a-l genera.",
+    "description": "Placeholder for the textarea, when it is empty."
+  },
+
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "Cod QR din selecție",
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "&Cod QR din selecție",
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "Cod QR din link",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
+  },
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "&Cod QR din link",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+  },
+  "contextMenuSaveImageCanvas": {
+    "message": "Salvează codul QR ca imagine…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+  },
+  "contextMenuSaveImageCanvasAccessKey": {
+    "message": "Salvează codul QR ca &imagine…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+  },
+  "contextMenuSaveImageSvg": {
+    "message": "Salvează codul QR ca un SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageSvgAccessKey": {
+    "message": "Salvează codul QR ca un &SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+  },
+
+  // options
+  "someSettingsAreManaged": {
+    "message": "Unele setări sunt gestionate de administratorul sistemului și nu pot fi modificate.",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "Această opțiune este dezactivată, deoarece a fost configurată de administratorul sistemului tău.",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+  },
+  "optionLearnMore": {
+    "message": "Mai mult",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Resetează toate setările la valorile implicite",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  "titleGeneral": {
+    "message": "Extensie",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "coduri QR",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Setări extensie",
+    "description": "The title for the addon behavior settings group."
+  },
+
+  "optionPopupIconColored": {
+    "message": "Iconiță colorată",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColoredDescr": {
+    "message": "Afișează o iconiță colorată în locul iconiței alb/negru din bara de instrumente.",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+
+  "subtitleQrCodeSize": {
+    "message": "Dimensiune cod QR",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "Dimensiune fixă:",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "Schimbă dimensiunea automat",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "Util pe dispozitivele mobile, unde codul QR se deschide într-o filă nouă.",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "Ține minte ultima dimensiune",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "subtitleMisc": {
+    "message": "Setări diverse",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
+  "optionQrQuietZone": {
+    "message": "Zonă liniștită al codului QR:",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ pătrat)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ pătrate)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "Numărul de module de margine în jurul codului QR colorate cu culoarea de fundal.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
+  },
+
+  "optionQrCodeColor": {
+    "message": "Culoare cod QR:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionQrCodeBackgroundColor": {
+    "message": "Culoare de fundal cod QR:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionErrorCorrection": {
+    "message": "Nivel de corecție a erorilor:",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcLow": {
+    "message": "Mic (7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcMedium": {
+    "message": "Mediu (15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcQuartile": {
+    "message": "Cuartilă (25%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcHigh": {
+    "message": "Mare (30%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "Această valoare indică cât de mult din cod poate lipsi, astfel încât să poată fi scanat în continuare.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option."
+  },
+
+  "optionAutoGetSelectedText": {
+    "message": "Utilizează automat textul selectat de pe site",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionUseMonospaceFont": {
+    "message": "Utilizează font monospace",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionDebugMode": {
+    "message": "Activează modul de debug",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "Acesta este util doar pentru a obține un output mai detaliat în consolă pentru raportarea erorilor.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
+  },
+
+  "translatorCredit": {
+    "message": "Această extensie a fost tradusă de Laurențiu Cristian Preda $TRANSLATORS$.",
+    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+    "placeholders": {
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/criseda/\">@criseda</a>"
+      }
+    }
+  },
+  "translatorLink": {
+    "message": "https://github.com/criseda",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorUsername": {
+    "message": "criseda",
+    "description": "The username that the translator wants to be referred to."
+  },
+
+  "contributorsThanks": {
+    "message": "Mulţumiri și $CONTRIBUTORS$.",
+    "description": "Text thanking all contributors and linking to the contributors file.",
+    "placeholders": {
+      "contributors": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">celorlalţi contribuitori</a>"
+      }
+    }
+  },
+  "contributorsThanksLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
+    "description": "The link to the CONTRIBUTORS file."
+  },
+  "contributorsThanksLinkText": {
+    "message": "ceilalţi contribuitori",
+    "description": "The link text linking to the contributors file. See contributorsThanks."
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "Inchide mesajul",
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "Mesajul se incarcă",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "Info mesaj",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "Mesaj de succes",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "Mesaj de eroare",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "Mesaj de avertizare",
+    "description": "the aria label to label the message box as an warning message box"
+  }
+}
