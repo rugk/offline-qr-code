@@ -427,7 +427,10 @@
     "message": "This add-on has been translated into Arabic by Ahmad Ayman ($LINK$)!",
     "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
-      "translators": { "content": "$1", "example": "<a href=\"https://github.com/rugk/\">@rugk</a>" }
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+      }
     },
     "hash": "a6f5deecd624d5f8cd58350c72dd8fdf"
   },
@@ -445,7 +448,10 @@
     "message": "شكرا لجميع المشاركين $CONTRIBUTORS$.",
     "description": "Text thanking all contributors and linking to the contributors file.",
     "placeholders": {
-      "contributors": { "content": "$1", "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>" }
+      "contributors": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+      }
     },
     "hash": "b1434b8b42b1707f37d0531a8efdc7f8"
   },
