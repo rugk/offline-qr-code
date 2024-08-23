@@ -53,12 +53,12 @@
     "hash": "d2883c6ca0164afc4f360f3e02e3166a"
   },
   "resettingOptionsWorked": {
-    "message": "Se ha restablecido la configuración de fábrica!",
+    "message": "¡Se ha restablecido la configuración de fábrica!",
     "description": "The message shown, when the options of the settings were reset.",
     "hash": "257b99ed2a074fccbfc658d770b50107"
   },
   "resettingOptionsFailed": {
-    "message": "No se pudo reestablecer la configuración!",
+    "message": "¡No se pudo restablecer la configuración!",
     "description": "The message shown, when the options of the settings could not have been reset.",
     "hash": "76e950d2db72a824482411ca6564fb1f"
   },
@@ -69,7 +69,7 @@
     "hash": "879b63f6ebf03308a9f4b8a4406663f3"
   },
   "loading": {
-    "message": "Cargando...",
+    "message": "Cargando…",
     "description": "A general loading message.",
     "hash": "e2a5d4627618472a68f4cb8895e93f30"
   },
@@ -127,7 +127,7 @@
 
   // tips
   "tipYouLikeAddon": {
-    "message": "Te gusta esta extensión?",
+    "message": "¿Te gusta esta extensión?",
     "description": "A tip shown to remind the user to rate the addon.",
     "hash": "0f5680a5a42bcebf793a44b9dfcf79a1"
   },
@@ -137,7 +137,7 @@
     "hash": "821d7f942b02e2b56cd0424d3ab65de8"
   },
   "tipSaveQrCode": {
-    "message": "Sabías que puedes guardar códigos QR?",
+    "message": "¿Sabías que puedes guardar códigos QR?",
     "description": "A tip shown to get the user to find the save option.",
     "hash": "84f0a0027a58c98d9158ab9894fe8427"
   },
@@ -187,7 +187,7 @@
     "hash": "9085b09f4748be12ab0c241d2e643b31"
   },
   "tipHowToUse": {
-    "message": "Cómo se usa?",
+    "message": "¿Cómo se usa?",
     "description": "The common button for tips, where you can get more information about how to use a feature just presented.",
     "hash": "b48eefa95832b3c6df287ff077b4e28a"
   },
@@ -333,7 +333,7 @@
     "hash": "a11f6e534cf14d30bccdb359489862b9"
   },
   "optionQrQuietZoneStatusSingular": {
-    "message": "($INTEGER$ cuadrados)",
+    "message": "($INTEGER$ cuadrado)",
     "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
     "placeholders": {
       "integer": { "content": "$1", "example": "1" }
