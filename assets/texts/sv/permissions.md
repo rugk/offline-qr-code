@@ -1,24 +1,24 @@
-# Requested permissions
+# Begärda behörigheter
 
-For a general explanation of add-on permissions see [this support article](https://support.mozilla.org/kb/permission-request-messages-firefox-extensions).
+För en generell förklaring av tilläggets behörigheter se [denna supportartikel](https://support.mozilla.org/kb/permission-request-messages-firefox-extensions).
 
-## Installation permissions
+## Installations behörigheter
 
-Currently, no permission is requested at the installation or when updating.
+För närvarande behövs inga behörigheter för installation eller vid uppdatering.
 
-## Feature-specific (optional) permissions
+## Framtidsspecefika (valbara) behörigheter
 
-These permissions are requested when doing some specific actions, if they are needed for that.
+Dessa behörigheter är begärda för vissa specefika åtgärder, om de behövs för det.
 
-| Internal Id | Permission                                                        | Requested at…              | Explanation                                                                                                                                                                                       |
+| Intern Id | Behörighet                                                        | Begärd vid…              | Förklaring                                                                                                                                                                                  |
 |:------------|:------------------------------------------------------------------|:---------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `downloads` | Download files and read and modify the browser’s download history | Download of QR code as SVG | Needed for downloading (saving) the SVG and allowing the user to choose a file location. This add-on does not access your downloaded files, it just uses this permission to start the download. |
+| `downloads` | Laddar ner filer samt läser och skriver och modifierar browserns nerladdnings historia | Nerladdning av QR-kod som SVG | Behövs för nerladdning (sparar) SVG:n och tillåter användaren att välja en destination för filen. Detta tillägg har inte tillgång till dina nerladdade filer, den använder bara behörigheten till att starta nerladdningen. |
 
-## Hidden permissions
-Additionally, it requests these permissions, which are not requested in Firefox when the add-on is installed, as they are not major permissions.
+## Dolda behörigheter
+Dessutom, den begär dessa behörigheter, vilka inte är begärda i Firefox när tillägget installeras, eftersom de inte är stora behörigheter.
 
-| Internal Id | Permission                   | Explanation                                                       |
+| Intern Id | Behörighet                   | Förklaring                                                       |
 |:------------|:-----------------------------|:------------------------------------------------------------------|
-| `activeTab` | Access current tab website   | Needed for getting the URL of the current website for the QR code |
-| `storage`   | Access local storage         | Needed for saving options                                         |
-| `menus`     | Modify browser context menus | Needed for adding context menus "QR code from selection" (etc.)   |
+| `activeTab` | Åtkomst till nuvarande flik   | Behövs för att få URL:n till den nuvarande websidan för QR-koden |
+| `storage`   | Åtkomst till local storage         | Behövs för att spara val                                         |
+| `menus`     | Modifiera browser kontext menyer | Behövs för att lägga till kontext menyer "QR-kod från val" (osv.)   |
