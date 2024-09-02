@@ -77,6 +77,7 @@
 
 - [@Fanksies](https://github.com/Fanksies)
 - Bryan Calisto ([@bryancalisto](https://github.com/bryancalisto))
+- Diego Verbrugghe ([@dverbru](https://github.com/dverbru))
 
 ### Swahili
 
