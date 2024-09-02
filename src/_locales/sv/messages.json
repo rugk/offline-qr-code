@@ -1,0 +1,428 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Offline QR Code Generator",
+    "description": "Name of the extension."
+  },
+  "extensionNameShort": {
+    "message": "Offline QR-Code",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Tillåter dig att generera en QR kod för vilken webbplats eller flik som helst, som du har öppen.",
+    "description": "Description of the extension."
+  },
+  "browserActionButtonTitle": {
+    "message": "Offline QR code",
+    "description": "The title for the button, which opens the popup."
+  },
+  "commandOpenQrPopup": {
+    "message": "Öppna QR-kod popup",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
+
+  // errors or other messages (mostly for settings)
+"errorShowingMessage": {
+  "message": "Kunde inte visa detta meddelande.",
+  "description": "When there is an error when showing the error/info/…."
+},
+"couldNotLoadOptions": {
+  "message": "Kunde inte ladda inställningar.",
+  "description": "When one or all settings could not be loaded."
+},
+"couldNotSaveOption": {
+  "message": "Kunde inte spara denna inställning.",
+  "description": "When a setting could not be saved."
+},
+"messageUndoButton": {
+  "message": "Ångra",
+  "description": "The text of a button that undoes the last action."
+},
+"couldNotUndoAction": {
+  "message": "Kunde inte ångra åtgärden.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Alla inställningar är nu återställda till standardvärden igen!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Kunde inte återställa inställningarna!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "Okänt fel",
+    "description": ""
+  },
+  "loading": {
+    "message": "Laddar…",
+    "description": "A general loading message."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "Kunde inte generera QR code.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Kunde inte hämta aktiv flik.",
+    "description": ""
+  },
+  "errorDownloadingFile": {
+    "message": "Kunde inte ladda ner filen.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Kan inte fortsätta utan behörighet.",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Behörighetsbegäran misslyckades.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  },
+  "errorQrCodeOverflow": {
+    "message": "Kunde inte generera QR koden, den angivna texten är för lång.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size."
+  },
+  "requestDownloadPermissionForQr": {
+    "message": "För att fortsätta att spara QR-koden behöver vi nedladdningsbehörighet.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+  },
+  "lowContrastRatioInfo": {
+    "message": "Din QR-kod kan vara svår att scanna för vissa QR-kod läsare på grund av låg kontrast.",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioWarning": {
+    "message": "Kontrasten för QR-koden kan vara för låg för att den ska kunna läsas av alla QR-kodläsare korrekt.",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "Färgen på QR-koden och bakgrunden är för lika.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Använd kontrasterande färger",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "Gillar du detta tillägg?",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Ranka det",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+    "message": "Visste du att du kan spara QR-koder?",
+    "description": "A tip shown to get the user to find the save option."
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
+  "tipQrCodeHotkey": {
+    "message": "Kom ihåg att snabbtangenten för detta tillägg är Ctrl+Shift+F10.",
+    "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipAndroidQrReader": {
+    "message": "Firefox har en integrerad QR-kodläsare.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
+  "tipTranslateAddon": {
+    "message": "Om du pratar ett annat språk så kan du hjälpa till att översätta detta tillägg.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
+  },
+  "tipDonate": {
+    "message": "Gillar du att använda detta tillägg gratis?",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Stöd utvecklingen genom att donera",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
+  "tipLearnMore": {
+    "message": "Lär dig mera",
+    "description": "The common button for tips, where you can get more information on click."
+  },
+  "tipHowToUse": {
+    "message": "Hur används detta?",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+  },
+
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "QR code platshållare bild",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "Ange text för QR-kod här för att generera den.",
+    "description": "Placeholder for the textarea, when it is empty."
+  },
+
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "QR-koder från urval",
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "&QR-koder från urval",
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "QR-kod från länk",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
+  },
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "&QR-kod från länk",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+  },
+  "contextMenuSaveImageCanvas": {
+    "message": "Spara QR-kod som en bild…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+  },
+  "contextMenuSaveImageCanvasAccessKey": {
+    "message": "Spara QR-kod som en &bild…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+  },
+  "contextMenuSaveImageSvg": {
+    "message": "Spara QR-kod som en SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageSvgAccessKey": {
+    "message": "Spara QR-kod som en &SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+  },
+
+  // options
+  "someSettingsAreManaged": {
+    "message": "Några inställningar hanteras av din systemadministratör och kan inte ändras.",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "Det här alternativet är inaktiverat på grund av att det är konfigurerat av din systemadministratör.",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+  },
+  "optionLearnMore": {
+    "message": "Lär dig mera",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Återställ alla inställningar till standardvärden",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  "titleGeneral": {
+    "message": "Tillägg",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "QR-kod",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Tilläggsbeteende",
+    "description": "The title for the addon behavior settings group."
+  },
+
+  "optionPopupIconColored": {
+    "message": "Färglagd ikon",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColoredDescr": {
+    "message": "Visar en färgad ikon istället för den svartvita ikonen i verktygsfältet.",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+
+  "subtitleQrCodeSize": {
+    "message": "QR-kod storlek",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "Fast storlek:",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "Automatiskt justera storlek",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "Mestadels användbar på mobila enheter, där QR-koden öppnas i en ny flik.",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "Kom ihåg senaste storlek",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "subtitleMisc": {
+    "message": "Diverse inställningar",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
+  "optionQrQuietZone": {
+    "message": "QR dött område („quiet zone“):",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ kvadrat)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ kvadrater)",
+    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "Antalet moduler runt QR-koden som är färgade i bakgrundsfärgen.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
+  },
+
+  "optionQrCodeColor": {
+    "message": "QR-kod färg:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionQrCodeBackgroundColor": {
+    "message": "QR-kod bakgrunds färg:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionErrorCorrection": {
+    "message": "Fel korrigerings nivå:",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcLow": {
+    "message": "Låg (7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcMedium": {
+    "message": "Medium (15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcQuartile": {
+    "message": "Kvarts (25%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcHigh": {
+    "message": "Hög (30%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "Detta värde anger hur mycket av koden som kan saknas, medans den fortfarande kan skannas.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option."
+  },
+
+  "optionAutoGetSelectedText": {
+    "message": "Använd den valda texten på webbplatsen automatiskt",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionUseMonospaceFont": {
+    "message": "Använd monospace font",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionDebugMode": {
+    "message": "Aktivera debug läge",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "Detta är endast användbart för att få mer detaljerad loggning i konsolen för att rapportera buggar, osv.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
+  },
+
+  "translatorCredit": {
+    "message": "Detta tillägg har översatts till svenska av Hannes Alexandersson (@HannesAlexandersson) .",
+    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+    "placeholders": {
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+      }
+    }
+  },
+  "translatorLink": {
+    "message": "https://github.com/HannesAlexandersson",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorUsername": {
+    "message": "HannesAlexandersson",
+    "description": "The username that the translator wants to be referred to."
+  },
+
+  "contributorsThanks": {
+    "message": "Även tack till $CONTRIBUTORS$.",
+    "description": "Text thanking all contributors and linking to the contributors file.",
+    "placeholders": {
+      "contributors": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+      }
+    }
+  },
+  "contributorsThanksLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
+    "description": "The link to the CONTRIBUTORS file."
+  },
+  "contributorsThanksLinkText": {
+    "message": "alla andra bidragsgivare",
+    "description": "The link text linking to the contributors file. See contributorsThanks."
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "Stäng detta meddelande",
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "laddar meddelande",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "info meddelande",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "framgångs meddelande",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "felmeddelande",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "varnings meddelande",
+    "description": "the aria label to label the message box as an warning message box"
+  }
+}
