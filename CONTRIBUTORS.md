@@ -19,6 +19,10 @@
 
 ## Translators
 
+### Arabic
+
+- Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
+
 ### Chinese (Simplified)
 
 - [@Cye3s](https://github.com/Cye3s)
@@ -95,10 +99,6 @@
 ### Ukrainian
 
 - Ömür Turan ([@dar321](https://github.com/dar321))
-
-### Arabic
-
-- Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
 
 ### Vietnamese
 
