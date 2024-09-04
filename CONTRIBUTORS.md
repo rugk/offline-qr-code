@@ -92,6 +92,10 @@
 - Ömür Turan ([@omurturan](https://github.com/omurturan))
 - Serkan Algur ([@serkanalgur](https://github.com/serkanalgur))
 
+### Ukrainian
+
+- Ömür Turan ([@dar321](https://github.com/dar321))
+
 ### Arabic
 
 - Ahmad Ayman ([@AhmadAymanA99](https://github.com/AhmadAymanA99))
