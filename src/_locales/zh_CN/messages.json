@@ -211,7 +211,7 @@
     "hash": "e8c3fbbac6f04370f00af836aa65b49d"
   },
   "contextMenuItemConvertSelectionAccessKey": {
-    "message": "为选中内容生成二维码(&Q)",
+    "message": "为选中内容生成二维码 (&Q)",
     "description": "the context menu entry shown for generating QR codes from a selection with an access key.",
     "hash": "95228af6c838cb7040b6e2441d8d516b"
   },
@@ -221,9 +221,29 @@
     "hash": "bc4971948a5e6f453046467bfbf6dbc0"
   },
   "contextMenuItemConvertLinkSelectionAccessKey": {
-    "message": "为链接生成二维码(&Q)",
+    "message": "为链接生成二维码 (&Q)",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
     "hash": "312595c39b5cbc8edf0baab8c16875af"
+  },
+  "contextMenuSaveImageCanvas": {
+    "message": "将二维码保存为图像…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup.",
+    "hash": "42a883816c70d59d5cd627824032554d"
+  },
+  "contextMenuSaveImageCanvasAccessKey": {
+    "message": "将二维码保存为图像 (&i)",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key.",
+    "hash": "6becd03ca3b80ffda6996a42f9b7a12b"
+  },
+  "contextMenuSaveImageSvg": {
+    "message": "将二维码保存为 SVG 矢量图…",
+    "description": "The context menu entry shown for saving SVG images in the popup.",
+    "hash": "9320cc3bf1cc9d37ad8013123a8d4118"
+  },
+  "contextMenuSaveImageSvgAccessKey": {
+    "message": "将二维码保存为 SVG 矢量图 (&S)",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key.",
+    "hash": "618fa783b036bbb465ec794c601d19a7"
   },
 
   // options
