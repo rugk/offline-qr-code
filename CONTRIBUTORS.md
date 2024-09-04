@@ -65,6 +65,10 @@
 
 - [@roffikk](https://github.com/roffikk)
 
+### Romanian
+
+- [@Criseda](https://github.com/Criseda)
+
 ### Russian
 
 - [@m1ndm1n3r](https://github.com/m1ndm1n3r)
