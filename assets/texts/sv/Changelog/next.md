@@ -1,2 +1,2 @@
-* **New:** The translation for Telugu has been added, thanks to @devulapallisai.
-* **Enhanced:** The translation for Spanish has been improved, thanks to @dverbru.
+* **Nytt:** Översättning till Telugu har lagts till, tack till @devulapallisai.
+* **Förbättring:** Översättning för Spanska har förbättrats, tack till @dverbru.

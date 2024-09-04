@@ -363,7 +363,7 @@
   },
 
   "translatorCredit": {
-    "message": "Detta tillägg har översatts till svenska av Hannes Alexandersson (@HannesAlexandersson) .",
+    "message": "Detta tillägg har översatts till svenska av $TRANSLATORS$.",
     "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
       "translators": {
