@@ -31,6 +31,10 @@
 
 - [@Nio](https://github.com/niotw)
 
+### Dutch
+
+- [@iw0nderhow](https://github.com/iw0nderhow)
+
 ### French
 
 - Nicolas Trouin ([@nicolas-trouin](https://github.com/nicolas-trouin))
