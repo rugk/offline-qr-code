@@ -16,6 +16,7 @@
 - Metta Ong ([@ongspxm](https://github.com/ongspxm))
 - Michael Corwin ([@mcorwin22](https://github.com/mcorwin22))
 - Pradyumna Mahajan ([@pradyumnamahajan](https://github.com/pradyumnamahajan))
+- Aadarsh Jha ([@renji18](https://github.com/renji18))
 
 ## Translators
 
