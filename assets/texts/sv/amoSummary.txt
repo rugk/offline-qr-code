@@ -1,0 +1,3 @@
+Detta tillägg låter dig snabbt skapa en QR-kod offline med URL:en från en öppen flik eller vilken (vald) annan text som helst! 👍
+
+Det fungerar fullständigt offline skyddar ditt privatliv och har en stor uppsättning verktyg som färglagda QR-koder!

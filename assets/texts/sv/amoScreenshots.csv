@@ -1,0 +1,8 @@
+qrBig.png; "QR-koderna är justerbara!";
+qrDark.png; "Du kan justera QR-koderna till ditt tema.";
+qrMenuFromLink.png; "Du kan skapa QR-koder direkt från länkar."
+qrMenuFromPhoneNumber.png; "Du kan skapa QR-koder direkt från vald text."
+qrSaveSvg.png; "Du kan spara QR-koder som SVGs eller PNGs.";
+qrSettings.png; "Många alternativ låter dig anpassa beteende och utseende";
+qrSmall.png; "QR-koder kan genereras i alla storlekar";
+qrText.png; "Skriv egen text omedelbart efter att ha klickat på skapa knappen för att generera en ny QR-kod i farten";

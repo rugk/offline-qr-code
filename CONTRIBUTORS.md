@@ -99,3 +99,7 @@
 ### Telugu 
 
 - Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))
+
+### Swedish
+
+- Hannes Alexandersson ([@HannesAlexandersson](https://github.com/HannesAlexandersson))
