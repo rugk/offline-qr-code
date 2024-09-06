@@ -1,0 +1,428 @@
+{
+  // manifest.json
+  "extensionName": {
+    "message": "Offline QR Code Generator",
+    "description": "Name of the extension."
+  },
+  "extensionNameShort": {
+    "message": "Offline QR-Code",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Σας επιτρέπει να δημιουργήσετε έναν κωδικό QR για οποιονδήποτε ιστότοπο ή καρτέλα που έχετε ανοίξει.",
+    "description": "Description of the extension."
+  },
+  "browserActionButtonTitle": {
+    "message": "Offline QR code",
+    "description": "The title for the button, which opens the popup."
+  },
+  "commandOpenQrPopup": {
+    "message": "Ανοίξτε το παραθυράκι κωδικού QR",
+    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+  },
+
+  // errors or other messages (mostly for settings)
+  "errorShowingMessage": {
+    "message": "Δεν ήταν δυνατή η εμφάνιση αυτού του μηνύματος.",
+    "description": "When there is an error when showing the error/info/…."
+  },
+  "couldNotLoadOptions": {
+    "message": "Δεν ήταν δυνατή η φόρτωση των ρυθμίσεων.",
+    "description": "When one or all settings could not be loaded."
+  },
+  "couldNotSaveOption": {
+    "message": "Δεν ήταν δυνατή η αποθήκευση αυτής της ρύθμισης.",
+    "description": "When a setting could not be saved."
+  },
+  "messageUndoButton": {
+    "message": "Πίσω",
+    "description": "The text of a button that undoes the last action."
+  },
+  "couldNotUndoAction": {
+    "message": "Δεν ήταν δυνατή η αναίρεση της ενέργειας.",
+    "description": "Shown when an action cannot be undone."
+  },
+  "resettingOptionsWorked": {
+    "message": "Όλες οι ρυθμίσεις είναι πλέον ξανά στο κανονικό!",
+    "description": "The message shown, when the options of the settings were reset."
+  },
+  "resettingOptionsFailed": {
+    "message": "Δεν ήταν δυνατή η επαναφορά των επιλογών!",
+    "description": "The message shown, when the options of the settings could not have been reset."
+  },
+
+  // errors or other messages
+  "unknownError": {
+    "message": "άγνωστο σφάλμα",
+    "description": ""
+  },
+  "loading": {
+    "message": "Φόρτωση…",
+    "description": "A general loading message."
+  },
+  "couldNotGenerateQrCode": {
+    "message": "Δεν ήταν δυνατή η δημιουργία κωδικού QR.",
+    "description": ""
+  },
+  "couldNotReceiveActiveTab": {
+    "message": "Δεν ήταν δυνατή η λήψη της ενεργής καρτέλας.",
+    "description": ""
+  },
+  "errorDownloadingFile": {
+    "message": "Δεν ήταν δυνατή η λήψη του αρχείου.",
+    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+  },
+  "errorPermissionRequired": {
+    "message": "Δεν γίνεται να συνεχίσουμε χωρίς άδεια",
+    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+  },
+  "errorPermissionRequestFailed": {
+    "message": "Το αίτημα άδειας απέτυχε.",
+    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+  },
+  "errorQrCodeOverflow": {
+    "message": "Δεν είναι δυνατή η δημιουργία κωδικού QR, το παρεχόμενο κείμενο είναι πολύ μεγάλο.",
+    "description": "Error shown when QR code cannot be generated due to overflow in input size."
+  },
+  "requestDownloadPermissionForQr": {
+    "message": "Για την συνέχεια αποθήκευσης του κώδικα QR, χρειαζόμαστε την άδεια λήψης.",
+    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+  },
+  "lowContrastRatioInfo": {
+    "message": "Ο κωδικός QR σας μπορεί να είναι δύσκολο να σαρωθεί από ορισμένα προγράμματα ανάγνωσης κωδικών QR λόγω της χαμηλής αντίθεσης.",
+    "desription": "The message shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioWarning": {
+    "message": "Ο λόγος αντίθεσης του κωδικού QR μπορεί να είναι πολύ χαμηλός για να αναγνωριστεί σωστά από όλα τα προγράμματα ανάγνωσης κωδικών QR",
+    "desription": "The warning shown when the contrast ratio is too low"
+  },
+  "lowContrastRatioError": {
+    "message": "Το χρώμα του κωδικού QR και το χρώμα του φόντου είναι πολύ παρόμοια.",
+    "description": "The message shown when the color for the QR code and the background are equal"
+  },
+  "messageAutoSelectColorButton": {
+    "message": "Χρησιμοποιήστε αντίθεση χρώματος",
+    "description": "The text of a button that sets a new color with a sufficient contrast."
+  },
+
+  // tips
+  "tipYouLikeAddon": {
+    "message": "Σας αρέσει αυτό το πρόσθετο;",
+    "description": "A tip shown to remind the user to rate the addon."
+  },
+  "tipYouLikeAddonButton": {
+    "message": "Βαθμολογήστε το",
+    "description": "Button for the tip shown to remind the user to rate the addon."
+  },
+  "tipSaveQrCode": {
+    "message": "Γνωρίζατε ότι μπορείτε να αποθηκεύσετε κωδικούς QR;",
+    "description": "A tip shown to get the user to find the save option."
+  },
+  "tipSaveQrCodeLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+  },
+  "tipQrCodeHotkey": {
+    "message": "Θυμηθείτε ότι το πλήκτρο συντόμευσης για αυτό το πρόσθετο είναι Ctrl+Shift+F10.",
+    "description": "A tip shown to get the user to notice that there is a hot key."
+  },
+  "tipAndroidQrReader": {
+    "message": "Το Firefox διαθέτει ενσωματωμένο σαρωτή QR Code.",
+    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+  },
+  "tipAndroidQrReaderLink": {
+    "message": "https://mzl.la/1GQ2fcu",
+    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+  },
+  "tipTranslateAddon": {
+    "message": "Εάν μιλάτε άλλη γλώσσα, μπορείτε να βοηθήσετε στη μετάφραση αυτού του πρόσθετου.",
+    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+  },
+  "tipTranslateAddonLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+    "description": "The link to a description of the translation service/way you can use."
+  },
+  "tipDonate": {
+    "message": "Σας αρέσει να χρησιμοποιείτε αυτό το πρόσθετο δωρεάν;",
+    "description": "A tip shown to get the remind them of a donation."
+  },
+  "tipDonateButton": {
+    "message": "Υποστηρίξτε την ανάπτυξη με δωρεές",
+    "description": "The button of the donation tip taking the user to the donation site."
+  },
+  "tipLearnMore": {
+    "message": "Μάθετε περισσότερα",
+    "description": "The common button for tips, where you can get more information on click."
+  },
+  "tipHowToUse": {
+    "message": "Πώς να χρησιμοποιήσετε;",
+    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+  },
+
+  // placeholder
+  "qrCodePlaceholder": {
+    "message": "Εικόνα κράτησης θέσης κωδικού QR",
+    "description": "Alt text of placeholder image."
+  },
+  "textareaPlaceholder": {
+    "message": "Εισαγάγετε κείμενο για τον κωδικό QR εδώ για να τον δημιουργήσετε.",
+    "description": "Placeholder for the textarea, when it is empty."
+  },
+
+  // context menu
+  "contextMenuItemConvertSelection": {
+    "message": "Κωδικός QR από την επιλογή",
+    "description": "The context menu entry shown for generating QR codes from a selection."
+  },
+  "contextMenuItemConvertSelectionAccessKey": {
+    "message": "Κωδικός &QR από την επιλογή",
+    "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+  },
+  "contextMenuItemConvertLinkSelection": {
+    "message": "Κωδικός QR από τον σύνδεσμο",
+    "description": "The context menu entry shown for generating QR codes from a selected link."
+  },
+  "contextMenuItemConvertLinkSelectionAccessKey": {
+    "message": "Κωδικός &QR από τον σύνδεσμο",
+    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+  },
+  "contextMenuSaveImageCanvas": {
+    "message": "Αποθήκευση κωδικού QR ως εικόνα…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+  },
+  "contextMenuSaveImageCanvasAccessKey": {
+    "message": "Αποθήκευση κωδικού QR ως &εικόνα…",
+    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+  },
+  "contextMenuSaveImageSvg": {
+    "message": "Αποθήκευση κωδικού QR ως SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup."
+  },
+  "contextMenuSaveImageSvgAccessKey": {
+    "message": "Αποθήκευση κωδικού QR ως &SVG…",
+    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+  },
+
+  // options
+  "someSettingsAreManaged": {
+    "message": "Η διαχείριση ορισμένων ρυθμίσεων γίνεται από τον διαχειριστή του συστήματός σας και δεν είναι δυνατή η αλλαγή τους.",
+    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+  },
+  "optionIsDisabledBecauseManaged": {
+    "message": "Αυτή η επιλογή είναι απενεργοποιημένη, επειδή έχει διαμορφωθεί από τον διαχειριστή του συστήματός σας.",
+    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+  },
+  "optionLearnMore": {
+    "message": "Μάθετε περισσότερα",
+    "description": "When a link to an explainer needs to be added, this is the link text."
+  },
+  "optionsResetButton": {
+    "message": "Επαναφέρετε όλες τις ρυθμίσεις στις προεπιλογές",
+    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+  },
+
+  "titleGeneral": {
+    "message": "Πρόσθετο",
+    "description": "The title for the general settings group."
+  },
+  "titleQrCodeSetting": {
+    "message": "Κωδικός QR",
+    "description": "The title for the qr code settings group."
+  },
+  "titleAddonBehavior": {
+    "message": "Συμπεριφορά πρόσθετων",
+    "description": "The title for the addon behavior settings group."
+  },
+
+  "optionPopupIconColored": {
+    "message": "Έγχρωμο εικονίδιο",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionPopupIconColoredDescr": {
+    "message": "Εμφανίζει ένα έγχρωμο εικονίδιο αντί για το ασπρόμαυρο εικονίδιο στη γραμμή εργαλείων.",
+    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+
+  "subtitleQrCodeSize": {
+    "message": "Μέγεθος κωδικού QR",
+    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+  },
+  "optionQrCodeSizeFixed": {
+    "message": "Σταθερό μέγεθος:",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionPixelAbbreviation": {
+    "message": "px",
+    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+  },
+  "optionQrCodeSizeAuto": {
+    "message": "Αυτόματη προσαρμογή του μεγέθους",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+  "optionQrCodeSizeAutoHelper": {
+    "message": "Κυρίως χρήσιμο σε κινητές συσκευές, όπου ο κωδικός QR ανοίγει σε μια νέα καρτέλα.",
+    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+  },
+  "optionQrCodeSizeRemember": {
+    "message": "Θυμήσου το τελευταίο μέγεθος",
+    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+  },
+
+  "subtitleMisc": {
+    "message": "Διάφορες ρυθμίσεις",
+    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+  },
+  "optionQrQuietZone": {
+    "message": "Ήσυχη ζώνη QR:",
+    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+  },
+  "optionQrQuietZoneStatusSingular": {
+    "message": "($INTEGER$ square)",
+    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "optionQrQuietZoneStatusPlural": {
+    "message": "($INTEGER$ squares)",
+    "description": "Ο αριθμός των κενών/«λευκών» μονάδων γύρω από τον κωδικό QR στον πληθυντικό του.",
+    "placeholders": {
+      "integer": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "optionQrQuietZoneDescr": {
+    "message": "Ο αριθμός των μονάδων περιγράμματος γύρω από τον κωδικό QR που χρωματίζεται στο χρώμα του φόντου.",
+    "description": "The description of the quiet zone option."
+  },
+  "optionQrQuietZoneDescrLink": {
+    "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+    "description": "The 'Learn more' link in the description of the quiet zone option."
+  },
+
+  "optionQrCodeColor": {
+    "message": "Χρώμα κωδικού QR:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionQrCodeBackgroundColor": {
+    "message": "Χρώμα φόντου κωδικού QR:",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionErrorCorrection": {
+    "message": "Επίπεδο διόρθωσης σφάλματος:",
+    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcLow": {
+    "message": "Χαμηλό (7%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcMedium": {
+    "message": "Μεσαίο (15%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcQuartile": {
+    "message": "Τεταρτημόριο (25%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionEcHigh": {
+    "message": "Υψηλό (30%)",
+    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+  },
+  "optionErrorCorrectionDescr": {
+    "message": "Η τιμή αυτή υποδεικνύει πόσο από τον κωδικό μπορεί να λείπει, ώστε να μπορεί να σαρωθεί ακόμα.",
+    "description": "The description of the error correction option."
+  },
+  "optionErrorCorrectionDescrLink": {
+    "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+    "description": "The 'Learn more' link in the description of the error correction option."
+  },
+
+  "optionAutoGetSelectedText": {
+    "message": "Χρησιμοποιήστε αυτόματα το επιλεγμένο κείμενο στον ιστότοπο",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionUseMonospaceFont": {
+    "message": "Χρησιμοποιήστε γραμματοσειρά monospace",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionDebugMode": {
+    "message": "Ενεργοποίηση λειτουργίας εντοπισμού σφαλμάτων",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "optionDebugModeDescr": {
+    "message": "Αυτό είναι χρήσιμο μόνο για να λαμβάνετε πιο λεπτομερή αποτελέσματα καταγραφής στην κονσόλα για την αναφορά σφαλμάτων κ.λπ.",
+    "description": "The description shown for the debug mode (optionDebugMode)."
+  },
+
+  "translatorCredit": {
+    "message": "Η ιστοσελίδα έχει μεταφραστεί στα ελληνικά από τον Gab $TRANSLATORS$.",
+    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+    "placeholders": {
+      "translators": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/\">@rugk</a>"
+      }
+    }
+  },
+  "translatorLink": {
+    "message": "https://github.com/GabGaitanidis",
+    "description": "The link to the translator's GitHub profile."
+  },
+  "translatorUsername": {
+    "message": "Gab",
+    "description": "The username that the translator wants to be referred to."
+  },
+
+  "contributorsThanks": {
+    "message": "Επίσης, ένα ευχαριστώ στους $CONTRIBUTORS$.",
+    "description": "Text thanking all contributors and linking to the contributors file.",
+    "placeholders": {
+      "contributors": {
+        "content": "$1",
+        "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+      }
+    }
+  },
+  "contributorsThanksLink": {
+    "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
+    "description": "The link to the CONTRIBUTORS file."
+  },
+  "contributorsThanksLinkText": {
+    "message": "all other contributors",
+    "description": "The link text linking to the contributors file. See contributorsThanks."
+  },
+
+  // ARIA labels/descriptions
+  "dismissIconDescription": {
+    "message": "Κλείστε αυτό το μήνυμα",
+    "description": "the aria label for the close button of the message box"
+  },
+  "ariaMessageLoading": {
+    "message": "φόρτωση μηνύματος",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageInfo": {
+    "message": "πληροφοριακό μήνυμα",
+    "description": "the aria label to label the message box as an info message box"
+  },
+  "ariaMessageSuccess": {
+    "message": "μήνυμα επιτυχίας",
+    "description": "the aria label to label the message box as an success message box"
+  },
+  "ariaMessageError": {
+    "message": "μήνυμα σφάλματος",
+    "description": "the aria label to label the message box as an error message box"
+  },
+  "ariaMessageWarning": {
+    "message": "προειδοποιητικό μήνυμα",
+    "description": "the aria label to label the message box as an warning message box"
+  }
+}
