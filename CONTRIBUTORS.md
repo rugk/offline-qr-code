@@ -26,6 +26,7 @@
 ### Chinese (Simplified)
 
 - [@Cye3s](https://github.com/Cye3s)
+- [@zhaiyusci](https://github.com/zhaiyusci)
 
 ### Chinese (Traditional)
 
