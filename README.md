@@ -1,4 +1,4 @@
-# Offline QR Code Generator <img align="right" height="425" width="365" src="assets/screencasts/qrText.gif">
+# Offline QR Code Generator <img align="right" height="440" width="502" src="assets/screencasts/qrText.gif">
 
 [![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-version&utm_campaign=github)  
 [![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-downloads&utm_campaign=github)
