@@ -46,6 +46,9 @@
 - [@rugk](https://github.com/rugk)
 - Tamara Undesser ([@tamarau](https://github.com/tamarau))
 
+### Greek
+- [@GabGaitanidis](https://github.com/GabGaitanidis)
+
 ### Hebrew
 
 - Shani Rub ([@shanirub](https://github.com/shanirub))
