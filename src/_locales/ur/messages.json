@@ -1,0 +1,429 @@
+{
+    // manifest.json
+    "extensionName": {
+      "message": "افلائن کیو آر کوڈ بنانے والا",
+      "description": "Name of the extension."
+    },
+    "extensionNameShort": {
+      "message": "افلائن کیو آر کوڈ",
+      "description": "Name of the extension."
+    },
+    "extensionDescription": {
+      "message": "آپ کے لئے کوئی بھی سائٹ یا کھلے ٹاب کا کیو آر کوڈ بنانے والا",
+      "description": "Description of the extension."
+    },
+    "browserActionButtonTitle": {
+      "message": "افلائن کیو آر کوڈ",
+      "description": "The title for the button, which opens the popup."
+    },
+    "commandOpenQrPopup": {
+      "message": "افلائن کیو آر کوڈ کھلو",
+      "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+    },
+  
+    // errors or other messages (mostly for settings)
+    "errorShowingMessage": {
+      "message": "مسج کھل نہیں سکا۔",
+      "description": "When there is an error when showing the error/info/…."
+    },
+    "couldNotLoadOptions": {
+      "message": "سٹںگز لوڈ نہیں ہو سکے۔",
+      "description": "When one or all settings could not be loaded."
+    },
+    "couldNotSaveOption": {
+      "message": "سٹںگ کو محفوظ نہیں کیا جا سکا۔",
+      "description": "When a setting could not be saved."
+    },
+    "messageUndoButton": {
+      "message": "واپس",
+      "description": "The text of a button that undoes the last action."
+    },
+    "couldNotUndoAction": {
+      "message": "واپس نہیں کیا جا سکا۔",
+      "description": "Shown when an action cannot be undone."
+    },
+    "resettingOptionsWorked": {
+      "message": "ساری سٹںگز کو دبارہ سٹ کر دیا گیا۔",
+      "description": "The message shown, when the options of the settings were reset."
+    },
+    "resettingOptionsFailed": {
+      "message": "سٹںگز کو دبارہ سٹ نہیں کیا جا سکا۔",
+      "description": "The message shown, when the options of the settings could not have been reset."
+    },
+  
+    // errors or other messages
+    "unknownError": {
+      "message": "نا مالوم مسلا",
+      "description": ""
+    },
+    "loading": {
+      "message": "لوڈ ہو رہا ہے۔",
+      "description": "A general loading message."
+    },
+    "couldNotGenerateQrCode": {
+      "message": "کیو آر کوڈ نہیں بن سکا۔",
+      "description": ""
+    },
+    "couldNotReceiveActiveTab": {
+      "message": "کھلا ٹاب نہیں مل سکا۔",
+      "description": ""
+    },
+    "errorDownloadingFile": {
+      "message": "ڈاونلوڈ نہیں ہو سکی۔",
+      "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+    },
+    "errorPermissionRequired": {
+      "message": "اجازت نہیں ملی۔",
+      "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+    },
+    "errorPermissionRequestFailed": {
+      "message": "اجازت نہیں ملی۔",
+      "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+    },
+    "errorQrCodeOverflow": {
+      "message": "کیو آر کوڈ نہیں بن سکا، کیونکہ بہت ٹکسٹ دیا گیا۔",
+      "description": "Error shown when QR code cannot be generated due to overflow in input size."
+    },
+    "requestDownloadPermissionForQr": {
+      "message": "کیو آر کوڈ کو محفوظ کرنے کے لیے اجازت کی زرورت ہے۔",
+      "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+    },
+    "lowContrastRatioInfo": {
+      "message": "اپ کا کیو آر کوڈ شاید پڑھے ن جا سکے گا۔",
+      "desription": "The message shown when the contrast ratio is too low"
+    },
+    "lowContrastRatioWarning": {
+      "message": "اپ کا کیو آر کوڈ شاید پڑھے ن جا سکے گا۔",
+      "desription": "The warning shown when the contrast ratio is too low"
+    },
+    "lowContrastRatioError": {
+      "message": "اپ کا کیو آر کوڈ اور اسکا پس منظر ملتا جلتا ہے۔",
+      "description": "The message shown when the color for the QR code and the background are equal"
+    },
+    "messageAutoSelectColorButton": {
+      "message": "الگ رنگ کا استمال کریں۔",
+      "description": "The text of a button that sets a new color with a sufficient contrast."
+    },
+  
+    // tips
+    "tipYouLikeAddon": {
+      "message": "کیا اپ کو یہ پسند ایا ہے؟",
+      "description": "A tip shown to remind the user to rate the addon."
+    },
+    "tipYouLikeAddonButton": {
+      "message": "اسے ریٹ کرین",
+      "description": "Button for the tip shown to remind the user to rate the addon."
+    },
+    "tipSaveQrCode": {
+      "message": "کیا اپ کو پتا تھا کے اپ اسے محفوظ بھی کر سکتے ہیں؟",
+      "description": "A tip shown to get the user to find the save option."
+    },
+    "tipSaveQrCodeLink": {
+      "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#how-to-save-the-qr-code-on-disk",
+      "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+    },
+    "tipQrCodeHotkey": {
+      "message": "یاد راکھیں کے اسکا شرٹکٹ Ctrl+Shift+F10 ہے۔",
+      "description": "A tip shown to get the user to notice that there is a hot key."
+    },
+    "tipAndroidQrReader": {
+      "message": "یاد رکھے کے فائرفاکس مں خد کیو آر کوڈ بنانے کا آپشن ہے۔",
+      "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+    },
+    "tipAndroidQrReaderLink": {
+      "message": "https://mzl.la/1GQ2fcu",
+      "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+    },
+    "tipTranslateAddon": {
+      "message": "اگر اپ کوئی اور زبان بات کرتے ہے تہ اسکا ترجمہ کرنے میں ہماری مدد کرے۔",
+      "description": "A tip shown to users that potentially speak another language to translate this add-on."
+    },
+    "tipTranslateAddonLink": {
+      "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
+      "description": "The link to a description of the translation service/way you can use."
+    },
+    "tipDonate": {
+      "message": "اسے مفت میں یستمال کرنے میں مزہ آرہاہے کیا؟",
+      "description": "A tip shown to get the remind them of a donation."
+    },
+    "tipDonateButton": {
+      "message": "اس پروجکٹ کو مدد کرنے کے لیے کچ عطہ کریں۔",
+      "description": "The button of the donation tip taking the user to the donation site."
+    },
+    "tipLearnMore": {
+      "message": "اور مالوم کریں۔",
+      "description": "The common button for tips, where you can get more information on click."
+    },
+    "tipHowToUse": {
+      "message": "کیسے استمال کریں؟",
+      "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+    },
+  
+    // placeholder
+    "qrCodePlaceholder": {
+      "message": "کیو آر کوڈ۔",
+      "description": "Alt text of placeholder image."
+    },
+    "textareaPlaceholder": {
+      "message": "کیو آر کوڈ بنانے کے لیے یہاں لکھیں۔",
+      "description": "Placeholder for the textarea, when it is empty."
+    },
+  
+    // context menu
+    "contextMenuItemConvertSelection": {
+      "message": "انتخاب سے کیو آر کوڈ بنائیں۔",
+      "description": "The context menu entry shown for generating QR codes from a selection."
+    },
+    "contextMenuItemConvertSelectionAccessKey": {
+      "message": "&QR code from selection",
+      "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+    },
+    "contextMenuItemConvertLinkSelection": {
+      "message": "لںک سے کیو آر کوڈ بنائیں۔",
+      "description": "The context menu entry shown for generating QR codes from a selected link."
+    },
+    "contextMenuItemConvertLinkSelectionAccessKey": {
+      "message": "&QR code from link",
+      "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+    },
+    "contextMenuSaveImageCanvas": {
+      "message": "کیو آر کوڈ کو پ ن ج میں محفوظ کریں۔",
+      "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+    },
+    "contextMenuSaveImageCanvasAccessKey": {
+      "message": "Save QR code as an &image…",
+      "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+    },
+    "contextMenuSaveImageSvg": {
+      "message": "کیو آر کوڈ کو س و ج میں محفوظ کریں۔",
+      "description": "The context menu entry shown for saving SVG images in the popup."
+    },
+    "contextMenuSaveImageSvgAccessKey": {
+      "message": "Save QR code as an &SVG…",
+      "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+    },
+  
+    // options
+    "someSettingsAreManaged": {
+      "message": "کچ ستںگز کو اپکا سسٹم ایڈمنسٹریٹر سٹ کرتا ہے۔ اور یہ بدلا نہین جا سکتا ہے۔",
+      "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+    },
+    "optionIsDisabledBecauseManaged": {
+      "message": "یہ اپشن نہیں چلیگا کیونکی اسکو اپ کا سسٹم ایڈمنسٹریٹر سٹ کرتا ہے۔",
+      "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+    },
+    "optionLearnMore": {
+      "message": "اور پڑھے",
+      "description": "When a link to an explainer needs to be added, this is the link text."
+    },
+    "optionsResetButton": {
+      "message": "ساری سٹںگز کو دبارہ سٹ کرو۔",
+      "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+    },
+  
+    "titleGeneral": {
+      "message": "سٹںگ",
+      "description": "The title for the general settings group."
+    },
+    "titleQrCodeSetting": {
+      "message": "کیو آر کوڈ",
+      "description": "The title for the qr code settings group."
+    },
+    "titleAddonBehavior": {
+      "message": "سٹںگز",
+      "description": "The title for the addon behavior settings group."
+    },
+  
+    "optionPopupIconColored": {
+      "message": "رںگ برںگ ایکون",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionPopupIconColoredDescr": {
+      "message": "رںگ برںگ ایکون بتایگا کالا/سفید کی بجاہے۔",
+      "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+    },
+  
+    "subtitleQrCodeSize": {
+      "message": "کیو آر کوڈ کا سائز۔",
+      "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+    },
+    "optionQrCodeSizeFixed": {
+      "message": "سٹ سائز:",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+    "optionPixelAbbreviation": {
+      "message": "px",
+      "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+    },
+    "optionQrCodeSizeAuto": {
+      "message": "خود بخود سائز سٹ کرو۔",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+    "optionQrCodeSizeAutoHelper": {
+      "message": "سبسے زیادا مددگار موبال فون پر جھاں پر کیو آر کود ایک نیے ٹاب پر کھولتا ہے۔",
+      "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+    },
+    "optionQrCodeSizeRemember": {
+      "message": "سائز یاد رکھیں۔",
+      "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    },
+  
+    "subtitleMisc": {
+      "message": "اکسٹرا ستںگز",
+      "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+    },
+    "optionQrQuietZone": {
+      "message": "کیو آر کود کے اتراف کے لیے کچھ ستںگز۔:",
+      "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+    },
+    "optionQrQuietZoneStatusSingular": {
+      "message": "($INTEGER$ square)",
+      "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+      "placeholders": {
+        "integer": {
+          "content": "$1",
+          "example": "1"
+        }
+      }
+    },
+    "optionQrQuietZoneStatusPlural": {
+      "message": "($INTEGER$ squares)",
+      "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+      "placeholders": {
+        "integer": {
+          "content": "$1",
+          "example": "3"
+        }
+      }
+    },
+    "optionQrQuietZoneDescr": {
+      "message": "کیو آر کود کے پیچھے پس منظر کے رنگ مے کتنے برڈر چاہیے۔",
+      "description": "The description of the quiet zone option."
+    },
+    "optionQrQuietZoneDescrLink": {
+      "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ#what-is-a-quiet-zone",
+      "description": "The 'Learn more' link in the description of the quiet zone option."
+    },
+  
+    "optionQrCodeColor": {
+      "message": "کیو آر کود کا رنگ:",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionQrCodeBackgroundColor": {
+      "message": "کیو آر کود کے پس منظر کا رنگ:",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionErrorCorrection": {
+      "message": "غلتی ساحیح کرنے کا تھرشحوکڈ:",
+      "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcLow": {
+      "message": "بہت کم (7%)",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcMedium": {
+      "message": "کم (15%)",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcQuartile": {
+      "message": "پاؤ (25%)",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionEcHigh": {
+      "message": "زیادہ (30%)",
+      "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    },
+    "optionErrorCorrectionDescr": {
+      "message": "یہ بتاتا ہے کے کتنا کوڈ کے بنا بھی یہ چلیگا۔",
+      "description": "The description of the error correction option."
+    },
+    "optionErrorCorrectionDescrLink": {
+      "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
+      "description": "The 'Learn more' link in the description of the error correction option."
+    },
+  
+    "optionAutoGetSelectedText": {
+      "message": "خود بخود سائٹ مے سے الفاز استمال کرو۔",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionUseMonospaceFont": {
+      "message": "منوسپیس فنت کا یستمال کرو۔",
+      "description": "This is an option shown in the add-on settings."
+    },
+  
+    "optionDebugMode": {
+      "message": "ڈیبگ موڈ اون کرو۔",
+      "description": "This is an option shown in the add-on settings."
+    },
+    "optionDebugModeDescr": {
+      "message": "یہ سرف کونسول مے سے کچ معلومات نکالے اور ہمیں دکھانے کے لیے ہے۔",
+      "description": "The description shown for the debug mode (optionDebugMode)."
+    },
+  
+    "translatorCredit": {
+      "message": "اس پروجکٹ کو $TRANSLATORS$ نے اردو مے ترجما کیا ہے۔.",
+      "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+      "placeholders": {
+        "translators": {
+          "content": "$1",
+          "example": "<a href=\"https://github.com/Toprun123/\">@Toprun123</a>"
+        }
+      }
+    },
+    "translatorLink": {
+      "message": "https://github.com/Toprun123",
+      "description": "The link to the translator's GitHub profile."
+    },
+    "translatorUsername": {
+      "message": "Toprun123",
+      "description": "The username that the translator wants to be referred to."
+    },
+  
+    "contributorsThanks": {
+      "message": "اور شکریا ان سب کو: $CONTRIBUTORS$.",
+      "description": "Text thanking all contributors and linking to the contributors file.",
+      "placeholders": {
+        "contributors": {
+          "content": "$1",
+          "example": "<a href=\"https://github.com/rugk/…/CONTRIBUTORS.md\">all other contributors</a>"
+        }
+      }
+    },
+    "contributorsThanksLink": {
+      "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
+      "description": "The link to the CONTRIBUTORS file."
+    },
+    "contributorsThanksLinkText": {
+      "message": "اور باقی سب جنہنے مدد کی۔",
+      "description": "The link text linking to the contributors file. See contributorsThanks."
+    },
+  
+    // ARIA labels/descriptions
+    "dismissIconDescription": {
+      "message": "بند کریں اسے۔",
+      "description": "the aria label for the close button of the message box"
+    },
+    "ariaMessageLoading": {
+      "message": "لوڈ ہو رہا ہے۔",
+      "description": "the aria label to label the message box as a loading message box"
+    },
+    "ariaMessageInfo": {
+      "message": "مالومات",
+      "description": "the aria label to label the message box as an info message box"
+    },
+    "ariaMessageSuccess": {
+      "message": "کامیاب",
+      "description": "the aria label to label the message box as an success message box"
+    },
+    "ariaMessageError": {
+      "message": "مسلہ",
+      "description": "the aria label to label the message box as an error message box"
+    },
+    "ariaMessageWarning": {
+      "message": "انتباہ",
+      "description": "the aria label to label the message box as an warning message box"
+    }
+  }
+  
