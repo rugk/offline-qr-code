@@ -1,3 +1,3 @@
-Esta extensión te permite generar rápidamente códigos QR de la URL de la pestaña abierta o cualquier otro texto! 👍
+Esta extensión te permite generar rápidamente un código QR con la URL de la pestaña actual, ¡o con cualquier otro texto! 👍
 
 Funciona completamente offline, protegiendo así tu privacidad!
