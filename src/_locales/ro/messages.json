@@ -53,8 +53,8 @@
 
   // errors or other messages
   "unknownError": {
-    "message": "Eroare necunoscută",
-    "description": ""
+    "message": "A apărut o eroare necunoscută",
+    "description": "An unknown error occured"
   },
   "loading": {
     "message": "Încărcare…",
