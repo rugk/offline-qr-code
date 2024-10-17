@@ -112,10 +112,14 @@
 
 - Cretzen ([@hellotinh03](https://github.com/hellotinh03))
 
-### Telugu 
+### Telugu
 
 - Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))
 
 ### Swedish
 
 - Hannes Alexandersson ([@HannesAlexandersson](https://github.com/HannesAlexandersson))
+
+### Urdu
+
+- Syed Daanish ([@Toprun123](https://github.com/Toprun123))
