@@ -93,18 +93,29 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
             UserInterface.handleQrError(e);
         }
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs)
-            .catch(UserInterface.handleQrError)
-            .catch((error) => {
-                console.error(error);
+        // try getting text from the clipboard
+        return gettingClipboard.then((clipboard) => {
+            try {
+                QrCreator.setText(clipboard);
+                QrCreator.generate();
+                UserInterface.postInitGenerate();
+            } catch (e) {
+                UserInterface.handleQrError(e);
+            }
+        }).catch(() => {
+            // …or fallback to tab URL
+            return queryBrowserTabs.then(QrCreator.generateFromTabs)
+                .catch(UserInterface.handleQrError)
+                .catch((error) => {
+                    console.error(error);
 
-                // show generic error, likely a tab URL error
-                CommonMessages.showError("couldNotReceiveActiveTab", false);
+                    // show generic error, likely a tab URL error
+                    CommonMessages.showError("couldNotReceiveActiveTab", false);
 
-                // re-throw error
-                throw error;
-            });
+                    // re-throw error
+                    throw error;
+                }); 
+        });
     });
 }).finally(() => {
     // post-initiation code should still run, even if errors happen
