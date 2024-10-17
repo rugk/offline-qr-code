@@ -55,7 +55,8 @@
     "menus"
   ],
   "optional_permissions": [
-    "downloads"
+    "downloads",
+    "clipboardRead"
   ],
   "applications": {
     "gecko": {
