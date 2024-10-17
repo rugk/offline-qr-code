@@ -16,6 +16,9 @@ import * as IconHandler from "/common/modules/IconHandler.js";
 
 const REMEBER_SIZE_INTERVAL = 500; // sec
 const CONTRAST_MESSAGE_ID = "contrast";
+const CLIPBOARD_READ_PERMISSION = {
+    permissions: ["clipboardRead"]
+};
 
 let updateRemberedSizeInterval = null;
 

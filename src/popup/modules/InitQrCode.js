@@ -56,6 +56,24 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
     });
 });
 
+// check for clipboard text
+const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((autoGetClipboardContent) => {
+    if (autoGetClipboardContent !== true) {
+        return Promise.reject(new Error("using clipboard content is disabled"));
+    }
+
+    navigator.clipboard.readText().then(text => {
+        if (text && text !== "") {
+            return Promise.resolve(text);
+        } else {
+            return Promise.reject(new Error("clipboard is empty")); 
+        }
+    }).catch(err => {
+        return Promise.reject(err);
+    })
+});
+
+
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
     // do not use tab URL as text if text is already overwritten
