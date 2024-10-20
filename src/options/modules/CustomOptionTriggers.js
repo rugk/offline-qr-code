@@ -73,6 +73,37 @@ function applyPopupIconColor(optionValue) {
 }
 
 /**
+ * Adjusts UI based on the state of context menu enabled option.
+ *
+ * @function
+ * @private
+ * @param {boolean} optionValue
+ * @returns {void}
+ */
+function applyContextMenuEnabled(optionValue) {
+    if (optionValue) {
+        console.log("Context menu is enabled");
+        // Call the logic to enable the context menu
+        browser.runtime.sendMessage({ action: "enableContextMenu" });
+    } else {
+        console.log("Context menu is disabled");
+        // Call the logic to disable the context menu
+        browser.runtime.sendMessage({ action: "disableContextMenu" });
+    }
+}
+
+/**
+ * Event listener to save the checkbox state and apply it.
+ */
+document.getElementById('contextMenuEnabled').addEventListener('change', async (event) => {
+    const isChecked = event.target.checked;
+    await browser.storage.local.set({ contextMenuEnabled: isChecked });
+
+    // Apply the context menu based on the checkbox state
+    applyContextMenuEnabled(isChecked);
+});
+
+/**
  * Adjust UI if QR code size option is changed.
  *
  * @function
@@ -253,6 +284,10 @@ export function registerTrigger() {
     AutomaticSettings.Trigger.registerSave("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrQuietZone", updateQrQuietZoneStatus);
+
+    // Register trigger for contextMenuEnabled
+    AutomaticSettings.Trigger.registerSave("contextMenuEnabled", applyContextMenuEnabled);
+    AutomaticSettings.Trigger.registerUpdate("contextMenuEnabled", applyContextMenuEnabled);
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);

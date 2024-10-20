@@ -61,6 +61,17 @@ function createItems() {
         contexts: ["page"]
     });
 
+    browser.runtime.onMessage.addListener((message) => {
+        if (message.action === "enableContextMenu") {
+            browser.menus.update(CONVERT_PAGE_URL, { visible: true });
+            console.log("Context menu enabled");
+        } else if (message.action === "disableContextMenu") {
+            browser.menus.update(CONVERT_PAGE_URL, { visible: false });
+            console.log("Context menu disabled");
+        }
+        browser.menus.refresh();
+    });
+    
     browser.menus.refresh();
 
     // if listener is set, because items were hidden -> remove it
@@ -97,7 +108,7 @@ function menuClicked(event) {
     case CONVERT_PAGE_URL:
         browser.browserAction.openPopup().then(() => {
             messageResentCount = 0;
-            // Send the current page URL to the popup
+            // Send the current page URL to the popup explicitly to overwrite any setting that may use a different string
             sendQrCodeText(event.pageUrl);
         });
         break;
@@ -132,6 +143,7 @@ function menuShown(info) {
 
     browser.menus.remove(CONVERT_TEXT_SELECTION);
     browser.menus.remove(CONVERT_LINK_TEXT_SELECTION);
+    browser.menus.remove(CONVERT_PAGE_URL);
 
     browser.menus.refresh();
 }
