@@ -30,6 +30,10 @@ const userInterfaceInit = UserInterface.init().then(() => {
     console.info("UserInterface module loaded.");
 });
 
+const CLIPBOARD_READ_PERMISSION = {
+    permissions: ["clipboardRead"]
+};
+
 // check for selected text
 // current tab is used by default
 const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
@@ -51,18 +55,17 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
         if (!selection) {
             throw new Error("nothing selected");
         }
-
         return selection;
     });
 });
 
 // check for clipboard text
 const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((autoGetClipboardContent) => {
-    if (autoGetClipboardContent !== true) {
+    if (autoGetClipboardContent !== true || !browser.permissions.contains(CLIPBOARD_READ_PERMISSION)) {
         return Promise.reject(new Error("using clipboard content is disabled"));
     }
 
-    navigator.clipboard.readText().then(text => {
+    return navigator.clipboard.readText().then((text) => {
         if (text && text !== "") {
             return Promise.resolve(text);
         } else {
@@ -82,7 +85,6 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 
         return Promise.resolve();
     }
-
     // get text from selected text, if possible
     return gettingSelection.then((selection) => {
         try {

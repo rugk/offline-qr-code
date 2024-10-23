@@ -9,6 +9,7 @@ import * as AutomaticSettings from "/common/modules/AutomaticSettings/AutomaticS
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
+import * as PermissionRequest from "/common/modules/PermissionRequest/PermissionRequest.js";
 
 // used to apply options
 import * as Colors from "/common/modules/Colors.js";
@@ -16,9 +17,13 @@ import * as IconHandler from "/common/modules/IconHandler.js";
 
 const REMEBER_SIZE_INTERVAL = 500; // sec
 const CONTRAST_MESSAGE_ID = "contrast";
+
 const CLIPBOARD_READ_PERMISSION = {
     permissions: ["clipboardRead"]
 };
+
+const MESSAGE_CLIPBOARD_READ_PERMISSION = "getClipboardContentPermissionInfo";
+
 
 let updateRemberedSizeInterval = null;
 
@@ -237,6 +242,24 @@ function resetOnBeforeLoad() {
     elQrCodeSize.removeAttribute("disabled");
 }
 
+function applyClipboardContent(optionValue, event={}) {
+    if (optionValue.enabled && // only if actually enabled
+        optionValue.action === "copy" && // if we require a permission for copying
+        !PermissionRequest.isPermissionGranted(CLIPBOARD_READ_PERMISSION) // and not already granted
+    ) {
+        return PermissionRequest.requestPermission(
+            CLIPBOARD_READ_PERMISSION,
+            MESSAGE_CLIPBOARD_READ_PERMISSION,
+            event,
+            {retry: true}
+        )
+    } 
+    PermissionRequest.cancelPermissionPrompt(CLIPBOARD_READ_PERMISSION,MESSAGE_CLIPBOARD_READ_PERMISSION);
+    
+
+    return Promise.resolve();
+} 
+
 /**
  * Binds the triggers.
  *
@@ -245,7 +268,7 @@ function resetOnBeforeLoad() {
  * @function
  * @returns {void}
  */
-export function registerTrigger() {
+export async function registerTrigger() {
     // register custom message
     CustomMessages.registerMessageType(CONTRAST_MESSAGE_ID, document.getElementById("messageContrast"));
 
@@ -256,6 +279,7 @@ export function registerTrigger() {
     AutomaticSettings.Trigger.registerSave("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrQuietZone", updateQrQuietZoneStatus);
+    AutomaticSettings.Trigger.registerSave("autoGetClipboardContent", applyClipboardContent);
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
@@ -263,4 +287,11 @@ export function registerTrigger() {
     // handle loading of options correctly
     AutomaticSettings.Trigger.registerBeforeLoad(resetOnBeforeLoad);
     AutomaticSettings.Trigger.registerAfterLoad(AutomaticSettings.Trigger.RUN_ALL_SAVE_TRIGGER);
+
+    await PermissionRequest.registerPermissionMessageBox(
+        CLIPBOARD_READ_PERMISSION,
+        MESSAGE_CLIPBOARD_READ_PERMISSION,
+        document.getElementById("getClipboardContentPermissionInfo"),
+        "permissionRequiredClipboardRead"
+    );
 }
