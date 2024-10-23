@@ -93,17 +93,6 @@ function applyContextMenuEnabled(optionValue) {
 }
 
 /**
- * Event listener to save the checkbox state and apply it.
- */
-document.getElementById('contextMenuEnabled').addEventListener('change', async (event) => {
-    const isChecked = event.target.checked;
-    await browser.storage.local.set({ contextMenuEnabled: isChecked });
-
-    // Apply the context menu based on the checkbox state
-    applyContextMenuEnabled(isChecked);
-});
-
-/**
  * Adjust UI if QR code size option is changed.
  *
  * @function

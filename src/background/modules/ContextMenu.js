@@ -61,17 +61,6 @@ function createItems() {
         contexts: ["page"]
     });
 
-    browser.runtime.onMessage.addListener((message) => {
-        if (message.action === "enableContextMenu") {
-            browser.menus.update(CONVERT_PAGE_URL, { visible: true });
-            console.log("Context menu enabled");
-        } else if (message.action === "disableContextMenu") {
-            browser.menus.update(CONVERT_PAGE_URL, { visible: false });
-            console.log("Context menu disabled");
-        }
-        browser.menus.refresh();
-    });
-    
     browser.menus.refresh();
 
     // if listener is set, because items were hidden -> remove it
@@ -160,5 +149,15 @@ export function init() {
     return createItems().then(() => {
         browser.menus.onClicked.addListener(menuClicked);
         browser.menus.onShown.addListener(menuShown);
+        browser.runtime.onMessage.addListener((message) => {
+            if (message.action === "enableContextMenu") {
+                browser.menus.update(CONVERT_PAGE_URL, { visible: true });
+                console.log("Context menu enabled");
+            } else if (message.action === "disableContextMenu") {
+                browser.menus.update(CONVERT_PAGE_URL, { visible: false });
+                console.log("Context menu disabled");
+            }
+            browser.menus.refresh();
+        });    
     });
 }

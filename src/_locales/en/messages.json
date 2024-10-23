@@ -250,13 +250,13 @@
     "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
   },
-  "contextMenuEnabled": {
-    "message": "Enable QR code context menu item",
-    "description": "Toggle to show or hide the context menu item for generating a QR code for the current page."
+  "optionContextMenuEnabled": {
+    "message": "Show general QR code generation context menu item",
+    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
   },
-  "contextMenuEnabledDescr": {
-    "message": "Enabling this option allows you to create a QR code for the current page using the context menu.",
-    "description": "Detailed description of the contextMenuEnabled setting."
+  "optionContextMenuEnabledDescr": {
+    "message": "Shows a context menu item to create QR code for the current page, in addition to links and text selections.",
+    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
   },
 
   "subtitleQrCodeSize": {
