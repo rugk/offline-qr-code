@@ -186,6 +186,14 @@
     "message": "&QR-Code aus Link",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
+  "contextMenuItemConvertPageURL": {
+    "message": "Generiere QR-Code für diese Seite",
+    "description": "Context menu item title for generating a QR code for the current page URL."
+  },
+  "contextMenuItemConvertPageURLAccessKey": {
+    "message": "&Generiere QR-Code für diese Seite",
+    "description": "Context menu item title for generating a QR code for the current page URL with an access key."
+  },
   "contextMenuSaveImageCanvas": {
     "message": "QR-Code als Bild speichern…",
     "description": "The context menu entry shown for saving SVG images in the popup."
@@ -240,6 +248,14 @@
   "optionPopupIconColoredDescr": {
     "message": "Zeigt ein farbiges Icon anstatt eines schwarz/weißen Icons in der Toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+  "optionContextMenuEnabled": {
+    "message": "Zeige allgemeinen QR-Code-Generierungs-Kontextmenü-Eintrag",
+    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
+  },
+  "optionContextMenuEnabledDescr": {
+    "message": "Zeigt einen Kontextmenü-Eintrag um QR-Codes für die aktuelle Seite zu erstellen, zusätzlich zu denen für Links und ausgewählten Text.",
+    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
   },
 
   "subtitleQrCodeSize": {
