@@ -4,6 +4,7 @@ import { createMenu } from "/common/modules/ContextMenu.js";
 const CONVERT_TEXT_SELECTION = "qr-convert-text-selection";
 const CONVERT_LINK_TEXT_SELECTION = "qr-convert-link-text-selection";
 const OPEN_OPTIONS = "qr-open-options";
+const CONVERT_PAGE_URL = "qr-convert-page-url";
 
 const MESSAGE_RESENT_TIMEOUT = 200; // ms
 const MESSAGE_RESENT_MAX = 9;
@@ -55,12 +56,17 @@ function createItems() {
         contexts: ["link"]
     });
 
+    const pageMenu = createMenu("contextMenuItemConvertPageURL", {
+        id: CONVERT_PAGE_URL,
+        contexts: ["page"]
+    });
+
     browser.menus.refresh();
 
     // if listener is set, because items were hidden -> remove it
     browser.menus.onHidden.removeListener(createItems);
 
-    return Promise.all([selectionMenu, linkMenu]);
+    return Promise.all([selectionMenu, linkMenu, pageMenu]);
 }
 
 /**
@@ -86,6 +92,13 @@ function menuClicked(event) {
 
             // send message to popup
             sendQrCodeText(event.linkUrl);
+        });
+        break;
+    case CONVERT_PAGE_URL:
+        browser.browserAction.openPopup().then(() => {
+            messageResentCount = 0;
+            // Send the current page URL to the popup explicitly to overwrite any setting that may use a different string
+            sendQrCodeText(event.pageUrl);
         });
         break;
     case OPEN_OPTIONS:
@@ -119,6 +132,7 @@ function menuShown(info) {
 
     browser.menus.remove(CONVERT_TEXT_SELECTION);
     browser.menus.remove(CONVERT_LINK_TEXT_SELECTION);
+    browser.menus.remove(CONVERT_PAGE_URL);
 
     browser.menus.refresh();
 }
@@ -135,5 +149,15 @@ export function init() {
     return createItems().then(() => {
         browser.menus.onClicked.addListener(menuClicked);
         browser.menus.onShown.addListener(menuShown);
+        browser.runtime.onMessage.addListener((message) => {
+            if (message.action === "enableContextMenu") {
+                browser.menus.update(CONVERT_PAGE_URL, { visible: true });
+                console.log("Context menu enabled");
+            } else if (message.action === "disableContextMenu") {
+                browser.menus.update(CONVERT_PAGE_URL, { visible: false });
+                console.log("Context menu disabled");
+            }
+            browser.menus.refresh();
+        });    
     });
 }
