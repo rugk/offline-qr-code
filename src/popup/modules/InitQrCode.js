@@ -59,7 +59,8 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
     });
 });
 
-// check for clipboard text
+// check for clipboard text if option is enabled and if extension has permission to read from clipboard
+// if the clipboard is empty it rejects the promise
 const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((autoGetClipboardContent) => {
     if (autoGetClipboardContent !== true || !browser.permissions.contains(CLIPBOARD_READ_PERMISSION)) {
         return Promise.reject(new Error("using clipboard content is disabled"));

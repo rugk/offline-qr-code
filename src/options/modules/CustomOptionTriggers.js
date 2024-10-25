@@ -265,6 +265,16 @@ function resetOnBeforeLoad() {
     elQrCodeSize.removeAttribute("disabled");
 }
 
+
+
+/**
+ * Adjust options page when copy from clipboard is changed
+ *
+ * @private
+ * @param  {Boolean} optionValue
+ * @param  {Object} [event]
+ * @returns {Promise}
+ */
 function applyClipboardContent(optionValue, event={}) {
     if (optionValue && !PermissionRequest.isPermissionGranted(CLIPBOARD_READ_PERMISSION)) {
         return PermissionRequest.requestPermission(
