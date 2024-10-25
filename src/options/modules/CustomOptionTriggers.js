@@ -70,7 +70,18 @@ function applyQrCodeSize(optionValue) {
 
 
 
-
+/**
+ * Adjust UI if QR code size option is changed.
+ *
+ * @function
+ * @private
+ * @param  {boolean} optionValue
+ * @param  {string} [option]
+ * @returns {void}
+ */
+function applyPopupIconColor(optionValue) {
+    IconHandler.changeIconIfColored(optionValue);
+}
 
 /**
  * Adjusts UI based on the state of context menu enabled option.
@@ -90,19 +101,6 @@ function applyContextMenuEnabled(optionValue) {
         // Call the logic to disable the context menu
         browser.runtime.sendMessage({ action: "disableContextMenu" });
     }
-}
-
-/**
- * Adjust UI if QR code size option is changed.
- *
- * @function
- * @private
- * @param  {boolean} optionValue
- * @param  {string} [option]
- * @returns {void}
- */
-function applyPopupIconColor(optionValue) {
-    IconHandler.changeIconIfColored(optionValue);
 }
 
 /**
