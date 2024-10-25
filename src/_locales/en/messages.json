@@ -190,6 +190,14 @@
     "message": "&QR code from link",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
+  "contextMenuItemConvertPageURL": {
+    "message": "Generate QR code for this page",
+    "description": "Context menu item title for generating a QR code for the current page URL."
+  },
+  "contextMenuItemConvertPageURLAccessKey": {
+    "message": "&Generate QR code for this page",
+    "description": "Context menu item title for generating a QR code for the current page URL with an access key."
+  },
   "contextMenuSaveImageCanvas": {
     "message": "Save QR code as an image…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
@@ -245,6 +253,14 @@
   "optionPopupIconColoredDescr": {
     "message": "Shows a colored icon instead of the black/white icon in the toolbar.",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+  },
+  "optionContextMenuEnabled": {
+    "message": "Show general QR code generation context menu item",
+    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
+  },
+  "optionContextMenuEnabledDescr": {
+    "message": "Shows a context menu item to create QR code for the current page, in addition to links and text selections.",
+    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
   },
 
   "subtitleQrCodeSize": {
