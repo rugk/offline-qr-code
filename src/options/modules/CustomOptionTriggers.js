@@ -243,10 +243,7 @@ function resetOnBeforeLoad() {
 }
 
 function applyClipboardContent(optionValue, event={}) {
-    if (optionValue.enabled && // only if actually enabled
-        optionValue.action === "copy" && // if we require a permission for copying
-        !PermissionRequest.isPermissionGranted(CLIPBOARD_READ_PERMISSION) // and not already granted
-    ) {
+    if (optionValue && !PermissionRequest.isPermissionGranted(CLIPBOARD_READ_PERMISSION)) {
         return PermissionRequest.requestPermission(
             CLIPBOARD_READ_PERMISSION,
             MESSAGE_CLIPBOARD_READ_PERMISSION,
@@ -255,8 +252,6 @@ function applyClipboardContent(optionValue, event={}) {
         )
     } 
     PermissionRequest.cancelPermissionPrompt(CLIPBOARD_READ_PERMISSION,MESSAGE_CLIPBOARD_READ_PERMISSION);
-    
-
     return Promise.resolve();
 } 
 
