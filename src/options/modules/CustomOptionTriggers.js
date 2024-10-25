@@ -67,6 +67,31 @@ function applyQrCodeSize(optionValue) {
     }
 }
 
+
+
+
+
+
+/**
+ * Adjusts UI based on the state of context menu enabled option.
+ *
+ * @function
+ * @private
+ * @param {boolean} optionValue
+ * @returns {void}
+ */
+function applyContextMenuEnabled(optionValue) {
+    if (optionValue) {
+        console.log("Context menu is enabled");
+        // Call the logic to enable the context menu
+        browser.runtime.sendMessage({ action: "enableContextMenu" });
+    } else {
+        console.log("Context menu is disabled");
+        // Call the logic to disable the context menu
+        browser.runtime.sendMessage({ action: "disableContextMenu" });
+    }
+}
+
 /**
  * Adjust UI if QR code size option is changed.
  *
@@ -275,6 +300,10 @@ export async function registerTrigger() {
     AutomaticSettings.Trigger.registerSave("qrBackgroundColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerSave("qrQuietZone", updateQrQuietZoneStatus);
     AutomaticSettings.Trigger.registerSave("autoGetClipboardContent", applyClipboardContent);
+
+    // Register trigger for contextMenuEnabled
+    AutomaticSettings.Trigger.registerSave("contextMenuEnabled", applyContextMenuEnabled);
+    AutomaticSettings.Trigger.registerUpdate("contextMenuEnabled", applyContextMenuEnabled);
 
     AutomaticSettings.Trigger.registerUpdate("qrColor", applyQrCodeColors);
     AutomaticSettings.Trigger.registerUpdate("qrBackgroundColor", applyQrCodeColors);
