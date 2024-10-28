@@ -74,7 +74,7 @@ const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((auto
         }
     }).catch(err => {
         return Promise.reject(err);
-    })
+    });
 });
 
 

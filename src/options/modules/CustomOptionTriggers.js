@@ -69,7 +69,6 @@ function applyQrCodeSize(optionValue) {
 
 
 
-
 /**
  * Adjust UI if QR code size option is changed.
  *
@@ -259,8 +258,6 @@ function applyQrCodeColors(optionValue, option) {
  * @returns {void}
  */
 function resetOnBeforeLoad() {
-    // needs to enable the QR code size input, as a disabled input would prevent the setting from being loaded
-    //
     const elQrCodeSize = document.getElementById("qrCodeSizeFixedValue");
     elQrCodeSize.removeAttribute("disabled");
 }
@@ -282,7 +279,7 @@ function applyClipboardContent(optionValue, event={}) {
             MESSAGE_CLIPBOARD_READ_PERMISSION,
             event,
             {retry: true}
-        )
+        );
     } 
     PermissionRequest.cancelPermissionPrompt(CLIPBOARD_READ_PERMISSION,MESSAGE_CLIPBOARD_READ_PERMISSION);
     return Promise.resolve();
