@@ -377,6 +377,14 @@
     "message": "Use clipboard content when opening popup",
     "description": "This is an option shown in the add-on settings."
   },
+  "buttonRequestPermission": {
+    "message": "Grant permission",
+    "description": "The button label, used for requesting a permission that is missing."
+  },
+  "couldNotRequestPermission": {
+    "message": "Requesting permission failed.",
+    "description": "When the permission request fails."
+  },
 
   "optionDebugMode": {
     "message": "Enable debug mode",

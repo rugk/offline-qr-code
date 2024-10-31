@@ -54,6 +54,14 @@
     "message": "Die Berechtigung Daten in die Zwischenablage zu kopieren, wird für diese Funktionalität benötigt.",
     "description": "The message shown, when the user wants to use the clipboard to read from"
   },
+  "buttonRequestPermission": {
+    "message": "Berechtigung erteilen",
+    "description": "The button label, used for requesting a permission that is missing."
+  },
+  "couldNotRequestPermission": {
+    "message": "Konnte Berechtigung nicht erfragen.",
+    "description": "When the permission request fails."
+  },
 
   // errors or other messages
   "unknownError": {
