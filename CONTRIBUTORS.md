@@ -16,6 +16,7 @@
 - Metta Ong ([@ongspxm](https://github.com/ongspxm))
 - Michael Corwin ([@mcorwin22](https://github.com/mcorwin22))
 - Pradyumna Mahajan ([@pradyumnamahajan](https://github.com/pradyumnamahajan))
+- Mahmoud Ayesh ([@mahmoudhusam](https://github.com/mahmoudhusam))
 
 ## Translators
 
@@ -112,10 +113,14 @@
 
 - Cretzen ([@hellotinh03](https://github.com/hellotinh03))
 
-### Telugu 
+### Telugu
 
 - Sai Prachodhan ([@devulapallisai](https://github.com/devulapallisai))
 
 ### Swedish
 
 - Hannes Alexandersson ([@HannesAlexandersson](https://github.com/HannesAlexandersson))
+
+### Urdu
+
+- Syed Daanish ([@Toprun123](https://github.com/Toprun123))

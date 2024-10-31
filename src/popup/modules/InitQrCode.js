@@ -30,6 +30,10 @@ const userInterfaceInit = UserInterface.init().then(() => {
     console.info("UserInterface module loaded.");
 });
 
+const CLIPBOARD_READ_PERMISSION = {
+    permissions: ["clipboardRead"]
+};
+
 // check for selected text
 // current tab is used by default
 const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetSelectedText) => {
@@ -51,10 +55,28 @@ const gettingSelection = AddonSettings.get("autoGetSelectedText").then((autoGetS
         if (!selection) {
             throw new Error("nothing selected");
         }
-
         return selection;
     });
 });
+
+// check for clipboard text if option is enabled and if extension has permission to read from clipboard
+// if the clipboard is empty it rejects the promise
+const gettingClipboard = AddonSettings.get("autoGetClipboardContent").then((autoGetClipboardContent) => {
+    if (autoGetClipboardContent !== true || !browser.permissions.contains(CLIPBOARD_READ_PERMISSION)) {
+        return Promise.reject(new Error("using clipboard content is disabled"));
+    }
+
+    return navigator.clipboard.readText().then((text) => {
+        if (text && text !== "") {
+            return Promise.resolve(text);
+        } else {
+            return Promise.reject(new Error("clipboard is empty")); 
+        }
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+});
+
 
 // generate QR code from tab or selected text or message, if everything is set up
 export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit]).then(() => {
@@ -64,7 +86,6 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
 
         return Promise.resolve();
     }
-
     // get text from selected text, if possible
     return gettingSelection.then((selection) => {
         try {
@@ -75,18 +96,29 @@ export const initiationProcess = Promise.all([qrCreatorInit, userInterfaceInit])
             UserInterface.handleQrError(e);
         }
     }).catch(() => {
-        // …or fallback to tab URL
-        return queryBrowserTabs.then(QrCreator.generateFromTabs)
-            .catch(UserInterface.handleQrError)
-            .catch((error) => {
-                console.error(error);
+        // try getting text from the clipboard
+        return gettingClipboard.then((clipboard) => {
+            try {
+                QrCreator.setText(clipboard);
+                QrCreator.generate();
+                UserInterface.postInitGenerate();
+            } catch (e) {
+                UserInterface.handleQrError(e);
+            }
+        }).catch(() => {
+            // …or fallback to tab URL
+            return queryBrowserTabs.then(QrCreator.generateFromTabs)
+                .catch(UserInterface.handleQrError)
+                .catch((error) => {
+                    console.error(error);
 
-                // show generic error, likely a tab URL error
-                CommonMessages.showError("couldNotReceiveActiveTab", false);
+                    // show generic error, likely a tab URL error
+                    CommonMessages.showError("couldNotReceiveActiveTab", false);
 
-                // re-throw error
-                throw error;
-            });
+                    // re-throw error
+                    throw error;
+                }); 
+        });
     });
 }).finally(() => {
     // post-initiation code should still run, even if errors happen
