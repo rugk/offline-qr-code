@@ -50,6 +50,10 @@
     "message": "Could not reset options!",
     "description": "The message shown, when the options of the settings could not have been reset."
   },
+  "permissionRequiredClipboardRead": {
+    "message": "The permission to copy data from the clipboard is required for this feature.",
+    "description": "The message shown, when the user wants to use the clipboard to read from"
+  },
 
   // errors or other messages
   "unknownError": {
@@ -367,6 +371,19 @@
   "optionUseMonospaceFont": {
     "message": "Use monospace font",
     "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionAutoGetClipboardContent": {
+    "message": "Use clipboard content when opening popup",
+    "description": "This is an option shown in the add-on settings."
+  },
+  "buttonRequestPermission": {
+    "message": "Grant permission",
+    "description": "The button label, used for requesting a permission that is missing."
+  },
+  "couldNotRequestPermission": {
+    "message": "Requesting permission failed.",
+    "description": "When the permission request fails."
   },
 
   "optionDebugMode": {

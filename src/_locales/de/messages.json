@@ -50,6 +50,18 @@
     "message": "Konnte Optionen nicht zurück setzen!",
     "description": "The message shown, when the options of the settings could not have been reset."
   },
+  "permissionRequiredClipboardRead": {
+    "message": "Die Berechtigung Daten in die Zwischenablage zu kopieren, wird für diese Funktionalität benötigt.",
+    "description": "The message shown, when the user wants to use the clipboard to read from"
+  },
+  "buttonRequestPermission": {
+    "message": "Berechtigung erteilen",
+    "description": "The button label, used for requesting a permission that is missing."
+  },
+  "couldNotRequestPermission": {
+    "message": "Konnte Berechtigung nicht erfragen.",
+    "description": "When the permission request fails."
+  },
 
   // errors or other messages
   "unknownError": {
@@ -254,7 +266,7 @@
     "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
   },
   "optionContextMenuEnabledDescr": {
-    "message": "Zeigt einen Kontextmenü-Eintrag um QR-Codes für die aktuelle Seite zu erstellen, zusätzlich zu denen für Links und ausgewählten Text.",
+    "message": "Zeigt einen Kontextmenü-Eintrag, um QR-Codes für die aktuelle Seite zu erstellen, zusätzlich zu denen für Links und ausgewählten Text.",
     "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
   },
 
@@ -364,6 +376,11 @@
   },
   "optionUseMonospaceFont": {
     "message": "Benutze Monospace-Schrift",
+    "description": "This is an option shown in the add-on settings."
+  },
+
+  "optionAutoGetClipboardContent": {
+    "message": "Benutze den Inhalt der Zwischenablage wenn der Popup geöffnet wird",
     "description": "This is an option shown in the add-on settings."
   },
 
