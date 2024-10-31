@@ -37,6 +37,10 @@
 
 - [@iw0nderhow](https://github.com/iw0nderhow)
 
+### Finnish
+
+- [@varjolintu](https://github.com/varjolintu)
+
 ### French
 
 - Nicolas Trouin ([@nicolas-trouin](https://github.com/nicolas-trouin))
