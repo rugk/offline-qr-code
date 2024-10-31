@@ -100,7 +100,7 @@ const tipArray = [
         text: "tipYouLikeAddon",
         actionButton: {
             text: "tipYouLikeAddonButton",
-            action: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/"
+            action: "https://addons.mozilla.org/firefox/addon/offline-qr-code-generator/reviews/?utm_source=offlineqr-extension&utm_medium=extension&utm_content=offlineqr-tip-rate&utm_campaign=offlineqr-tip-rate"
         }
     },
     {
