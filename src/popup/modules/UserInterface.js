@@ -43,6 +43,7 @@ const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
 const qrCodeContainer = document.getElementById("qrcode-container");
 const qrCodeResizeContainer = document.getElementById("qrcode-resize-container");
 const qrCodeText = document.getElementById("qrcodetext");
+document.getElementById("copy-qr-btn").addEventListener("click", copyToClipboard); //copy text button
 
 let resizeMutationObserver;
 
@@ -52,6 +53,33 @@ let placeholderShown = true;
 let qrLastSize = 200;
 let qrCodeSizeOption = {};
 let savingQrCodeSize = null; // promise
+
+/**
+ * Copy text of text area in clipboard when 
+ * button is pressed
+ *
+ * @function
+ * @returns {void}
+ */
+async function copyToClipboard() {
+    try {
+        await navigator.clipboard.writeText(qrCodeText.value);
+        
+        const copyStatus = document.getElementById("copy-status");
+        copyStatus.textContent = "Text copied";
+
+        //add styling for message status
+        copyStatus.classList.add("show");
+
+        //after 1sec status message is not displayed anymore
+        setTimeout(() => {
+            copyStatus.classList.remove("show");
+        }, 1300);
+    } catch (error) {
+        console.error("Error during copy :", error);
+    }
+}
+
 
 /**
  * Hide QR code and show placeholder instead.
