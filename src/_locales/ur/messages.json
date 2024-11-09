@@ -16,6 +16,14 @@
     "message": "افلائن کیو آر کوڈ",
     "description": "The title for the button, which opens the popup."
   },
+  "buttonRequestPermission": {
+    "message": "اجازت دیں",
+    "description": "The button label, used for requesting a permission that is missing."
+  },
+  "permissionRequiredClipboardRead": {
+    "message": "اس خصوصیت کے لیے کلپ بورڈ سے ڈیٹا کاپی کرنے کی اجازت چاہیے۔",
+    "description": "The message shown, when the user wants to use the clipboard to read from"
+  },
   "commandOpenQrPopup": {
     "message": "افلائن کیو آر کوڈ کھلو",
     "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
@@ -33,6 +41,10 @@
   "couldNotSaveOption": {
     "message": "سٹںگ کو محفوظ نہیں کیا جا سکا۔",
     "description": "When a setting could not be saved."
+  },
+  "couldNotRequestPermission": {
+    "message": "اجازت طلب کرنا ناکام ہوگیا۔",
+    "description": "When the permission request fails."
   },
   "messageUndoButton": {
     "message": "واپس",
@@ -170,12 +182,20 @@
   },
 
   // context menu
+  "contextMenuItemConvertPageURL": {
+    "message": "اس صفحے کے لیے کیو آر کوڈ بنائیں",
+    "description": "Context menu item title for generating a QR code for the current page URL."
+  },
+  "contextMenuItemConvertPageURLAccessKey": {
+    "message": "&اس صفہ کے لیےکیو آر کوڈ بنائیں",
+    "description": "Context menu item title for generating a QR code for the current page URL with an access key."
+  },
   "contextMenuItemConvertSelection": {
     "message": "انتخاب سے کیو آر کوڈ بنائیں۔",
     "description": "The context menu entry shown for generating QR codes from a selection."
   },
   "contextMenuItemConvertSelectionAccessKey": {
-    "message": "&QR code from selection",
+    "message": "&سلکشن سے کیو آر کوڈ",
     "description": "the context menu entry shown for generating QR codes from a selection with an access key."
   },
   "contextMenuItemConvertLinkSelection": {
@@ -183,7 +203,7 @@
     "description": "The context menu entry shown for generating QR codes from a selected link."
   },
   "contextMenuItemConvertLinkSelectionAccessKey": {
-    "message": "&QR code from link",
+    "message": "&لںک سے کیو آر کوڈ",
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
   },
   "contextMenuSaveImageCanvas": {
@@ -191,15 +211,15 @@
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
   },
   "contextMenuSaveImageCanvasAccessKey": {
-    "message": "Save QR code as an &image…",
+    "message": "کیو آر کوڈ کو &فوٹو کی ترح ساو کرے…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
   },
   "contextMenuSaveImageSvg": {
-    "message": "کیو آر کوڈ کو س و ج میں محفوظ کریں۔",
+    "message": "کیو آر کوڈ کو س-و-ج میں محفوظ کریں۔",
     "description": "The context menu entry shown for saving SVG images in the popup."
   },
   "contextMenuSaveImageSvgAccessKey": {
-    "message": "Save QR code as an &SVG…",
+    "message": "کیو آر کوڈ کو &س-و-ج کی ترح ساو کرے…",
     "description": "The context menu entry shown for saving SVG images in the popup with an access key."
   },
 
@@ -344,9 +364,21 @@
     "description": "The 'Learn more' link in the description of the error correction option."
   },
 
+  "optionAutoGetClipboardContent": {
+    "message": "پاپ اپ کھولتے وقت کلپ بورڈ کا مواد استعمال کریں",
+    "description": "This is an option shown in the add-on settings."
+  },
   "optionAutoGetSelectedText": {
     "message": "خود بخود سائٹ مے سے الفاز استمال کرو۔",
     "description": "This is an option shown in the add-on settings."
+  },
+  "optionContextMenuEnabled": {
+    "message": "عمومی کیو آر کوڈ جنریشن کے کنٹکسٹ کے مینو آئٹم کو دکھائیں",
+    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
+  },
+  "optionContextMenuEnabledDescr": {
+    "message": "موجودہ صفحے کے لیے کیو آر کوڈ بنانے کے لیے ایک کنٹکسٹ کے مینو آئٹم کو دکھاتا ہے، لنکس اور متن کے انتخاب کے علاوہ۔",
+    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
   },
   "optionUseMonospaceFont": {
     "message": "منوسپیس فنت کا یستمال کرو۔",
