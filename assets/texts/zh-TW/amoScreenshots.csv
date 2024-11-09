@@ -1,8 +1,8 @@
-qrBig.png; "二維條碼可調整大小！";
-qrDark.png; "您可以調整二維條碼來符合您的主題。";
-qrMenuFromLink.png; "您可以直接從連結生成二維條碼。"
-qrMenuFromPhoneNumber.png; "您可以從選取的文字直接生成二維條碼。"
-qrSaveSvg.png; "您可以儲存二維條碼為SVG或PNG。";
-qrSettings.png; "您可以調整多個選項，自定義行為與外觀。";
-qrSmall.png; "可產生任意大小的二維條碼。";
-qrText.png; "點擊按鈕產生二維條碼，輸入文字，即時自動更新。";
+qrBig.png; "QR 碼可調整大小！";
+qrDark.png; "可以自訂 QR 碼的主題。";
+qrMenuFromLink.png; "可以直接從鏈結產生 QR 碼。"
+qrMenuFromPhoneNumber.png; "可以直接從選取的文字產生 QR 碼。"
+qrSaveSvg.png; "可以將 QR 碼儲存成 SVG 或 PNG。";
+qrSettings.png; "有許多選項可自訂行爲和外觀。";
+qrSmall.png; "可產生任意大小的 QR 碼。";
+qrText.png; "按一下按鈕，輸入文字，即時更新 QR 碼。";
