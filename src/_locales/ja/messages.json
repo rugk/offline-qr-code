@@ -62,6 +62,11 @@
     "description": "The message shown, when the options of the settings could not have been reset.",
     "hash": "76e950d2db72a824482411ca6564fb1f"
   },
+  "permissionRequiredClipboardRead": {
+    "message": "この機能の動作にはクリップボードのデータをコピーする権限が必要です。",
+    "description": "The message shown, when the user wants to use the clipboard to read from",
+    "hash": "4ac4cd3bf49ac157f435a267c47a28ec"
+  },
 
   // errors or other messages
   "unknownError": {
@@ -225,6 +230,16 @@
     "description": "The context menu entry shown for generating QR codes from a selected link with an access key.",
     "hash": "312595c39b5cbc8edf0baab8c16875af"
   },
+  "contextMenuItemConvertPageURL": {
+    "message": "このページのQRコードを作成する",
+    "description": "Context menu item title for generating a QR code for the current page URL.",
+    "hash": "0a7a04d8b855c29f4f88f24c17008b3d"
+  },
+  "contextMenuItemConvertPageURLAccessKey": {
+    "message": "このページのQRコードを作成する(&G)",
+    "description": "Context menu item title for generating a QR code for the current page URL with an access key.",
+    "hash": "5d6c965ad6c409442d99123d5ac4e8e9"
+  },
   "contextMenuSaveImageCanvas": {
     "message": "QRコードを画像として保存する…",
     "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup.",
@@ -291,6 +306,16 @@
     "message": "ツールバーに白黒のアイコンではなくカラーのアイコンを表示する。",
     "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details.",
     "hash": "5d8459d16f7e1ed774fc85f40ce8963e"
+  },
+  "optionContextMenuEnabled": {
+    "message": "コンテキストメニューにQRコード作成を表示する",
+    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page.",
+    "hash": "6bf487ca2534102bf2710bfd35d7b673"
+  },
+  "optionContextMenuEnabledDescr": {
+    "message": "リンクや選択したテキストに加え、現在のページのQRコードを作成するコンテキストメニューアイテムを表示する。",
+    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page.",
+    "hash": "fb523036b54981d41722e9fe54f5eaf7"
   },
   "subtitleQrCodeSize": {
     "message": "QRコードのサイズ",
@@ -412,6 +437,21 @@
     "message": "等幅フォントを使用する",
     "description": "This is an option shown in the add-on settings.",
     "hash": "69191273c436064be8c4f5d6a8f675f5"
+  },
+  "optionAutoGetClipboardContent": {
+    "message": "ポップアップを開いた際にクリップボードの内容を使用する",
+    "description": "This is an option shown in the add-on settings.",
+    "hash": "4f48f8fa294c08afa99a80d3a8f6d162"
+  },
+  "buttonRequestPermission": {
+    "message": "許可する",
+    "description": "The button label, used for requesting a permission that is missing.",
+    "hash": "4689dc838288903e92432d87c1b8fea2"
+  },
+  "couldNotRequestPermission": {
+    "message": "権限の要求に失敗しました。",
+    "description": "When the permission request fails.",
+    "hash": "53e3617a82c33e20fb22eed64dced8de"
   },
   "optionDebugMode": {
     "message": "デバッグモードを有効化する",
