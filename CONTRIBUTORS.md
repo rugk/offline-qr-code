@@ -32,6 +32,7 @@
 ### Chinese (Traditional)
 
 - [@Nio](https://github.com/niotw)
+- [@Eee14](https://github.com/Eee14)
 
 ### Dutch
 
