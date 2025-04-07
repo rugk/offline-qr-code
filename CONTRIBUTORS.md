@@ -57,6 +57,7 @@
 ### Hebrew
 
 - Shani Rub ([@shanirub](https://github.com/shanirub))
+- [@relspas](https://github.com/relspas)
 
 ### Indonesian
 
