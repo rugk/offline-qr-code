@@ -1,36 +1,35 @@
-// /**
-//  * Starter module for QR code popup.
-//  *
-//  * @module qrcode
-//  * @requires modules/RandomTips
-//  * @requires modules/InitQrCode
-//  */
-// "use strict";
+/**
+ * Starter module for QR code popup.
+ *
+ * @module qrcode
+ * @requires modules/RandomTips
+ * @requires modules/InitQrCode
+ */
+"use strict";
 
-// import { tips } from "/common/modules/data/Tips.js";
-// import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
+import { tips } from "/common/modules/data/Tips.js";
+import * as RandomTips from "/common/modules/RandomTips/RandomTips.js";
 
-// import "./modules/InitQrCode.js";
+import "./modules/InitQrCode.js";
 
 const CHECKBOX_ID = "disable-tips-checkbox";
 
-/*Check browser's storage if user wants to receive the tips (default = true)*/
+/*Check browser's storage if user wants to receive the tips*/
 async function ShowTips() {
     const result = await browser.storage.local.get("showTips");
     return result.showTips !== false;
 }
 
-// Save user preference when checkbox is changed
-function setupCheckbox() {
+/*Functionality for checkbox changes */
+function SetupCheckbox() {
     const checkbox = document.getElementById(CHECKBOX_ID);
     if (!checkbox) return;
 
-    // Load initial state
+    /*Load initial state whether users wants to see tips */
     browser.storage.local.get("showTips").then((result) => {
         checkbox.checked = result.showTips === false;
     });
 
-    // Listen for changes
     checkbox.addEventListener("change", () => {
         const show = !checkbox.checked;
         browser.storage.local.set({ showTips: show });
@@ -39,8 +38,8 @@ function setupCheckbox() {
 
 async function init() 
 {
-    setupCheckbox();
-    if (await shouldShowTips()) 
+    SetupCheckbox();
+    if (await ShowTips()) 
     {
         RandomTips.init(tips).then(() => {
             RandomTips.setContext("popup");
