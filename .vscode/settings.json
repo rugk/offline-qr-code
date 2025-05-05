@@ -1,0 +1,5 @@
+{
+    "[javascript]": {
+        "javascript.preferences.importModuleSpecifierEnding": "js"
+    }
+}
