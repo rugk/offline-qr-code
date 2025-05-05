@@ -162,6 +162,10 @@
     "message": "How to use?",
     "description": "The common button for tips, where you can get more information about how to use a feature just presented."
   },
+  "zoomQrCodeHotkey": {
+    "message": "Use Alt and +/- to zoom the QR code!",
+    "description": "Tooltip for the unconventional zoom key combination."
+  },
 
   // placeholder
   "qrCodePlaceholder": {
