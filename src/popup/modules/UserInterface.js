@@ -21,7 +21,7 @@ import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.j
 
 import * as QrError from "./QrLib/QrError.js";
 import * as QrCreator from "./QrCreator.js";
-import {createMenu} from "/common/modules/ContextMenu.js";
+import { createMenu } from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 20; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
@@ -35,13 +35,15 @@ const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
 const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
 
 const DOWNLOAD_PERMISSION = {
-    permissions: ["downloads"]
+    permissions: ["downloads"],
 };
 
 const qrCode = document.getElementById("qrcode");
 const qrCodePlaceholder = document.getElementById("qrcode-placeholder");
 const qrCodeContainer = document.getElementById("qrcode-container");
-const qrCodeResizeContainer = document.getElementById("qrcode-resize-container");
+const qrCodeResizeContainer = document.getElementById(
+    "qrcode-resize-container"
+);
 const qrCodeText = document.getElementById("qrcodetext");
 
 let resizeMutationObserver;
@@ -49,7 +51,11 @@ let resizeMutationObserver;
 let placeholderShown = true;
 
 // default/last size
-let qrLastSize = 200;
+if (localStorage.getItem("lastSize") === null) {
+    localStorage.setItem("lastSize", 200);
+}
+let qrLastSize = parseInt(localStorage.getItem("lastSize"));
+
 let qrCodeSizeOption = {};
 let savingQrCodeSize = null; // promise
 
@@ -130,7 +136,9 @@ const refreshQrCode = throttle(() => {
  * @returns {bool}
  */
 function isSelected(input) {
-    return input.selectionStart === 0 && input.selectionEnd === input.value.length;
+    return (
+        input.selectionStart === 0 && input.selectionEnd === input.value.length
+    );
 }
 
 /**
@@ -142,7 +150,8 @@ function isSelected(input) {
  * @returns {void}
  */
 function selectAllText(event) {
-    const targetIsSelected = document.activeElement === event.target && isSelected(event.target);
+    const targetIsSelected =
+        document.activeElement === event.target && isSelected(event.target);
 
     console.info("selectAllText", event);
 
@@ -169,7 +178,7 @@ function selectAllText(event) {
  */
 function scrollToTop(event) {
     console.info("scrollToTop", event);
-    event.target.scrollTo(0,0);
+    event.target.scrollTo(0, 0);
 }
 
 /**
@@ -186,7 +195,7 @@ async function saveQrCodeSizeOption() {
     console.info("saved qr code text size/style", qrCodeSizeOption);
 
     savingQrCodeSize = browser.storage.sync.set({
-        "qrCodeSize": qrCodeSizeOption
+        qrCodeSize: qrCodeSizeOption,
     });
     return savingQrCodeSize;
 }
@@ -200,7 +209,10 @@ async function saveQrCodeSizeOption() {
  * @name throttledSaveQrCodeSizeOption
  * @private
  */
-const throttledSaveQrCodeSizeOption = throttle(saveQrCodeSizeOption, THROTTLE_SIZE_SAVING_FOR_REMEMBER);
+const throttledSaveQrCodeSizeOption = throttle(
+    saveQrCodeSizeOption,
+    THROTTLE_SIZE_SAVING_FOR_REMEMBER
+);
 
 /**
  * Sets the new size of the QR code.
@@ -267,7 +279,9 @@ function saveQrCodeTextSize() {
  * @returns {void}
  */
 function resizeElements() {
-    const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+    const newQrCodeSize =
+        Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) -
+        QR_CODE_CONTAINER_MARGIN;
     const qrSizeDiff = newQrCodeSize - qrLastSize;
 
     // rezizing at small window heights (e.g. when popup is being constructed)
@@ -279,7 +293,10 @@ function resizeElements() {
     }
 
     // do not resize if size is not *increased* by 5 px or *decreased* by 2px
-    if (qrSizeDiff < QR_CODE_SIZE_SNAP && qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP) {
+    if (
+        qrSizeDiff < QR_CODE_SIZE_SNAP &&
+        qrSizeDiff > -QR_CODE_SIZE_DECREASE_SNAP
+    ) {
         // but allow resize of input text, if needed
         saveQrCodeTextSize();
 
@@ -376,7 +393,8 @@ export function handleQrError(error) {
  * @returns {void}
  */
 function triggerFileSave(file, filename, requestDownloadPermissions) {
-    const downloadPermissionGranted = browser.permissions.contains(DOWNLOAD_PERMISSION);
+    const downloadPermissionGranted =
+        browser.permissions.contains(DOWNLOAD_PERMISSION);
 
     downloadPermissionGranted.then((isAlreadyGranted) => {
         let usePermissionWorkaround = false;
@@ -388,50 +406,69 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
             CommonMessages.showInfo("requestDownloadPermissionForQr");
         }
 
-        browser.runtime.sendMessage({
-            type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
-            usePermissionWorkaround: usePermissionWorkaround,
-            file: file,
-            filename: filename,
-        }).then(() => {
-            console.info("image saved on disk", file, filename);
-        }).catch((error) => {
-            console.error("Could not save SVG image saved on disk", error, file, filename);
+        browser.runtime
+            .sendMessage({
+                type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS,
+                usePermissionWorkaround: usePermissionWorkaround,
+                file: file,
+                filename: filename,
+            })
+            .then(() => {
+                console.info("image saved on disk", file, filename);
+            })
+            .catch((error) => {
+                console.error(
+                    "Could not save SVG image saved on disk",
+                    error,
+                    file,
+                    filename
+                );
 
-            // in case of user error (i.e. user cancelled e.g.) do not show error message
-            if (error.message.includes("user")) {
-                return;
-            }
+                // in case of user error (i.e. user cancelled e.g.) do not show error message
+                if (error.message.includes("user")) {
+                    return;
+                }
 
-            CommonMessages.showError("errorDownloadingFile", error);
-        });
+                CommonMessages.showError("errorDownloadingFile", error);
+            });
 
         // show error when promise is rejected
-        requestDownloadPermissions.then((permissionGranted) => {
-            if (usePermissionWorkaround) {
-                // if permission result is there, hide info message
-                CommonMessages.hideInfo();
-            }
+        requestDownloadPermissions
+            .then((permissionGranted) => {
+                if (usePermissionWorkaround) {
+                    // if permission result is there, hide info message
+                    CommonMessages.hideInfo();
+                }
 
-            // in case of success there is nothing else to do
-            if (permissionGranted) {
-                return;
-            }
+                // in case of success there is nothing else to do
+                if (permissionGranted) {
+                    return;
+                }
 
-            // and stop retrying to download in background script
-            if (usePermissionWorkaround) {
-                browser.runtime.sendMessage({
-                    type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY
-                });
-            }
+                // and stop retrying to download in background script
+                if (usePermissionWorkaround) {
+                    browser.runtime.sendMessage({
+                        type: COMMUNICATION_MESSAGE_TYPE.SAVE_FILE_AS_STOP_RETRY,
+                    });
+                }
 
-            // if permission is declined, make user aware that this permission was required
-            console.error("Permission request for", DOWNLOAD_PERMISSION, "declined.");
-            CommonMessages.showError("errorPermissionRequired", true);
-        }).catch((error) => {
-            console.error("Permission request for", DOWNLOAD_PERMISSION, "failed:", error);
-            CommonMessages.showError("errorPermissionRequestFailed", true);
-        });
+                // if permission is declined, make user aware that this permission was required
+                console.error(
+                    "Permission request for",
+                    DOWNLOAD_PERMISSION,
+                    "declined."
+                );
+                CommonMessages.showError("errorPermissionRequired", true);
+            })
+            .catch((error) => {
+                console.error(
+                    "Permission request for",
+                    DOWNLOAD_PERMISSION,
+                    "failed:",
+                    error
+                );
+                CommonMessages.showError("errorPermissionRequestFailed", true);
+            });
     });
 }
 
@@ -444,7 +481,7 @@ function triggerFileSave(file, filename, requestDownloadPermissions) {
  * @returns {filename}
  */
 function generateFilename() {
-    let qrCodeInputText =  qrCodeText.value; // get current value from input
+    let qrCodeInputText = qrCodeText.value; // get current value from input
     let url;
 
     try {
@@ -481,27 +518,30 @@ function generateFilename() {
  * @returns {void}
  */
 function menuClicked(event) {
-    const requestDownloadPermissions = browser.permissions.request(DOWNLOAD_PERMISSION);
+    const requestDownloadPermissions =
+        browser.permissions.request(DOWNLOAD_PERMISSION);
     let filename = generateFilename();
 
     switch (event.menuItemId) {
-    case CONTEXT_MENU_SAVE_IMAGE_SVG: {
-        filename= filename + ".svg";
-        const svgElem = QrCreator.getQrCodeSvgFromLib();
-        const svgString = (new XMLSerializer()).serializeToString(svgElem);
-        const file = new File([svgString], filename, { type: "image/svg+xml;charset=utf-8" });
-        triggerFileSave(file, filename, requestDownloadPermissions);
-        break;
-    }
-    case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
-        filename= filename + ".png";
-        const canvasElem = QrCreator.getQrCodeCanvasFromLib();
-        canvasElem.toBlob((blob) => {
-            const file = new File([blob], filename, { type: "image/png" });
+        case CONTEXT_MENU_SAVE_IMAGE_SVG: {
+            filename = filename + ".svg";
+            const svgElem = QrCreator.getQrCodeSvgFromLib();
+            const svgString = new XMLSerializer().serializeToString(svgElem);
+            const file = new File([svgString], filename, {
+                type: "image/svg+xml;charset=utf-8",
+            });
             triggerFileSave(file, filename, requestDownloadPermissions);
-        }, "image/png");
-        break;
-    }
+            break;
+        }
+        case CONTEXT_MENU_SAVE_IMAGE_CANVAS: {
+            filename = filename + ".png";
+            const canvasElem = QrCreator.getQrCodeCanvasFromLib();
+            canvasElem.toBlob((blob) => {
+                const file = new File([blob], filename, { type: "image/png" });
+                triggerFileSave(file, filename, requestDownloadPermissions);
+            }, "image/png");
+            break;
+        }
     }
 }
 
@@ -526,18 +566,16 @@ async function createContextMenu() {
         id: CONTEXT_MENU_SAVE_IMAGE_SVG,
         contexts: ["page"],
         documentUrlPatterns: [
-            document.URL // only apply to own URL = popup
-        ]
-    }
-    );
+            document.URL, // only apply to own URL = popup
+        ],
+    });
     await createMenu("contextMenuSaveImageCanvas", {
         id: CONTEXT_MENU_SAVE_IMAGE_CANVAS,
         contexts: ["page"],
         documentUrlPatterns: [
-            document.URL // only apply to own URL = popup
-        ]
-    }
-    );
+            document.URL, // only apply to own URL = popup
+        ],
+    });
 
     browser.menus.onClicked.addListener(menuClicked);
     return Promise.resolve();
@@ -556,7 +594,7 @@ export function lateInit() {
     // conflict with restoring the popup size
     resizeMutationObserver.observe(qrCodeText, {
         attributes: true,
-        attributeFilter: ["style"]
+        attributeFilter: ["style"],
     });
 }
 
@@ -591,60 +629,102 @@ export function init() {
     qrCodeText.addEventListener("input", refreshQrCode);
     qrCodeText.addEventListener("focus", selectAllText);
 
-    const applyingMonospaceFont = AddonSettings.get("monospaceFont").then((monospaceFont) => {
-        if (monospaceFont) {
-            qrCodeText.style.fontFamily = "monospace";
+    const applyingMonospaceFont = AddonSettings.get("monospaceFont").then(
+        (monospaceFont) => {
+            if (monospaceFont) {
+                qrCodeText.style.fontFamily = "monospace";
+            }
         }
-    });
+    );
 
-    const applyingQrColor = AddonSettings.get("qrBackgroundColor").then((qrBackgroundColor) => {
-        if (qrBackgroundColor) {
-            document.body.style.backgroundColor = qrBackgroundColor;
+    const applyingQrColor = AddonSettings.get("qrBackgroundColor").then(
+        (qrBackgroundColor) => {
+            if (qrBackgroundColor) {
+                document.body.style.backgroundColor = qrBackgroundColor;
+            }
         }
-    });
+    );
 
     // for some very strange reason, the MutationObserver only works when it is initiated as fast as possible gives better performance when resizing later
     resizeMutationObserver = new MutationObserver(throttledResizeElements);
 
-    const applyingQrSize = AddonSettings.get("qrCodeSize").then(async (qrCodeSize) => {
-        // save as module variable
-        qrCodeSizeOption = qrCodeSize;
+    const applyingQrSize = AddonSettings.get("qrCodeSize").then(
+        async (qrCodeSize) => {
+            // save as module variable
+            qrCodeSizeOption = qrCodeSize;
 
-        if (qrCodeSize.sizeType === "auto") {
-            // do not resize QR code, but center it horizontally (SVG maximizes automatically)
-            qrCodeResizeContainer.style.width = "auto";
-        }
+            if (qrCodeSize.sizeType === "auto") {
+                // do not resize QR code, but center it horizontally (SVG maximizes automatically)
+                qrCodeResizeContainer.style.width = "auto";
+            }
 
-        if (qrCodeSize.sizeType === "remember" || qrCodeSize.sizeType === "fixed") {
-            await QrCreator.qrCreatorInit;
+            if (
+                qrCodeSize.sizeType === "remember" ||
+                qrCodeSize.sizeType === "fixed"
+            ) {
+                await QrCreator.qrCreatorInit;
 
-            if (qrLastSize === qrCodeSize.size) {
-                console.info("QR code last size is the same as current setting, so do not reset");
-                // BUT set CSS stuff to make it consistent
-                setNewQrCodeSize(qrCodeSize.size, false);
-            } else {
-                // regenerate QR code
-                setNewQrCodeSize(qrCodeSize.size, true);
+                if (qrLastSize === qrCodeSize.size) {
+                    console.info(
+                        "QR code last size is the same as current setting, so do not reset"
+                    );
+                    // BUT set CSS stuff to make it consistent
+                    setNewQrCodeSize(qrCodeSize.size, false);
+                } else {
+                    // regenerate QR code
+                    setNewQrCodeSize(qrLastSize, true);
+                }
+            }
+
+            // also set height of text (also to prevent display errors) when remember is enabled
+            if (
+                qrCodeSize.sizeType === "remember" &&
+                qrCodeSize.hasOwnProperty("sizeText")
+            ) {
+                console.info("restore qr code text size:", qrCodeSize.sizeText);
+                // is saved as CSS string already
+                // height is NOT (anymore) restored, as this may cause display errors (likely due to different content-box settings) and the height does not matter, anyway
+                qrCodeText.style.width = qrCodeSize.sizeText.width;
+
+                // detect too small size
+                const minimalSize =
+                    qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
+                if (window.innerHeight < minimalSize) {
+                    console.error(
+                        "too small size",
+                        window.innerHeight,
+                        "should be at least: ",
+                        minimalSize
+                    );
+                }
             }
         }
-
-        // also set height of text (also to prevent display errors) when remember is enabled
-        if (qrCodeSize.sizeType === "remember" && qrCodeSize.hasOwnProperty("sizeText")) {
-            console.info("restore qr code text size:", qrCodeSize.sizeText);
-            // is saved as CSS string already
-            // height is NOT (anymore) restored, as this may cause display errors (likely due to different content-box settings) and the height does not matter, anyway
-            qrCodeText.style.width = qrCodeSize.sizeText.width;
-
-            // detect too small size
-            const minimalSize = qrCodeSize.size + parseInt(qrCodeSize.sizeText.height, 10);
-            if (window.innerHeight < minimalSize) {
-                console.error("too small size", window.innerHeight, "should be at least: ", minimalSize);
-            }
-        }
-    });
+    );
 
     const initQrTypespecificSettings = createContextMenu();
 
     // return Promise chain
-    return Promise.all([applyingMonospaceFont, applyingQrSize, applyingQrColor, initQrTypespecificSettings]);
+    return Promise.all([
+        applyingMonospaceFont,
+        applyingQrSize,
+        applyingQrColor,
+        initQrTypespecificSettings,
+    ]);
 }
+
+/**
+ * Listens to Alt + plus/minus keypresses to alter 
+ * QR code size.
+ */
+document.addEventListener('keydown', function(event) {
+    if ((event.key == '=' || event.key == '+') && event.altKey && qrLastSize < 440) {
+        setNewQrCodeSize(qrLastSize + 30, true);
+
+        localStorage.setItem("lastSize", qrLastSize);
+    }
+    if (event.key == '-' && event.altKey && qrLastSize > 50) {
+        setNewQrCodeSize(qrLastSize - 30, true);
+
+        localStorage.setItem("lastSize", qrLastSize);
+    }
+});
