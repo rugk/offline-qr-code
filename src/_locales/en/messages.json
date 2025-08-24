@@ -108,6 +108,10 @@
     "message": "Use contrasting color",
     "description": "The text of a button that sets a new color with a sufficient contrast."
   },
+  "qrCodeSizeTooLargeWarning": {
+    "message": "The selected QR code size exceeds the available display space. The displayed QR code has been resized to fit. ",
+    "description": "The message shown when the requested QR code size is too large to display and has been automatically scaled down to fit."
+  },
 
   // tips
   "tipYouLikeAddon": {
