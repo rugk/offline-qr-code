@@ -8,6 +8,16 @@ html, body {
   max-height: 100%;
   height: 100%;
 }
+
+body {
+  direction: rtl;
+  resize: both;
+}
+
+body > * {
+  direction: __MSG_@@bidi_dir__;
+}
+
 /* on (small) mobile displays */
 @media (max-width: 700px) {
   body {
@@ -103,7 +113,7 @@ html, body {
   min-height: 2em;
   max-height: 100%;
 
-  resize: both;
+  resize: none;
 
   /* Firefox needs a fixed height, so it can scale the popup large enough when QR code is displayed */
   height: 6em;

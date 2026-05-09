@@ -554,7 +554,7 @@ async function createContextMenu() {
 export function lateInit() {
     // start listening for resize events very late, so that it does not
     // conflict with restoring the popup size
-    resizeMutationObserver.observe(qrCodeText, {
+    resizeMutationObserver.observe(document.body, {
         attributes: true,
         attributeFilter: ["style"]
     });
