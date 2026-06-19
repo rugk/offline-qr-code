@@ -1,9 +1,9 @@
 # Offline QR Code Generator <img align="right" height="440" width="502" src="assets/screencasts/qrText.gif">
 
-[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-version&utm_campaign=github)  
-[![Mozilla Add-on downloads](https://img.shields.io/amo/d/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-downloads&utm_campaign=github)
-[![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-users&utm_campaign=github)
-[![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator.svg)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/?utm_source=github.com&utm_medium=git&utm_content=badge-stars&utm_campaign=github)
+[![Mozilla Add-on version](https://img.shields.io/amo/v/offline-qr-code-generator)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-version&utm_campaign=github)  
+[![Mozilla Add-on downloads](https://img.shields.io/amo/dw/offline-qr-code-generator)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-downloads&utm_campaign=github)
+[![Mozilla Add-on users](https://img.shields.io/amo/users/offline-qr-code-generator)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/?utm_source=github.com&utm_medium=git&utm_content=badge-users&utm_campaign=github)
+[![Mozilla Add-on stars](https://img.shields.io/amo/stars/offline-qr-code-generator)](https://addons.mozilla.org/de/firefox/addon/offline-qr-code-generator/reviews/?utm_source=github.com&utm_medium=git&utm_content=badge-stars&utm_campaign=github)
 
 <img height="200" width="200" src="assets/qrbig-optimized.svg">
 
