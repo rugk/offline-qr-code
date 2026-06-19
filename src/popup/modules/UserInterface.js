@@ -15,6 +15,7 @@ import isObject from "/common/modules/lodash/isObject.js";
 import throttle from "/common/modules/lodash/throttle.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
+import { isMobile } from "/common/modules/AutomaticSettings/EnvironmentalOptions.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
@@ -25,11 +26,12 @@ import {createMenu} from "/common/modules/ContextMenu.js";
 
 const TOP_SCROLL_TIMEOUT = 20; // ms
 const QR_CODE_REFRESH_TIMEOUT = 200; // ms
-const QR_CODE_CONTAINER_MARGIN = 40; // px
+export const QR_CODE_CONTAINER_MARGIN = 40; // px
 const QR_CODE_SIZE_SNAP = 5; // px
 const QR_CODE_SIZE_DECREASE_SNAP = 2; // px
 const WINDOW_MINIMUM_HEIGHT = 250; // px
 const THROTTLE_SIZE_SAVING_FOR_REMEMBER = 500; // ms
+export const MAX_WINDOW_HEIGHT = 600;
 
 const CONTEXT_MENU_SAVE_IMAGE_CANVAS = "save-image-canvas";
 const CONTEXT_MENU_SAVE_IMAGE_SVG = "save-image-svg";
@@ -47,6 +49,8 @@ const qrCodeText = document.getElementById("qrcodetext");
 let resizeMutationObserver;
 
 let placeholderShown = true;
+let sizeWarningShown = false;
+let firstResize = true; // check if initial resize is needed
 
 // default/last size
 let qrLastSize = 200;
@@ -266,8 +270,30 @@ function saveQrCodeTextSize() {
  * @private
  * @returns {void}
  */
-function resizeElements() {
-    const newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+async function resizeElements() {
+
+    // if a size warning is shown upon resize, hide it
+    if (sizeWarningShown) {
+        CommonMessages.hideWarning();
+    }
+
+    let newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
+
+    // the warning is shown only on desktop
+    if (!await isMobile()) {
+        // if initial resize is needed, compute maximum allowed qr code size
+        if (firstResize) {
+            firstResize = false;
+            newQrCodeSize = Math.min(qrLastSize, MAX_WINDOW_HEIGHT - qrCodeText.offsetHeight - QR_CODE_CONTAINER_MARGIN);
+
+            // if the fixed qr code size is larger than the maximum allowed qr code size, add warning
+            if (newQrCodeSize < qrLastSize) {
+                sizeWarningShown = true;
+                CommonMessages.showWarning("qrCodeSizeTooLargeWarning", true);
+            }
+        }
+    }
+
     const qrSizeDiff = newQrCodeSize - qrLastSize;
 
     // rezizing at small window heights (e.g. when popup is being constructed)
@@ -641,6 +667,9 @@ export function init() {
                 console.error("too small size", window.innerHeight, "should be at least: ", minimalSize);
             }
         }
+
+        // initial resize to fit centering issue of QR code
+        resizeElements();
     });
 
     const initQrTypespecificSettings = createContextMenu();
