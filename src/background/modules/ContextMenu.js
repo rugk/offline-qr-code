@@ -151,7 +151,7 @@ export function init() {
         browser.menus.onClicked.addListener(menuClicked);
         browser.menus.onShown.addListener(menuShown);
 
-        BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT, (request, sender, sendResponse) => {
+        BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT, (request) => {
             if (request.value) {
                 browser.menus.update(CONVERT_PAGE_URL, { visible: true });
                 console.log("Context menu enabled");
@@ -159,8 +159,6 @@ export function init() {
                 browser.menus.update(CONVERT_PAGE_URL, { visible: false });
                 console.log("Context menu disabled");
             }
-
-            sendResponse();
         });
     });
 }
