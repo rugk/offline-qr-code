@@ -1,3 +1,4 @@
+import * as BrowserCommunication from "/common/modules/BrowserCommunication/BrowserCommunication.js";
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 import { createMenu } from "/common/modules/ContextMenu.js";
 
@@ -149,15 +150,15 @@ export function init() {
     return createItems().then(() => {
         browser.menus.onClicked.addListener(menuClicked);
         browser.menus.onShown.addListener(menuShown);
-        browser.runtime.onMessage.addListener((message) => {
-            if (message.action === "enableContextMenu") {
+
+        BrowserCommunication.addListener(COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT, (request) => {
+            if (request.value) {
                 browser.menus.update(CONVERT_PAGE_URL, { visible: true });
                 console.log("Context menu enabled");
-            } else if (message.action === "disableContextMenu") {
+            } else {
                 browser.menus.update(CONVERT_PAGE_URL, { visible: false });
                 console.log("Context menu disabled");
             }
-            browser.menus.refresh();
-        });    
+        });
     });
 }

@@ -10,6 +10,7 @@ import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.j
 import * as CustomMessages from "/common/modules/MessageHandler/CustomMessages.js";
 import { MESSAGE_LEVEL } from "/common/modules/data/MessageLevel.js";
 import * as PermissionRequest from "/common/modules/PermissionRequest/PermissionRequest.js";
+import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
 
 // used to apply options
 import * as Colors from "/common/modules/Colors.js";
@@ -89,15 +90,10 @@ function applyPopupIconColor(optionValue) {
  * @returns {void}
  */
 function applyContextMenuEnabled(optionValue) {
-    if (optionValue) {
-        console.log("Context menu is enabled");
-        // Call the logic to enable the context menu
-        browser.runtime.sendMessage({ action: "enableContextMenu" });
-    } else {
-        console.log("Context menu is disabled");
-        // Call the logic to disable the context menu
-        browser.runtime.sendMessage({ action: "disableContextMenu" });
-    }
+    browser.runtime.sendMessage({
+        type: COMMUNICATION_MESSAGE_TYPE.SET_QR_TEXT,
+        value: optionValue
+    });
 }
 
 /**
@@ -278,10 +274,10 @@ function applyClipboardContent(optionValue, event={}) {
             event,
             {retry: true}
         );
-    } 
+    }
     PermissionRequest.cancelPermissionPrompt(CLIPBOARD_READ_PERMISSION,MESSAGE_CLIPBOARD_READ_PERMISSION);
     return Promise.resolve();
-} 
+}
 
 /**
  * Binds the triggers.
