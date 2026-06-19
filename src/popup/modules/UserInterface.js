@@ -15,6 +15,7 @@ import isObject from "/common/modules/lodash/isObject.js";
 import throttle from "/common/modules/lodash/throttle.js";
 
 import { COMMUNICATION_MESSAGE_TYPE } from "/common/modules/data/BrowserCommunicationTypes.js";
+import { isMobile } from "/common/modules/AutomaticSettings/EnvironmentalOptions.js";
 
 import * as AddonSettings from "/common/modules/AddonSettings/AddonSettings.js";
 import * as CommonMessages from "/common/modules/MessageHandler/CommonMessages.js";
@@ -269,7 +270,7 @@ function saveQrCodeTextSize() {
  * @private
  * @returns {void}
  */
-function resizeElements() {
+async function resizeElements() {
 
     // if a size warning is shown upon resize, hide it
     if (sizeWarningShown) {
@@ -279,12 +280,12 @@ function resizeElements() {
     let newQrCodeSize = Math.min(qrCodeContainer.offsetHeight, qrCodeContainer.offsetWidth) - QR_CODE_CONTAINER_MARGIN;
 
     // the warning is shown only on desktop
-    if (!navigator.userAgent.includes("Mobile")) {
+    if (!await isMobile()) {
         // if initial resize is needed, compute maximum allowed qr code size
         if (firstResize) {
             firstResize = false;
             newQrCodeSize = Math.min(qrLastSize, MAX_WINDOW_HEIGHT - qrCodeText.offsetHeight - QR_CODE_CONTAINER_MARGIN);
-    
+
             // if the fixed qr code size is larger than the maximum allowed qr code size, add warning
             if (newQrCodeSize < qrLastSize) {
                 sizeWarningShown = true;
