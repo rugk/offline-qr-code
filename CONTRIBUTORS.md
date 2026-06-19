@@ -1,6 +1,6 @@
 # Contributors
 
-- [@anirudh-modi](https://github.com/anirudh-modi)
+- [@anirudh-modi](https://git^b.com/anirudh-modi)
 - [@ENT8R](https://github.com/ENT8R)
 - [@OogieBoogieInJSON](https://github.com/OogieBoogieInJSON)
 - [@redagavin](https://github.com/redagavin)
@@ -59,6 +59,9 @@
 
 - Shani Rub ([@shanirub](https://github.com/shanirub))
 - [@relspas](https://github.com/relspas)
+
+### Hungarian
+- [@alakszab1107](https://github.com/alakszab1107)
 
 ### Indonesian
 
