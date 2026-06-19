@@ -13,5 +13,6 @@
 export const COMMUNICATION_MESSAGE_TYPE = Object.freeze({
     SET_QR_TEXT: "setQrText",
     SAVE_FILE_AS: "saveFileAs",
-    SAVE_FILE_AS_STOP_RETRY: "saveFileAsStopRetry"
+    SAVE_FILE_AS_STOP_RETRY: "saveFileAsStopRetry",
+    CONTEXT_MENU_CHANGE: "contextMenuChange"
 });
