@@ -2,57 +2,57 @@
   // manifest.json
   "extensionName": {
     "message": "離線 QR 碼產生器",
-    "description": "Name of the extension."
+    "description": "擴展名稱。"
   },
   "extensionNameShort": {
     "message": "離線 QR 碼",
-    "description": "Name of the extension."
+    "description": "擴展名稱。"
   },
   "extensionDescription": {
     "message": "把任何開啟的網站、分頁做成 QR 碼",
-    "description": "Description of the extension."
+    "description": "擴展的描述。"
   },
   "browserActionButtonTitle": {
     "message": "產生 QR 碼",
-    "description": "The title for the button, which opens the popup."
+    "description": "開啟彈出視窗的按鈕的標題。"
   },
   "commandOpenQrPopup": {
     "message": "開啟 QR 碼彈出視窗",
-    "description": "Description of the hot key command to open the QR Code popup (by default with Ctrl+Shift+F10)."
+    "description": "開啟二維碼彈出視窗的熱鍵指令描述（預設為 Ctrl+Shift+F10）。"
   },
 
   // errors or other messages (mostly for settings)
   "errorShowingMessage": {
     "message": "無法顯示此訊息。",
-    "description": "When there is an error when showing the error/info/…."
+    "description": "顯示錯誤/訊息/時發生錯誤..."
   },
   "couldNotLoadOptions": {
     "message": "無法載入設定。",
-    "description": "When one or all settings could not be loaded."
+    "description": "當無法載入一個或所有設定。"
   },
   "couldNotSaveOption": {
     "message": "無法儲存此設定。",
-    "description": "When a setting could not be saved."
+    "description": "當無法儲存設定時。"
   },
   "messageUndoButton": {
     "message": "復原",
-    "description": "The text of a button that undoes the last action."
+    "description": "撤銷上一個動作的按鈕的文字。"
   },
   "couldNotUndoAction": {
     "message": "無法復原。",
-    "description": "Shown when an action cannot be undone."
+    "description": "當某個操作無法撤銷時顯示。"
   },
   "resettingOptionsWorked": {
     "message": "所有設定都調回預設值了！",
-    "description": "The message shown, when the options of the settings were reset."
+    "description": "當設定選項被重置時顯示的訊息。"
   },
   "resettingOptionsFailed": {
     "message": "無法重置選項！",
-    "description": "The message shown, when the options of the settings could not have been reset."
+    "description": "當無法重置設定選項時顯示的訊息。"
   },
   "permissionRequiredClipboardRead": {
     "message": "此功能需要從剪貼簿複製資料的權限。",
-    "description": "The message shown, when the user wants to use the clipboard to read from"
+    "description": "當使用者想要使用剪貼簿讀取時顯示的訊息"
   },
 
   // errors or other messages
@@ -62,7 +62,7 @@
   },
   "loading": {
     "message": "載入中⋯⋯",
-    "description": "A general loading message."
+    "description": "一般的載入訊息。"
   },
   "couldNotGenerateQrCode": {
     "message": "無法產生 QR 碼。",
@@ -74,231 +74,231 @@
   },
   "errorDownloadingFile": {
     "message": "無法下載檔案。",
-    "description": "Error shown when a file could not be downloaded. Do not mention a file type or name, but just keep it general."
+    "description": "當無法下載檔案時顯示的錯誤訊息。請避免提及檔案類型或名稱，保持一般描述即可。"
   },
   "errorPermissionRequired": {
     "message": "需要權限才能繼續。",
-    "description": "Error shown when a permission is declined and the thing the user triggered cannot be executed."
+    "description": "當權限被拒絕且用戶觸發的操作無法執行時顯示的錯誤訊息。"
   },
   "errorPermissionRequestFailed": {
     "message": "權限請求失敗。",
-    "description": "Error shown when a permission request failed. This indicates a technical error and does NOT mean the user declined the permission."
+    "description": "當權限請求失敗時顯示的錯誤訊息。這表示技術錯誤，並不代表用戶拒絕了權限。"
   },
   "errorQrCodeOverflow": {
     "message": "文字太長，無法產生 QR 碼。",
-    "description": "Error shown when QR code cannot be generated due to overflow in input size."
+    "description": "當因輸入大小溢出而無法生成 QR 碼時顯示的錯誤訊息。"
   },
   "requestDownloadPermissionForQr": {
     "message": "需要下載權限，才能儲存 QR 碼",
-    "description": "Shown, when the user is asked to allow the download permission to save the QR code."
+    "description": "當系統要求用戶允許下載權限以保存 QR 碼時顯示的訊息。"
   },
   "lowContrastRatioInfo": {
     "message": "對比度較低，某些 QR 碼讀取器可能不好讀。",
-    "desription": "The message shown when the contrast ratio is too low"
+    "desription": "當對比度比率過低時顯示的訊息。"
   },
   "lowContrastRatioWarning": {
     "message": "QR 碼的對比度太低，會比較難被 QR 碼讀取器正確讀取",
-    "desription": "The warning shown when the contrast ratio is too low"
+    "desription": "當對比度比率過低時顯示的警告訊息。"
   },
   "lowContrastRatioError": {
     "message": "QR 碼顏色與背景顏色太像了！",
-    "description": "The message shown when the color for the QR code and the background are equal"
+    "description": "當 QR 碼的顏色與背景顏色相同時顯示的訊息。"
   },
   "messageAutoSelectColorButton": {
     "message": "使用對比色",
-    "description": "The text of a button that sets a new color with a sufficient contrast."
+    "description": "設置具有足夠對比度的新顏色的按鈕文本。"
   },
 
   // tips
   "tipYouLikeAddon": {
     "message": "喜歡這款附加元件嗎？",
-    "description": "A tip shown to remind the user to rate the addon."
+    "description": "顯示提醒用戶對插件進行評價的提示。"
   },
   "tipYouLikeAddonButton": {
     "message": "請給評價",
-    "description": "Button for the tip shown to remind the user to rate the addon."
+    "description": "提示用戶對插件進行評價的按鈕。"
   },
   "tipSaveQrCode": {
     "message": "你知道 QR 碼要怎麼儲存嗎？",
-    "description": "A tip shown to get the user to find the save option."
+    "description": "顯示提示引導用戶找到儲存選項。"
   },
   "tipSaveQrCodeLink": {
     "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(Chinese)#%E5%A6%82%E4%BD%95%E5%B0%87-qr-%E7%A2%BC%E5%84%B2%E5%AD%98%E8%B5%B7%E4%BE%86",
-    "description": "The link for more information for the tip on how to save the QR code image. This should go to the FAQ."
+    "description": "有關如何儲存 QR 碼圖片的提示的更多資訊連結。這應該指向常見問題解答 (FAQ)。"
   },
   "tipQrCodeHotkey": {
     "message": "這款附加元件的快捷鍵是 Ctrl＋Shift＋F10。",
-    "description": "A tip shown to get the user to notice that there is a hot key."
+    "description": "顯示提示引導用戶注意到有熱鍵存在。"
   },
   "tipAndroidQrReader": {
     "message": "Firefox 有內建的 QR 碼掃描器。",
-    "description": "A tip shown to get the Android users to make them aware that Firefox already has an integrated QR Code Reader/Scanner. See https://github.com/rugk/offline-qr-code/issues/160."
+    "description": "顯示提示讓 Android 用戶注意到 Firefox 已經內建了 QR 碼閱讀器/掃描器。請參見 https://github.com/rugk/offline-qr-code/issues/160."
   },
   "tipAndroidQrReaderLink": {
     "message": "https://mzl.la/1GQ2fcu",
-    "description": "The link for more information for the tip about the integrated Android QR Code scanner. The current link should automatically redirect the user to their locale translation of the support article, so it should *NOT* need to be changed."
+    "description": "有關內建 Android QR 碼掃描器提示的更多資訊連結。當前的連結應該會自動將用戶重定向到其當地語言版本的支援文章，因此不需要進行更改。"
   },
   "tipTranslateAddon": {
     "message": "若您會其他語言，可以幫忙翻譯這款附加元件。",
-    "description": "A tip shown to users that potentially speak another language to translate this add-on."
+    "description": "顯示提示給可能使用其他語言的用戶，讓他們翻譯此插件。"
   },
   "tipTranslateAddonLink": {
     "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTING.md#translations",
-    "description": "The link to a description of the translation service/way you can use."
+    "description": "用於描述可使用的翻譯服務/方式的連結。"
   },
   "tipDonate": {
     "message": "這款附加元件好用嗎？",
-    "description": "A tip shown to get the remind them of a donation."
+    "description": "顯示提示提醒用戶進行捐贈。"
   },
   "tipDonateButton": {
     "message": "請以行動支持開發",
-    "description": "The button of the donation tip taking the user to the donation site."
+    "description": "捐贈提示的按鈕，將用戶引導至捐贈網站。"
   },
   "tipLearnMore": {
     "message": "瞭解更多",
-    "description": "The common button for tips, where you can get more information on click."
+    "description": "常見的提示按鈕，點擊後可以獲得更多資訊。"
   },
   "tipHowToUse": {
     "message": "要怎麼用？",
-    "description": "The common button for tips, where you can get more information about how to use a feature just presented."
+    "description": "常見的提示按鈕，點擊後可以獲得有關如何使用剛介紹的功能的更多資訊。"
   },
 
   // placeholder
   "qrCodePlaceholder": {
     "message": "QR 碼圖片預留位置",
-    "description": "Alt text of placeholder image."
+    "description": "佔位圖像的替代文字 (Alt text)。"
   },
   "textareaPlaceholder": {
     "message": "請輸入要產生 QR 碼的文字。",
-    "description": "Placeholder for the textarea, when it is empty."
+    "description": "當文本區域為空時的佔位符。"
   },
 
   // context menu
   "contextMenuItemConvertSelection": {
     "message": "把選取內容做成 QR 碼",
-    "description": "The context menu entry shown for generating QR codes from a selection."
+    "description": "顯示的上下文菜單項目，用於從選擇中生成 QR 碼。"
   },
   "contextMenuItemConvertSelectionAccessKey": {
     "message": "把選取內容做成 QR 碼（&Q）",
-    "description": "the context menu entry shown for generating QR codes from a selection with an access key."
+    "description": "顯示的上下文菜單項目，用於從選擇中生成 QR 碼並包含快捷鍵。"
   },
   "contextMenuItemConvertLinkSelection": {
     "message": "把鏈結做成 QR 碼",
-    "description": "The context menu entry shown for generating QR codes from a selected link."
+    "description": "顯示的上下文菜單項目，用於從選擇的連結生成 QR 碼。"
   },
   "contextMenuItemConvertLinkSelectionAccessKey": {
     "message": "把鏈結做成 QR 碼（&Q）",
-    "description": "The context menu entry shown for generating QR codes from a selected link with an access key."
+    "description": "顯示的上下文菜單項目，用於從選擇的連結生成 QR 碼並包含快捷鍵。"
   },
   "contextMenuItemConvertPageURL": {
     "message": "把此頁面做成 QR 碼",
-    "description": "Context menu item title for generating a QR code for the current page URL."
+    "description": "用於為目前頁面 URL 產生二維碼的上下文選單項目標題。"
   },
   "contextMenuItemConvertPageURLAccessKey": {
     "message": "把此頁面做成 QR 碼（&G）",
-    "description": "Context menu item title for generating a QR code for the current page URL with an access key."
+    "description": "用於使用存取鍵為目前頁面 URL 產生二維碼的上下文選單項目標題。"
   },
   "contextMenuSaveImageCanvas": {
     "message": "以 PNG 檔儲存",
-    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup."
+    "description": "彈出視窗中顯示的用於儲存 PNG 圖像（來自畫布）的上下文選單項目。"
   },
   "contextMenuSaveImageCanvasAccessKey": {
     "message": "以 PNG 檔儲存（&i）",
-    "description": "The context menu entry shown for saving PNG images (from a canvas) in the popup with an access key."
+    "description": "顯示的上下文選單項目用於在彈出視窗中使用存取鍵儲存 PNG 影像（來自畫布）。"
   },
   "contextMenuSaveImageSvg": {
     "message": "以 SVG 檔儲存",
-    "description": "The context menu entry shown for saving SVG images in the popup."
+    "description": "彈出視窗中顯示的用於儲存 SVG 影像的上下文選單項目。"
   },
   "contextMenuSaveImageSvgAccessKey": {
     "message": "以 SVG 檔儲存（&S）",
-    "description": "The context menu entry shown for saving SVG images in the popup with an access key."
+    "description": "在彈出視窗中顯示用於使用存取鍵儲存 SVG 影像的上下文選單項目。"
   },
 
   // options
   "someSettingsAreManaged": {
     "message": "由於系統管理員限制，無法更改某些設定。",
-    "description": "The message, which appears, when settings are pre-defined (as managed options) by administrators."
+    "description": "當管理員預先定義設定（作為管理選項）時出現的訊息。"
   },
   "optionIsDisabledBecauseManaged": {
     "message": "系統管理員設定，此選項已停用。",
-    "description": "The title (tooltip) shown, when hovering over a disabled, managed option."
+    "description": "當滑鼠懸停在已停用的管理選項上時顯示的標題（工具提示）。"
   },
   "optionLearnMore": {
     "message": "瞭解更多",
-    "description": "When a link to an explainer needs to be added, this is the link text."
+    "description": "當需要添加指向解釋器的連結時，這就是連結文字。"
   },
   "optionsResetButton": {
     "message": "將所有設定重設爲預設值",
-    "description": "The button to delete all current settings and load the defaults, shown in the add-on settings."
+    "description": "刪除所有目前設定並載入預設設定的按鈕，顯示在附加設定中。"
   },
 
   "titleGeneral": {
     "message": "附加元件",
-    "description": "The title for the general settings group."
+    "description": "常規設定組的標題。"
   },
   "titleQrCodeSetting": {
     "message": "QR 碼",
-    "description": "The title for the qr code settings group."
+    "description": "二維碼設定組的標題。"
   },
   "titleAddonBehavior": {
     "message": "附加元件行爲",
-    "description": "The title for the addon behavior settings group."
+    "description": "插件行為設定組的標題。"
   },
 
   "optionPopupIconColored": {
     "message": "彩色圖示",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
   "optionPopupIconColoredDescr": {
     "message": "在工具列上顯示彩色圖示，而非黑白圖示。",
-    "description": "This is an option shown in the add-on settings. It describes the optionPopupIconColored setting in more details."
+    "description": "這是附加元件設定中顯示的選項。它更詳細地描述了 optionPopupIconColored 設定。"
   },
   "optionContextMenuEnabled": {
     "message": "在右鍵選單顯示一般 QR 碼產生器選項",
-    "description": "This label refers to an option in the add-on settings. It allows users to toggle the visibility of the context menu item for generating a QR code from the current page."
+    "description": "此標籤指的是附加元件設定中的一個選項。它允許使用者切換從目前頁面產生二維碼的上下文選單項目的可見性。"
   },
   "optionContextMenuEnabledDescr": {
     "message": "在右鍵選單顯示把此頁面作成 QR 碼的選項（選取鏈結和文字時不會顯示）。",
-    "description": "This is the helper text for the context menu toggle option. It explains that enabling this option will show the QR code generation context menu for the current page."
+    "description": "這是上下文選單切換選項的說明文字。它解釋說啟用此選項將顯示當前頁面的二維碼產生上下文選單。"
   },
 
   "subtitleQrCodeSize": {
     "message": "QR 碼大小",
-    "description": "The heading/grouping title shown for the radio buttons for the size setting of the QR code."
+    "description": "二維碼大小設定單選按鈕顯示的標題/分組標題。"
   },
   "optionQrCodeSizeFixed": {
     "message": "固定大小：",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "這是附加元件設定中顯示的選項。這是選擇二維碼大小的選項。"
   },
   "optionPixelAbbreviation": {
     "message": "px",
-    "description": "The abbreviation of the term 'pixels'. In most cases, it may stay as it is in English."
+    "description": "術語“像素”的縮寫。大多數情況下，它可能保持英文原樣。"
   },
   "optionQrCodeSizeAuto": {
     "message": "自動調整大小",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "這是附加元件設定中顯示的選項。這是選擇二維碼大小的選項。"
   },
   "optionQrCodeSizeAutoHelper": {
     "message": "適和行動裝置，QR 碼會在新分頁中顯示。",
-    "description": "Helper text for the optionQrCodeSizeAuto making the user aware that this setting will likely have no or little effect on desktop devices."
+    "description": "選項QrCodeSizeAuto 的說明文字使用戶意識到此設定可能對桌面裝置沒有影響或影響很小。"
   },
   "optionQrCodeSizeRemember": {
     "message": "記住最後的大小",
-    "description": "This is an option shown in the add-on settings. It is one option for selecting the QR code size."
+    "description": "這是附加元件設定中顯示的選項。這是選擇二維碼大小的選項。"
   },
 
   "subtitleMisc": {
     "message": "雜項設定",
-    "description": "The heading/grouping title shown for the miscellaneous setting of the QR code."
+    "description": "顯示的二維碼雜項設定的標題/分組標題。"
   },
   "optionQrQuietZone": {
     "message": "安穩區：",
-    "description": "This is an option shown in the add-on settings. It's about the area around the QR code."
+    "description": "這是附加元件設定中顯示的選項。它與二維碼周圍的區域有關。"
   },
   "optionQrQuietZoneStatusSingular": {
     "message": "($INTEGER$ 格方塊)",
-    "description": "This is the number of empty/'white' modules around the QR code in its singular form.",
+    "description": "這是單數形式的二維碼周圍的空/“白色”模組的數量。",
     "placeholders": {
       "integer": {
         "content": "$1",
@@ -308,7 +308,7 @@
   },
   "optionQrQuietZoneStatusPlural": {
     "message": "($INTEGER$ 格方塊)",
-    "description": "This is the number of empty/'white' modules around the QR code in its plural form.",
+    "description": "這是複數形式的二維碼周圍的空/“白色”模組的數量。",
     "placeholders": {
       "integer": {
         "content": "$1",
@@ -318,86 +318,86 @@
   },
   "optionQrQuietZoneDescr": {
     "message": "QR 碼的邊框大小，顯示背景色。",
-    "description": "The description of the quiet zone option."
+    "description": "靜區選項的描述。"
   },
   "optionQrQuietZoneDescrLink": {
     "message": "https://github.com/rugk/offline-qr-code/wiki/FAQ-(Chinese)#%E4%BB%80%E9%BA%BC%E6%98%AF%E5%AE%89%E7%A9%A9%E5%8D%80",
-    "description": "The 'Learn more' link in the description of the quiet zone option."
+    "description": "靜區選項描述中的「了解更多」連結。"
   },
 
   "optionQrCodeColor": {
     "message": "QR 碼顏色：",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
 
   "optionQrCodeBackgroundColor": {
     "message": "QR 碼背景色：",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
 
   "optionErrorCorrection": {
     "message": "糾錯等級：",
-    "description": "Error correction setting for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "QR碼的錯誤修正設定。請參閱 https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcLow": {
     "message": "L 級（7%）",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "QR 碼的糾錯等級選項。請參閱 https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcMedium": {
     "message": "M 級（15%）",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "QR 碼的糾錯等級選項。請參閱 See https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcQuartile": {
     "message": "Q 級（25%）",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "QR 碼的糾錯等級選項。 請參閱 https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionEcHigh": {
     "message": "H 級（30%）",
-    "description": "Option of error correction level for QR code. See https://en.wikipedia.org/wiki/QR_code#Error_correction."
+    "description": "QR 碼的糾錯等級選項。 請參閱 https://en.wikipedia.org/wiki/QR_code#Error_correction."
   },
   "optionErrorCorrectionDescr": {
     "message": "此值表示遺失（掃不到）多少碼塊，也可以讀到內容。",
-    "description": "The description of the error correction option."
+    "description": "錯誤更正選項的描述。"
   },
   "optionErrorCorrectionDescrLink": {
     "message": "https://en.wikipedia.org/wiki/QR_code#Error_correction",
-    "description": "The 'Learn more' link in the description of the error correction option."
+    "description": "錯誤更正選項描述中的「了解更多」連結。"
   },
 
   "optionAutoGetSelectedText": {
     "message": "自動使用網頁中選取的文字",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
   "optionUseMonospaceFont": {
     "message": "使用等寬字體",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
 
   "optionAutoGetClipboardContent": {
     "message": "開起彈出視窗時使用剪貼簿的內容",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
   "buttonRequestPermission": {
     "message": "授予權限",
-    "description": "The button label, used for requesting a permission that is missing."
+    "description": "按鈕標籤，用於請求缺少的權限。"
   },
   "couldNotRequestPermission": {
     "message": "權限請求失敗。",
-    "description": "When the permission request fails."
+    "description": "當權限請求失敗時。"
   },
 
   "optionDebugMode": {
     "message": "啟用偵錯模式",
-    "description": "This is an option shown in the add-on settings."
+    "description": "這是附加元件設定中顯示的選項。"
   },
   "optionDebugModeDescr": {
     "message": "只有在控制臺取得更詳細的日誌輸出來匯報錯誤等情況時有用。",
-    "description": "The description shown for the debug mode (optionDebugMode)."
+    "description": "顯示的調試模式 (optionDebugMode) 的描述。"
   },
 
   "translatorCredit": {
     "message": "本附加元件正體中文翻譯由 $TRANSLATORS$ 以及 nioTW（參考 Cye3s 的 zh_CN）完成。",
-    "description": "The credit text for the translator. See https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
+    "description": "翻譯者的致謝文字。 請參閱 https://github.com/TinyWebEx/common/blob/master/CONTRIBUTING.md#translator-credit-inside-of-add-on for how to translate this.",
     "placeholders": {
       "translators": {
         "content": "$1",
@@ -407,16 +407,16 @@
   },
   "translatorLink": {
     "message": "https://github.com/Eee14",
-    "description": "The link to the translator's GitHub profile."
+    "description": "譯者 GitHub 個人資料的連結。"
   },
   "translatorUsername": {
     "message": "@Eee14",
-    "description": "The username that the translator wants to be referred to."
+    "description": "譯者希望被提及的使用者名稱。"
   },
 
   "contributorsThanks": {
     "message": "同時感謝$CONTRIBUTORS$。",
-    "description": "Text thanking all contributors and linking to the contributors file.",
+    "description": "文本感謝所有貢獻者並連結到貢獻者文件。",
     "placeholders": {
       "contributors": {
         "content": "$1",
@@ -426,36 +426,36 @@
   },
   "contributorsThanksLink": {
     "message": "https://github.com/rugk/offline-qr-code/blob/master/CONTRIBUTORS.md",
-    "description": "The link to the CONTRIBUTORS file."
+    "description": "貢獻者 (CONTRIBUTORS) 文件的連結。"
   },
   "contributorsThanksLinkText": {
     "message": "其他所有貢獻者",
-    "description": "The link text linking to the contributors file. See contributorsThanks."
+    "description": "連結到貢獻者文件的連結文字。參見貢獻者感謝。"
   },
 
   // ARIA labels/descriptions
   "dismissIconDescription": {
     "message": "關閉訊息",
-    "description": "the aria label for the close button of the message box"
+    "description": "訊息框關閉按鈕的 aria 標籤"
   },
   "ariaMessageLoading": {
     "message": "正在載入訊息",
-    "description": "the aria label to label the message box as an info message box"
+    "description": "aria 標籤將訊息框標記為資訊訊息框"
   },
   "ariaMessageInfo": {
     "message": "資訊訊息",
-    "description": "the aria label to label the message box as an info message box"
+    "description": "aria 標籤將訊息框標記為資訊訊息框"
   },
   "ariaMessageSuccess": {
     "message": "完成訊息",
-    "description": "the aria label to label the message box as an success message box"
+    "description": "aria 標籤將訊息框標記為成功訊息框"
   },
   "ariaMessageError": {
     "message": "錯誤訊息",
-    "description": "the aria label to label the message box as an error message box"
+    "description": "aria 標籤將訊息框標記為錯誤訊息框"
   },
   "ariaMessageWarning": {
     "message": "警告訊息",
-    "description": "the aria label to label the message box as an warning message box"
+    "description": "aria 標籤將訊息框標記為警告訊息框"
   }
 }
